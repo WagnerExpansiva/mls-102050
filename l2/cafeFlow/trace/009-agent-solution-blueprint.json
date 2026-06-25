@@ -1,0 +1,1072 @@
+{
+  "savedAt": "2026-06-25T00:34:43.608Z",
+  "agentName": "agentSolutionBlueprint",
+  "stepId": 9,
+  "planning": {
+    "planId": "plan-solution-blueprint",
+    "dependsOn": [
+      "req-implementation-decisions"
+    ],
+    "executionMode": "sequential",
+    "executionHost": "client"
+  },
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitSolutionBlueprint",
+      "arguments": {
+        "questions": [
+          "O CafeFlow precisa enviar comandas para impressora térmica da cozinha ou apenas exibir status em tela?",
+          "Como deve funcionar o alerta de estoque baixo: quantidade mínima configurada por item ou apenas visual?",
+          "Quais formas de pagamento e regras de taxas/serviço devem ser suportadas no MVP?",
+          "O atendente pode cancelar ou editar itens de um pedido depois que ele foi enviado à cozinha?",
+          "Qual o escopo mínimo desejado para resiliência offline em versões futuras?"
+        ],
+        "result": {
+          "actors": [
+            {
+              "actorId": "attendantCashier",
+              "description": "Atendente ou caixa que lança pedidos no POS, seleciona mesa/takeout e acompanha o andamento.",
+              "title": "Atendente/Caixa"
+            },
+            {
+              "actorId": "cook",
+              "description": "Cozinheiro que visualiza a fila de pedidos e atualiza os status de preparo.",
+              "title": "Cozinheiro"
+            },
+            {
+              "actorId": "managerOwner",
+              "description": "Gerente ou proprietário que gerencia cardápio, estoque, turnos e acessa relatórios.",
+              "title": "Gerente/Proprietário"
+            }
+          ],
+          "artifactPlan": {
+            "agents": [
+              {
+                "actor": "managerOwner",
+                "artifactType": "agent",
+                "priority": "now",
+                "reason": "Funcionalidade LLM explicitamente solicitada para gerar resumos de vendas do dia e sugerir itens para promover com base nos últimos 7 dias.",
+                "references": [
+                  "usecaseEntityGenerateDailySalesSummary",
+                  "usecaseEntitySuggestPromotions",
+                  "pageLlmAssistant"
+                ],
+                "rulesApplied": [
+                  "ruleLlmDataPrivacy"
+                ],
+                "signal": "agentSalesAssistant",
+                "title": "Assistente IA de Vendas"
+              }
+            ],
+            "horizontalModules": [
+              {
+                "artifactType": "horizontalModule",
+                "priority": "soon",
+                "reason": "Alertas operacionais de cozinha e estoque baixo melhoram a coordenação entre atendentes e cozinha.",
+                "references": [
+                  "mdmOrder",
+                  "mdmStockItem",
+                  "pageDashboard",
+                  "pageKitchenDisplay"
+                ],
+                "signal": "horizontalNotifications",
+                "title": "Módulo de Notificações"
+              },
+              {
+                "artifactType": "horizontalModule",
+                "priority": "soon",
+                "reason": "Rastreia quem alterou pedidos, estoque e fechamento de turno para segurança e conformidade.",
+                "references": [
+                  "mdmOrder",
+                  "mdmDailyShift",
+                  "mdmStockItem",
+                  "mdmMenuItem"
+                ],
+                "signal": "horizontalAuditLog",
+                "title": "Log de Auditoria"
+              },
+              {
+                "artifactType": "horizontalModule",
+                "priority": "later",
+                "reason": "Resiliência básica para quedas de internet, planejada para versões futuras fora do MVP.",
+                "references": [
+                  "mdmOrder",
+                  "mdmStockItem"
+                ],
+                "signal": "horizontalOfflineResilience",
+                "title": "Resiliência Offline"
+              }
+            ],
+            "mdm": [
+              {
+                "artifactType": "mdm",
+                "priority": "now",
+                "reason": "Dados mestres dos itens vendidos, incluindo categoria, preço e vínculo com ingredientes em estoque.",
+                "references": [
+                  "MenuItem",
+                  "MenuCategory",
+                  "MenuItemIngredient"
+                ],
+                "signal": "mdmMenuItem",
+                "title": "Item do Cardápio"
+              },
+              {
+                "artifactType": "mdm",
+                "priority": "now",
+                "reason": "Dados mestres dos insumos controlados, com quantidade, unidade e ponto de alerta.",
+                "references": [
+                  "StockItem"
+                ],
+                "signal": "mdmStockItem",
+                "title": "Item de Estoque"
+              },
+              {
+                "artifactType": "mdm",
+                "priority": "now",
+                "reason": "Registro central do compromisso de venda, com itens, mesa/takeout e ciclo de status.",
+                "references": [
+                  "Order",
+                  "OrderItem"
+                ],
+                "signal": "mdmOrder",
+                "title": "Pedido"
+              },
+              {
+                "artifactType": "mdm",
+                "priority": "now",
+                "reason": "Delimita o período operacional para vendas, fechamento e relatórios diários.",
+                "references": [
+                  "DailyShift"
+                ],
+                "signal": "mdmDailyShift",
+                "title": "Turno Diário"
+              }
+            ],
+            "metricDashboards": [
+              {
+                "actor": "managerOwner",
+                "artifactType": "metricDashboard",
+                "priority": "now",
+                "reason": "Dashboard administrativo consolidado com vendas de hoje, itens mais vendidos e alertas de estoque baixo.",
+                "references": [
+                  "managerOwnerMetricTableDailySales",
+                  "managerOwnerMetricTableTopSellingItems",
+                  "managerOwnerMetricTableLowStockAlerts",
+                  "pageDashboard"
+                ],
+                "signal": "managerOwnerMetricDashboard",
+                "title": "Dashboard de Métricas do CafeFlow"
+              }
+            ],
+            "metricTables": [
+              {
+                "actor": "managerOwner",
+                "artifactType": "metricTable",
+                "priority": "now",
+                "reason": "Métrica principal do dashboard: total de vendas do dia, número de pedidos e ticket médio.",
+                "references": [
+                  "mdmOrder",
+                  "mdmDailyShift"
+                ],
+                "rulesApplied": [
+                  "ruleOrderRequiresOpenShift"
+                ],
+                "signal": "managerOwnerMetricTableDailySales",
+                "title": "Tabela de Métricas: Vendas de Hoje"
+              },
+              {
+                "actor": "managerOwner",
+                "artifactType": "metricTable",
+                "priority": "now",
+                "reason": "Identifica os produtos com maior saída para apoiar decisões de estoque e promoção.",
+                "references": [
+                  "mdmOrder",
+                  "mdmMenuItem"
+                ],
+                "signal": "managerOwnerMetricTableTopSellingItems",
+                "title": "Tabela de Métricas: Itens Mais Vendidos"
+              },
+              {
+                "actor": "managerOwner",
+                "artifactType": "metricTable",
+                "priority": "now",
+                "reason": "Alerta operacional com itens de estoque abaixo do ponto de alerta configurado.",
+                "references": [
+                  "mdmStockItem"
+                ],
+                "rulesApplied": [
+                  "ruleLowStockAlert"
+                ],
+                "signal": "managerOwnerMetricTableLowStockAlerts",
+                "title": "Tabela de Métricas: Estoque Baixo"
+              }
+            ],
+            "pages": [
+              {
+                "actor": "managerOwner",
+                "artifactType": "page",
+                "priority": "now",
+                "reason": "Tela principal do gestor com vendas do dia, itens mais vendidos e alertas de estoque.",
+                "references": [
+                  "managerOwnerMetricDashboard",
+                  "workflowLlmInsights"
+                ],
+                "signal": "pageDashboard",
+                "title": "Dashboard"
+              },
+              {
+                "actor": "attendantCashier",
+                "artifactType": "page",
+                "priority": "now",
+                "reason": "Interface rápida para selecionar itens do cardápio, definir mesa/takeout e enviar o pedido.",
+                "references": [
+                  "workflowCreateOrder",
+                  "mdmMenuItem"
+                ],
+                "signal": "pagePos",
+                "title": "POS - Lançamento de Pedido"
+              },
+              {
+                "actor": "cook",
+                "artifactType": "page",
+                "priority": "now",
+                "reason": "Tela da cozinha para visualizar fila de pedidos e atualizar status de preparo.",
+                "references": [
+                  "workflowUpdateKitchenStatus",
+                  "mdmOrder"
+                ],
+                "signal": "pageKitchenDisplay",
+                "title": "Display da Cozinha"
+              },
+              {
+                "actor": "managerOwner",
+                "artifactType": "page",
+                "priority": "now",
+                "reason": "Cadastro e edição de categorias, itens, preços e ingredientes.",
+                "references": [
+                  "workflowManageMenu",
+                  "mdmMenuItem"
+                ],
+                "signal": "pageMenuManagement",
+                "title": "Gerenciamento de Cardápio"
+              },
+              {
+                "actor": "managerOwner",
+                "artifactType": "page",
+                "priority": "now",
+                "reason": "Controle de entradas, saídas, ajustes e alertas de estoque.",
+                "references": [
+                  "workflowManageStock",
+                  "mdmStockItem"
+                ],
+                "signal": "pageStockManagement",
+                "title": "Gerenciamento de Estoque"
+              },
+              {
+                "actor": "managerOwner",
+                "artifactType": "page",
+                "priority": "now",
+                "reason": "Relatório de fechamento do turno diário com vendas e resumo operacional.",
+                "references": [
+                  "workflowCloseDailyShift",
+                  "mdmDailyShift"
+                ],
+                "signal": "pageShiftClosingReport",
+                "title": "Relatório de Fechamento de Turno"
+              },
+              {
+                "actor": "managerOwner",
+                "artifactType": "page",
+                "priority": "now",
+                "reason": "Painel para consultar resumos de vendas e sugestões de promoção geradas pela IA.",
+                "references": [
+                  "workflowLlmInsights",
+                  "agentSalesAssistant"
+                ],
+                "signal": "pageLlmAssistant",
+                "title": "Assistente IA"
+              }
+            ],
+            "plugins": [
+              {
+                "artifactType": "plugin",
+                "priority": "later",
+                "reason": "Integração com impressora térmica de cozinha ainda não confirmada; pode ser adicionada em versão futura.",
+                "references": [
+                  "workflowCreateOrder"
+                ],
+                "signal": "pluginKitchenPrinter",
+                "title": "Impressora de Cozinha"
+              }
+            ],
+            "usecaseEntities": [
+              {
+                "actor": "attendantCashier",
+                "artifactType": "usecaseEntity",
+                "priority": "now",
+                "reason": "Caso de uso de backend essencial para o lançamento de pedidos no POS.",
+                "references": [
+                  "mdmMenuItem",
+                  "mdmOrder"
+                ],
+                "rulesApplied": [
+                  "ruleOrderRequiresOpenShift",
+                  "ruleUniqueOpenShiftPerDay"
+                ],
+                "signal": "usecaseEntityCreateOrder",
+                "title": "Criar Pedido"
+              },
+              {
+                "actor": "cook",
+                "artifactType": "usecaseEntity",
+                "priority": "now",
+                "reason": "Caso de uso de backend que sustenta o fluxo de cozinha e acompanhamento.",
+                "references": [
+                  "mdmOrder"
+                ],
+                "rulesApplied": [
+                  "ruleOrderStatusFlow",
+                  "ruleStockDeductionOnOrderPreparation"
+                ],
+                "signal": "usecaseEntityUpdateOrderStatus",
+                "title": "Atualizar Status do Pedido"
+              },
+              {
+                "actor": "managerOwner",
+                "artifactType": "usecaseEntity",
+                "priority": "now",
+                "reason": "Caso de uso de backend obrigatório para o fechamento de turno e relatórios.",
+                "references": [
+                  "mdmOrder",
+                  "mdmDailyShift"
+                ],
+                "rulesApplied": [
+                  "ruleShiftCloseNoOpenOrders"
+                ],
+                "signal": "usecaseEntityCloseDailyShift",
+                "title": "Fechar Turno Diário"
+              },
+              {
+                "actor": "managerOwner",
+                "artifactType": "usecaseEntity",
+                "priority": "now",
+                "reason": "Caso de uso de backend para cadastro e atualização do cardápio.",
+                "references": [
+                  "mdmMenuItem",
+                  "mdmStockItem"
+                ],
+                "rulesApplied": [
+                  "ruleMenuItemPricePositive"
+                ],
+                "signal": "usecaseEntityManageMenuItem",
+                "title": "Gerenciar Item do Cardápio"
+              },
+              {
+                "actor": "managerOwner",
+                "artifactType": "usecaseEntity",
+                "priority": "now",
+                "reason": "Caso de uso de backend para controle de entradas, saídas e ajustes de estoque.",
+                "references": [
+                  "mdmStockItem"
+                ],
+                "rulesApplied": [
+                  "ruleStockQuantityNonNegative",
+                  "ruleLowStockAlert"
+                ],
+                "signal": "usecaseEntityManageStockItem",
+                "title": "Gerenciar Item de Estoque"
+              },
+              {
+                "actor": "managerOwner",
+                "artifactType": "usecaseEntity",
+                "priority": "now",
+                "reason": "Gera o resumo de vendas do dia consumido pelo assistente IA e pelo dashboard.",
+                "references": [
+                  "mdmOrder",
+                  "mdmDailyShift"
+                ],
+                "signal": "usecaseEntityGenerateDailySalesSummary",
+                "title": "Gerar Resumo de Vendas do Dia"
+              },
+              {
+                "actor": "managerOwner",
+                "artifactType": "usecaseEntity",
+                "priority": "now",
+                "reason": "Analisa os últimos 7 dias de vendas e sugere itens para promover.",
+                "references": [
+                  "mdmOrder",
+                  "mdmMenuItem"
+                ],
+                "rulesApplied": [
+                  "ruleLlmDataPrivacy"
+                ],
+                "signal": "usecaseEntitySuggestPromotions",
+                "title": "Sugerir Itens para Promover"
+              }
+            ],
+            "workflows": [
+              {
+                "actor": "attendantCashier",
+                "artifactType": "workflow",
+                "priority": "now",
+                "reason": "Fluxo principal de atendimento: selecionar itens, definir mesa/takeout e enviar para a cozinha.",
+                "references": [
+                  "mdmMenuItem",
+                  "usecaseEntityCreateOrder",
+                  "pagePos"
+                ],
+                "signal": "workflowCreateOrder",
+                "title": "Lançar Pedido no POS"
+              },
+              {
+                "actor": "cook",
+                "artifactType": "workflow",
+                "priority": "now",
+                "reason": "Ciclo de vida do pedido na cozinha, desde o recebimento até a entrega.",
+                "references": [
+                  "mdmOrder",
+                  "usecaseEntityUpdateOrderStatus",
+                  "pageKitchenDisplay"
+                ],
+                "signal": "workflowUpdateKitchenStatus",
+                "title": "Acompanhar Status da Cozinha"
+              },
+              {
+                "actor": "managerOwner",
+                "artifactType": "workflow",
+                "priority": "now",
+                "reason": "Processo de fechamento do turno com conferência de vendas e estoque.",
+                "references": [
+                  "mdmDailyShift",
+                  "usecaseEntityCloseDailyShift",
+                  "mdmOrder",
+                  "pageShiftClosingReport"
+                ],
+                "signal": "workflowCloseDailyShift",
+                "title": "Fechar Turno Diário"
+              },
+              {
+                "actor": "managerOwner",
+                "artifactType": "workflow",
+                "priority": "now",
+                "reason": "Cadastro e atualização de itens, categorias, preços e ingredientes.",
+                "references": [
+                  "mdmMenuItem",
+                  "usecaseEntityManageMenuItem",
+                  "mdmStockItem",
+                  "pageMenuManagement"
+                ],
+                "signal": "workflowManageMenu",
+                "title": "Gerenciar Cardápio"
+              },
+              {
+                "actor": "managerOwner",
+                "artifactType": "workflow",
+                "priority": "now",
+                "reason": "Ajuste de estoque, registro de entradas/saídas e revisão de alertas.",
+                "references": [
+                  "mdmStockItem",
+                  "usecaseEntityManageStockItem",
+                  "pageStockManagement"
+                ],
+                "signal": "workflowManageStock",
+                "title": "Gerenciar Estoque"
+              },
+              {
+                "actor": "managerOwner",
+                "artifactType": "workflow",
+                "priority": "now",
+                "reason": "Interação com o assistente IA para obter resumos e sugestões de promoção.",
+                "references": [
+                  "agentSalesAssistant",
+                  "usecaseEntityGenerateDailySalesSummary",
+                  "usecaseEntitySuggestPromotions",
+                  "pageLlmAssistant"
+                ],
+                "signal": "workflowLlmInsights",
+                "title": "Consultar Assistente IA"
+              }
+            ]
+          },
+          "capabilities": [
+            {
+              "actor": "attendantCashier",
+              "capabilityId": "createOrder",
+              "description": "Lançar pedidos no POS selecionando itens do cardápio e definindo mesa ou takeout.",
+              "priority": "now",
+              "title": "Lançar Pedido"
+            },
+            {
+              "actor": "attendantCashier",
+              "capabilityId": "openDailyShift",
+              "description": "Abrir o turno diário antes de iniciar as vendas.",
+              "priority": "now",
+              "title": "Abrir Turno Diário"
+            },
+            {
+              "actor": "cook",
+              "capabilityId": "updateKitchenStatus",
+              "description": "Visualizar a fila de pedidos e atualizar os status de preparo na cozinha.",
+              "priority": "now",
+              "title": "Atualizar Status da Cozinha"
+            },
+            {
+              "actor": "managerOwner",
+              "capabilityId": "manageMenu",
+              "description": "Cadastrar, editar e remover itens do cardápio, categorias, preços e ingredientes.",
+              "priority": "now",
+              "title": "Gerenciar Cardápio"
+            },
+            {
+              "actor": "managerOwner",
+              "capabilityId": "manageStock",
+              "description": "Controlar entradas, saídas, ajustes e alertas de itens de estoque.",
+              "priority": "now",
+              "title": "Gerenciar Estoque"
+            },
+            {
+              "actor": "managerOwner",
+              "capabilityId": "closeDailyShift",
+              "description": "Realizar o fechamento do turno e emitir o relatório de vendas do dia.",
+              "priority": "now",
+              "title": "Fechar Turno Diário"
+            },
+            {
+              "actor": "managerOwner",
+              "capabilityId": "viewDashboard",
+              "description": "Acompanhar vendas de hoje, itens mais vendidos e alertas de estoque baixo.",
+              "priority": "now",
+              "title": "Visualizar Dashboard"
+            },
+            {
+              "actor": "managerOwner",
+              "capabilityId": "askSalesAssistant",
+              "description": "Consultar o assistente IA para resumos de vendas do dia e sugestões de promoção.",
+              "priority": "now",
+              "title": "Consultar Assistente IA"
+            }
+          ],
+          "coverage": [
+            {
+              "capabilityId": "createOrder",
+              "coveredBy": [
+                "pagePos",
+                "workflowCreateOrder",
+                "usecaseEntityCreateOrder"
+              ],
+              "notes": "Atendente usa o POS para montar o pedido e enviá-lo à cozinha."
+            },
+            {
+              "capabilityId": "openDailyShift",
+              "coveredBy": [
+                "pagePos",
+                "usecaseEntityCreateOrder"
+              ],
+              "notes": "Abertura implícita no início do dia; regra valida turno aberto para criar pedidos."
+            },
+            {
+              "capabilityId": "updateKitchenStatus",
+              "coveredBy": [
+                "pageKitchenDisplay",
+                "workflowUpdateKitchenStatus",
+                "usecaseEntityUpdateOrderStatus"
+              ],
+              "notes": "Cozinheiro atualiza status e o sistema baixa estoque ao iniciar preparo."
+            },
+            {
+              "capabilityId": "manageMenu",
+              "coveredBy": [
+                "pageMenuManagement",
+                "workflowManageMenu",
+                "usecaseEntityManageMenuItem"
+              ],
+              "notes": "Gerente mantém categorias, itens, preços e vínculo com ingredientes."
+            },
+            {
+              "capabilityId": "manageStock",
+              "coveredBy": [
+                "pageStockManagement",
+                "workflowManageStock",
+                "usecaseEntityManageStockItem"
+              ],
+              "notes": "Gerente controla entradas, saídas, ajustes e alertas de estoque."
+            },
+            {
+              "capabilityId": "closeDailyShift",
+              "coveredBy": [
+                "pageShiftClosingReport",
+                "workflowCloseDailyShift",
+                "usecaseEntityCloseDailyShift"
+              ],
+              "notes": "Fechamento do turno gera relatório e exige que não haja pedidos em aberto."
+            },
+            {
+              "capabilityId": "viewDashboard",
+              "coveredBy": [
+                "pageDashboard",
+                "managerOwnerMetricDashboard",
+                "managerOwnerMetricTableDailySales",
+                "managerOwnerMetricTableTopSellingItems",
+                "managerOwnerMetricTableLowStockAlerts"
+              ],
+              "notes": "Dashboard consolida métricas de vendas e alertas de estoque."
+            },
+            {
+              "capabilityId": "askSalesAssistant",
+              "coveredBy": [
+                "pageLlmAssistant",
+                "workflowLlmInsights",
+                "agentSalesAssistant",
+                "usecaseEntityGenerateDailySalesSummary",
+                "usecaseEntitySuggestPromotions"
+              ],
+              "notes": "Assistente IA consome resumos e sugestões gerados pelos casos de uso."
+            }
+          ],
+          "module": {
+            "businessDomain": "Food Service - Cafeterias e Lanchonetes de Pequeno Porte",
+            "languages": [
+              "pt-BR",
+              "en"
+            ],
+            "moduleName": "cafeFlow",
+            "purpose": "Agilizar o atendimento de pedidos, coordenar a cozinha e controlar o estoque de forma simples para cafeterias e lanchonetes pequenas.",
+            "title": "CafeFlow",
+            "visualStyle": {
+              "layout": "Interface responsiva com barra lateral e cartões de ação rápida, otimizada para tablets e desktops no balcão e na cozinha",
+              "palette": [
+                "#6F4E37",
+                "#D4A373",
+                "#F5F5F0",
+                "#2C2C2C",
+                "#E76F51"
+              ],
+              "tone": "limpa, moderna, rápida e acolhedora"
+            }
+          },
+          "ontology": {
+            "entities": {
+              "DailyShift": {
+                "description": "Período operacional diário que delimita quando a loja está aberta para vendas, servindo de base para fechamento e relatórios.",
+                "entityId": "DailyShift",
+                "kind": "calendar",
+                "lifecycleStates": [
+                  "open",
+                  "closed"
+                ],
+                "ownership": "mdmOwned",
+                "statusEnum": [
+                  "open",
+                  "closed"
+                ],
+                "title": "Turno Diário"
+              },
+              "MenuCategory": {
+                "description": "Agrupamento de itens do cardápio, como bebidas, salgados ou doces, usado para organizar o POS e a gestão.",
+                "entityId": "MenuCategory",
+                "kind": "category",
+                "ownership": "mdmOwned",
+                "title": "Categoria do Cardápio"
+              },
+              "MenuItem": {
+                "description": "Item vendido no cardápio, com nome, categoria, preço, disponibilidade e vínculo com ingredientes em estoque.",
+                "entityId": "MenuItem",
+                "kind": "product",
+                "ownership": "mdmOwned",
+                "statusEnum": [
+                  "active",
+                  "inactive"
+                ],
+                "title": "Item do Cardápio"
+              },
+              "MenuItemIngredient": {
+                "description": "Relação entre um item do cardápio e os insumos necessários para sua produção, com quantidade por unidade vendida.",
+                "entityId": "MenuItemIngredient",
+                "kind": "composition",
+                "ownership": "moduleOwned",
+                "title": "Ingrediente do Item do Cardápio"
+              },
+              "Order": {
+                "description": "Compromisso de venda central do domínio, contendo itens do cardápio, identificação de mesa ou takeout e ciclo de status.",
+                "entityId": "Order",
+                "kind": "transaction",
+                "lifecycleStates": [
+                  "received",
+                  "preparing",
+                  "ready",
+                  "delivered",
+                  "cancelled"
+                ],
+                "ownership": "mdmOwned",
+                "statusEnum": [
+                  "received",
+                  "preparing",
+                  "ready",
+                  "delivered",
+                  "cancelled"
+                ],
+                "title": "Pedido"
+              },
+              "OrderItem": {
+                "description": "Linha de um pedido, vinculada a um item do cardápio, com quantidade, preço unitário e observações.",
+                "entityId": "OrderItem",
+                "kind": "transactionItem",
+                "ownership": "moduleOwned",
+                "title": "Item do Pedido"
+              },
+              "StockItem": {
+                "description": "Insumo controlado em estoque, como café, pão ou leite, com unidade de medida, saldo e ponto de alerta.",
+                "entityId": "StockItem",
+                "kind": "inventory",
+                "ownership": "mdmOwned",
+                "statusEnum": [
+                  "active",
+                  "inactive"
+                ],
+                "title": "Item de Estoque"
+              },
+              "StockMovement": {
+                "description": "Registro de entrada, saída ou ajuste de estoque, vinculado a um item de estoque e, quando aplicável, a um pedido.",
+                "entityId": "StockMovement",
+                "kind": "transaction",
+                "ownership": "moduleOwned",
+                "title": "Movimentação de Estoque"
+              }
+            }
+          },
+          "relationships": [
+            {
+              "description": "Uma categoria pode conter vários itens do cardápio.",
+              "fromEntity": "MenuCategory",
+              "relationshipId": "MenuCategoryHasMenuItems",
+              "toEntity": "MenuItem",
+              "type": "one-to-many"
+            },
+            {
+              "description": "Um item do cardápio possui uma lista de ingredientes necessários.",
+              "fromEntity": "MenuItem",
+              "relationshipId": "MenuItemHasIngredients",
+              "toEntity": "MenuItemIngredient",
+              "type": "one-to-many"
+            },
+            {
+              "description": "Cada ingrediente do cardápio referencia um item de estoque.",
+              "fromEntity": "MenuItemIngredient",
+              "relationshipId": "IngredientUsesStockItem",
+              "toEntity": "StockItem",
+              "type": "many-to-one"
+            },
+            {
+              "description": "Um pedido é composto por vários itens de pedido.",
+              "fromEntity": "Order",
+              "relationshipId": "OrderHasItems",
+              "toEntity": "OrderItem",
+              "type": "one-to-many"
+            },
+            {
+              "description": "Cada item de pedido referencia um item do cardápio.",
+              "fromEntity": "OrderItem",
+              "relationshipId": "OrderItemRefersMenuItem",
+              "toEntity": "MenuItem",
+              "type": "many-to-one"
+            },
+            {
+              "description": "Todo pedido pertence a um turno diário.",
+              "fromEntity": "Order",
+              "relationshipId": "OrderBelongsToShift",
+              "toEntity": "DailyShift",
+              "type": "many-to-one"
+            },
+            {
+              "description": "Cada movimentação de estoque referencia um item de estoque.",
+              "fromEntity": "StockMovement",
+              "relationshipId": "StockMovementRefersStockItem",
+              "toEntity": "StockItem",
+              "type": "many-to-one"
+            },
+            {
+              "description": "Movimentações de baixa de estoque podem estar vinculadas ao pedido que as consumiu.",
+              "fromEntity": "StockMovement",
+              "relationshipId": "StockMovementRelatedToOrder",
+              "toEntity": "Order",
+              "type": "many-to-one"
+            }
+          ],
+          "rules": [
+            {
+              "appliesTo": [
+                "Order",
+                "usecaseEntityCreateOrder"
+              ],
+              "description": "Um pedido só pode ser criado quando existir um turno diário aberto para a data atual.",
+              "layer": "layer_3",
+              "ruleId": "ruleOrderRequiresOpenShift",
+              "title": "Pedido exige turno aberto"
+            },
+            {
+              "appliesTo": [
+                "Order",
+                "usecaseEntityUpdateOrderStatus"
+              ],
+              "description": "O status do pedido deve seguir o fluxo recebido → em preparo → pronto → entregue, não permitindo saltos inválidos.",
+              "layer": "layer_3",
+              "ruleId": "ruleOrderStatusFlow",
+              "title": "Fluxo de status do pedido"
+            },
+            {
+              "appliesTo": [
+                "Order",
+                "StockItem",
+                "StockMovement",
+                "usecaseEntityUpdateOrderStatus"
+              ],
+              "description": "Ao transicionar um pedido para 'em preparo', o sistema debita do estoque os ingredientes vinculados aos itens do pedido.",
+              "layer": "layer_3",
+              "ruleId": "ruleStockDeductionOnOrderPreparation",
+              "title": "Baixa de estoque no início do preparo"
+            },
+            {
+              "appliesTo": [
+                "StockItem",
+                "usecaseEntityManageStockItem"
+              ],
+              "description": "Um item de estoque gera alerta quando sua quantidade atual for menor ou igual ao ponto de alerta configurado.",
+              "layer": "layer_3",
+              "ruleId": "ruleLowStockAlert",
+              "title": "Alerta de estoque baixo"
+            },
+            {
+              "appliesTo": [
+                "DailyShift",
+                "usecaseEntityCloseDailyShift"
+              ],
+              "description": "O turno diário só pode ser fechado quando não houver pedidos em aberto (recebido, em preparo ou pronto).",
+              "layer": "layer_3",
+              "ruleId": "ruleShiftCloseNoOpenOrders",
+              "title": "Fechamento de turno sem pedidos abertos"
+            },
+            {
+              "appliesTo": [
+                "MenuItem",
+                "usecaseEntityManageMenuItem"
+              ],
+              "description": "O preço de venda de um item do cardápio deve ser maior ou igual a zero.",
+              "layer": "layer_3",
+              "ruleId": "ruleMenuItemPricePositive",
+              "title": "Preço do cardápio não negativo"
+            },
+            {
+              "appliesTo": [
+                "StockItem",
+                "StockMovement",
+                "usecaseEntityManageStockItem"
+              ],
+              "description": "A quantidade em estoque não pode ficar negativa após uma movimentação de saída ou ajuste.",
+              "layer": "layer_3",
+              "ruleId": "ruleStockQuantityNonNegative",
+              "title": "Estoque não negativo"
+            },
+            {
+              "appliesTo": [
+                "DailyShift",
+                "usecaseEntityCreateOrder"
+              ],
+              "description": "Apenas um turno diário pode estar aberto por dia, garantindo base única para vendas e fechamento.",
+              "layer": "layer_3",
+              "ruleId": "ruleUniqueOpenShiftPerDay",
+              "title": "Turno único aberto por dia"
+            },
+            {
+              "appliesTo": [
+                "usecaseEntityGenerateDailySalesSummary",
+                "usecaseEntitySuggestPromotions",
+                "agentSalesAssistant"
+              ],
+              "description": "Dados de vendas enviados ao LLM devem ser agregados e anonimizados, sem informações pessoais de clientes ou atendentes.",
+              "layer": "layer_3",
+              "ruleId": "ruleLlmDataPrivacy",
+              "title": "Privacidade dos dados no LLM"
+            }
+          ],
+          "userActions": [
+            {
+              "actionId": "openDailyShift",
+              "actor": "attendantCashier",
+              "affectedEntities": [
+                "DailyShift"
+              ],
+              "capabilityId": "openDailyShift",
+              "commandType": "create",
+              "description": "Abre o turno diário antes de iniciar as vendas.",
+              "rulesApplied": [
+                "ruleUniqueOpenShiftPerDay"
+              ],
+              "title": "Abrir Turno Diário"
+            },
+            {
+              "actionId": "createOrder",
+              "actor": "attendantCashier",
+              "affectedEntities": [
+                "Order",
+                "OrderItem",
+                "MenuItem"
+              ],
+              "capabilityId": "createOrder",
+              "commandType": "create",
+              "description": "Seleciona itens do cardápio, define mesa ou takeout e cria o pedido.",
+              "rulesApplied": [
+                "ruleOrderRequiresOpenShift"
+              ],
+              "title": "Criar Pedido"
+            },
+            {
+              "actionId": "updateOrderStatus",
+              "actor": "cook",
+              "affectedEntities": [
+                "Order"
+              ],
+              "capabilityId": "updateKitchenStatus",
+              "commandType": "update",
+              "description": "Avança o status do pedido na cozinha (recebido → em preparo → pronto → entregue).",
+              "rulesApplied": [
+                "ruleOrderStatusFlow",
+                "ruleStockDeductionOnOrderPreparation"
+              ],
+              "title": "Atualizar Status do Pedido"
+            },
+            {
+              "actionId": "cancelOrder",
+              "actor": "managerOwner",
+              "affectedEntities": [
+                "Order",
+                "StockMovement"
+              ],
+              "capabilityId": "createOrder",
+              "commandType": "update",
+              "description": "Cancela um pedido e, se já houve baixa de estoque, registra movimentação de reposição.",
+              "rulesApplied": [
+                "ruleOrderStatusFlow",
+                "ruleStockQuantityNonNegative"
+              ],
+              "title": "Cancelar Pedido"
+            },
+            {
+              "actionId": "manageMenuCategory",
+              "actor": "managerOwner",
+              "affectedEntities": [
+                "MenuCategory"
+              ],
+              "capabilityId": "manageMenu",
+              "commandType": "create/update/delete",
+              "description": "Cria, edita ou remove categorias do cardápio.",
+              "title": "Gerenciar Categoria do Cardápio"
+            },
+            {
+              "actionId": "manageMenuItem",
+              "actor": "managerOwner",
+              "affectedEntities": [
+                "MenuItem",
+                "MenuItemIngredient",
+                "StockItem"
+              ],
+              "capabilityId": "manageMenu",
+              "commandType": "create/update/delete",
+              "description": "Cria, edita ou remove itens do cardápio, preços e ingredientes vinculados.",
+              "rulesApplied": [
+                "ruleMenuItemPricePositive"
+              ],
+              "title": "Gerenciar Item do Cardápio"
+            },
+            {
+              "actionId": "manageStockItem",
+              "actor": "managerOwner",
+              "affectedEntities": [
+                "StockItem"
+              ],
+              "capabilityId": "manageStock",
+              "commandType": "create/update/delete",
+              "description": "Cria, edita ou remove itens de estoque e seus pontos de alerta.",
+              "title": "Gerenciar Item de Estoque"
+            },
+            {
+              "actionId": "registerStockMovement",
+              "actor": "managerOwner",
+              "affectedEntities": [
+                "StockItem",
+                "StockMovement"
+              ],
+              "capabilityId": "manageStock",
+              "commandType": "create",
+              "description": "Registra entrada, saída ou ajuste de estoque.",
+              "rulesApplied": [
+                "ruleStockQuantityNonNegative",
+                "ruleLowStockAlert"
+              ],
+              "title": "Registrar Movimentação de Estoque"
+            },
+            {
+              "actionId": "closeDailyShift",
+              "actor": "managerOwner",
+              "affectedEntities": [
+                "DailyShift",
+                "Order"
+              ],
+              "capabilityId": "closeDailyShift",
+              "commandType": "update",
+              "description": "Fecha o turno diário e gera o relatório de fechamento.",
+              "rulesApplied": [
+                "ruleShiftCloseNoOpenOrders"
+              ],
+              "title": "Fechar Turno Diário"
+            },
+            {
+              "actionId": "viewDashboard",
+              "actor": "managerOwner",
+              "affectedEntities": [
+                "Order",
+                "MenuItem",
+                "StockItem"
+              ],
+              "capabilityId": "viewDashboard",
+              "commandType": "query",
+              "description": "Visualiza vendas de hoje, itens mais vendidos e alertas de estoque baixo.",
+              "title": "Visualizar Dashboard"
+            },
+            {
+              "actionId": "askSalesAssistant",
+              "actor": "managerOwner",
+              "affectedEntities": [
+                "Order",
+                "MenuItem"
+              ],
+              "capabilityId": "askSalesAssistant",
+              "commandType": "query",
+              "description": "Consulta o assistente IA para obter resumo de vendas do dia ou sugestões de promoção.",
+              "rulesApplied": [
+                "ruleLlmDataPrivacy"
+              ],
+              "title": "Consultar Assistente IA"
+            }
+          ]
+        },
+        "status": "ok",
+        "trace": [
+          "Blueprint criado a partir do escopo descoberto e das decisões de implementação aceitas para o CafeFlow.",
+          "Mantidos os papéis de Atendente/Caixa, Cozinheiro e Gerente/Proprietário com suas capacidades prioritárias.",
+          "Definidas as entidades do domínio: MenuCategory, MenuItem, MenuItemIngredient, StockItem, StockMovement, Order, OrderItem e DailyShift, com ownership e relacionamentos.",
+          "Centralizadas as regras de negócio em regras explícitas, incluindo fluxo de status do pedido, baixa de estoque, fechamento de turno e privacidade no uso do LLM.",
+          "Mapeadas as ações do usuário para criação, transição e cancelamento de pedidos, gestão de cardápio/estoque e fechamento de turno.",
+          "Plano de artefatos inclui páginas, workflows, entidades de caso de uso, MDMs, tabelas de métricas, dashboard, agente LLM e horizontais/plugins pós-MVP.",
+          "Autenticação, autorização, i18n e armazenamento de mídia foram tratados como capacidades já fornecidas pela plataforma, sem artefatos próprios.",
+          "Questões em aberto sobre impressora térmica, alerta de estoque, formas de pagamento, edição/cancelamento de pedidos e offline foram preservadas para próxima clarificação."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 35,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

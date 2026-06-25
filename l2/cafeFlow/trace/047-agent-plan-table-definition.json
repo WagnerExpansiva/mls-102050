@@ -1,0 +1,144 @@
+{
+  "savedAt": "2026-06-25T01:13:12.075Z",
+  "agentName": "agentPlanTableDefinition",
+  "stepId": 47,
+  "planning": null,
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitTableDefinitionPlan",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "tableDefinition": {
+            "tableId": "menuItemIngredient",
+            "tableName": "menu_item_ingredient",
+            "title": "Ingredientes do Item do Cardápio",
+            "purpose": "Registrar a composição de ingredientes por item do cardápio para suportar preparo e baixa de estoque.",
+            "moduleId": "cafeFlow",
+            "ownership": "moduleOwned",
+            "layer": "layer_1_external",
+            "tableKind": "transactional",
+            "rootEntity": "MenuItemIngredient",
+            "primaryKey": [
+              "menu_item_ingredient_id"
+            ],
+            "columns": [
+              {
+                "name": "menu_item_ingredient_id",
+                "type": "uuid",
+                "nullable": false,
+                "primaryKey": true,
+                "description": "Identificador único do ingrediente do item do cardápio"
+              },
+              {
+                "name": "menu_item_id",
+                "type": "uuid",
+                "nullable": false,
+                "description": "Referência ao item do cardápio ao qual o ingrediente pertence"
+              },
+              {
+                "name": "stock_item_id",
+                "type": "uuid",
+                "nullable": false,
+                "description": "Referência ao item de estoque utilizado como insumo na produção"
+              },
+              {
+                "name": "quantity",
+                "type": "numeric",
+                "nullable": false,
+                "description": "Quantidade necessária do insumo por unidade vendida do item do cardápio"
+              },
+              {
+                "name": "created_at",
+                "type": "timestamptz",
+                "nullable": false,
+                "description": "Data e hora de criação do registro"
+              },
+              {
+                "name": "updated_at",
+                "type": "timestamptz",
+                "nullable": false,
+                "description": "Data e hora da última atualização do registro"
+              }
+            ],
+            "foreignRefs": [
+              {
+                "fieldName": "menu_item_id",
+                "targetEntity": "MenuItem",
+                "targetOwnership": "mdmOwned",
+                "reason": "Item do cardápio ao qual o ingrediente pertence"
+              },
+              {
+                "fieldName": "stock_item_id",
+                "targetEntity": "StockItem",
+                "targetOwnership": "mdmOwned",
+                "reason": "Insumo de estoque utilizado na produção do item do cardápio"
+              }
+            ],
+            "indexes": [
+              {
+                "indexName": "idx_menu_item_ingredient_menu_item_id",
+                "columns": [
+                  "menu_item_id"
+                ],
+                "unique": false,
+                "reason": "Suporte a consultas por item do cardápio no gerenciamento de ingredientes"
+              },
+              {
+                "indexName": "idx_menu_item_ingredient_stock_item_id",
+                "columns": [
+                  "stock_item_id"
+                ],
+                "unique": false,
+                "reason": "Suporte a consultas por insumo de estoque e baixa automática no preparo"
+              },
+              {
+                "indexName": "idx_menu_item_ingredient_unique_composition",
+                "columns": [
+                  "menu_item_id",
+                  "stock_item_id"
+                ],
+                "unique": true,
+                "reason": "Garantir que não existam ingredientes duplicados para o mesmo item do cardápio"
+              }
+            ],
+            "detailsColumn": {
+              "enabled": false,
+              "reason": "Não há dados internos ou filhos a serem armazenados em JSON; todos os campos são necessários para filtros, joins e regras de negócio."
+            },
+            "accessPolicy": {
+              "directAccessAllowedFor": [
+                "layer_3_usecases"
+              ],
+              "forbiddenFor": [
+                "pages",
+                "layer_2_controllers"
+              ]
+            },
+            "rulesApplied": [
+              "ruleStockDeductionOnOrderPreparation"
+            ]
+          },
+          "defsPlan": {
+            "fileName": "tables/menuItemIngredient.defs.ts",
+            "exportName": "menuItemIngredientTableDefinition",
+            "saveAsDefs": true
+          }
+        },
+        "questions": [],
+        "trace": [
+          "Planejada tabela transactional menu_item_ingredient no layer_1_external para o módulo cafeFlow.",
+          "Colunas físicas definidas para PK, FKs, quantidade e auditoria.",
+          "Índices criados para suportar consultas por menu_item_id, stock_item_id e unicidade da composição.",
+          "Detalhes em JSON desabilitados pois todos os campos são necessários para filtros, joins e regras de negócio."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 38,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

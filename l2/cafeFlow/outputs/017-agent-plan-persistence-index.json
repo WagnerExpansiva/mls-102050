@@ -1,0 +1,161 @@
+{
+  "savedAt": "2026-06-25T01:11:47.052Z",
+  "agentName": "agentPlanPersistenceIndex",
+  "stepId": 17,
+  "planning": {
+    "planId": "plan-persistence-index",
+    "dependsOn": [
+      "plan-mdm",
+      "plan-horizontals",
+      "plan-plugins",
+      "plan-entity-definition"
+    ],
+    "executionMode": "sequential",
+    "executionHost": "client"
+  },
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitPersistenceIndex",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "persistenceScope": {
+            "moduleId": "cafeFlow",
+            "newTablesRequired": true,
+            "metricsTablesRequired": true,
+            "excludedEntities": [
+              {
+                "entityId": "DailyShift",
+                "ownership": "mdmOwned",
+                "reason": "rule.mdm.exclude"
+              },
+              {
+                "entityId": "MenuCategory",
+                "ownership": "mdmOwned",
+                "reason": "rule.mdm.exclude"
+              },
+              {
+                "entityId": "MenuItem",
+                "ownership": "mdmOwned",
+                "reason": "rule.mdm.exclude"
+              },
+              {
+                "entityId": "Order",
+                "ownership": "mdmOwned",
+                "reason": "rule.mdm.exclude"
+              },
+              {
+                "entityId": "StockItem",
+                "ownership": "mdmOwned",
+                "reason": "rule.mdm.exclude"
+              }
+            ]
+          },
+          "tables": [
+            {
+              "tableId": "menuItemIngredient",
+              "tableName": "menu_item_ingredient",
+              "title": "Ingredientes do Item do Cardápio",
+              "purpose": "Registrar a composição de ingredientes por item do cardápio para suportar preparo e baixa de estoque.",
+              "ownership": "moduleOwned",
+              "rootEntity": "MenuItemIngredient",
+              "sourceEntities": [
+                "MenuItemIngredient"
+              ],
+              "embeddedEntities": [],
+              "persistencePattern": "aggregateJsonDetails",
+              "tableKind": "transactional",
+              "detailsColumnRecommended": true,
+              "priority": "now",
+              "readsByArtifacts": [
+                "Gerenciamento de Cardápio",
+                "Gerenciar Cardápio"
+              ],
+              "writesByArtifacts": [
+                "Gerenciar Cardápio",
+                "Gerenciar Item do Cardápio"
+              ],
+              "rulesApplied": [
+                "ruleStockDeductionOnOrderPreparation"
+              ],
+              "reason": "rule.module.owned.entity"
+            },
+            {
+              "tableId": "orderItem",
+              "tableName": "order_item",
+              "title": "Itens do Pedido",
+              "purpose": "Persistir os itens associados a cada pedido para preparo e acompanhamento da cozinha.",
+              "ownership": "moduleOwned",
+              "rootEntity": "OrderItem",
+              "sourceEntities": [
+                "OrderItem"
+              ],
+              "embeddedEntities": [],
+              "persistencePattern": "singleEntity",
+              "tableKind": "transactional",
+              "detailsColumnRecommended": false,
+              "priority": "now",
+              "readsByArtifacts": [
+                "Display da Cozinha",
+                "Acompanhar Status da Cozinha",
+                "Lançar Pedido no POS"
+              ],
+              "writesByArtifacts": [
+                "Lançar Pedido no POS",
+                "Cancelar Pedido",
+                "Atualizar Status do Pedido"
+              ],
+              "rulesApplied": [
+                "ruleOrderStatusFlow",
+                "ruleStockDeductionOnOrderPreparation"
+              ],
+              "reason": "rule.module.owned.entity"
+            },
+            {
+              "tableId": "stockMovement",
+              "tableName": "stock_movement",
+              "title": "Movimentações de Estoque",
+              "purpose": "Registrar entradas e saídas de estoque vinculadas a operações e ajustes manuais.",
+              "ownership": "moduleOwned",
+              "rootEntity": "StockMovement",
+              "sourceEntities": [
+                "StockMovement"
+              ],
+              "embeddedEntities": [],
+              "persistencePattern": "singleEntity",
+              "tableKind": "transactional",
+              "detailsColumnRecommended": false,
+              "priority": "now",
+              "readsByArtifacts": [
+                "Gerenciamento de Estoque",
+                "Gerenciar Estoque"
+              ],
+              "writesByArtifacts": [
+                "Registrar Movimentação de Estoque",
+                "Gerenciar Estoque"
+              ],
+              "rulesApplied": [
+                "ruleStockQuantityNonNegative",
+                "ruleLowStockAlert"
+              ],
+              "reason": "rule.module.owned.entity"
+            }
+          ]
+        },
+        "questions": [],
+        "trace": [
+          "rule.metrics.requested",
+          "rule.module.owned.only",
+          "rule.exclude.mdm",
+          "rule.table.pattern.selection"
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 35,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "savedAt": "2026-06-25T01:10:41.108Z",
+  "agentName": "agentPlanHorizontals",
+  "stepId": 15,
+  "planning": {
+    "planId": "plan-horizontals",
+    "dependsOn": [
+      "plan-finalize-solution-plan"
+    ],
+    "executionMode": "parallel_static",
+    "executionHost": "client"
+  },
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitHorizontalPlan",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "horizontalModules": [
+            {
+              "horizontalModuleId": "notifications",
+              "priority": "soon",
+              "reason": "Alertas de cozinha e de estoque baixo foram aceitos como necessidade operacional e melhoram a coordenação entre atendentes e cozinha.",
+              "reusedOntologyRefs": [
+                "NotificationTemplate",
+                "NotificationDelivery",
+                "NotificationPreference"
+              ],
+              "consumedByArtifacts": [
+                "pageDashboard",
+                "pageKitchenDisplay",
+                "mdmOrder",
+                "mdmStockItem"
+              ]
+            }
+          ]
+        },
+        "questions": [],
+        "trace": [
+          "Planejado o módulo de notificações com base na decisão aceita de alertas operacionais.",
+          "Financeiro e Documentos não aplicáveis ao escopo atual.",
+          "AuthRoles e i18n não planejados por serem fornecidos pela plataforma."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 45,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

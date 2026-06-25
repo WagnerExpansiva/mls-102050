@@ -1,0 +1,390 @@
+{
+  "savedAt": "2026-06-25T00:30:34.716Z",
+  "agentName": "agentDiscoverSolutionScope",
+  "stepId": 5,
+  "planning": {
+    "planId": "req-discover-scope",
+    "dependsOn": [
+      "req-clarification-answer"
+    ],
+    "executionMode": "sequential",
+    "executionHost": "client"
+  },
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitSolutionScopeDraft",
+      "arguments": {
+        "questions": [
+          "O CafeFlow precisa enviar comandas para impressora térmica da cozinha ou apenas exibir status em tela?",
+          "Como deve funcionar o alerta de estoque baixo: quantidade mínima configurada por item ou apenas visual?",
+          "Quais formas de pagamento e regras de taxas/serviço devem ser suportadas no MVP?",
+          "O atendente pode cancelar ou editar itens de um pedido depois que ele foi enviado à cozinha?",
+          "Qual o escopo mínimo desejado para resiliência offline em versões futuras?"
+        ],
+        "result": {
+          "actors": [
+            {
+              "actorId": "attendantCashier",
+              "description": "Atendente ou caixa que lança pedidos no POS, seleciona mesa/takeout e acompanha o andamento.",
+              "title": "Atendente/Caixa"
+            },
+            {
+              "actorId": "cook",
+              "description": "Cozinheiro que visualiza a fila de pedidos e atualiza os status de preparo.",
+              "title": "Cozinheiro"
+            },
+            {
+              "actorId": "managerOwner",
+              "description": "Gerente ou proprietário que gerencia cardápio, estoque, turnos e acessa relatórios.",
+              "title": "Gerente/Proprietário"
+            }
+          ],
+          "artifactSignals": {
+            "agents": [
+              {
+                "priority": "now",
+                "reason": "O usuário pediu explicitamente um assistente IA que gere resumos de vendas do dia e sugira itens para promover com base nos últimos 7 dias.",
+                "signal": "agentSalesAssistant",
+                "title": "Assistente IA de Vendas"
+              }
+            ],
+            "horizontalModules": [
+              {
+                "priority": "now",
+                "reason": "Necessário para diferenciar permissões entre atendente, cozinheiro e gerente.",
+                "signal": "horizontalAuthRoles",
+                "title": "Autenticação e Papéis"
+              },
+              {
+                "priority": "now",
+                "reason": "O app deve suportar pt-BR e en conforme a solicitação de idiomas.",
+                "signal": "horizontalI18n",
+                "title": "Internacionalização"
+              },
+              {
+                "priority": "soon",
+                "reason": "Importante para rastrear quem alterou pedidos, estoque e fechamento de turno.",
+                "signal": "horizontalAuditLog",
+                "title": "Log de Auditoria"
+              },
+              {
+                "priority": "soon",
+                "reason": "Alertas de cozinha e de estoque baixo ajudam na coordenação entre atendentes e cozinha.",
+                "signal": "horizontalNotifications",
+                "title": "Notificações"
+              },
+              {
+                "priority": "later",
+                "reason": "Mencionado como possibilidade futura para quedas de internet, fora do MVP.",
+                "signal": "horizontalOfflineResilience",
+                "title": "Resiliência Offline"
+              }
+            ],
+            "mdm": [
+              {
+                "mdmKind": "product",
+                "priority": "now",
+                "reason": "Dados mestres dos itens vendidos, com categoria, preço e vínculo a ingredientes em estoque.",
+                "signal": "mdmMenuItem",
+                "title": "Item do Cardápio"
+              },
+              {
+                "mdmKind": "inventory",
+                "priority": "now",
+                "reason": "Dados mestres dos insumos controlados, com quantidade, unidade e ponto de alerta.",
+                "signal": "mdmStockItem",
+                "title": "Item de Estoque"
+              },
+              {
+                "mdmKind": "transaction",
+                "priority": "now",
+                "reason": "Registro central do compromisso de venda, com itens, mesa/takeout e ciclo de status.",
+                "signal": "mdmOrder",
+                "title": "Pedido"
+              },
+              {
+                "mdmKind": "calendar",
+                "priority": "now",
+                "reason": "Delimita o período operacional para vendas, fechamento e relatórios diários.",
+                "signal": "mdmDailyShift",
+                "title": "Turno Diário"
+              }
+            ],
+            "metrics": [
+              {
+                "priority": "now",
+                "reason": "Métrica principal do dashboard para acompanhamento do dia.",
+                "signal": "metricDailySales",
+                "title": "Vendas de Hoje"
+              },
+              {
+                "priority": "now",
+                "reason": "Permite identificar os produtos com maior saída e apoiar decisões de estoque e promoção.",
+                "signal": "metricTopSellingItems",
+                "title": "Itens Mais Vendidos"
+              },
+              {
+                "priority": "now",
+                "reason": "Alerta operacional essencial para evitar ruptura de insumos durante o atendimento.",
+                "signal": "metricLowStockAlerts",
+                "title": "Estoque Baixo"
+              }
+            ],
+            "pages": [
+              {
+                "actor": "managerOwner",
+                "priority": "now",
+                "reason": "Tela principal do gestor com vendas do dia, itens mais vendidos e alertas de estoque.",
+                "signal": "pageDashboard",
+                "title": "Dashboard"
+              },
+              {
+                "actor": "attendantCashier",
+                "priority": "now",
+                "reason": "Interface rápida para selecionar itens do cardápio, definir mesa/takeout e enviar o pedido.",
+                "signal": "pagePos",
+                "title": "POS - Lançamento de Pedido"
+              },
+              {
+                "actor": "cook",
+                "priority": "now",
+                "reason": "Tela da cozinha para visualizar fila de pedidos e atualizar status de preparo.",
+                "signal": "pageKitchenDisplay",
+                "title": "Display da Cozinha"
+              },
+              {
+                "actor": "managerOwner",
+                "priority": "now",
+                "reason": "Cadastro e edição de categorias, itens, preços e ingredientes.",
+                "signal": "pageMenuManagement",
+                "title": "Gerenciamento de Cardápio"
+              },
+              {
+                "actor": "managerOwner",
+                "priority": "now",
+                "reason": "Controle de entradas, saídas, ajustes e alertas de estoque.",
+                "signal": "pageStockManagement",
+                "title": "Gerenciamento de Estoque"
+              },
+              {
+                "actor": "managerOwner",
+                "priority": "now",
+                "reason": "Relatório de fechamento do turno diário com vendas, formas de pagamento e resumo operacional.",
+                "signal": "pageShiftClosingReport",
+                "title": "Relatório de Fechamento de Turno"
+              },
+              {
+                "actor": "managerOwner",
+                "priority": "now",
+                "reason": "Painel para consultar resumos de vendas e sugestões de promoção geradas pela IA.",
+                "signal": "pageLlmAssistant",
+                "title": "Assistente IA"
+              },
+              {
+                "actor": "managerOwner",
+                "priority": "now",
+                "reason": "Dashboard administrativo consolidado com métricas e alertas solicitados no levantamento inicial.",
+                "signal": "pageAdminDashboard",
+                "title": "Dashboard Administrativo"
+              }
+            ],
+            "plugins": [
+              {
+                "priority": "later",
+                "reason": "Integração com impressora térmica de cozinha ainda não confirmada; pode ser adicionada em versão futura.",
+                "signal": "pluginKitchenPrinter",
+                "title": "Impressora de Cozinha"
+              }
+            ],
+            "usecases": [
+              {
+                "actor": "attendantCashier",
+                "priority": "now",
+                "reason": "Cria o compromisso de venda, vincula itens do cardápio e define mesa ou takeout.",
+                "signal": "usecaseCreateOrder",
+                "title": "Criar Pedido"
+              },
+              {
+                "actor": "cook",
+                "priority": "now",
+                "reason": "Transiciona o pedido entre status como recebido, em preparo, pronto e entregue.",
+                "signal": "usecaseUpdateOrderStatus",
+                "title": "Atualizar Status do Pedido"
+              },
+              {
+                "actor": "managerOwner",
+                "priority": "now",
+                "reason": "Finaliza o turno diário e gera o relatório de fechamento.",
+                "signal": "usecaseCloseDailyShift",
+                "title": "Fechar Turno Diário"
+              },
+              {
+                "actor": "managerOwner",
+                "priority": "now",
+                "reason": "Mantém os dados mestres dos produtos vendidos e seus ingredientes.",
+                "signal": "usecaseManageMenuItem",
+                "title": "Gerenciar Item do Cardápio"
+              },
+              {
+                "actor": "managerOwner",
+                "priority": "now",
+                "reason": "Mantém os dados mestres de estoque e registra movimentações.",
+                "signal": "usecaseManageStockItem",
+                "title": "Gerenciar Item de Estoque"
+              },
+              {
+                "actor": "managerOwner",
+                "priority": "now",
+                "reason": "Gera o resumo de vendas do dia consumido pelo assistente IA e pelo dashboard.",
+                "signal": "usecaseGenerateDailySalesSummary",
+                "title": "Gerar Resumo de Vendas do Dia"
+              },
+              {
+                "actor": "managerOwner",
+                "priority": "now",
+                "reason": "Analisa os últimos 7 dias de vendas e sugere itens para promover.",
+                "signal": "usecaseSuggestPromotions",
+                "title": "Sugerir Itens para Promover"
+              }
+            ],
+            "workflows": [
+              {
+                "actor": "attendantCashier",
+                "priority": "now",
+                "reason": "Fluxo principal de atendimento: selecionar itens, definir mesa/takeout e enviar para a cozinha.",
+                "signal": "workflowCreateOrder",
+                "title": "Lançar Pedido no POS"
+              },
+              {
+                "actor": "cook",
+                "priority": "now",
+                "reason": "Ciclo de vida do pedido na cozinha, desde o recebimento até a entrega.",
+                "signal": "workflowUpdateKitchenStatus",
+                "title": "Acompanhar Status da Cozinha"
+              },
+              {
+                "actor": "managerOwner",
+                "priority": "now",
+                "reason": "Processo de fechamento do turno com conferência de vendas e estoque.",
+                "signal": "workflowCloseDailyShift",
+                "title": "Fechar Turno Diário"
+              },
+              {
+                "actor": "managerOwner",
+                "priority": "now",
+                "reason": "Cadastro e atualização de itens, categorias, preços e ingredientes.",
+                "signal": "workflowManageMenu",
+                "title": "Gerenciar Cardápio"
+              },
+              {
+                "actor": "managerOwner",
+                "priority": "now",
+                "reason": "Ajuste de estoque, registro de entradas/saídas e revisão de alertas.",
+                "signal": "workflowManageStock",
+                "title": "Gerenciar Estoque"
+              },
+              {
+                "actor": "managerOwner",
+                "priority": "now",
+                "reason": "Interação com o assistente IA para obter resumos e sugestões de promoção.",
+                "signal": "workflowLlmInsights",
+                "title": "Consultar Assistente IA"
+              }
+            ]
+          },
+          "businessRisks": [
+            "Concorrência no lançamento de pedidos por múltiplos atendentes pode causar duplicidade ou inconsistência de estoque.",
+            "Vínculo entre ingredientes e itens do cardápio exige regras claras de baixa de estoque para evitar ruptura ou saldo negativo.",
+            "Dependência de internet no MVP pode interromper o atendimento em quedas de conexão.",
+            "Uso de LLM sobre dados de vendas exige atenção à privacidade e possíveis alucinações nas sugestões.",
+            "Pedidos em aberto no momento do fechamento de turno podem gerar divergência nos relatórios."
+          ],
+          "capabilities": [
+            {
+              "actor": "attendantCashier",
+              "capabilityId": "createOrder",
+              "description": "Lançar pedidos no POS selecionando itens do cardápio e definindo mesa ou takeout.",
+              "priority": "now",
+              "title": "Lançar Pedido"
+            },
+            {
+              "actor": "attendantCashier",
+              "capabilityId": "openDailyShift",
+              "description": "Abrir o turno diário antes de iniciar as vendas.",
+              "priority": "now",
+              "title": "Abrir Turno Diário"
+            },
+            {
+              "actor": "cook",
+              "capabilityId": "updateKitchenStatus",
+              "description": "Visualizar a fila de pedidos e atualizar os status de preparo na cozinha.",
+              "priority": "now",
+              "title": "Atualizar Status da Cozinha"
+            },
+            {
+              "actor": "managerOwner",
+              "capabilityId": "manageMenu",
+              "description": "Cadastrar, editar e remover itens do cardápio, categorias, preços e ingredientes.",
+              "priority": "now",
+              "title": "Gerenciar Cardápio"
+            },
+            {
+              "actor": "managerOwner",
+              "capabilityId": "manageStock",
+              "description": "Controlar entradas, saídas, ajustes e alertas de itens de estoque.",
+              "priority": "now",
+              "title": "Gerenciar Estoque"
+            },
+            {
+              "actor": "managerOwner",
+              "capabilityId": "closeDailyShift",
+              "description": "Realizar o fechamento do turno e emitir o relatório de vendas do dia.",
+              "priority": "now",
+              "title": "Fechar Turno Diário"
+            },
+            {
+              "actor": "managerOwner",
+              "capabilityId": "viewDashboard",
+              "description": "Acompanhar vendas de hoje, itens mais vendidos e alertas de estoque baixo.",
+              "priority": "now",
+              "title": "Visualizar Dashboard"
+            },
+            {
+              "actor": "managerOwner",
+              "capabilityId": "askSalesAssistant",
+              "description": "Consultar o assistente IA para resumos de vendas do dia e sugestões de promoção.",
+              "priority": "now",
+              "title": "Consultar Assistente IA"
+            }
+          ],
+          "domain": "cafeFlow",
+          "missingContext": [
+            "Confirmação sobre integração com impressora térmica de cozinha.",
+            "Regras de alerta de estoque baixo e quantidade mínima por item.",
+            "Formas de pagamento e cálculo de taxas/serviço no fechamento.",
+            "Permissões para edição/cancelamento de pedidos já enviados à cozinha.",
+            "Escopo mínimo de resiliência offline para versões futuras."
+          ],
+          "summary": "O CafeFlow é um app para cafeterias e lanchonetes pequenas que une um POS rápido, controle de pedidos e status de cozinha, gestão de cardápio e estoque, fechamento de turno diário e um assistente IA para resumos de vendas e sugestões de promoção. A solução é single-tenant, online, com interface otimizada para tablets e desktops no balcão e na cozinha."
+        },
+        "status": "ok",
+        "trace": [
+          "Identificadas as entidades principais: Item do Cardápio, Pedido, Turno Diário e Item de Estoque.",
+          "Mapeados os papéis de Atendente/Caixa, Cozinheiro e Gerente/Proprietário com suas capacidades prioritárias.",
+          "Definidos os principais artefatos de interface: dashboard, POS, display de cozinha, gestão de cardápio/estoque, relatório de fechamento e assistente IA.",
+          "Incluídos casos de uso de backend para criação e transição de status de pedidos, fechamento de turno, gestão de estoque/cardápio e geração de insights com LLM.",
+          "Adicionados sinais de MDM obrigatórios para cardápio, estoque, pedidos e turnos, justificando a necessidade de dados mestres.",
+          "Incluídos sinais de métricas e dashboard administrativo conforme a solicitação de métricas iniciais básicas.",
+          "Registrados riscos de negócio relacionados a concorrência no POS, consistência de estoque, dependência online e uso de LLM.",
+          "Listadas questões em aberto para a próxima rodada de clarificação."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 34,
+    "interaction": null,
+    "nextSteps": null
+  }
+}
