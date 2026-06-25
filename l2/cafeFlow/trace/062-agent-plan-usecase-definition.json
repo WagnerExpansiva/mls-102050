@@ -1,0 +1,74 @@
+{
+  "savedAt": "2026-06-25T01:22:04.168Z",
+  "agentName": "agentPlanUsecaseDefinition",
+  "stepId": 62,
+  "planning": null,
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitUsecaseDefinitionPlan",
+      "arguments": {
+        "status": "needs_input",
+        "result": {
+          "usecaseDefinition": {
+            "usecaseId": "registrarMovimentacaoEstoque",
+            "commands": [
+              {
+                "commandId": "registrarMovimentacaoEstoque",
+                "input": [
+                  {
+                    "name": "stockItemId",
+                    "type": "string",
+                    "required": true
+                  },
+                  {
+                    "name": "movementType",
+                    "type": "string",
+                    "required": true
+                  },
+                  {
+                    "name": "quantity",
+                    "type": "number",
+                    "required": true
+                  },
+                  {
+                    "name": "movementDate",
+                    "type": "date",
+                    "required": false
+                  },
+                  {
+                    "name": "reason",
+                    "type": "string",
+                    "required": false
+                  }
+                ],
+                "output": [
+                  {
+                    "name": "estoqueAggregate",
+                    "type": "estoqueAggregate"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "questions": [
+          "Quais são os campos obrigatórios exatos para registrar a movimentação (ex.: data, motivo, local, usuário responsável)?",
+          "O tipo de movimento deve ser um enum específico (ex.: ENTRADA/SAIDA/ajuste)? Qual o nome do enum?",
+          "Existe algum identificador de movimentação que deve ser retornado além do estoqueAggregate?",
+          "Há necessidade de informar lote/serial do item no input?",
+          "A data da movimentação é sempre ‘agora’ ou pode ser informada pelo usuário?"
+        ],
+        "trace": [
+          "Usecase registra entrada/saída e atualiza métricas; lê stock_item e escreve stock_movement, stock_item e low_stock_metrics.",
+          "Assumi um único comando principal para registrar a movimentação e retornar o estoque agregado atualizado."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 65,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

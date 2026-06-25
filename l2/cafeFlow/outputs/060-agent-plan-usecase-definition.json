@@ -1,0 +1,42 @@
+{
+  "savedAt": "2026-06-25T01:22:10.276Z",
+  "agentName": "agentPlanUsecaseDefinition",
+  "stepId": 60,
+  "planning": null,
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitUsecaseDefinitionPlan",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "usecaseDefinition": {
+            "usecaseId": "gerarResumoVendasDia",
+            "commands": [
+              {
+                "commandId": "gerarResumoVendasDia",
+                "input": [],
+                "output": [
+                  {
+                    "name": "metricasCafeFlow",
+                    "type": "metricasCafeFlow"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "questions": [],
+        "trace": [
+          "Usecase consulta métricas de vendas do dia; não há inputs explícitos no contexto.",
+          "Saída corresponde à entidade metricasCafeFlow conforme outputEntities."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 65,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

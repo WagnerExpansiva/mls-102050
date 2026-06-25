@@ -1,0 +1,82 @@
+{
+  "savedAt": "2026-06-25T01:21:34.362Z",
+  "agentName": "agentCriticPlanIndex",
+  "stepId": 58,
+  "planning": {
+    "planId": "plan-index-critic:usecasePlan:3",
+    "dependsOn": [
+      "plan-usecase-entities"
+    ],
+    "executionMode": "sequential",
+    "executionHost": "client"
+  },
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitPlanIndexCritique",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "approved": true,
+          "errors": [],
+          "warnings": [
+            {
+              "code": "usecase.metricWrite.unjustified",
+              "message": "usecase criarPedido writes metric table todaySalesMetrics but does not map to any of its measures/sourceWriteEvents; remove the write or propose the missing measure in the metrics index",
+              "path": "usecases[3]"
+            },
+            {
+              "code": "usecase.metricWrite.unjustified",
+              "message": "usecase criarPedido writes metric table topSellingItemsMetrics but does not map to any of its measures/sourceWriteEvents; remove the write or propose the missing measure in the metrics index",
+              "path": "usecases[3]"
+            },
+            {
+              "code": "usecase.metricWrite.unjustified",
+              "message": "usecase atualizarStatusPedido writes metric table topSellingItemsMetrics but does not map to any of its measures/sourceWriteEvents; remove the write or propose the missing measure in the metrics index",
+              "path": "usecases[5]"
+            },
+            {
+              "code": "usecase.metricWrite.unjustified",
+              "message": "usecase atualizarStatusPedido writes metric table lowStockMetrics but does not map to any of its measures/sourceWriteEvents; remove the write or propose the missing measure in the metrics index",
+              "path": "usecases[5]"
+            },
+            {
+              "code": "usecase.metricWrite.unjustified",
+              "message": "usecase cancelarPedido writes metric table todaySalesMetrics but does not map to any of its measures/sourceWriteEvents; remove the write or propose the missing measure in the metrics index",
+              "path": "usecases[6]"
+            },
+            {
+              "code": "usecase.metricWrite.unjustified",
+              "message": "usecase cancelarPedido writes metric table topSellingItemsMetrics but does not map to any of its measures/sourceWriteEvents; remove the write or propose the missing measure in the metrics index",
+              "path": "usecases[6]"
+            },
+            {
+              "code": "usecase.metricWrite.unjustified",
+              "message": "usecase cancelarPedido writes metric table lowStockMetrics but does not map to any of its measures/sourceWriteEvents; remove the write or propose the missing measure in the metrics index",
+              "path": "usecases[6]"
+            },
+            {
+              "code": "usecase.metricWrite.unjustified",
+              "message": "usecase registrarMovimentacaoEstoque writes metric table lowStockMetrics but does not map to any of its measures/sourceWriteEvents; remove the write or propose the missing measure in the metrics index",
+              "path": "usecases[13]"
+            }
+          ],
+          "notes": []
+        },
+        "questions": [],
+        "trace": [
+          "Confirmed deterministic warnings: 8 metricWrite.unjustified findings across criarPedido, atualizarStatusPedido, cancelarPedido and registrarMovimentacaoEstoque.",
+          "Verified read coverage: all written tables (module-owned, MDM and metric) have corresponding read-only usecases with empty writesTables.",
+          "Verified lifecycle coverage: create/update/delete/read/list operations are mapped for all aggregates.",
+          "Verified layer 3 access: all usecases are layer_3_usecases and no lower layer accesses tables directly.",
+          "No contract errors found."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 59,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "savedAt": "2026-06-25T01:20:03.296Z",
+  "agentName": "agentCriticPlanIndex",
+  "stepId": 54,
+  "planning": {
+    "planId": "plan-index-critic:usecasePlan:2",
+    "dependsOn": [
+      "plan-usecase-entities"
+    ],
+    "executionMode": "sequential",
+    "executionHost": "client"
+  },
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitPlanIndexCritique",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "approved": false,
+          "errors": [
+            {
+              "code": "usecase.metric.write.missing",
+              "message": "Nenhum usecase declara escrita nas tabelas de métrica (today_sales_metrics, top_selling_items_metrics, low_stock_metrics). Usecases que alteram tabelas transacionais base devem atualizar as métricas relacionadas.",
+              "path": "usecases"
+            },
+            {
+              "code": "usecase.metric.write.missing.criarPedido",
+              "message": "criarPedido escreve order e order_item, mas não declara atualização das métricas de vendas relacionadas.",
+              "path": "usecases.criarPedido.writesTables"
+            },
+            {
+              "code": "usecase.metric.write.missing.atualizarStatusPedido",
+              "message": "atualizarStatusPedido altera pedido e estoque, mas não declara atualização de métricas de vendas e estoque.",
+              "path": "usecases.atualizarStatusPedido.writesTables"
+            },
+            {
+              "code": "usecase.metric.write.missing.cancelarPedido",
+              "message": "cancelarPedido altera pedido e estoque, mas não declara atualização de métricas de vendas e estoque.",
+              "path": "usecases.cancelarPedido.writesTables"
+            },
+            {
+              "code": "usecase.metric.write.missing.registrarMovimentacaoEstoque",
+              "message": "registrarMovimentacaoEstoque altera quantidades de estoque, mas não declara atualização de low_stock_metrics.",
+              "path": "usecases.registrarMovimentacaoEstoque.writesTables"
+            }
+          ],
+          "warnings": [
+            {
+              "code": "usecase.metrics.noWriter",
+              "message": "Tabelas de métrica existem, mas nenhum usecase declara escrita em métricas.",
+              "path": "usecases"
+            }
+          ]
+        },
+        "questions": [],
+        "trace": [
+          "Revisão do índice de usecases concluída. Verificada cobertura de leitura/escrita, transições de ciclo de vida e atualização de métricas."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 55,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

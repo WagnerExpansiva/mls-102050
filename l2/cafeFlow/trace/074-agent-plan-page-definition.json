@@ -1,0 +1,578 @@
+{
+  "savedAt": "2026-06-25T01:25:24.380Z",
+  "agentName": "agentPlanPageDefinition",
+  "stepId": 74,
+  "planning": null,
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitPageDefinitionPlan",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "pageDefinition": {
+            "pageId": "stockManagement",
+            "pageName": "Gerenciamento de Estoque",
+            "actor": "managerOwner",
+            "purpose": "Revisar itens de estoque, ajustar quantidades e registrar movimentações.",
+            "capabilities": [
+              "manageStock"
+            ],
+            "flowRefs": {
+              "experienceFlows": [],
+              "entityLifecycles": [
+                "workflowStockManagement"
+              ],
+              "taskWorkflows": [],
+              "automations": []
+            },
+            "pluginRefs": [],
+            "mdmRefs": [
+              "stock"
+            ],
+            "pageInputs": [],
+            "navigationRefs": [],
+            "sections": [
+              {
+                "sectionName": "Alertas de estoque baixo",
+                "mode": "view",
+                "organisms": [
+                  {
+                    "organismName": "ListaAlertasEstoqueBaixo",
+                    "purpose": "Exibir alertas ativos de estoque baixo para itens críticos.",
+                    "userActions": [
+                      "Filtrar alertas",
+                      "Consultar item em alerta"
+                    ],
+                    "requiredEntities": [
+                      "StockItem"
+                    ],
+                    "readsFields": [
+                      "StockItem.stockItemId",
+                      "StockItem.name",
+                      "StockItem.currentQuantity",
+                      "StockItem.alertThreshold",
+                      "StockItem.status"
+                    ],
+                    "writesFields": [],
+                    "rulesApplied": [
+                      "ruleLowStockAlert"
+                    ]
+                  }
+                ]
+              },
+              {
+                "sectionName": "Itens de estoque",
+                "mode": "manage",
+                "organisms": [
+                  {
+                    "organismName": "TabelaItensEstoque",
+                    "purpose": "Listar itens de estoque com quantidade e status para revisão rápida.",
+                    "userActions": [
+                      "Consultar estoque",
+                      "Selecionar item para edição"
+                    ],
+                    "requiredEntities": [
+                      "StockItem"
+                    ],
+                    "readsFields": [
+                      "StockItem.stockItemId",
+                      "StockItem.name",
+                      "StockItem.currentQuantity",
+                      "StockItem.alertThreshold",
+                      "StockItem.unitOfMeasure",
+                      "StockItem.status"
+                    ],
+                    "writesFields": [],
+                    "rulesApplied": [
+                      "ruleLowStockAlert"
+                    ]
+                  },
+                  {
+                    "organismName": "FormEdicaoItemEstoque",
+                    "purpose": "Atualizar dados e quantidades do item de estoque selecionado.",
+                    "userActions": [
+                      "Editar itens",
+                      "Salvar alterações",
+                      "Inativar item",
+                      "Reativar item"
+                    ],
+                    "requiredEntities": [
+                      "StockItem"
+                    ],
+                    "readsFields": [
+                      "StockItem.stockItemId",
+                      "StockItem.name",
+                      "StockItem.alertThreshold",
+                      "StockItem.unitOfMeasure",
+                      "StockItem.status",
+                      "StockItem.currentQuantity"
+                    ],
+                    "writesFields": [
+                      "StockItem.name",
+                      "StockItem.alertThreshold",
+                      "StockItem.unitOfMeasure",
+                      "StockItem.status",
+                      "StockItem.currentQuantity"
+                    ],
+                    "rulesApplied": [
+                      "ruleStockQuantityNonNegative"
+                    ]
+                  }
+                ]
+              },
+              {
+                "sectionName": "Movimentações de estoque",
+                "mode": "manage",
+                "organisms": [
+                  {
+                    "organismName": "FormRegistrarMovimentacao",
+                    "purpose": "Registrar entrada, saída ou ajuste manual de estoque.",
+                    "userActions": [
+                      "Registrar movimentação"
+                    ],
+                    "requiredEntities": [
+                      "StockMovement",
+                      "StockItem"
+                    ],
+                    "readsFields": [
+                      "StockItem.stockItemId",
+                      "StockItem.name",
+                      "StockItem.currentQuantity",
+                      "StockItem.unitOfMeasure"
+                    ],
+                    "writesFields": [
+                      "StockMovement.stockItemId",
+                      "StockMovement.movementType",
+                      "StockMovement.quantity",
+                      "StockMovement.note",
+                      "StockMovement.occurredAt",
+                      "StockMovement.orderId"
+                    ],
+                    "rulesApplied": [
+                      "ruleStockQuantityNonNegative",
+                      "ruleLowStockAlert"
+                    ]
+                  },
+                  {
+                    "organismName": "HistoricoMovimentacoes",
+                    "purpose": "Exibir histórico de movimentações com filtros por item e período.",
+                    "userActions": [
+                      "Consultar histórico",
+                      "Filtrar por período",
+                      "Filtrar por item"
+                    ],
+                    "requiredEntities": [
+                      "StockMovement",
+                      "StockItem"
+                    ],
+                    "readsFields": [
+                      "StockMovement.stockMovementId",
+                      "StockMovement.stockItemId",
+                      "StockMovement.movementType",
+                      "StockMovement.quantity",
+                      "StockMovement.note",
+                      "StockMovement.occurredAt",
+                      "StockMovement.orderId",
+                      "StockItem.name",
+                      "StockItem.unitOfMeasure"
+                    ],
+                    "writesFields": [],
+                    "rulesApplied": []
+                  }
+                ]
+              }
+            ]
+          },
+          "bffCommands": [
+            {
+              "commandName": "listarItensEstoque",
+              "purpose": "Exibir níveis atuais de estoque.",
+              "kind": "query",
+              "input": [
+                {
+                  "name": "filtroTexto",
+                  "type": "string",
+                  "required": false
+                },
+                {
+                  "name": "status",
+                  "type": "string",
+                  "required": false
+                }
+              ],
+              "output": [
+                {
+                  "name": "stockItemId",
+                  "type": "StockItemId"
+                },
+                {
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "name": "currentQuantity",
+                  "type": "number"
+                },
+                {
+                  "name": "alertThreshold",
+                  "type": "number"
+                },
+                {
+                  "name": "unitOfMeasure",
+                  "type": "string"
+                },
+                {
+                  "name": "status",
+                  "type": "string"
+                }
+              ],
+              "readsEntities": [
+                "StockItem"
+              ],
+              "writesEntities": [],
+              "readsTables": [],
+              "writesTables": [],
+              "usecaseRefs": [
+                "listarItensEstoque"
+              ],
+              "layerContract": {
+                "controllerLayer": "layer_2_controllers",
+                "mustCallLayer": "layer_3_usecases",
+                "directTableAccessForbidden": true
+              },
+              "rulesApplied": []
+            },
+            {
+              "commandName": "gerenciarItemEstoque",
+              "purpose": "Atualizar item de estoque e quantidades.",
+              "kind": "command",
+              "input": [
+                {
+                  "name": "stockItemId",
+                  "type": "StockItemId",
+                  "required": true
+                },
+                {
+                  "name": "name",
+                  "type": "string",
+                  "required": false
+                },
+                {
+                  "name": "alertThreshold",
+                  "type": "number",
+                  "required": false
+                },
+                {
+                  "name": "unitOfMeasure",
+                  "type": "string",
+                  "required": false
+                },
+                {
+                  "name": "status",
+                  "type": "string",
+                  "required": false
+                },
+                {
+                  "name": "currentQuantity",
+                  "type": "number",
+                  "required": false
+                }
+              ],
+              "output": [
+                {
+                  "name": "stockItemId",
+                  "type": "StockItemId"
+                },
+                {
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "name": "currentQuantity",
+                  "type": "number"
+                },
+                {
+                  "name": "alertThreshold",
+                  "type": "number"
+                },
+                {
+                  "name": "unitOfMeasure",
+                  "type": "string"
+                },
+                {
+                  "name": "status",
+                  "type": "string"
+                }
+              ],
+              "readsEntities": [
+                "StockItem"
+              ],
+              "writesEntities": [
+                "StockItem"
+              ],
+              "readsTables": [],
+              "writesTables": [],
+              "usecaseRefs": [
+                "gerenciarItemEstoque"
+              ],
+              "layerContract": {
+                "controllerLayer": "layer_2_controllers",
+                "mustCallLayer": "layer_3_usecases",
+                "directTableAccessForbidden": true
+              },
+              "rulesApplied": [
+                "ruleStockQuantityNonNegative"
+              ]
+            },
+            {
+              "commandName": "registrarMovimentacaoEstoque",
+              "purpose": "Registrar entrada/saída/ajuste manual de estoque.",
+              "kind": "command",
+              "input": [
+                {
+                  "name": "stockItemId",
+                  "type": "StockItemId",
+                  "required": true
+                },
+                {
+                  "name": "movementType",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "quantity",
+                  "type": "number",
+                  "required": true
+                },
+                {
+                  "name": "note",
+                  "type": "string",
+                  "required": false
+                },
+                {
+                  "name": "occurredAt",
+                  "type": "date",
+                  "required": true
+                },
+                {
+                  "name": "orderId",
+                  "type": "OrderId",
+                  "required": false
+                },
+                {
+                  "name": "adjustedQuantity",
+                  "type": "number",
+                  "required": false
+                }
+              ],
+              "output": [
+                {
+                  "name": "stockMovementId",
+                  "type": "StockMovementId"
+                },
+                {
+                  "name": "stockItemId",
+                  "type": "StockItemId"
+                },
+                {
+                  "name": "movementType",
+                  "type": "string"
+                },
+                {
+                  "name": "quantity",
+                  "type": "number"
+                },
+                {
+                  "name": "note",
+                  "type": "string"
+                },
+                {
+                  "name": "occurredAt",
+                  "type": "date"
+                }
+              ],
+              "readsEntities": [
+                "StockItem"
+              ],
+              "writesEntities": [
+                "StockMovement",
+                "StockItem"
+              ],
+              "readsTables": [],
+              "writesTables": [
+                "stock_movement",
+                "low_stock_metrics"
+              ],
+              "usecaseRefs": [
+                "registrarMovimentacaoEstoque"
+              ],
+              "layerContract": {
+                "controllerLayer": "layer_2_controllers",
+                "mustCallLayer": "layer_3_usecases",
+                "directTableAccessForbidden": true
+              },
+              "rulesApplied": [
+                "ruleStockQuantityNonNegative",
+                "ruleLowStockAlert"
+              ]
+            },
+            {
+              "commandName": "listarMovimentacoesEstoque",
+              "purpose": "Exibir histórico de movimentações.",
+              "kind": "query",
+              "input": [
+                {
+                  "name": "stockItemId",
+                  "type": "StockItemId",
+                  "required": false
+                },
+                {
+                  "name": "dataInicio",
+                  "type": "date",
+                  "required": false
+                },
+                {
+                  "name": "dataFim",
+                  "type": "date",
+                  "required": false
+                },
+                {
+                  "name": "movementType",
+                  "type": "string",
+                  "required": false
+                }
+              ],
+              "output": [
+                {
+                  "name": "stockMovementId",
+                  "type": "StockMovementId"
+                },
+                {
+                  "name": "stockItemId",
+                  "type": "StockItemId"
+                },
+                {
+                  "name": "movementType",
+                  "type": "string"
+                },
+                {
+                  "name": "quantity",
+                  "type": "number"
+                },
+                {
+                  "name": "note",
+                  "type": "string"
+                },
+                {
+                  "name": "occurredAt",
+                  "type": "date"
+                },
+                {
+                  "name": "orderId",
+                  "type": "OrderId"
+                },
+                {
+                  "name": "itemName",
+                  "type": "string"
+                },
+                {
+                  "name": "unitOfMeasure",
+                  "type": "string"
+                }
+              ],
+              "readsEntities": [
+                "StockMovement",
+                "StockItem"
+              ],
+              "writesEntities": [],
+              "readsTables": [
+                "stock_movement"
+              ],
+              "writesTables": [],
+              "usecaseRefs": [
+                "listarMovimentacoesEstoque"
+              ],
+              "layerContract": {
+                "controllerLayer": "layer_2_controllers",
+                "mustCallLayer": "layer_3_usecases",
+                "directTableAccessForbidden": true
+              },
+              "rulesApplied": []
+            },
+            {
+              "commandName": "listarAlertasEstoqueBaixo",
+              "purpose": "Exibir alertas de estoque baixo.",
+              "kind": "query",
+              "input": [
+                {
+                  "name": "filtroTexto",
+                  "type": "string",
+                  "required": false
+                },
+                {
+                  "name": "status",
+                  "type": "string",
+                  "required": false
+                }
+              ],
+              "output": [
+                {
+                  "name": "stockItemId",
+                  "type": "StockItemId"
+                },
+                {
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "name": "currentQuantity",
+                  "type": "number"
+                },
+                {
+                  "name": "alertThreshold",
+                  "type": "number"
+                },
+                {
+                  "name": "status",
+                  "type": "string"
+                }
+              ],
+              "readsEntities": [
+                "StockItem"
+              ],
+              "writesEntities": [],
+              "readsTables": [
+                "low_stock_metrics"
+              ],
+              "writesTables": [],
+              "usecaseRefs": [
+                "listarAlertasEstoqueBaixo"
+              ],
+              "layerContract": {
+                "controllerLayer": "layer_2_controllers",
+                "mustCallLayer": "layer_3_usecases",
+                "directTableAccessForbidden": true
+              },
+              "rulesApplied": [
+                "ruleLowStockAlert"
+              ]
+            }
+          ]
+        },
+        "questions": [],
+        "trace": [
+          "Página definida a partir do selector stockManagement.",
+          "Capacidades e ações principais convertidas em seções: alertas, itens e movimentações.",
+          "Comandos BFF alinhados aos usecases: listarItensEstoque, gerenciarItemEstoque, registrarMovimentacaoEstoque, listarMovimentacoesEstoque, listarAlertasEstoqueBaixo.",
+          "Tabelas MDM não incluídas em readsTables/writesTables; apenas stock_movement e low_stock_metrics listadas."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 61,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

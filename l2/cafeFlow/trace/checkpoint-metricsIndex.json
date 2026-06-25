@@ -1,0 +1,464 @@
+{
+  "schemaVersion": "2026-06-06",
+  "artifactType": "indexCheckpoint",
+  "indexName": "metricsIndex",
+  "moduleName": "cafeFlow",
+  "status": "frozen",
+  "approvedAt": "2026-06-25T01:16:08.112Z",
+  "source": {
+    "agentName": "agentPlanMetricsIndex",
+    "stepId": 19,
+    "planId": "plan-metrics-index"
+  },
+  "healthReport": {
+    "localErrors": [],
+    "localWarnings": [
+      {
+        "severity": "warning",
+        "code": "metrics.sourceBaseTable.unknown",
+        "message": "metric table todaySalesMetrics sources unknown base table order",
+        "path": "metricTables[0]"
+      },
+      {
+        "severity": "warning",
+        "code": "metrics.sourceBaseTable.unknown",
+        "message": "metric table todaySalesMetrics sources unknown base table order_item",
+        "path": "metricTables[0]"
+      },
+      {
+        "severity": "warning",
+        "code": "metrics.sourceBaseTable.unknown",
+        "message": "metric table todaySalesMetrics sources unknown base table daily_shift",
+        "path": "metricTables[0]"
+      },
+      {
+        "severity": "warning",
+        "code": "metrics.sourceBaseTable.unknown",
+        "message": "metric table topSellingItemsMetrics sources unknown base table order_item",
+        "path": "metricTables[1]"
+      },
+      {
+        "severity": "warning",
+        "code": "metrics.sourceBaseTable.unknown",
+        "message": "metric table topSellingItemsMetrics sources unknown base table menu_item",
+        "path": "metricTables[1]"
+      },
+      {
+        "severity": "warning",
+        "code": "metrics.sourceBaseTable.unknown",
+        "message": "metric table lowStockMetrics sources unknown base table stock_item",
+        "path": "metricTables[2]"
+      },
+      {
+        "severity": "warning",
+        "code": "metrics.sourceBaseTable.unknown",
+        "message": "metric table lowStockMetrics sources unknown base table stock_movement",
+        "path": "metricTables[2]"
+      }
+    ],
+    "criticErrors": [],
+    "criticWarnings": [
+      {
+        "severity": "warning",
+        "code": "metrics.sourceBaseTable.unknown",
+        "message": "A tabela de métricas todaySalesMetrics referencia a base table order que não é conhecida no módulo.",
+        "path": "metricTables[0]"
+      },
+      {
+        "severity": "warning",
+        "code": "metrics.sourceBaseTable.unknown",
+        "message": "A tabela de métricas todaySalesMetrics referencia a base table order_item que não é conhecida no módulo.",
+        "path": "metricTables[0]"
+      },
+      {
+        "severity": "warning",
+        "code": "metrics.sourceBaseTable.unknown",
+        "message": "A tabela de métricas todaySalesMetrics referencia a base table daily_shift que não é conhecida no módulo.",
+        "path": "metricTables[0]"
+      },
+      {
+        "severity": "warning",
+        "code": "metrics.sourceBaseTable.unknown",
+        "message": "A tabela de métricas topSellingItemsMetrics referencia a base table order_item que não é conhecida no módulo.",
+        "path": "metricTables[1]"
+      },
+      {
+        "severity": "warning",
+        "code": "metrics.sourceBaseTable.unknown",
+        "message": "A tabela de métricas topSellingItemsMetrics referencia a base table menu_item que não é conhecida no módulo.",
+        "path": "metricTables[1]"
+      },
+      {
+        "severity": "warning",
+        "code": "metrics.sourceBaseTable.unknown",
+        "message": "A tabela de métricas lowStockMetrics referencia a base table stock_item que não é conhecida no módulo.",
+        "path": "metricTables[2]"
+      },
+      {
+        "severity": "warning",
+        "code": "metrics.sourceBaseTable.unknown",
+        "message": "A tabela de métricas lowStockMetrics referencia a base table stock_movement que não é conhecida no módulo.",
+        "path": "metricTables[2]"
+      },
+      {
+        "severity": "warning",
+        "code": "metrics.grain.ambiguous",
+        "message": "A medida orderCount na todaySalesMetrics pode sofrer dupla contagem devido à coexistência de dimensões orderId e orderItemId/menuItemId sem grain explícito.",
+        "path": "metricTables[0]"
+      },
+      {
+        "severity": "warning",
+        "code": "metrics.sourceEvent.nonFact",
+        "message": "O evento menuItemUpdated em topSellingItemsMetrics não cria novos fatos de venda; verificar necessidade como fonte de derivação.",
+        "path": "metricTables[1]"
+      }
+    ],
+    "attempts": 2,
+    "notes": [
+      "Todas as tabelas de métricas e o dashboard aprovados estão presentes, sem inflação de escopo.",
+      "O dashboard referencia exclusivamente métricas deste índice e aponta para o actorId managerOwner do plano final.",
+      "A responsabilidade de atualização está corretamente atribuída a layer_3_usecases em nível de plano.",
+      "Todas as tabelas de métricas possuem storageEngine postgresTimescaleDB."
+    ]
+  },
+  "index": {
+    "runId": "provider-tool-call",
+    "stepId": "repair:metricsIndex",
+    "schemaVersion": "2026-06-02",
+    "status": "ok",
+    "result": {
+      "metricsPlan": {
+        "moduleId": "cafeFlow",
+        "title": "CafeFlow",
+        "description": "Plano de métricas operacionais para acompanhamento de vendas, cardápio e estoque em tempo real",
+        "enabled": true,
+        "storageEngine": "postgresTimescaleDB",
+        "updateResponsibility": "layer_3_usecases",
+        "derivationSources": [
+          "baseTableUpdates",
+          "lifecycleTransitions",
+          "operationalRisks"
+        ]
+      },
+      "metricTables": [
+        {
+          "metricTableId": "todaySalesMetrics",
+          "tableName": "today_sales_metrics",
+          "title": "Vendas de Hoje",
+          "purpose": "Consolidar em tempo real o faturamento e o volume de pedidos do turno atual",
+          "storageEngine": "postgresTimescaleDB",
+          "sourceBaseTables": [
+            "order",
+            "order_item",
+            "daily_shift"
+          ],
+          "sourceEntities": [
+            "Order",
+            "OrderItem",
+            "DailyShift"
+          ],
+          "sourceWriteEvents": [
+            "orderCreated",
+            "orderStatusUpdated",
+            "orderItemCreated",
+            "dailyShiftOpened",
+            "dailyShiftClosed"
+          ],
+          "timeColumn": "recorded_at",
+          "dimensions": [
+            {
+              "dimensionId": "dailyShiftId",
+              "column": "daily_shift_id",
+              "type": "uuid",
+              "description": "Turno diário relacionado ao pedido"
+            },
+            {
+              "dimensionId": "orderId",
+              "column": "order_id",
+              "type": "uuid",
+              "description": "Pedido transacional"
+            },
+            {
+              "dimensionId": "orderStatus",
+              "column": "order_status",
+              "type": "string",
+              "description": "Status atual do pedido"
+            },
+            {
+              "dimensionId": "orderItemId",
+              "column": "order_item_id",
+              "type": "uuid",
+              "description": "FK dimension derived from ontology relationship OrderHasItems (Order -> OrderItem)"
+            },
+            {
+              "dimensionId": "menuItemId",
+              "column": "menu_item_id",
+              "type": "uuid",
+              "description": "FK dimension derived from ontology relationship OrderItemRefersMenuItem (OrderItem -> MenuItem)"
+            }
+          ],
+          "measures": [
+            {
+              "measureId": "totalRevenue",
+              "column": "total_revenue",
+              "type": "numeric",
+              "aggregation": "sum",
+              "unit": "BRL",
+              "description": "Receita total dos pedidos"
+            },
+            {
+              "measureId": "orderCount",
+              "column": "order_count",
+              "type": "integer",
+              "aggregation": "sum",
+              "unit": "count",
+              "description": "Quantidade de pedidos"
+            },
+            {
+              "measureId": "itemsSold",
+              "column": "items_sold",
+              "type": "integer",
+              "aggregation": "sum",
+              "unit": "units",
+              "description": "Total de unidades de itens vendidos"
+            }
+          ],
+          "aggregationWindows": [
+            "1 minute",
+            "1 hour",
+            "1 day"
+          ],
+          "retentionPolicy": "30 dias",
+          "priority": "now",
+          "rulesApplied": [
+            "ruleOrderRequiresOpenShift",
+            "ruleOrderStatusFlow",
+            "ruleShiftCloseNoOpenOrders"
+          ],
+          "reason": "Permitir ao gerente/proprietário acompanhar as vendas do dia, identificar picos de demanda e tomar decisões rápidas durante o expediente"
+        },
+        {
+          "metricTableId": "topSellingItemsMetrics",
+          "tableName": "top_selling_items_metrics",
+          "title": "Itens Mais Vendidos",
+          "purpose": "Identificar os produtos do cardápio com maior saída e receita em diferentes períodos",
+          "storageEngine": "postgresTimescaleDB",
+          "sourceBaseTables": [
+            "order_item",
+            "menu_item"
+          ],
+          "sourceEntities": [
+            "OrderItem",
+            "MenuItem"
+          ],
+          "sourceWriteEvents": [
+            "orderItemCreated",
+            "orderItemCancelled",
+            "menuItemUpdated"
+          ],
+          "timeColumn": "recorded_at",
+          "dimensions": [
+            {
+              "dimensionId": "menuItemId",
+              "column": "menu_item_id",
+              "type": "uuid",
+              "description": "Item do cardápio vendido"
+            },
+            {
+              "dimensionId": "orderId",
+              "column": "order_id",
+              "type": "uuid",
+              "description": "Pedido de origem"
+            },
+            {
+              "dimensionId": "menuCategoryId",
+              "column": "menu_category_id",
+              "type": "uuid",
+              "description": "Categoria do cardápio do item"
+            },
+            {
+              "dimensionId": "menuItemIngredientId",
+              "column": "menu_item_ingredient_id",
+              "type": "uuid",
+              "description": "FK dimension derived from ontology relationship MenuItemHasIngredients (MenuItem -> MenuItemIngredient)"
+            }
+          ],
+          "measures": [
+            {
+              "measureId": "quantitySold",
+              "column": "quantity_sold",
+              "type": "integer",
+              "aggregation": "sum",
+              "unit": "units",
+              "description": "Quantidade vendida do item"
+            },
+            {
+              "measureId": "revenue",
+              "column": "revenue",
+              "type": "numeric",
+              "aggregation": "sum",
+              "unit": "BRL",
+              "description": "Receita gerada pelo item"
+            },
+            {
+              "measureId": "orderCount",
+              "column": "order_count",
+              "type": "integer",
+              "aggregation": "sum",
+              "unit": "count",
+              "description": "Número de pedidos que continham o item"
+            }
+          ],
+          "aggregationWindows": [
+            "1 hour",
+            "1 day",
+            "7 days",
+            "30 days"
+          ],
+          "retentionPolicy": "1 ano",
+          "priority": "now",
+          "rulesApplied": [
+            "ruleMenuItemPricePositive"
+          ],
+          "reason": "Apoiar o gerente em decisões de compra, promoções, ajuste de cardápio e priorização de preparo na cozinha"
+        },
+        {
+          "metricTableId": "lowStockMetrics",
+          "tableName": "low_stock_metrics",
+          "title": "Estoque Baixo",
+          "purpose": "Monitorar continuamente o nível dos insumos e registrar alertas de estoque abaixo do mínimo",
+          "storageEngine": "postgresTimescaleDB",
+          "sourceBaseTables": [
+            "stock_item",
+            "stock_movement"
+          ],
+          "sourceEntities": [
+            "StockItem",
+            "StockMovement"
+          ],
+          "sourceWriteEvents": [
+            "stockMovementRegistered",
+            "stockItemUpdated",
+            "stockItemCreated"
+          ],
+          "timeColumn": "recorded_at",
+          "dimensions": [
+            {
+              "dimensionId": "stockItemId",
+              "column": "stock_item_id",
+              "type": "uuid",
+              "description": "Item de estoque monitorado"
+            },
+            {
+              "dimensionId": "movementType",
+              "column": "movement_type",
+              "type": "string",
+              "description": "Tipo da última movimentação de estoque"
+            },
+            {
+              "dimensionId": "orderId",
+              "column": "order_id",
+              "type": "uuid",
+              "description": "FK dimension derived from ontology relationship StockMovementRelatedToOrder (StockMovement -> Order)"
+            }
+          ],
+          "measures": [
+            {
+              "measureId": "currentQuantity",
+              "column": "current_quantity",
+              "type": "numeric",
+              "aggregation": "last",
+              "unit": "units",
+              "description": "Quantidade atual em estoque"
+            },
+            {
+              "measureId": "lowStockAlertCount",
+              "column": "low_stock_alert_count",
+              "type": "integer",
+              "aggregation": "sum",
+              "unit": "count",
+              "description": "Contagem de alertas de estoque baixo"
+            },
+            {
+              "measureId": "reorderLevel",
+              "column": "reorder_level",
+              "type": "numeric",
+              "aggregation": "last",
+              "unit": "units",
+              "description": "Nível mínimo definido para reposição"
+            }
+          ],
+          "aggregationWindows": [
+            "1 hour",
+            "1 day"
+          ],
+          "retentionPolicy": "90 dias",
+          "priority": "now",
+          "rulesApplied": [
+            "ruleLowStockAlert",
+            "ruleStockQuantityNonNegative"
+          ],
+          "reason": "Evitar ruptura de insumos críticos durante o atendimento e garantir reposição proativa"
+        }
+      ],
+      "dashboardPages": [
+        {
+          "metricDashboardId": "cafeFlowMetricsDashboard",
+          "title": "Dashboard de Métricas do CafeFlow",
+          "actor": "managerOwner",
+          "accessPolicy": "managerOwner",
+          "priority": "now",
+          "sources": [
+            "todaySalesMetrics",
+            "topSellingItemsMetrics",
+            "lowStockMetrics"
+          ],
+          "description": "Painel operacional unificado com indicadores de vendas do dia, produtos mais vendidos e nível de estoque",
+          "rulesApplied": [],
+          "widgets": [
+            {
+              "widgetId": "todayRevenueKpi",
+              "title": "Receita do Dia",
+              "metricId": "totalRevenue",
+              "type": "kpi",
+              "sourceMetricTable": "todaySalesMetrics"
+            },
+            {
+              "widgetId": "todayOrdersKpi",
+              "title": "Pedidos do Dia",
+              "metricId": "orderCount",
+              "type": "kpi",
+              "sourceMetricTable": "todaySalesMetrics"
+            },
+            {
+              "widgetId": "topItemsChart",
+              "title": "Itens Mais Vendidos",
+              "metricId": "quantitySold",
+              "type": "chart",
+              "sourceMetricTable": "topSellingItemsMetrics"
+            },
+            {
+              "widgetId": "topItemsRevenueChart",
+              "title": "Receita por Item",
+              "metricId": "revenue",
+              "type": "chart",
+              "sourceMetricTable": "topSellingItemsMetrics"
+            },
+            {
+              "widgetId": "lowStockAlertList",
+              "title": "Alertas de Estoque Baixo",
+              "metricId": "lowStockAlertCount",
+              "type": "list",
+              "sourceMetricTable": "lowStockMetrics"
+            }
+          ]
+        }
+      ]
+    },
+    "questions": [],
+    "trace": [
+      "Removida dimensão duplicada de turno em todaySalesMetrics e padronizado dailyShiftId como uuid.",
+      "Padronizados tipos de FK para menuItemId, orderId, orderItemId e menuItemIngredientId como uuid para consistência entre tabelas."
+    ]
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "savedAt": "2026-06-25T01:22:10.486Z",
+  "agentName": "agentPlanUsecaseDefinition",
+  "stepId": 63,
+  "planning": null,
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitUsecaseDefinitionPlan",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "usecaseDefinition": {
+            "usecaseId": "sugerirItensParaPromover",
+            "commands": [
+              {
+                "commandId": "sugerirItensParaPromover",
+                "input": [
+                  {
+                    "name": "metricasCafeFlowId",
+                    "type": "string",
+                    "required": true
+                  },
+                  {
+                    "name": "cardapioId",
+                    "type": "string",
+                    "required": true
+                  }
+                ],
+                "output": [
+                  {
+                    "name": "metricasCafeFlow",
+                    "type": "metricasCafeFlow"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "questions": [],
+        "trace": [
+          "Usecase sugere itens com base em métricas e cardápio.",
+          "Inputs derivados de entidades de entrada: metricasCafeFlow e cardapioAggregate.",
+          "Output é a entidade de métricas atualizada com sugestões."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 67,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

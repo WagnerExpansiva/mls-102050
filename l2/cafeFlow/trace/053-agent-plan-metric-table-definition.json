@@ -1,0 +1,198 @@
+{
+  "savedAt": "2026-06-25T01:16:21.226Z",
+  "agentName": "agentPlanMetricTableDefinition",
+  "stepId": 53,
+  "planning": null,
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitMetricTableDefinitionPlan",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "metricTableDefinition": {
+            "metricTableId": "lowStockMetrics",
+            "tableName": "low_stock_metrics",
+            "moduleId": "cafeFlow",
+            "title": "Estoque Baixo",
+            "purpose": "Monitorar continuamente o nível dos insumos e registrar alertas de estoque abaixo do mínimo",
+            "tableKind": "metricTimeseries",
+            "storageEngine": "postgresTimescaleDB",
+            "layer": "layer_1_external",
+            "timeColumn": "recorded_at",
+            "columns": [
+              {
+                "name": "recorded_at",
+                "type": "timestamptz",
+                "nullable": false,
+                "description": "Data e hora do registro da métrica"
+              },
+              {
+                "name": "stock_item_id",
+                "type": "uuid",
+                "nullable": false,
+                "description": "Item de estoque monitorado"
+              },
+              {
+                "name": "movement_type",
+                "type": "varchar(32)",
+                "nullable": false,
+                "description": "Tipo da última movimentação de estoque"
+              },
+              {
+                "name": "order_id",
+                "type": "uuid",
+                "nullable": true,
+                "description": "Pedido relacionado à movimentação, quando aplicável"
+              },
+              {
+                "name": "current_quantity",
+                "type": "numeric",
+                "nullable": false,
+                "description": "Quantidade atual em estoque"
+              },
+              {
+                "name": "low_stock_alert_count",
+                "type": "integer",
+                "nullable": false,
+                "default": 0,
+                "description": "Contagem de alertas de estoque baixo"
+              },
+              {
+                "name": "reorder_level",
+                "type": "numeric",
+                "nullable": false,
+                "description": "Nível mínimo definido para reposição"
+              }
+            ],
+            "dimensions": [
+              {
+                "dimensionId": "stockItemId",
+                "column": "stock_item_id",
+                "type": "uuid",
+                "description": "Item de estoque monitorado"
+              },
+              {
+                "dimensionId": "movementType",
+                "column": "movement_type",
+                "type": "string",
+                "description": "Tipo da última movimentação de estoque"
+              },
+              {
+                "dimensionId": "orderId",
+                "column": "order_id",
+                "type": "uuid",
+                "description": "FK dimension derived from ontology relationship StockMovementRelatedToOrder (StockMovement -> Order)"
+              }
+            ],
+            "measures": [
+              {
+                "measureId": "currentQuantity",
+                "column": "current_quantity",
+                "aggregation": "last",
+                "unit": "units",
+                "description": "Quantidade atual em estoque"
+              },
+              {
+                "measureId": "lowStockAlertCount",
+                "column": "low_stock_alert_count",
+                "aggregation": "sum",
+                "unit": "count",
+                "description": "Contagem de alertas de estoque baixo"
+              },
+              {
+                "measureId": "reorderLevel",
+                "column": "reorder_level",
+                "aggregation": "last",
+                "unit": "units",
+                "description": "Nível mínimo definido para reposição"
+              }
+            ],
+            "sourceWriteEvents": [
+              "stockMovementRegistered",
+              "stockItemUpdated",
+              "stockItemCreated"
+            ],
+            "hypertable": {
+              "timeColumn": "recorded_at",
+              "chunkTimeInterval": "7 days",
+              "retentionPolicy": "90 days",
+              "compressionPolicy": "30 days",
+              "indexes": [
+                {
+                  "indexName": "idx_low_stock_metrics_recorded_at",
+                  "columns": [
+                    "recorded_at"
+                  ],
+                  "purpose": "Suporte a consultas por período e ordenação temporal"
+                },
+                {
+                  "indexName": "idx_low_stock_metrics_stock_item_id_recorded_at",
+                  "columns": [
+                    "stock_item_id",
+                    "recorded_at"
+                  ],
+                  "purpose": "Consultas de métricas por item de estoque e período"
+                },
+                {
+                  "indexName": "idx_low_stock_metrics_order_id_recorded_at",
+                  "columns": [
+                    "order_id",
+                    "recorded_at"
+                  ],
+                  "purpose": "Consultas por pedido relacionado e período"
+                },
+                {
+                  "indexName": "idx_low_stock_metrics_movement_type",
+                  "columns": [
+                    "movement_type"
+                  ],
+                  "purpose": "Filtros por tipo de movimentação"
+                }
+              ]
+            },
+            "updatePolicy": {
+              "updatedByLayer": "layer_3_usecases",
+              "pagesMayUpdate": false,
+              "controllersMayUpdate": false,
+              "usecaseRefs": [
+                "usecaseEntityManageStockItem",
+                "usecaseEntityRegisterStockMovement",
+                "usecaseEntityCancelOrder"
+              ]
+            },
+            "accessPolicy": {
+              "directAccessAllowedFor": [
+                "layer_3_usecases"
+              ],
+              "forbiddenFor": [
+                "pages",
+                "layer_2_controllers",
+                "agents"
+              ]
+            },
+            "rulesApplied": [
+              "ruleLowStockAlert",
+              "ruleStockQuantityNonNegative"
+            ]
+          },
+          "defsPlan": {
+            "fileName": "tables/lowStockMetrics.defs.ts",
+            "exportName": "lowStockMetricsMetricTableDefinition",
+            "saveAsDefs": true
+          }
+        },
+        "questions": [],
+        "trace": [
+          "Definida métrica de estoque baixo com dimensões de item de estoque, tipo de movimentação e pedido relacionado.",
+          "Configurada hypertable com retenção de 90 dias e índices temporais e por dimensões."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 41,
+    "interaction": null,
+    "nextSteps": null
+  }
+}
