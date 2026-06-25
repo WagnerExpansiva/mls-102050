@@ -20,9 +20,6 @@
   "links": [],
   "servicesConfigEnabled": false,
   "modules": [
-    {
-      "moduleName": "cafeFlow"
-    }
   ],
   "dependencies": [
     {
