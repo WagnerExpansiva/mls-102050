@@ -1,0 +1,119 @@
+{
+  "savedAt": "2026-06-25T20:05:32.176Z",
+  "agentName": "agentNs2EntityDefinition",
+  "stepId": 37,
+  "planning": null,
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitEntityDefinition",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "entityDefinition": {
+            "entityId": "StockMovement",
+            "title": "Movimentação de Estoque",
+            "description": "Registro de entrada/saída/ajuste de InventoryItem. Pode ser estornado mantendo rastreabilidade.",
+            "kind": "event",
+            "ownership": "moduleOwned",
+            "lifecycleStates": [
+              "posted",
+              "voided"
+            ],
+            "statusEnum": [
+              "posted",
+              "voided"
+            ],
+            "rulesApplied": [
+              "inventoryAutoConsumptionByRecipeOnOrderCompletion",
+              "orderCancellationStockHandling"
+            ],
+            "fields": [
+              {
+                "fieldId": "stockMovementId",
+                "type": "uuid",
+                "required": true,
+                "description": "Identificador único da movimentação de estoque"
+              },
+              {
+                "fieldId": "inventoryItemId",
+                "type": "uuid",
+                "required": true,
+                "description": "Referência ao item de inventário cujo saldo foi alterado"
+              },
+              {
+                "fieldId": "orderId",
+                "type": "uuid",
+                "required": false,
+                "description": "Referência ao pedido que gerou a movimentação, quando aplicável"
+              },
+              {
+                "fieldId": "type",
+                "type": "string",
+                "required": true,
+                "description": "Tipo da movimentação: entrada, saída, ajuste ou estorno",
+                "enum": [
+                  "entrada",
+                  "saida",
+                  "ajuste",
+                  "estorno"
+                ]
+              },
+              {
+                "fieldId": "quantity",
+                "type": "number",
+                "required": true,
+                "description": "Quantidade movimentada (valor positivo; direção definida pelo tipo)"
+              },
+              {
+                "fieldId": "unitCost",
+                "type": "money",
+                "required": false,
+                "description": "Custo unitário do item no momento da movimentação"
+              },
+              {
+                "fieldId": "notes",
+                "type": "text",
+                "required": false,
+                "description": "Observações adicionais sobre a movimentação"
+              },
+              {
+                "fieldId": "status",
+                "type": "string",
+                "required": true,
+                "description": "Situação do registro contábil da movimentação",
+                "enum": [
+                  "posted",
+                  "voided"
+                ]
+              },
+              {
+                "fieldId": "createdAt",
+                "type": "datetime",
+                "required": true,
+                "description": "Data e hora de criação do registro"
+              },
+              {
+                "fieldId": "updatedAt",
+                "type": "datetime",
+                "required": true,
+                "description": "Data e hora da última atualização do registro"
+              }
+            ]
+          }
+        },
+        "questions": [],
+        "trace": [
+          "Definido StockMovement como evento de domínio moduleOwned com estados posted/voided.",
+          "Incluídos campos de identidade, referências a InventoryItem e Order (opcional), atributos de negócio (tipo, quantidade, custo, observações), status e timestamps de auditoria.",
+          "Aplicadas regras inventoryAutoConsumptionByRecipeOnOrderCompletion e orderCancellationStockHandling."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 43,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

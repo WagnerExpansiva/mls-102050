@@ -1,0 +1,79 @@
+{
+  "savedAt": "2026-06-25T20:06:32.056Z",
+  "agentName": "agentNs2WorkflowDefinition",
+  "stepId": 52,
+  "planning": null,
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitWorkflowDefinition",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "workflowDefinition": {
+            "workflowId": "kitchenUpdateStatus",
+            "title": "Atualizar status na cozinha (em preparo/pronto)",
+            "executionMode": "sequential",
+            "trigger": "Cozinha recebe pedidos enviados e atualiza andamento conforme produção",
+            "actors": [
+              "cook"
+            ],
+            "states": [
+              "draft",
+              "sentToKitchen",
+              "inPreparation",
+              "ready",
+              "delivered",
+              "cancelled"
+            ],
+            "transitions": [
+              {
+                "from": "sentToKitchen",
+                "to": "inPreparation",
+                "on": "startPreparation",
+                "by": "cook"
+              },
+              {
+                "from": "inPreparation",
+                "to": "ready",
+                "on": "markReady",
+                "by": "cook"
+              }
+            ],
+            "operationIds": [],
+            "entities": [
+              "Order",
+              "OrderItem"
+            ],
+            "rulesApplied": [],
+            "story": {
+              "actor": "cook",
+              "goal": "Atualizar o andamento dos pedidos recebidos na cozinha",
+              "soThat": "o salão saiba o que está em preparo e o que está pronto para entrega",
+              "steps": [
+                "Visualizar lista de Orders enviados para a cozinha",
+                "Selecionar um Order e iniciar preparo, mudando status para em preparo",
+                "Quando itens/pedido estiverem prontos, atualizar status para pronto",
+                "Manter o status atualizado conforme a produção avança"
+              ],
+              "outcome": "Status de cozinha refletindo o andamento real dos pedidos"
+            }
+          }
+        },
+        "questions": [],
+        "trace": [
+          "Identified selector kitchenUpdateStatus and primary entity Order with declared lifecycle states",
+          "Reused exact Order lifecycle states for workflow states array",
+          "Mapped story steps to transitions: sentToKitchen→inPreparation (startPreparation) and inPreparation→ready (markReady) by cook",
+          "Preserved provided actors, entities, trigger, executionMode, and story from reduced context",
+          "Set operationIds and rulesApplied to empty arrays as no operations or rules were provided"
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 54,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

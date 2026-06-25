@@ -1,0 +1,67 @@
+{
+  "savedAt": "2026-06-25T20:04:38.956Z",
+  "agentName": "agentNs2Mdm",
+  "stepId": 13,
+  "planning": {
+    "planId": "plan-mdm",
+    "dependsOn": [
+      "plan-finalize-solution-plan"
+    ],
+    "executionMode": "parallel_static",
+    "executionHost": "client"
+  },
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitMdmPlan",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "mdmDomains": [
+            {
+              "domainId": "menu",
+              "title": "Cardápio",
+              "masterEntities": [
+                "MenuCategory",
+                "MenuItem"
+              ],
+              "resolution": "referenceSharedInfra",
+              "reason": "Cardápio muda com baixa frequência e precisa consistência no POS e relatórios; ativação/desativação exige controle mestre."
+            },
+            {
+              "domainId": "inventoryCatalog",
+              "title": "Itens de Estoque",
+              "masterEntities": [
+                "InventoryItem"
+              ],
+              "resolution": "referenceSharedInfra",
+              "reason": "Item de estoque é dado mestre com nível mínimo para alertas e integração com receitas/baixa automática."
+            },
+            {
+              "domainId": "tableReference",
+              "title": "Mesas",
+              "masterEntities": [
+                "Table"
+              ],
+              "resolution": "referenceSharedInfra",
+              "reason": "Referência opcional pós‑MVP para reduzir erros em pedidos por mesa; entidade estável."
+            }
+          ]
+        },
+        "questions": [
+          "Alguma outra entidade deve ser tratada como mestre (ex.: RecipeComponent ou DailyShift)?",
+          "As mesas terão atributos por unidade (capacidade, área), exigindo versões históricas?"
+        ],
+        "trace": [
+          "Mapped MDM signals to ontology entities.",
+          "Created three reference domains with shared infra resolution."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 42,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

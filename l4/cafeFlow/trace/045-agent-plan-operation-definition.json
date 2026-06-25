@@ -1,0 +1,63 @@
+{
+  "savedAt": "2026-06-25T20:06:47.724Z",
+  "agentName": "agentPlanOperationDefinition",
+  "stepId": 45,
+  "planning": null,
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitOperationDefinition",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "operationDefinition": {
+            "operationId": "posFastOrderOps",
+            "title": "POS rápido: abrir pedido e adicionar/remover itens",
+            "actor": "attendant",
+            "entity": "Order",
+            "kind": "create",
+            "reads": [
+              "DailyShift",
+              "Table",
+              "MenuItem"
+            ],
+            "writes": [
+              "Order",
+              "OrderItem"
+            ],
+            "rulesApplied": [
+              "shiftMustBeOpenToRegisterOrders",
+              "singleEstablishmentPerAccount"
+            ],
+            "story": {
+              "actor": "attendant",
+              "goal": "Abrir rapidamente um pedido e ajustar seus itens",
+              "soThat": "o atendimento no balcão/mesa seja ágil",
+              "steps": [
+                "Criar um novo Order (em turno aberto)",
+                "Adicionar OrderItem ao Order com quantidades e observações",
+                "Remover ou ajustar OrderItem quando necessário",
+                "Salvar o Order em estado rascunho/aberto"
+              ],
+              "outcome": "Pedido aberto com itens corretamente registrados"
+            }
+          }
+        },
+        "questions": [],
+        "trace": [
+          "Analyzed selector posFastOrderOps against the provided story and entity shape",
+          "Identified actor as attendant and primary entity as Order",
+          "Determined kind as create because the first step is to create a new Order and the outcome is an opened order",
+          "Mapped reads to DailyShift (verify open shift), Table (optional seating reference), and MenuItem (validate items and prices)",
+          "Mapped writes to Order (new draft record) and OrderItem (add/remove/adjust lines)",
+          "Selected relevant rules: shiftMustBeOpenToRegisterOrders (step 1 enforces open shift) and singleEstablishmentPerAccount (tenant isolation context)"
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 38,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

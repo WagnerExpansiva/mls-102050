@@ -1,0 +1,67 @@
+{
+  "savedAt": "2026-06-25T20:06:21.678Z",
+  "agentName": "agentPlanOperationDefinition",
+  "stepId": 46,
+  "planning": null,
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitOperationDefinition",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "operationDefinition": {
+            "operationId": "sendOrderToKitchen",
+            "title": "Enviar pedido para cozinha",
+            "actor": "attendant",
+            "entity": "Order",
+            "kind": "update",
+            "reads": [
+              "Order",
+              "Order.status",
+              "Order.dailyShiftId",
+              "OrderItem",
+              "DailyShift"
+            ],
+            "writes": [
+              "Order",
+              "Order.status",
+              "Order.updatedAt"
+            ],
+            "rulesApplied": [
+              "shiftMustBeOpenToRegisterOrders"
+            ],
+            "story": {
+              "actor": "attendant",
+              "goal": "Despachar o pedido para produção na cozinha",
+              "soThat": "a cozinha receba e comece o preparo",
+              "steps": [
+                "Selecionar um Order aberto/rascunho",
+                "Validar que há itens e informações necessárias",
+                "Atualizar status do Order para enviado à cozinha",
+                "Confirmar que o pedido aparece na fila da cozinha"
+              ],
+              "outcome": "Pedido encaminhado para a cozinha com status atualizado"
+            }
+          }
+        },
+        "questions": [],
+        "trace": [
+          "Identified operationId equals selector: sendOrderToKitchen",
+          "Mapped actor as attendant from indexItem and story",
+          "Set entity to canonical ontology id Order with kind update",
+          "Defined reads: Order and Order.status to locate and verify draft state, Order.dailyShiftId and DailyShift to enforce shiftMustBeOpenToRegisterOrders, OrderItem to validate items exist",
+          "Defined writes: Order with Order.status (transition to sentToKitchen) and Order.updatedAt (timestamp change)",
+          "Selected rulesApplied: shiftMustBeOpenToRegisterOrders as the relevant business rule for this transition",
+          "Embedded the provided user story unchanged",
+          "No clarifying questions needed; context sufficient to complete intent-level BFF contract"
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 39,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

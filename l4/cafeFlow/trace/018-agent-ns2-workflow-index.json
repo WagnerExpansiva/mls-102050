@@ -1,0 +1,122 @@
+{
+  "savedAt": "2026-06-25T20:06:09.998Z",
+  "agentName": "agentNs2WorkflowIndex",
+  "stepId": 18,
+  "planning": {
+    "planId": "plan-workflow-index",
+    "dependsOn": [
+      "plan-behavior-classification"
+    ],
+    "executionMode": "sequential",
+    "executionHost": "client"
+  },
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitWorkflowIndex",
+      "arguments": {
+        "status": "needs_input",
+        "result": {
+          "workflows": [
+            {
+              "workflowId": "orderLifecycle",
+              "title": "Ciclo de vida do pedido (POS → cozinha → finalização/cancelamento)",
+              "executionMode": "sequential",
+              "trigger": "Atendente inicia um novo pedido no POS durante um DailyShift aberto",
+              "actors": [
+                "attendant",
+                "cook",
+                "cashier"
+              ],
+              "entities": [
+                "Order",
+                "OrderItem",
+                "DailyShift"
+              ],
+              "operationIds": [
+                "posFastOrderOps",
+                "sendOrderToKitchen"
+              ]
+            },
+            {
+              "workflowId": "openCloseDailyShift",
+              "title": "Abertura e fechamento de turno diário",
+              "executionMode": "sequential",
+              "trigger": "Caixa abre o turno no início do expediente e o fecha ao final",
+              "actors": [
+                "cashier"
+              ],
+              "entities": [
+                "DailyShift"
+              ],
+              "operationIds": [
+                "shiftCloseReport"
+              ]
+            },
+            {
+              "workflowId": "inventoryMovements",
+              "title": "Movimentação de estoque (entrada/saída/ajuste) e reabastecimento simples",
+              "executionMode": "sequential",
+              "trigger": "Gestor/owner registra uma movimentação de estoque ou reabastecimento",
+              "actors": [
+                "managerOwner"
+              ],
+              "entities": [
+                "InventoryItem",
+                "StockMovement"
+              ],
+              "operationIds": []
+            },
+            {
+              "workflowId": "kitchenUpdateStatus",
+              "title": "Atualizar status na cozinha (em preparo/pronto)",
+              "executionMode": "sequential",
+              "trigger": "Cozinha recebe pedidos enviados e atualiza andamento conforme produção",
+              "actors": [
+                "cook"
+              ],
+              "entities": [
+                "Order",
+                "OrderItem"
+              ],
+              "operationIds": []
+            },
+            {
+              "workflowId": "cancelOrder",
+              "title": "Cancelar pedido",
+              "executionMode": "sequential",
+              "trigger": "Caixa solicita cancelamento de um pedido existente",
+              "actors": [
+                "cashier"
+              ],
+              "entities": [
+                "Order",
+                "OrderItem",
+                "StockMovement",
+                "InventoryItem"
+              ],
+              "operationIds": []
+            }
+          ]
+        },
+        "questions": [
+          "Faltam operações classificadas para orquestrar os workflows: inventoryMovements, kitchenUpdateStatus e cancelOrder. Pode fornecer/confirmar os operationIds correspondentes (ex.: createStockMovement/applyStockMovement, updateKitchenStatus, cancelOrderAndReconcileStock)?",
+          "No workflow openCloseDailyShift: existe operação para abrir/fechar DailyShift (update) além do shiftCloseReport (query)? Se sim, qual o operationId?",
+          "No orderLifecycle: existe operação para finalizar/concluir Order (checkout/close) e/ou encaminhar para cancelamento? Se sim, quais operationIds?"
+        ],
+        "trace": [
+          "Input contained 5 workflows and 4 operations.",
+          "Mapped workflow entities to canonical ontology ids as provided.",
+          "Linked orderLifecycle to posFastOrderOps and sendOrderToKitchen by intent/entity match.",
+          "Linked openCloseDailyShift to shiftCloseReport; missing open/close shift operations.",
+          "No matching operationIds provided for inventory movements, kitchen status updates, or cancel order; left empty and raised questions per rule."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 37,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

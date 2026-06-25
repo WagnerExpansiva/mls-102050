@@ -1,0 +1,65 @@
+{
+  "savedAt": "2026-06-25T20:06:32.033Z",
+  "agentName": "agentPlanOperationDefinition",
+  "stepId": 44,
+  "planning": null,
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitOperationDefinition",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "operationDefinition": {
+            "operationId": "manageMenuItems",
+            "title": "Gerenciar itens do cardápio (CRUD + ativar/desativar)",
+            "actor": "managerOwner",
+            "entity": "MenuItem",
+            "kind": "update",
+            "reads": [
+              "MenuItem",
+              "MenuCategory"
+            ],
+            "writes": [
+              "MenuItem",
+              "MenuItem.status",
+              "MenuItem.isAvailable",
+              "MenuItem.price",
+              "MenuItem.name",
+              "MenuItem.description",
+              "MenuItem.menuCategoryId"
+            ],
+            "rulesApplied": [
+              "singleEstablishmentPerAccount"
+            ],
+            "story": {
+              "actor": "managerOwner",
+              "goal": "Criar, editar, ativar/desativar e remover itens do cardápio",
+              "soThat": "o POS e a cozinha usem um cardápio atualizado",
+              "steps": [
+                "Criar ou localizar um MenuItem",
+                "Atualizar nome, preço, descrição e categoria",
+                "Ativar/desativar disponibilidade do item",
+                "Excluir item quando aplicável"
+              ],
+              "outcome": "Cardápio consistente e atualizado"
+            }
+          }
+        },
+        "questions": [],
+        "trace": [
+          "Analyzed selector manageMenuItems and reduced context",
+          "Mapped actor to managerOwner, entity to MenuItem, and kind to update per provided indexItem and mutation intent",
+          "Identified reads on MenuItem (locate/edit) and MenuCategory (validate category reference)",
+          "Identified writes on MenuItem and specific fields managed during lifecycle: status, isAvailable, price, name, description, menuCategoryId",
+          "Included rule singleEstablishmentPerAccount from entityShape rulesApplied"
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 38,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

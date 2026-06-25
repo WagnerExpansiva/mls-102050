@@ -1,0 +1,82 @@
+{
+  "savedAt": "2026-06-25T20:05:16.593Z",
+  "agentName": "agentNs2EntityDefinition",
+  "stepId": 38,
+  "planning": null,
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitEntityDefinition",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "entityDefinition": {
+            "entityId": "Table",
+            "title": "Mesa",
+            "description": "Referência estável das mesas do salão para associar pedidos e acelerar operação.",
+            "kind": "mdm",
+            "ownership": "moduleOwned",
+            "statusEnum": [
+              "active",
+              "inactive"
+            ],
+            "fields": [
+              {
+                "fieldId": "tableId",
+                "type": "uuid",
+                "required": true,
+                "description": "Identificador único da mesa."
+              },
+              {
+                "fieldId": "name",
+                "type": "string",
+                "required": true,
+                "description": "Nome ou número da mesa para identificação no salão."
+              },
+              {
+                "fieldId": "status",
+                "type": "string",
+                "required": true,
+                "enum": [
+                  "active",
+                  "inactive"
+                ],
+                "description": "Situação atual da mesa no ciclo de vida."
+              },
+              {
+                "fieldId": "createdAt",
+                "type": "datetime",
+                "required": true,
+                "description": "Data e hora de criação do registro."
+              },
+              {
+                "fieldId": "updatedAt",
+                "type": "datetime",
+                "required": true,
+                "description": "Data e hora da última atualização do registro."
+              }
+            ],
+            "rulesApplied": [
+              "singleEstablishmentPerAccount"
+            ]
+          }
+        },
+        "questions": [],
+        "trace": [
+          "Selected entity Table (Mesa)",
+          "Defined identity field tableId as uuid",
+          "No outgoing relationships from Table; Order references Table via orderOptionalTable (manyToOneOptional) so no reference fields needed on Table",
+          "Added business field name for table identification",
+          "Added status field with enum [active, inactive] matching provided statusEnum",
+          "Added audit timestamps createdAt and updatedAt",
+          "Applied domain rule singleEstablishmentPerAccount"
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 43,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

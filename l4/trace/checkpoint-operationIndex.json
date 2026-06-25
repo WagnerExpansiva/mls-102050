@@ -1,0 +1,38 @@
+{
+  "indexName": "operationIndex",
+  "moduleName": "cafeFlow",
+  "approvedAt": "2026-06-25T20:06:03.856Z",
+  "findings": [],
+  "index": {
+    "operations": [
+      {
+        "operationId": "manageMenuItems",
+        "title": "Gerenciar itens do cardápio (CRUD + ativar/desativar)",
+        "actor": "managerOwner",
+        "entity": "MenuItem",
+        "kind": "update"
+      },
+      {
+        "operationId": "posFastOrderOps",
+        "title": "POS rápido: abrir pedido e adicionar/remover itens",
+        "actor": "attendant",
+        "entity": "Order",
+        "kind": "update"
+      },
+      {
+        "operationId": "sendOrderToKitchen",
+        "title": "Enviar pedido para cozinha",
+        "actor": "attendant",
+        "entity": "Order",
+        "kind": "update"
+      },
+      {
+        "operationId": "shiftCloseReport",
+        "title": "Gerar relatório de fechamento de turno",
+        "actor": "cashier",
+        "entity": "DailyShift",
+        "kind": "query"
+      }
+    ]
+  }
+}

@@ -1,0 +1,676 @@
+{
+  "savedAt": "2026-06-25T20:04:32.038Z",
+  "agentName": "agentNs2Finalize",
+  "stepId": 11,
+  "planning": {
+    "planId": "plan-finalize-solution-plan",
+    "dependsOn": [
+      "plan-blueprint-review"
+    ],
+    "executionMode": "sequential",
+    "executionHost": "client"
+  },
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitFinalDomainPlan",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "module": {
+            "moduleName": "cafeFlow",
+            "purpose": "Agilizar o atendimento de pedidos (POS), coordenar o status na cozinha, simplificar o fechamento por turno e manter um controle simples de estoque ligado aos ingredientes/insumos, com apoio de IA para insights de vendas.",
+            "businessDomain": "Food service (cafeterias e lanchonetes pequenas) — POS, cozinha, turno e estoque simples",
+            "languages": [
+              "pt-BR",
+              "en"
+            ],
+            "visualStyle": "Profissional, alto contraste e legibilidade para operação rápida (toques grandes, cores por status, modo balcão/cozinha)."
+          },
+          "actors": [
+            {
+              "actorId": "attendant",
+              "title": "Atendente",
+              "description": "Lança pedidos rapidamente no POS, associa mesa/takeout e acompanha andamento para entregar ao cliente."
+            },
+            {
+              "actorId": "cashier",
+              "title": "Caixa",
+              "description": "Finaliza pedidos no balcão, opera rotinas de turno (abertura/fechamento) e confere totais de vendas do período."
+            },
+            {
+              "actorId": "cook",
+              "title": "Cozinheiro",
+              "description": "Visualiza fila de pedidos, atualiza status de preparo e sinaliza itens prontos/indisponibilidades."
+            },
+            {
+              "actorId": "managerOwner",
+              "title": "Gerente/Proprietário",
+              "description": "Administra cardápio e estoque, acompanha dashboard/relatórios e usa insights (incl. IA) para decisões operacionais."
+            }
+          ],
+          "capabilities": [
+            {
+              "capabilityId": "orderLifecycle",
+              "title": "Ciclo de vida do pedido (POS → cozinha → finalização/cancelamento)",
+              "description": "Gerenciar pedidos ao longo do tempo: criação, edição, envio para cozinha, mudanças de status, finalização e cancelamento, garantindo rastreabilidade no turno e impacto em estoque.",
+              "actor": "attendant",
+              "priority": "now",
+              "behaviorHint": "workflow"
+            },
+            {
+              "capabilityId": "tableOrTakeoutHandling",
+              "title": "Operação por mesa ou takeout (atribuição/transferência)",
+              "description": "Associar pedido a mesa ou marcar como retirada; permitir transferir/alterar durante o atendimento conforme necessário.",
+              "actor": "attendant",
+              "priority": "soon",
+              "behaviorHint": "workflow"
+            },
+            {
+              "capabilityId": "openCloseDailyShift",
+              "title": "Abertura e fechamento de turno diário",
+              "description": "Abrir turno, operar durante o período e fechar com conferência e resumo (vendas e eventos relevantes), apoiando a disciplina operacional do dia.",
+              "actor": "cashier",
+              "priority": "now",
+              "behaviorHint": "workflow"
+            },
+            {
+              "capabilityId": "inventoryMovements",
+              "title": "Movimentação de estoque (entrada/saída/ajuste) e reabastecimento simples",
+              "description": "Registrar entradas, saídas e ajustes manuais de insumos, mantendo níveis atualizados além da baixa por venda.",
+              "actor": "managerOwner",
+              "priority": "now",
+              "behaviorHint": "workflow"
+            },
+            {
+              "capabilityId": "manageMenuItems",
+              "title": "Gerenciar itens do cardápio (CRUD + ativar/desativar)",
+              "description": "Criar/editar itens do cardápio com categoria, preço e receita (insumos e quantidades); ativar/desativar para controlar disponibilidade.",
+              "actor": "managerOwner",
+              "priority": "now",
+              "behaviorHint": "operation"
+            },
+            {
+              "capabilityId": "posFastOrderOps",
+              "title": "POS rápido: abrir pedido e adicionar/remover itens",
+              "description": "Operações rápidas de balcão para lançamento e edição de itens do pedido com mínima fricção.",
+              "actor": "attendant",
+              "priority": "now",
+              "behaviorHint": "operation"
+            },
+            {
+              "capabilityId": "sendOrderToKitchen",
+              "title": "Enviar pedido para cozinha",
+              "description": "Despachar pedido para a fila de produção, tornando-o visível para cozinha e iniciando o acompanhamento de status.",
+              "actor": "attendant",
+              "priority": "now",
+              "behaviorHint": "operation"
+            },
+            {
+              "capabilityId": "kitchenUpdateStatus",
+              "title": "Atualizar status na cozinha (em preparo/pronto)",
+              "description": "Atualizar o estado de preparo dos itens/pedidos para sincronizar atendimento e retirada/entrega. Tratado como transições controladas no workflow do pedido.",
+              "actor": "cook",
+              "priority": "now",
+              "behaviorHint": "workflow"
+            },
+            {
+              "capabilityId": "cancelOrder",
+              "title": "Cancelar pedido",
+              "description": "Cancelar pedido com motivo e efeitos consistentes (ex.: reversão/ajuste de estoque conforme regra) e registro no turno, respeitando transições válidas por estado.",
+              "actor": "cashier",
+              "priority": "now",
+              "behaviorHint": "workflow"
+            },
+            {
+              "capabilityId": "dashboardSummary",
+              "title": "Consultar dashboard (vendas de hoje/turno, mais vendidos, estoque baixo)",
+              "description": "Exibir visão operacional com resumo do período corrente, ranking de itens e alertas de estoque baixo.",
+              "actor": "managerOwner",
+              "priority": "soon",
+              "behaviorHint": "operation"
+            },
+            {
+              "capabilityId": "shiftCloseReport",
+              "title": "Gerar relatório de fechamento de turno",
+              "description": "Gerar/visualizar o relatório do turno com totais e ocorrências relevantes para conferência e decisão.",
+              "actor": "cashier",
+              "priority": "now",
+              "behaviorHint": "operation"
+            },
+            {
+              "capabilityId": "aiSalesDailySummary",
+              "title": "Assistente IA: gerar resumo de vendas do dia",
+              "description": "Gerar narrativa/insights do desempenho do dia/turno com base nos pedidos e itens vendidos (usa proxy LLM da plataforma).",
+              "actor": "managerOwner",
+              "priority": "soon",
+              "behaviorHint": "operation"
+            },
+            {
+              "capabilityId": "aiPromoSuggestions7d",
+              "title": "Assistente IA: sugerir itens para promover (últimos 7 dias)",
+              "description": "Sugerir itens para promoção com base em tendências dos últimos 7 dias (mais vendidos, margem/custo opcional, estoque), usando proxy LLM da plataforma.",
+              "actor": "managerOwner",
+              "priority": "soon",
+              "behaviorHint": "operation"
+            },
+            {
+              "capabilityId": "lowStockMonitoring",
+              "title": "Monitorar estoque baixo e priorizar reposição",
+              "description": "Detectar itens abaixo do nível mínimo e sugerir priorização com base no consumo recente; pode operar como agente recorrente.",
+              "actor": "managerOwner",
+              "priority": "later",
+              "behaviorHint": "either"
+            }
+          ],
+          "ontology": {
+            "entities": {
+              "MenuItem": {
+                "title": "Item do Cardápio",
+                "description": "Produto vendido no POS, com categoria, preço e receita (lista de insumos/quantidades) e sinalização de disponibilidade.",
+                "kind": "mdm",
+                "ownership": "moduleOwned",
+                "statusEnum": [
+                  "active",
+                  "inactive"
+                ]
+              },
+              "MenuCategory": {
+                "title": "Categoria de Cardápio",
+                "description": "Classificação para agrupar e filtrar itens do cardápio (ex.: cafés, salgados, doces).",
+                "kind": "mdm",
+                "ownership": "moduleOwned"
+              },
+              "InventoryItem": {
+                "title": "Item de Estoque (Insumo)",
+                "description": "Ingrediente/insumo controlado em estoque, com unidade de medida, nível mínimo e custo opcional.",
+                "kind": "mdm",
+                "ownership": "moduleOwned"
+              },
+              "RecipeComponent": {
+                "title": "Componente de Receita",
+                "description": "Vínculo persistente entre MenuItem e InventoryItem, registrando o quanto de cada insumo é consumido por venda.",
+                "kind": "supporting",
+                "ownership": "moduleOwned"
+              },
+              "Order": {
+                "title": "Pedido",
+                "description": "Pedido de venda (mesa ou takeout) com status e vínculo ao DailyShift em que ocorreu.",
+                "kind": "core",
+                "ownership": "moduleOwned",
+                "statusEnum": [
+                  "draft",
+                  "sentToKitchen",
+                  "inPreparation",
+                  "ready",
+                  "delivered",
+                  "cancelled"
+                ]
+              },
+              "OrderItem": {
+                "title": "Item do Pedido",
+                "description": "Linha do pedido com MenuItem, quantidade e preço aplicado no momento.",
+                "kind": "core",
+                "ownership": "moduleOwned"
+              },
+              "Table": {
+                "title": "Mesa",
+                "description": "Referência estável das mesas do salão para associar pedidos e acelerar operação.",
+                "kind": "mdm",
+                "ownership": "moduleOwned",
+                "statusEnum": [
+                  "active",
+                  "inactive"
+                ]
+              },
+              "DailyShift": {
+                "title": "Turno Diário",
+                "description": "Período operacional com abertura/fechamento, responsável e agregados para fechamento e conferência.",
+                "kind": "core",
+                "ownership": "moduleOwned",
+                "lifecycleStates": [
+                  "open",
+                  "closed"
+                ]
+              },
+              "StockMovement": {
+                "title": "Movimentação de Estoque",
+                "description": "Registro de entrada/saída/ajuste de InventoryItem. Pode ser estornado mantendo rastreabilidade.",
+                "kind": "event",
+                "ownership": "moduleOwned",
+                "lifecycleStates": [
+                  "posted",
+                  "voided"
+                ]
+              },
+              "SalesInsight": {
+                "title": "Insight de Vendas",
+                "description": "Registro imutável (append-only) de um insight/resumo gerado (manual ou IA) para auditoria e reconsulta.",
+                "kind": "supporting",
+                "ownership": "moduleOwned"
+              }
+            }
+          },
+          "rules": [
+            {
+              "ruleId": "platformProvidedAuthRbacI18n",
+              "title": "Recursos de autenticação/RBAC e i18n são fornecidos pela plataforma",
+              "description": "Não modelar usuários, papéis, permissões ou entidades de tradução; assumir controle de acesso e internacionalização como baseline da plataforma.",
+              "appliesTo": [
+                "Module",
+                "Actors",
+                "AllCapabilities"
+              ],
+              "layer": "platform-assumption"
+            },
+            {
+              "ruleId": "singleEstablishmentPerAccount",
+              "title": "Conta representa um único estabelecimento (sem filiais)",
+              "description": "Todos os dados operacionais pertencem a um único ponto de venda por conta/tenant.",
+              "appliesTo": [
+                "Table",
+                "DailyShift",
+                "Order",
+                "InventoryItem",
+                "MenuItem"
+              ],
+              "layer": "domain"
+            },
+            {
+              "ruleId": "inventoryAutoConsumptionByRecipeOnOrderCompletion",
+              "title": "Baixa automática de estoque por venda baseada na receita",
+              "description": "Ao finalizar (ou ao enviar para cozinha, conforme política) um Order não cancelado, registrar consumo conforme RecipeComponent, gerando StockMovement de saída e atualizando níveis.",
+              "appliesTo": [
+                "Order",
+                "OrderItem",
+                "RecipeComponent",
+                "StockMovement"
+              ],
+              "layer": "domain"
+            },
+            {
+              "ruleId": "orderCancellationStockHandling",
+              "title": "Cancelamento deve tratar efeitos em estoque e histórico",
+              "description": "Ao cancelar Order, manter histórico; se já houve baixa de insumos, registrar estorno/ajuste via StockMovement para manter rastreabilidade.",
+              "appliesTo": [
+                "Order",
+                "StockMovement"
+              ],
+              "layer": "domain"
+            },
+            {
+              "ruleId": "shiftMustBeOpenToRegisterOrders",
+              "title": "Pedidos só podem ser registrados em turno aberto",
+              "description": "Para consistência de fechamento, Order deve estar vinculado a um DailyShift em estado open no momento do registro.",
+              "appliesTo": [
+                "DailyShift",
+                "Order"
+              ],
+              "layer": "domain"
+            }
+          ],
+          "relationships": [
+            {
+              "relationshipId": "menuCategoryGroupsMenuItems",
+              "fromEntity": "MenuCategory",
+              "toEntity": "MenuItem",
+              "type": "oneToMany",
+              "description": "Uma MenuCategory agrupa vários MenuItem; cada MenuItem pertence a uma MenuCategory."
+            },
+            {
+              "relationshipId": "menuItemHasRecipeComponents",
+              "fromEntity": "MenuItem",
+              "toEntity": "RecipeComponent",
+              "type": "oneToMany",
+              "description": "Um MenuItem possui RecipeComponent que determinam consumo de InventoryItem."
+            },
+            {
+              "relationshipId": "recipeComponentUsesInventoryItem",
+              "fromEntity": "RecipeComponent",
+              "toEntity": "InventoryItem",
+              "type": "manyToOne",
+              "description": "Cada RecipeComponent aponta para um InventoryItem e a quantidade consumida."
+            },
+            {
+              "relationshipId": "orderHasOrderItems",
+              "fromEntity": "Order",
+              "toEntity": "OrderItem",
+              "type": "oneToMany",
+              "description": "Um Order possui OrderItem com itens vendidos e quantidades."
+            },
+            {
+              "relationshipId": "orderItemReferencesMenuItem",
+              "fromEntity": "OrderItem",
+              "toEntity": "MenuItem",
+              "type": "manyToOne",
+              "description": "Cada OrderItem referencia um MenuItem (preço é snapshot no OrderItem)."
+            },
+            {
+              "relationshipId": "orderOptionalTable",
+              "fromEntity": "Order",
+              "toEntity": "Table",
+              "type": "manyToOneOptional",
+              "description": "Order pode estar associado a uma Table (mesa) ou não (takeout)."
+            },
+            {
+              "relationshipId": "shiftHasOrders",
+              "fromEntity": "DailyShift",
+              "toEntity": "Order",
+              "type": "oneToMany",
+              "description": "Um DailyShift agrega os Order registrados durante seu período aberto."
+            },
+            {
+              "relationshipId": "inventoryItemHasMovements",
+              "fromEntity": "InventoryItem",
+              "toEntity": "StockMovement",
+              "type": "oneToMany",
+              "description": "StockMovement registram alterações de quantidade do InventoryItem ao longo do tempo."
+            },
+            {
+              "relationshipId": "orderMayGenerateStockMovements",
+              "fromEntity": "Order",
+              "toEntity": "StockMovement",
+              "type": "oneToManyOptional",
+              "description": "Consumos/estornos de insumos podem ser registrados como StockMovement vinculados ao Order."
+            },
+            {
+              "relationshipId": "shiftMayHaveInsights",
+              "fromEntity": "DailyShift",
+              "toEntity": "SalesInsight",
+              "type": "oneToManyOptional",
+              "description": "SalesInsight podem ser associados ao DailyShift para consulta no fechamento e histórico."
+            }
+          ],
+          "approvedArtifacts": {
+            "mdm": [
+              {
+                "title": "Cardápio (MenuCategory e MenuItem) como dados mestres com ativação/desativação",
+                "reason": "Cardápio muda com baixa frequência e precisa ser consistente no POS e relatórios."
+              },
+              {
+                "title": "InventoryItem como dado mestre com nível mínimo",
+                "reason": "Base para alertas de estoque baixo e para receita/baixa automática."
+              },
+              {
+                "title": "Table como referência opcional (introduzir após MVP)",
+                "reason": "Acelera operação e reduz erros de digitação em pedidos por mesa."
+              }
+            ],
+            "horizontals": [
+              {
+                "title": "Caixa/Financeiro simplificado (fechamento)",
+                "reason": "Fechamento por turno pode evoluir para sumarização de entradas/saídas e conferência; sem reconstruir pagamentos neste estágio."
+              }
+            ],
+            "plugins": [],
+            "agents": [
+              {
+                "title": "Agente de Insights de Vendas (diário e 7 dias)",
+                "reason": "Gera resumo e sugestões promocionais usando dados de pedidos/itens e chama o proxy LLM da plataforma."
+              },
+              {
+                "title": "Agente de Monitoramento de Estoque Baixo",
+                "reason": "Identifica itens abaixo do mínimo e sugere reposição baseada em consumo; útil mas pode vir depois do MVP."
+              }
+            ]
+          },
+          "decisions": [
+            {
+              "decisionId": "menuItemEntityModel",
+              "title": "Modelar Item do Cardápio com categoria, preço e receita (ingredientes)",
+              "decision": "Accepted (now)",
+              "reason": "Núcleo do produto: vendas rápidas no POS e controle simples de estoque dependem do vínculo entre itens vendidos e consumo de ingredientes.",
+              "affectedArtifacts": [
+                "ontology.entities.MenuItem",
+                "ontology.entities.RecipeComponent",
+                "capabilities.manageMenuItems"
+              ]
+            },
+            {
+              "decisionId": "inventoryItemEntityModel",
+              "title": "Modelar Item de Estoque (insumo) com unidade, nível mínimo e custo opcional",
+              "decision": "Accepted (now)",
+              "reason": "Controle de estoque e alertas de baixo estoque são foco; base para consumo por receita e ajustes manuais.",
+              "affectedArtifacts": [
+                "ontology.entities.InventoryItem",
+                "capabilities.inventoryMovements"
+              ]
+            },
+            {
+              "decisionId": "orderEntityAndLineItems",
+              "title": "Modelar Pedido e Itens do Pedido com status",
+              "decision": "Accepted (now)",
+              "reason": "Ciclo de vida do pedido e coordenação com cozinha são o coração do POS; precisa de estados e itens detalhados.",
+              "affectedArtifacts": [
+                "ontology.entities.Order",
+                "ontology.entities.OrderItem",
+                "capabilities.orderLifecycle",
+                "capabilities.posFastOrderOps"
+              ]
+            },
+            {
+              "decisionId": "tableReferenceEntity",
+              "title": "Modelar Mesa como referência estável do salão",
+              "decision": "Accepted (soon)",
+              "reason": "Pedidos por mesa estão no escopo, mas pode iniciar MVP com número livre; entidade melhora consistência e velocidade operacional.",
+              "affectedArtifacts": [
+                "ontology.entities.Table",
+                "capabilities.tableOrTakeoutHandling"
+              ]
+            },
+            {
+              "decisionId": "dailyShiftEntity",
+              "title": "Modelar Turno Diário com abertura/fechamento",
+              "decision": "Accepted (now)",
+              "reason": "Fechamento por turno e relatório são telas-chave e requisito operacional.",
+              "affectedArtifacts": [
+                "ontology.entities.DailyShift",
+                "capabilities.openCloseDailyShift",
+                "capabilities.shiftCloseReport"
+              ]
+            },
+            {
+              "decisionId": "posOrderLifecycleWorkflow",
+              "title": "Workflow do ciclo de vida do pedido (POS → cozinha → finalização/cancelamento)",
+              "decision": "Accepted (now)",
+              "reason": "Coordenação rápida e consistente entre atendimento e cozinha, reduzindo erros de status e de estoque.",
+              "affectedArtifacts": [
+                "capabilities.orderLifecycle"
+              ]
+            },
+            {
+              "decisionId": "tableVsTakeoutWorkflow",
+              "title": "Workflow para operação por mesa vs takeout",
+              "decision": "Accepted (soon)",
+              "reason": "Melhora flexibilidade no balcão em horários de pico.",
+              "affectedArtifacts": [
+                "capabilities.tableOrTakeoutHandling"
+              ]
+            },
+            {
+              "decisionId": "shiftOpenCloseWorkflow",
+              "title": "Workflow de abertura e fechamento de turno diário",
+              "decision": "Accepted (now)",
+              "reason": "Base para disciplina operacional e relatórios.",
+              "affectedArtifacts": [
+                "capabilities.openCloseDailyShift"
+              ]
+            },
+            {
+              "decisionId": "inventoryMovementWorkflow",
+              "title": "Workflow de movimentação de estoque",
+              "decision": "Accepted (now)",
+              "reason": "Controle simples de estoque precisa de operações manuais além da baixa automática.",
+              "affectedArtifacts": [
+                "capabilities.inventoryMovements",
+                "ontology.entities.StockMovement"
+              ]
+            },
+            {
+              "decisionId": "inventoryConsumptionRule",
+              "title": "Regra de baixa automática de estoque por venda baseada na receita",
+              "decision": "Accepted (now)",
+              "reason": "Sem isso o estoque não reflete vendas.",
+              "affectedArtifacts": [
+                "rules.inventoryAutoConsumptionByRecipeOnOrderCompletion"
+              ]
+            },
+            {
+              "decisionId": "menuManagementOperations",
+              "title": "Operações de gerenciamento de cardápio (CRUD + ativar/desativar)",
+              "decision": "Accepted (now)",
+              "reason": "Tela de gerenciamento de cardápio é chave; ativar/desativar é prática comum.",
+              "affectedArtifacts": [
+                "capabilities.manageMenuItems"
+              ]
+            },
+            {
+              "decisionId": "posOrderOperations",
+              "title": "Operações rápidas de POS",
+              "decision": "Accepted (now)",
+              "reason": "Atendimento rápido é o foco principal; operações sustentam o POS.",
+              "affectedArtifacts": [
+                "capabilities.posFastOrderOps",
+                "capabilities.sendOrderToKitchen"
+              ]
+            },
+            {
+              "decisionId": "kitchenStatusOperations",
+              "title": "Atualização de status de cozinha",
+              "decision": "Accepted (now)",
+              "reason": "Coordenação de cozinha foi explicitada; sem status o POS não fecha o loop.",
+              "affectedArtifacts": [
+                "capabilities.kitchenUpdateStatus"
+              ]
+            },
+            {
+              "decisionId": "stockAdjustmentOperations",
+              "title": "Operações de estoque e consulta de baixo estoque",
+              "decision": "Accepted (now)",
+              "reason": "Requisito direto e suporte ao dia a dia.",
+              "affectedArtifacts": [
+                "capabilities.inventoryMovements",
+                "capabilities.lowStockMonitoring"
+              ]
+            },
+            {
+              "decisionId": "dashboardSummaryOperation",
+              "title": "Operação de resumo do Dashboard",
+              "decision": "Accepted (soon)",
+              "reason": "Derivado após POS/estoque/turno estarem funcionando.",
+              "affectedArtifacts": [
+                "capabilities.dashboardSummary"
+              ]
+            },
+            {
+              "decisionId": "shiftCloseReportOperation",
+              "title": "Operação de relatório de fechamento de turno",
+              "decision": "Accepted (now)",
+              "reason": "Requisito explícito e encerra o ciclo operacional.",
+              "affectedArtifacts": [
+                "capabilities.shiftCloseReport"
+              ]
+            },
+            {
+              "decisionId": "salesInsightsAgent",
+              "title": "Agente IA de Insights de Vendas",
+              "decision": "Accepted (soon)",
+              "reason": "Funcionalidade LLM solicitada; depende de dados mínimos disponíveis.",
+              "affectedArtifacts": [
+                "capabilities.aiSalesDailySummary",
+                "capabilities.aiPromoSuggestions7d",
+                "ontology.entities.SalesInsight"
+              ]
+            },
+            {
+              "decisionId": "inventoryLowAgent",
+              "title": "Agente de monitoramento de estoque baixo",
+              "decision": "Accepted (later)",
+              "reason": "Agrega inteligência incremental, não essencial ao MVP.",
+              "affectedArtifacts": [
+                "capabilities.lowStockMonitoring"
+              ]
+            },
+            {
+              "decisionId": "simpleCashoutModule",
+              "title": "Módulo horizontal de Caixa/Financeiro simplificado para fechamento",
+              "decision": "Accepted (later)",
+              "reason": "Pode ser adiado; escopo atual não detalha pagamentos.",
+              "affectedArtifacts": [
+                "approvedArtifacts.horizontals"
+              ]
+            },
+            {
+              "decisionId": "avoidBuildingPlatformAuthAndI18n",
+              "title": "Assumir autenticação/RBAC e i18n como recursos da plataforma",
+              "decision": "Accepted (now)",
+              "reason": "Evita retrabalho e mantém alinhamento ao baseline da plataforma.",
+              "affectedArtifacts": [
+                "rules.platformProvidedAuthRbacI18n"
+              ]
+            },
+            {
+              "decisionId": "clarifySubflowsUnderOrderLifecycle",
+              "title": "Operações específicas são subfluxos do ciclo de vida do pedido",
+              "decision": "Accepted (now)",
+              "reason": "Reduz duplicidade de ownership: posFastOrderOps, sendOrderToKitchen, kitchenUpdateStatus e cancelOrder são ações dentro de orderLifecycle.",
+              "affectedArtifacts": [
+                "capabilities.orderLifecycle",
+                "capabilities.posFastOrderOps",
+                "capabilities.sendOrderToKitchen",
+                "capabilities.kitchenUpdateStatus",
+                "capabilities.cancelOrder"
+              ]
+            },
+            {
+              "decisionId": "alignStockMovementStateModel",
+              "title": "Alinhar estado de StockMovement para lifecycleStates",
+              "decision": "Accepted (now)",
+              "reason": "Entidade é stateful (pode ser estornada); lifecycleStates expressa melhor o ciclo do evento do que statusEnum.",
+              "affectedArtifacts": [
+                "ontology.entities.StockMovement"
+              ]
+            },
+            {
+              "decisionId": "salesInsightAppendOnly",
+              "title": "SalesInsight é registro imutável (append-only)",
+              "decision": "Accepted (now)",
+              "reason": "Evita necessidade de estados adicionais; auditoria por reconsulta é atendida.",
+              "affectedArtifacts": [
+                "ontology.entities.SalesInsight"
+              ]
+            }
+          ],
+          "deferredItems": [
+            {
+              "title": "Pagamentos e múltiplos métodos/integração fiscal",
+              "description": "Modelagem de Payment/recebíveis, conciliação e integrações fiscais/maquininha fora do Stage 1; avaliar ao evoluir o horizontal de Caixa/Financeiro."
+            },
+            {
+              "title": "Edição/void de OrderItem após envio para cozinha",
+              "description": "Caso seja necessário remover/substituir itens após sentToKitchen, definir regras de transição e possível entidade/evento de ajuste; por ora fica coberto pelo orderLifecycle com restrições."
+            },
+            {
+              "title": "Política de momento da baixa automática de estoque",
+              "description": "Decidir se a baixa ocorre em sentToKitchen ou delivered/finalização; atualmente parametrizado por política, detalhar quando implementar."
+            }
+          ]
+        },
+        "questions": [],
+        "trace": [
+          "Applied review: changed capabilities.kitchenUpdateStatus behaviorHint operation→workflow; changed capabilities.cancelOrder behaviorHint operation→workflow.",
+          "Applied review: converted StockMovement statusEnum to lifecycleStates [posted, voided] to align with stateful entity guidance; removed statusEnum from StockMovement.",
+          "Applied review: clarified SalesInsight as append-only immutable record; no lifecycle/status added.",
+          "Applied review: added decision clarifying operation capabilities are subflows under orderLifecycle to address overlap finding.",
+          "Kept ontology ids stable; removed no entities; no use-case-shaped entities introduced.",
+          "Stage-1 constraints respected: no pages/tables/persistence/metrics added."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 33,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

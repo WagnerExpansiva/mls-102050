@@ -1,0 +1,66 @@
+{
+  "savedAt": "2026-06-25T20:06:03.855Z",
+  "agentName": "agentPlanOperationIndex",
+  "stepId": 20,
+  "planning": {
+    "planId": "plan-operation-index",
+    "dependsOn": [
+      "plan-behavior-classification"
+    ],
+    "executionMode": "sequential",
+    "executionHost": "client"
+  },
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitOperationIndex",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "operations": [
+            {
+              "operationId": "manageMenuItems",
+              "title": "Gerenciar itens do cardápio (CRUD + ativar/desativar)",
+              "actor": "managerOwner",
+              "entity": "MenuItem",
+              "kind": "update"
+            },
+            {
+              "operationId": "posFastOrderOps",
+              "title": "POS rápido: abrir pedido e adicionar/remover itens",
+              "actor": "attendant",
+              "entity": "Order",
+              "kind": "update"
+            },
+            {
+              "operationId": "sendOrderToKitchen",
+              "title": "Enviar pedido para cozinha",
+              "actor": "attendant",
+              "entity": "Order",
+              "kind": "update"
+            },
+            {
+              "operationId": "shiftCloseReport",
+              "title": "Gerar relatório de fechamento de turno",
+              "actor": "cashier",
+              "entity": "DailyShift",
+              "kind": "query"
+            }
+          ]
+        },
+        "questions": [],
+        "trace": [
+          "Input provided classified operations list with 4 operations.",
+          "Workflows listed are already covered; no additional operations added.",
+          "Validated entities against provided ontology ids: MenuItem, Order, DailyShift are present.",
+          "Produced operation index mirroring classified operations and keeping stable operationIds."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 36,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

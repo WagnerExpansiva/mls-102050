@@ -1,0 +1,88 @@
+{
+  "savedAt": "2026-06-25T20:05:21.828Z",
+  "agentName": "agentNs2EntityDefinition",
+  "stepId": 36,
+  "planning": null,
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitEntityDefinition",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "entityDefinition": {
+            "entityId": "SalesInsight",
+            "title": "Insight de Vendas",
+            "description": "Registro imutável (append-only) de um insight/resumo gerado (manual ou IA) para auditoria e reconsulta.",
+            "kind": "supporting",
+            "ownership": "moduleOwned",
+            "fields": [
+              {
+                "fieldId": "salesInsightId",
+                "type": "uuid",
+                "required": true,
+                "description": "Identificador único do insight de vendas"
+              },
+              {
+                "fieldId": "dailyShiftId",
+                "type": "uuid",
+                "required": false,
+                "description": "Referência ao turno diário ao qual o insight está associado"
+              },
+              {
+                "fieldId": "title",
+                "type": "string",
+                "required": true,
+                "description": "Título do insight"
+              },
+              {
+                "fieldId": "content",
+                "type": "text",
+                "required": true,
+                "description": "Conteúdo completo do insight ou resumo gerado"
+              },
+              {
+                "fieldId": "source",
+                "type": "string",
+                "required": true,
+                "description": "Origem da geração do insight: manual por usuário ou automático por IA",
+                "enum": [
+                  "manual",
+                  "ai"
+                ]
+              },
+              {
+                "fieldId": "generatedAt",
+                "type": "datetime",
+                "required": true,
+                "description": "Data e hora em que o insight foi gerado"
+              },
+              {
+                "fieldId": "createdAt",
+                "type": "datetime",
+                "required": true,
+                "description": "Data e hora de criação do registro"
+              },
+              {
+                "fieldId": "updatedAt",
+                "type": "datetime",
+                "required": true,
+                "description": "Data e hora da última atualização do registro"
+              }
+            ],
+            "rulesApplied": []
+          }
+        },
+        "questions": [],
+        "trace": [
+          "SalesInsight definido como entidade supporting moduleOwned com identidade uuid, referência opcional a DailyShift, atributos de negócio (título, conteúdo, origem, data de geração) e timestamps de auditoria createdAt/updatedAt. Regras: nenhuma."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 44,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

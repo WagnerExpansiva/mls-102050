@@ -1,0 +1,68 @@
+{
+  "savedAt": "2026-06-25T20:06:32.047Z",
+  "agentName": "agentNs2WorkflowDefinition",
+  "stepId": 51,
+  "planning": null,
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitWorkflowDefinition",
+      "arguments": {
+        "status": "ok",
+        "trace": [
+          "Resolving workflow definition for selector: inventoryMovements",
+          "Adopting StockMovement lifecycle states [posted, voided] as workflow states",
+          "Mapping single transition posted→voided for reversal/voiding by managerOwner",
+          "Assembling sequential execution model with empty operationIds"
+        ],
+        "questions": [],
+        "result": {
+          "workflowDefinition": {
+            "workflowId": "inventoryMovements",
+            "title": "Movimentação de estoque (entrada/saída/ajuste) e reabastecimento simples",
+            "executionMode": "sequential",
+            "trigger": "Gestor/owner registra uma movimentação de estoque ou reabastecimento",
+            "actors": [
+              "managerOwner"
+            ],
+            "states": [
+              "posted",
+              "voided"
+            ],
+            "transitions": [
+              {
+                "from": "posted",
+                "to": "voided",
+                "on": "void",
+                "by": "managerOwner"
+              }
+            ],
+            "operationIds": [],
+            "entities": [
+              "InventoryItem",
+              "StockMovement"
+            ],
+            "rulesApplied": [],
+            "story": {
+              "actor": "managerOwner",
+              "goal": "Registrar entradas, saídas e ajustes de estoque",
+              "soThat": "o saldo de InventoryItem fique correto e suporte reposição simples",
+              "steps": [
+                "Localizar o InventoryItem a movimentar",
+                "Criar um StockMovement (entrada/saída/ajuste) com quantidade, motivo e data/hora",
+                "Aplicar o StockMovement atualizando o saldo do InventoryItem",
+                "Revisar histórico de movimentações para auditoria simples"
+              ],
+              "outcome": "Estoque atualizado com rastreabilidade por movimentação"
+            }
+          }
+        }
+      }
+    },
+    "status": "completed",
+    "stepId": 39,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

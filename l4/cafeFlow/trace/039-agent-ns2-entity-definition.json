@@ -1,0 +1,106 @@
+{
+  "savedAt": "2026-06-25T20:05:11.383Z",
+  "agentName": "agentNs2EntityDefinition",
+  "stepId": 39,
+  "planning": null,
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitEntityDefinition",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "entityDefinition": {
+            "entityId": "Order",
+            "title": "Pedido",
+            "description": "Pedido de venda (mesa ou takeout) com status e vínculo ao DailyShift em que ocorreu.",
+            "kind": "core",
+            "ownership": "moduleOwned",
+            "statusEnum": [
+              "draft",
+              "sentToKitchen",
+              "inPreparation",
+              "ready",
+              "delivered",
+              "cancelled"
+            ],
+            "lifecycleStates": [
+              "draft",
+              "sentToKitchen",
+              "inPreparation",
+              "ready",
+              "delivered",
+              "cancelled"
+            ],
+            "rulesApplied": [
+              "singleEstablishmentPerAccount",
+              "inventoryAutoConsumptionByRecipeOnOrderCompletion",
+              "orderCancellationStockHandling",
+              "shiftMustBeOpenToRegisterOrders"
+            ],
+            "fields": [
+              {
+                "fieldId": "orderId",
+                "type": "uuid",
+                "required": true,
+                "description": "Identificador único do pedido."
+              },
+              {
+                "fieldId": "status",
+                "type": "string",
+                "required": true,
+                "description": "Status atual do pedido no ciclo de vida.",
+                "enum": [
+                  "draft",
+                  "sentToKitchen",
+                  "inPreparation",
+                  "ready",
+                  "delivered",
+                  "cancelled"
+                ]
+              },
+              {
+                "fieldId": "dailyShiftId",
+                "type": "DailyShift",
+                "required": true,
+                "description": "Referência ao turno (DailyShift) em que o pedido foi registrado."
+              },
+              {
+                "fieldId": "tableId",
+                "type": "Table",
+                "required": false,
+                "description": "Referência opcional à mesa (Table). Ausente para pedidos takeout."
+              },
+              {
+                "fieldId": "createdAt",
+                "type": "datetime",
+                "required": true,
+                "description": "Data e hora de criação do registro."
+              },
+              {
+                "fieldId": "updatedAt",
+                "type": "datetime",
+                "required": true,
+                "description": "Data e hora da última atualização do registro."
+              }
+            ]
+          }
+        },
+        "questions": [],
+        "trace": [
+          "Definido campo identidade orderId do tipo uuid",
+          "Adicionado campo status do tipo string com enum dos estados do ciclo de vida do pedido",
+          "Adicionada referência obrigatória dailyShiftId para a entidade DailyShift conforme relacionamento shiftHasOrders",
+          "Adicionada referência opcional tableId para a entidade Table conforme relacionamento orderOptionalTable",
+          "Incluídos campos de auditoria createdAt e updatedAt do tipo datetime",
+          "Mapeadas as 4 regras de domínio aplicáveis ao Order em rulesApplied"
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 43,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

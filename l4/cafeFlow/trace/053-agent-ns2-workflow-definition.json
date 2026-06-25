@@ -1,0 +1,83 @@
+{
+  "savedAt": "2026-06-25T20:07:18.731Z",
+  "agentName": "agentNs2WorkflowDefinition",
+  "stepId": 53,
+  "planning": null,
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitWorkflowDefinition",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "workflowDefinition": {
+            "workflowId": "cancelOrder",
+            "title": "Cancelar pedido",
+            "executionMode": "sequential",
+            "trigger": "Caixa solicita cancelamento de um pedido existente",
+            "actors": [
+              "cashier"
+            ],
+            "states": [
+              "sentToKitchen",
+              "inPreparation",
+              "cancelled"
+            ],
+            "transitions": [
+              {
+                "from": "sentToKitchen",
+                "to": "inPreparation",
+                "on": "confirmCancellation",
+                "by": "cashier",
+                "guard": "orderIsCancellable"
+              },
+              {
+                "from": "inPreparation",
+                "to": "cancelled",
+                "on": "finalizeCancellation",
+                "by": "system"
+              }
+            ],
+            "operationIds": [],
+            "entities": [
+              "Order",
+              "OrderItem",
+              "StockMovement",
+              "InventoryItem"
+            ],
+            "rulesApplied": [
+              "orderCancellationEligibilityRule",
+              "stockReversalOnCancellationRule",
+              "orderStatusTransitionToCancelledRule"
+            ],
+            "story": {
+              "actor": "cashier",
+              "goal": "Cancelar um pedido já registrado",
+              "soThat": "o histórico e os efeitos no estoque permaneçam corretos",
+              "steps": [
+                "Localizar o Order a ser cancelado",
+                "Validar elegibilidade de cancelamento conforme status atual",
+                "Confirmar o cancelamento informando motivo",
+                "Atualizar status do Order para cancelado e registrar histórico",
+                "Tratar efeitos no estoque (ex.: estornar baixa automática se aplicável, registrando StockMovement de ajuste)"
+              ],
+              "outcome": "Pedido cancelado com histórico e estoque reconciliados"
+            }
+          }
+        },
+        "questions": [],
+        "trace": [
+          "Defined workflow states using Order lifecycle states: sentToKitchen, inPreparation, cancelled",
+          "Mapped cancellation process to sequential workflow with cashier confirmation and system finalization",
+          "Reused exact entity IDs from ontology: Order, OrderItem, StockMovement, InventoryItem",
+          "Preserved provided story and trigger verbatim"
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 38,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

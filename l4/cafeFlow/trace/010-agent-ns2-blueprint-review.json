@@ -1,0 +1,83 @@
+{
+  "savedAt": "2026-06-25T20:03:40.814Z",
+  "agentName": "agentNs2BlueprintReview",
+  "stepId": 10,
+  "planning": {
+    "planId": "plan-blueprint-review",
+    "dependsOn": [
+      "plan-solution-blueprint"
+    ],
+    "executionMode": "sequential",
+    "executionHost": "client"
+  },
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitBlueprintReview",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "summary": "Blueprint consistente: todos capabilities têm ator, entidades são conhecidas e regras referenciam entidades existentes. Pequenas lacunas: algumas entidades/capabilities stateful sem lifecycle explícito e alguns behaviorHint possivelmente subestimam workflow.",
+          "findings": [
+            {
+              "severity": "warning",
+              "code": "ENTITY_STATEFUL_NO_LIFECYCLE",
+              "message": "Entidade parece stateful (movimentos podem ser estornados), mas não possui lifecycleStates explícitos; usa statusEnum. Se o padrão esperado é lifecycleStates para processos/estado, considerar alinhar.",
+              "path": "ontology.entities.StockMovement"
+            },
+            {
+              "severity": "warning",
+              "code": "ENTITY_STATEFUL_NO_LIFECYCLE",
+              "message": "Entidade de insight tende a ter estados (ex.: gerado/aprovado/publicado) ou ao menos timestamps; não há lifecycleStates/statusEnum. Se for apenas registro imutável, explicitar como append-only.",
+              "path": "ontology.entities.SalesInsight"
+            },
+            {
+              "severity": "warning",
+              "code": "CAPABILITY_BEHAVIORHINT_MISMATCH",
+              "message": "Atualizar status na cozinha envolve transições de estado do pedido/itens; pode se comportar como workflow em vez de operation (especialmente com múltiplos passos/filas).",
+              "path": "capabilities[kitchenUpdateStatus].behaviorHint"
+            },
+            {
+              "severity": "warning",
+              "code": "CAPABILITY_BEHAVIORHINT_MISMATCH",
+              "message": "Cancelar pedido pode exigir validações por estado (draft/sentToKitchen/etc.) e efeitos em estoque; pode ser melhor tratado como workflow (ou operação com regra de transição bem definida).",
+              "path": "capabilities[cancelOrder].behaviorHint"
+            },
+            {
+              "severity": "info",
+              "code": "CAPABILITY_OVERLAP",
+              "message": "Há sobreposição entre 'orderLifecycle' (workflow) e operações específicas ('posFastOrderOps','sendOrderToKitchen','kitchenUpdateStatus','cancelOrder'). Isso é ok, mas pode gerar duplicidade de planejamento/ownership; considerar explicitar que as operações são subfluxos do workflow principal.",
+              "path": "capabilities"
+            },
+            {
+              "severity": "info",
+              "code": "ENTITY_NO_DIRECT_CAPABILITY",
+              "message": "OrderItem não tem capability dedicada (aparece indiretamente em POS rápido e ciclo de vida). Ok, mas se precisar de edição/void por item após envio à cozinha, pode requerer capability/regra adicional.",
+              "path": "ontology.entities.OrderItem"
+            }
+          ]
+        },
+        "questions": [
+          "StockMovement deve ser modelado como entidade com lifecycleStates (posted/voided) ou como event append-only (com movimentos de estorno como novos eventos) sem 'voided'?",
+          "SalesInsight é apenas um log imutável (append-only) ou precisa de estados (rascunho/aprovado/publicado) e vínculo explícito a período (dia/turno)?",
+          "Após 'sentToKitchen', é permitido editar Order/OrderItems? Se sim, como versionar/reconciliar com cozinha e com baixa de estoque?",
+          "A baixa automática ocorre em qual transição exatamente (sendToKitchen vs completion/delivered)? O rule menciona política variável; deseja fixar para evitar ambiguidade no fluxo?",
+          "A entidade Table precisará de capability de CRUD/ativar-desativar (gerência de mesas) ou é fornecida externamente?"
+        ],
+        "trace": [
+          "Checked: every capability has actor -> OK",
+          "Checked: entities ownership -> all moduleOwned -> OK",
+          "Checked: rules appliesTo reference known entities -> OK",
+          "Checked: capabilities referencing entities implicitly; no dangling references found",
+          "Checked: stateful entities lifecycle -> DailyShift has lifecycleStates; Order has statusEnum; StockMovement has statusEnum; SalesInsight none",
+          "Checked: behaviorHint alignment for clearly workflow-like capabilities"
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 32,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

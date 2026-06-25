@@ -1,0 +1,217 @@
+{
+  "indexName": "behaviorIndex",
+  "moduleName": "cafeFlow",
+  "approvedAt": "2026-06-25T20:05:58.171Z",
+  "findings": [],
+  "index": {
+    "workflows": [
+      {
+        "workflowId": "orderLifecycle",
+        "title": "Ciclo de vida do pedido (POS → cozinha → finalização/cancelamento)",
+        "actor": "attendant",
+        "entities": [
+          "Order",
+          "OrderItem",
+          "DailyShift"
+        ],
+        "capabilityIds": [
+          "orderLifecycle"
+        ],
+        "story": {
+          "actor": "attendant",
+          "goal": "Registrar um pedido no POS, enviar para a cozinha e acompanhar até a finalização",
+          "soThat": "o atendimento seja rápido e a cozinha receba e produza os itens corretamente",
+          "steps": [
+            "Verificar que existe um DailyShift aberto para registrar pedidos",
+            "Criar um Order no POS (mesa ou takeout conforme o contexto operacional)",
+            "Adicionar e/ou remover OrderItem conforme solicitações do cliente",
+            "Enviar o Order para a cozinha (mudando o estado para enviado/em produção)",
+            "Acompanhar o progresso do pedido até ficar pronto e entregue",
+            "Finalizar o Order (marcando como concluído) ou encaminhar para cancelamento quando necessário"
+          ],
+          "outcome": "Pedido registrado, preparado e finalizado (ou encaminhado para cancelamento) com histórico consistente"
+        }
+      },
+      {
+        "workflowId": "openCloseDailyShift",
+        "title": "Abertura e fechamento de turno diário",
+        "actor": "cashier",
+        "entities": [
+          "DailyShift"
+        ],
+        "capabilityIds": [
+          "openCloseDailyShift"
+        ],
+        "story": {
+          "actor": "cashier",
+          "goal": "Abrir o turno para permitir vendas e fechá-lo ao final do período",
+          "soThat": "as vendas sejam controladas por turno e o caixa feche com conferência",
+          "steps": [
+            "Abrir um DailyShift informando data/hora e valores iniciais (ex.: fundo de caixa)",
+            "Manter o DailyShift em estado aberto durante o atendimento",
+            "Encerrar o DailyShift ao final do período confirmando valores e observações",
+            "Marcar o DailyShift como fechado, bloqueando novos pedidos nesse turno"
+          ],
+          "outcome": "Turno registrado com status aberto/fechado e base para relatórios"
+        }
+      },
+      {
+        "workflowId": "inventoryMovements",
+        "title": "Movimentação de estoque (entrada/saída/ajuste) e reabastecimento simples",
+        "actor": "managerOwner",
+        "entities": [
+          "InventoryItem",
+          "StockMovement"
+        ],
+        "capabilityIds": [
+          "inventoryMovements"
+        ],
+        "story": {
+          "actor": "managerOwner",
+          "goal": "Registrar entradas, saídas e ajustes de estoque",
+          "soThat": "o saldo de InventoryItem fique correto e suporte reposição simples",
+          "steps": [
+            "Localizar o InventoryItem a movimentar",
+            "Criar um StockMovement (entrada/saída/ajuste) com quantidade, motivo e data/hora",
+            "Aplicar o StockMovement atualizando o saldo do InventoryItem",
+            "Revisar histórico de movimentações para auditoria simples"
+          ],
+          "outcome": "Estoque atualizado com rastreabilidade por movimentação"
+        }
+      },
+      {
+        "workflowId": "kitchenUpdateStatus",
+        "title": "Atualizar status na cozinha (em preparo/pronto)",
+        "actor": "cook",
+        "entities": [
+          "Order",
+          "OrderItem"
+        ],
+        "capabilityIds": [
+          "kitchenUpdateStatus"
+        ],
+        "story": {
+          "actor": "cook",
+          "goal": "Atualizar o andamento dos pedidos recebidos na cozinha",
+          "soThat": "o salão saiba o que está em preparo e o que está pronto para entrega",
+          "steps": [
+            "Visualizar lista de Orders enviados para a cozinha",
+            "Selecionar um Order e iniciar preparo, mudando status para em preparo",
+            "Quando itens/pedido estiverem prontos, atualizar status para pronto",
+            "Manter o status atualizado conforme a produção avança"
+          ],
+          "outcome": "Status de cozinha refletindo o andamento real dos pedidos"
+        }
+      },
+      {
+        "workflowId": "cancelOrder",
+        "title": "Cancelar pedido",
+        "actor": "cashier",
+        "entities": [
+          "Order",
+          "OrderItem",
+          "StockMovement",
+          "InventoryItem"
+        ],
+        "capabilityIds": [
+          "cancelOrder"
+        ],
+        "story": {
+          "actor": "cashier",
+          "goal": "Cancelar um pedido já registrado",
+          "soThat": "o histórico e os efeitos no estoque permaneçam corretos",
+          "steps": [
+            "Localizar o Order a ser cancelado",
+            "Validar elegibilidade de cancelamento conforme status atual",
+            "Confirmar o cancelamento informando motivo",
+            "Atualizar status do Order para cancelado e registrar histórico",
+            "Tratar efeitos no estoque (ex.: estornar baixa automática se aplicável, registrando StockMovement de ajuste)"
+          ],
+          "outcome": "Pedido cancelado com histórico e estoque reconciliados"
+        }
+      }
+    ],
+    "operations": [
+      {
+        "operationId": "manageMenuItems",
+        "title": "Gerenciar itens do cardápio (CRUD + ativar/desativar)",
+        "actor": "managerOwner",
+        "entity": "MenuItem",
+        "kind": "update",
+        "capabilityId": "manageMenuItems",
+        "story": {
+          "actor": "managerOwner",
+          "goal": "Criar, editar, ativar/desativar e remover itens do cardápio",
+          "soThat": "o POS e a cozinha usem um cardápio atualizado",
+          "steps": [
+            "Criar ou localizar um MenuItem",
+            "Atualizar nome, preço, descrição e categoria",
+            "Ativar/desativar disponibilidade do item",
+            "Excluir item quando aplicável"
+          ],
+          "outcome": "Cardápio consistente e atualizado"
+        }
+      },
+      {
+        "operationId": "posFastOrderOps",
+        "title": "POS rápido: abrir pedido e adicionar/remover itens",
+        "actor": "attendant",
+        "entity": "Order",
+        "kind": "update",
+        "capabilityId": "posFastOrderOps",
+        "story": {
+          "actor": "attendant",
+          "goal": "Abrir rapidamente um pedido e ajustar seus itens",
+          "soThat": "o atendimento no balcão/mesa seja ágil",
+          "steps": [
+            "Criar um novo Order (em turno aberto)",
+            "Adicionar OrderItem ao Order com quantidades e observações",
+            "Remover ou ajustar OrderItem quando necessário",
+            "Salvar o Order em estado rascunho/aberto"
+          ],
+          "outcome": "Pedido aberto com itens corretamente registrados"
+        }
+      },
+      {
+        "operationId": "sendOrderToKitchen",
+        "title": "Enviar pedido para cozinha",
+        "actor": "attendant",
+        "entity": "Order",
+        "kind": "update",
+        "capabilityId": "sendOrderToKitchen",
+        "story": {
+          "actor": "attendant",
+          "goal": "Despachar o pedido para produção na cozinha",
+          "soThat": "a cozinha receba e comece o preparo",
+          "steps": [
+            "Selecionar um Order aberto/rascunho",
+            "Validar que há itens e informações necessárias",
+            "Atualizar status do Order para enviado à cozinha",
+            "Confirmar que o pedido aparece na fila da cozinha"
+          ],
+          "outcome": "Pedido encaminhado para a cozinha com status atualizado"
+        }
+      },
+      {
+        "operationId": "shiftCloseReport",
+        "title": "Gerar relatório de fechamento de turno",
+        "actor": "cashier",
+        "entity": "DailyShift",
+        "kind": "query",
+        "capabilityId": "shiftCloseReport",
+        "story": {
+          "actor": "cashier",
+          "goal": "Gerar um relatório do turno para conferência e registro",
+          "soThat": "o fechamento seja auditável e fácil de revisar",
+          "steps": [
+            "Selecionar o DailyShift a reportar (normalmente o turno atual)",
+            "Consultar totais de vendas e indicadores do turno",
+            "Gerar e visualizar o relatório de fechamento",
+            "Exportar/imprimir quando necessário"
+          ],
+          "outcome": "Relatório de fechamento disponível para conferência"
+        }
+      }
+    ]
+  }
+}
