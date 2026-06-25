@@ -1,0 +1,84 @@
+/// <mls fileReference="_102050_/l4/workflows/posOrderLifecycle.defs.ts" enhancement="_blank"/>
+
+export const workflowPosOrderLifecycle = {
+  "workflowId": "posOrderLifecycle",
+  "title": "Registrar e manter pedido no POS (mesa/takeout)",
+  "executionMode": "sequential",
+  "trigger": "Atendente inicia um novo atendimento/pedido (mesa ou takeout) no POS",
+  "actors": [
+    "attendant"
+  ],
+  "states": [
+    "draft",
+    "open",
+    "submitted",
+    "closed",
+    "cancelled"
+  ],
+  "transitions": [
+    {
+      "from": "draft",
+      "to": "open",
+      "on": "createOrder",
+      "by": "attendant"
+    },
+    {
+      "from": "open",
+      "to": "open",
+      "on": "updateLines",
+      "by": "attendant"
+    },
+    {
+      "from": "open",
+      "to": "submitted",
+      "on": "confirmOrder",
+      "by": "attendant"
+    },
+    {
+      "from": "submitted",
+      "to": "open",
+      "on": "reopenOrder",
+      "by": "attendant"
+    },
+    {
+      "from": "submitted",
+      "to": "closed",
+      "on": "closeService",
+      "by": "attendant"
+    },
+    {
+      "from": "open",
+      "to": "cancelled",
+      "on": "cancelOrder",
+      "by": "attendant"
+    },
+    {
+      "from": "draft",
+      "to": "cancelled",
+      "on": "cancelOrder",
+      "by": "attendant"
+    }
+  ],
+  "operationIds": [],
+  "entities": [
+    "Order",
+    "OrderLine",
+    "Table",
+    "MenuItem"
+  ],
+  "rulesApplied": [],
+  "story": {
+    "actor": "attendant",
+    "goal": "Registrar um pedido para uma mesa ou takeout e mantê-lo atualizado durante o atendimento",
+    "soThat": "a cozinha e o caixa tenham uma fonte única e correta do que deve ser preparado e cobrado",
+    "steps": [
+      "Selecionar tipo do pedido (mesa ou takeout) e, se aplicável, escolher a Table",
+      "Criar Order e adicionar/remover/editar OrderLine com base nos MenuItem",
+      "Adicionar observações e quantidades conforme solicitado pelo cliente",
+      "Salvar/confirmar o pedido para envio para a fila da cozinha e permitir alterações enquanto o atendimento estiver aberto"
+    ],
+    "outcome": "Order criado/atualizado com OrderLines corretas e pronto para preparo e posterior finalização"
+  }
+} as const;
+
+export default workflowPosOrderLifecycle;

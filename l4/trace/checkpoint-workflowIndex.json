@@ -1,0 +1,74 @@
+{
+  "indexName": "workflowIndex",
+  "moduleName": "cafeFlow",
+  "approvedAt": "2026-06-25T17:42:23.215Z",
+  "findings": [],
+  "index": {
+    "workflows": [
+      {
+        "workflowId": "posOrderLifecycle",
+        "title": "Registrar e manter pedido no POS (mesa/takeout)",
+        "executionMode": "sequential",
+        "trigger": "Atendente inicia um novo atendimento/pedido (mesa ou takeout) no POS",
+        "actors": [
+          "attendant"
+        ],
+        "entities": [
+          "Order",
+          "OrderLine",
+          "Table",
+          "MenuItem"
+        ],
+        "operationIds": []
+      },
+      {
+        "workflowId": "kitchenQueueAndStatusFlow",
+        "title": "Fila da cozinha e atualização de status do pedido",
+        "executionMode": "sequential",
+        "trigger": "Cozinheiro abre a tela/fila da cozinha para pedidos pendentes",
+        "actors": [
+          "cook"
+        ],
+        "entities": [
+          "Order",
+          "OrderLine"
+        ],
+        "operationIds": []
+      },
+      {
+        "workflowId": "orderFinalizationAndInventoryConsumption",
+        "title": "Finalizar pedido e consumir estoque automaticamente",
+        "executionMode": "sequential",
+        "trigger": "Caixa decide finalizar um pedido dentro de um turno (DailyShift) aberto",
+        "actors": [
+          "cashier"
+        ],
+        "entities": [
+          "Order",
+          "DailyShift",
+          "StockMovement",
+          "StockItem",
+          "RecipeLine",
+          "MenuItem",
+          "OrderLine"
+        ],
+        "operationIds": []
+      },
+      {
+        "workflowId": "dailyShiftOpenCloseWorkflow",
+        "title": "Abrir e fechar turno diário",
+        "executionMode": "sequential",
+        "trigger": "Gerente/owner inicia o dia/turno (abrir) ou encerra (fechar)",
+        "actors": [
+          "managerOwner"
+        ],
+        "entities": [
+          "DailyShift"
+        ],
+        "operationIds": [
+          "generateShiftCloseReportOp"
+        ]
+      }
+    ]
+  }
+}

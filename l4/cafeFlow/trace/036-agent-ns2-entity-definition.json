@@ -1,0 +1,117 @@
+{
+  "savedAt": "2026-06-25T17:41:36.252Z",
+  "agentName": "agentNs2EntityDefinition",
+  "stepId": 36,
+  "planning": null,
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitEntityDefinition",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "entityDefinition": {
+            "entityId": "Order",
+            "title": "Pedido",
+            "description": "Registro do atendimento (mesa ou takeout) contendo itens, quantidades, timestamps e status para coordenação POS↔cozinha↔entrega e base para relatórios.",
+            "kind": "core",
+            "ownership": "moduleOwned",
+            "lifecycleStates": [
+              "draft",
+              "sentToKitchen",
+              "inPreparation",
+              "ready",
+              "completed",
+              "cancelled"
+            ],
+            "statusEnum": [
+              "draft",
+              "sentToKitchen",
+              "inPreparation",
+              "ready",
+              "completed",
+              "cancelled"
+            ],
+            "rulesApplied": [
+              "orderStatusStateMachine",
+              "inventoryConsumptionTiming",
+              "shiftCloseEligibility"
+            ],
+            "fields": [
+              {
+                "fieldId": "id",
+                "type": "uuid",
+                "required": true,
+                "description": "Identificador único do pedido."
+              },
+              {
+                "fieldId": "orderType",
+                "type": "string",
+                "required": true,
+                "description": "Tipo de atendimento: mesa (dine-in) ou takeout.",
+                "enum": [
+                  "mesa",
+                  "takeout"
+                ]
+              },
+              {
+                "fieldId": "status",
+                "type": "string",
+                "required": true,
+                "description": "Estado atual do pedido no fluxo de atendimento.",
+                "enum": [
+                  "draft",
+                  "sentToKitchen",
+                  "inPreparation",
+                  "ready",
+                  "completed",
+                  "cancelled"
+                ]
+              },
+              {
+                "fieldId": "tableId",
+                "type": "Table",
+                "required": false,
+                "description": "Referência à mesa para pedidos do tipo mesa; nulo para takeout."
+              },
+              {
+                "fieldId": "dailyShiftId",
+                "type": "DailyShift",
+                "required": false,
+                "description": "Turno diário ao qual o pedido foi associado para fechamento e relatórios."
+              },
+              {
+                "fieldId": "createdAt",
+                "type": "datetime",
+                "required": true,
+                "description": "Data e hora de criação do registro."
+              },
+              {
+                "fieldId": "updatedAt",
+                "type": "datetime",
+                "required": true,
+                "description": "Data e hora da última atualização do registro."
+              }
+            ]
+          }
+        },
+        "questions": [],
+        "trace": [
+          "Identificado entityId Order com título Pedido e lifecycleStates fornecidos.",
+          "Mapeados relacionamentos manyToOne_optional como campos de referência tableId (Table) e dailyShiftId (DailyShift).",
+          "Relacionamento oneToMany com OrderLine não gera campo em Order (chave estrangeira fica em OrderLine).",
+          "Relacionamento incoming de StockMovement não gera campo em Order.",
+          "Adicionados atributos de negócio orderType (enum mesa/takeout) e status (enum do ciclo de vida).",
+          "Incluídos timestamps de auditoria createdAt e updatedAt.",
+          "Aplicadas regras que mencionam Order: orderStatusStateMachine, inventoryConsumptionTiming, shiftCloseEligibility.",
+          "Todas as entidades referenciadas estão presentes em otherEntityIds; status ok."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 44,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "indexName": "behaviorIndex",
+  "moduleName": "cafeFlow",
+  "approvedAt": "2026-06-25T17:42:12.496Z",
+  "findings": [],
+  "index": {
+    "workflows": [
+      {
+        "workflowId": "posOrderLifecycle",
+        "title": "Registrar e manter pedido no POS (mesa/takeout)",
+        "actor": "attendant",
+        "entities": [
+          "Order",
+          "OrderLine",
+          "Table",
+          "MenuItem"
+        ],
+        "capabilityIds": [
+          "posCreateAndEditOrder"
+        ],
+        "story": {
+          "actor": "attendant",
+          "goal": "Registrar um pedido para uma mesa ou takeout e mantê-lo atualizado durante o atendimento",
+          "soThat": "a cozinha e o caixa tenham uma fonte única e correta do que deve ser preparado e cobrado",
+          "steps": [
+            "Selecionar tipo do pedido (mesa ou takeout) e, se aplicável, escolher a Table",
+            "Criar Order e adicionar/remover/editar OrderLine com base nos MenuItem",
+            "Adicionar observações e quantidades conforme solicitado pelo cliente",
+            "Salvar/confirmar o pedido para envio para a fila da cozinha e permitir alterações enquanto o atendimento estiver aberto"
+          ],
+          "outcome": "Order criado/atualizado com OrderLines corretas e pronto para preparo e posterior finalização"
+        }
+      },
+      {
+        "workflowId": "kitchenQueueAndStatusFlow",
+        "title": "Fila da cozinha e atualização de status do pedido",
+        "actor": "cook",
+        "entities": [
+          "Order",
+          "OrderLine"
+        ],
+        "capabilityIds": [
+          "kitchenOrderQueueAndStatus"
+        ],
+        "story": {
+          "actor": "cook",
+          "goal": "Ver a fila de pedidos e atualizar o status conforme o preparo avança",
+          "soThat": "o salão/atendimento acompanhe o andamento e reduza erros/atrasos",
+          "steps": [
+            "Abrir a fila de pedidos pendentes na cozinha",
+            "Selecionar um Order e revisar suas OrderLines e observações",
+            "Marcar status de preparo (ex.: em preparo, pronto) conforme regras do estabelecimento",
+            "Atualizar o status do pedido/itens para refletir o andamento real"
+          ],
+          "outcome": "Status do Order/OrderLines atualizado, refletindo o progresso na cozinha"
+        }
+      },
+      {
+        "workflowId": "orderFinalizationAndInventoryConsumption",
+        "title": "Finalizar pedido e consumir estoque automaticamente",
+        "actor": "cashier",
+        "entities": [
+          "Order",
+          "DailyShift",
+          "StockMovement",
+          "StockItem",
+          "RecipeLine",
+          "MenuItem",
+          "OrderLine"
+        ],
+        "capabilityIds": [
+          "finalizeOrder",
+          "autoDecrementInventoryFromOrders"
+        ],
+        "story": {
+          "actor": "cashier",
+          "goal": "Encerrar o atendimento de um pedido e garantir que o estoque seja baixado conforme o consumo",
+          "soThat": "o caixa feche corretamente e o controle de estoque permaneça confiável",
+          "steps": [
+            "Localizar o Order a ser finalizado (normalmente já pronto/entregue)",
+            "Conferir itens (OrderLines) e total a cobrar",
+            "Finalizar o pedido (encerrar atendimento) dentro do DailyShift aberto",
+            "Ao finalizar, gerar StockMovement(s) e baixar quantidades dos StockItem conforme RecipeLine dos MenuItem presentes no pedido",
+            "Persistir o status final do Order e registrar a movimentação para auditoria"
+          ],
+          "outcome": "Order finalizado e estoque baixado automaticamente com registros de StockMovement"
+        }
+      },
+      {
+        "workflowId": "dailyShiftOpenCloseWorkflow",
+        "title": "Abrir e fechar turno diário",
+        "actor": "managerOwner",
+        "entities": [
+          "DailyShift"
+        ],
+        "capabilityIds": [
+          "dailyShiftOpenClose"
+        ],
+        "story": {
+          "actor": "managerOwner",
+          "goal": "Controlar o ciclo diário de operação abrindo e fechando o turno",
+          "soThat": "as vendas e operações fiquem organizadas por período e permitam conferência",
+          "steps": [
+            "Abrir um DailyShift no início do dia/turno",
+            "Operar o dia com pedidos vinculados ao turno aberto",
+            "Ao final, verificar condições de elegibilidade para fechamento",
+            "Fechar o DailyShift registrando o encerramento do turno"
+          ],
+          "outcome": "DailyShift aberto/fechado corretamente e pronto para relatórios/controle"
+        }
+      }
+    ],
+    "operations": [
+      {
+        "operationId": "manageMenuItemsAndRecipesOp",
+        "title": "Gerenciar itens do cardápio e receitas (ingredientes)",
+        "actor": "managerOwner",
+        "entity": "MenuItem",
+        "kind": "update",
+        "capabilityId": "manageMenuItemsAndRecipes",
+        "story": {
+          "actor": "managerOwner",
+          "goal": "Cadastrar e manter itens do cardápio com suas receitas/ingredientes",
+          "soThat": "o POS e a baixa automática de estoque funcionem com precisão",
+          "steps": [
+            "Criar/editar/excluir um MenuItem (nome, preço, disponibilidade)",
+            "Definir/atualizar RecipeLine(s) associados (ingrediente/StockItem e quantidade por item)",
+            "Salvar alterações e validar consistência (ex.: ingredientes existentes)"
+          ],
+          "outcome": "MenuItem atualizado e receitas (RecipeLine) prontas para cálculo de consumo"
+        }
+      },
+      {
+        "operationId": "manageStockItemsOp",
+        "title": "Gerenciar itens de estoque",
+        "actor": "managerOwner",
+        "entity": "StockItem",
+        "kind": "update",
+        "capabilityId": "manageStockItems",
+        "story": {
+          "actor": "managerOwner",
+          "goal": "Cadastrar e manter o catálogo de itens de estoque",
+          "soThat": "compras/recebimentos e consumo por receitas sejam rastreáveis",
+          "steps": [
+            "Criar/editar/inativar StockItem (nome, unidade, fator/medida, limiar de estoque baixo se aplicável)",
+            "Salvar alterações e garantir que itens possam ser referenciados em RecipeLine"
+          ],
+          "outcome": "StockItem atualizado e disponível para movimentações e receitas"
+        }
+      },
+      {
+        "operationId": "adjustOrReceiveStockOp",
+        "title": "Ajustar/receber estoque",
+        "actor": "managerOwner",
+        "entity": "StockMovement",
+        "kind": "create",
+        "capabilityId": "adjustStock",
+        "story": {
+          "actor": "managerOwner",
+          "goal": "Registrar entrada/ajuste de estoque",
+          "soThat": "os níveis de StockItem reflitam a quantidade real disponível",
+          "steps": [
+            "Selecionar um StockItem a ajustar/receber",
+            "Informar tipo de movimentação (entrada, ajuste) e quantidade",
+            "Criar StockMovement com data/motivo e aplicar ao saldo do StockItem"
+          ],
+          "outcome": "StockMovement registrado e saldo do StockItem atualizado"
+        }
+      },
+      {
+        "operationId": "generateShiftCloseReportOp",
+        "title": "Gerar relatório de fechamento de turno",
+        "actor": "managerOwner",
+        "entity": "DailyShift",
+        "kind": "query",
+        "capabilityId": "shiftCloseReport",
+        "story": {
+          "actor": "managerOwner",
+          "goal": "Gerar o relatório do fechamento do turno",
+          "soThat": "possa conferir resultados e manter registro operacional",
+          "steps": [
+            "Selecionar o DailyShift a reportar",
+            "Consultar totais e indicadores do turno (ex.: pedidos finalizados, valores)",
+            "Gerar/visualizar o relatório consolidado"
+          ],
+          "outcome": "Relatório de fechamento do DailyShift disponível para conferência"
+        }
+      }
+    ]
+  }
+}

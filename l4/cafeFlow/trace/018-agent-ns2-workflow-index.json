@@ -1,0 +1,107 @@
+{
+  "savedAt": "2026-06-25T17:42:23.213Z",
+  "agentName": "agentNs2WorkflowIndex",
+  "stepId": 18,
+  "planning": {
+    "planId": "plan-workflow-index",
+    "dependsOn": [
+      "plan-behavior-classification"
+    ],
+    "executionMode": "sequential",
+    "executionHost": "client"
+  },
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitWorkflowIndex",
+      "arguments": {
+        "status": "needs_input",
+        "result": {
+          "workflows": [
+            {
+              "workflowId": "posOrderLifecycle",
+              "title": "Registrar e manter pedido no POS (mesa/takeout)",
+              "executionMode": "sequential",
+              "trigger": "Atendente inicia um novo atendimento/pedido (mesa ou takeout) no POS",
+              "actors": [
+                "attendant"
+              ],
+              "entities": [
+                "Order",
+                "OrderLine",
+                "Table",
+                "MenuItem"
+              ],
+              "operationIds": []
+            },
+            {
+              "workflowId": "kitchenQueueAndStatusFlow",
+              "title": "Fila da cozinha e atualização de status do pedido",
+              "executionMode": "sequential",
+              "trigger": "Cozinheiro abre a tela/fila da cozinha para pedidos pendentes",
+              "actors": [
+                "cook"
+              ],
+              "entities": [
+                "Order",
+                "OrderLine"
+              ],
+              "operationIds": []
+            },
+            {
+              "workflowId": "orderFinalizationAndInventoryConsumption",
+              "title": "Finalizar pedido e consumir estoque automaticamente",
+              "executionMode": "sequential",
+              "trigger": "Caixa decide finalizar um pedido dentro de um turno (DailyShift) aberto",
+              "actors": [
+                "cashier"
+              ],
+              "entities": [
+                "Order",
+                "DailyShift",
+                "StockMovement",
+                "StockItem",
+                "RecipeLine",
+                "MenuItem",
+                "OrderLine"
+              ],
+              "operationIds": []
+            },
+            {
+              "workflowId": "dailyShiftOpenCloseWorkflow",
+              "title": "Abrir e fechar turno diário",
+              "executionMode": "sequential",
+              "trigger": "Gerente/owner inicia o dia/turno (abrir) ou encerra (fechar)",
+              "actors": [
+                "managerOwner"
+              ],
+              "entities": [
+                "DailyShift"
+              ],
+              "operationIds": [
+                "generateShiftCloseReportOp"
+              ]
+            }
+          ]
+        },
+        "questions": [
+          "Não há operations classificados para orquestrar nos workflows de pedido/cozinha/finalização (ex.: criar/editar Order, atualizar status, finalizar Order, gerar StockMovements/baixar StockItem). Confirma que esses operations não foram classificados ainda (devemos deixar operationIds vazio) ou há uma lista adicional?",
+          "Para o workflow de fechamento de turno: o relatório (generateShiftCloseReportOp) deve ser parte obrigatória do fechamento (sempre executa) ou opcional (executa sob demanda)?",
+          "Deseja representar o consumo de estoque na finalização como orquestração de adjustOrReceiveStockOp, ou isso é um outro operation específico (autoDecrementInventoryFromOrders) que ainda precisa ser classificado como operation?"
+        ],
+        "trace": [
+          "Input received: 4 classified workflows, 4 classified operations, ontology ids list.",
+          "Mapped each workflow to actors/entities from classification.",
+          "Attempted to map capabilityIds to classified operationIds; only match available: generateShiftCloseReportOp for shift close reporting.",
+          "Left operationIds empty where no corresponding classified operations were provided for order/kitchen/inventory decrement flows.",
+          "Flagged missing operations needed for orchestration references per rules."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 37,
+    "interaction": null,
+    "nextSteps": null
+  }
+}
