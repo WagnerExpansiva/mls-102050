@@ -18,5 +18,37 @@
   "reasons": {},
   "services": [],
   "links": [],
-  "servicesConfigEnabled": false
+  "servicesConfigEnabled": false,
+  "modules": [
+    {
+      "moduleName": "cafeFlow",
+      "module": {
+        "moduleName": "cafeFlow",
+        "title": "CafeFlow",
+        "purpose": "Agilizar o atendimento de pedidos, coordenar a cozinha e controlar o estoque de forma simples para cafeterias e lanchonetes pequenas.",
+        "businessDomain": "Food Service - Cafeterias e Lanchonetes de Pequeno Porte",
+        "languages": [
+          "pt-BR",
+          "en"
+        ],
+        "visualStyle": {
+          "tone": "limpa, moderna, rápida e acolhedora",
+          "layout": "Interface responsiva com barra lateral e cartões de ação rápida, otimizada para tablets e desktops no balcão e na cozinha",
+          "palette": [
+            "#6F4E37",
+            "#D4A373",
+            "#F5F5F0",
+            "#2C2C2C",
+            "#E76F51"
+          ]
+        }
+      }
+    }
+  ],
+  "dependencies": [
+    {
+      "projectId": "102034",
+      "kind": "mdm-infrastructure"
+    }
+  ]
 }

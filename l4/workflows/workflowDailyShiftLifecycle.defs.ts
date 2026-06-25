@@ -1,0 +1,147 @@
+/// <mls fileReference="_102050_/l4/workflows/workflowDailyShiftLifecycle.defs.ts" enhancement="_blank"/>
+
+export const workflowDailyShiftLifecycleDef = {
+  "schemaVersion": "2026-06-06",
+  "artifactType": "workflow",
+  "artifactId": "workflowDailyShiftLifecycle",
+  "moduleName": "cafeFlow",
+  "status": "draft",
+  "source": {
+    "agentName": "agentPlanWorkflowDefinition",
+    "stepId": 29,
+    "planId": "plan-validate-solution-coverage"
+  },
+  "data": {
+    "workflowDefinition": {
+      "workflowId": "workflowDailyShiftLifecycle",
+      "title": "Ciclo de Vida do Turno Diário",
+      "purpose": "Controlar a abertura e o fechamento do turno diário, garantindo que apenas um turno esteja aberto por dia e que o fechamento só ocorra quando não houver pedidos pendentes.",
+      "executionMode": "entityLifecycle",
+      "createsTask": false,
+      "taskConfig": {
+        "taskTitleTemplate": "",
+        "assigneeRules": [],
+        "slaRules": [],
+        "taskRoomRequired": false
+      },
+      "actors": [
+        "attendantCashier",
+        "managerOwner"
+      ],
+      "states": [
+        {
+          "stateId": "open",
+          "description": "Turno diário aberto para operações e registro de vendas."
+        },
+        {
+          "stateId": "closed",
+          "description": "Turno diário fechado após concluir vendas e validações."
+        }
+      ],
+      "transitions": [
+        {
+          "from": "closed",
+          "to": "open",
+          "trigger": "openDailyShift",
+          "actor": "attendantCashier",
+          "conditions": [
+            "ruleUniqueOpenShiftPerDay"
+          ],
+          "actions": [
+            "set DailyShift.status=open",
+            "set DailyShift.shiftDate=today",
+            "set DailyShift.createdAt=now",
+            "set DailyShift.updatedAt=now"
+          ],
+          "rulesApplied": [
+            "ruleUniqueOpenShiftPerDay"
+          ]
+        },
+        {
+          "from": "open",
+          "to": "closed",
+          "trigger": "closeDailyShift",
+          "actor": "managerOwner",
+          "conditions": [
+            "ruleShiftCloseNoOpenOrders"
+          ],
+          "actions": [
+            "set DailyShift.status=closed",
+            "set DailyShift.updatedAt=now"
+          ],
+          "rulesApplied": [
+            "ruleShiftCloseNoOpenOrders"
+          ]
+        }
+      ],
+      "requiredEntities": [
+        "DailyShift"
+      ],
+      "persistenceRefs": [],
+      "usecaseRefs": [
+        "abrirTurnoDiario",
+        "listarTurnosDiarios",
+        "fecharTurnoDiario"
+      ],
+      "metricRefs": [],
+      "userActions": [
+        "openDailyShift",
+        "closeDailyShift",
+        "listDailyShifts"
+      ],
+      "relatedPages": [
+        "shiftCloseReport",
+        "shiftOpen"
+      ],
+      "relatedAgents": [],
+      "relatedPlugins": [],
+      "rulesApplied": [
+        "ruleShiftCloseNoOpenOrders",
+        "ruleUniqueOpenShiftPerDay"
+      ],
+      "implementationSuggestions": [
+        {
+          "suggestionId": "suggShiftOpenValidation",
+          "title": "Validação de turno aberto ao criar pedido",
+          "priority": "now",
+          "description": "Verificar automaticamente a existência de turno aberto antes de permitir a criação de pedidos, reutilizando a consulta de turnos diários.",
+          "tradeoff": "Adiciona uma validação a mais no fluxo de criação de pedidos, com leve impacto de latência."
+        },
+        {
+          "suggestionId": "suggShiftCloseBlock",
+          "title": "Bloqueio de fechamento com pedidos abertos",
+          "priority": "now",
+          "description": "Bloquear o fechamento do turno quando existirem pedidos com status diferente de delivered ou cancelled.",
+          "tradeoff": "Pode exigir ajustes de comunicação para resolver pendências antes do fechamento."
+        },
+        {
+          "suggestionId": "suggNoTaskForShiftLifecycle",
+          "title": "Operação direta sem tarefas",
+          "priority": "now",
+          "description": "Manter abertura e fechamento como ações diretas no POS, sem criação de tarefas, para reduzir etapas operacionais.",
+          "tradeoff": "Menos rastreabilidade via tarefas; depende de auditoria via logs e histórico do turno."
+        }
+      ],
+      "workflowScope": "singleModule",
+      "moduleRefs": [
+        "cafeFlow"
+      ],
+      "pageRefsByModule": [],
+      "entityRefsByModule": [],
+      "writesArtifacts": [
+        {
+          "moduleId": "cafeFlow",
+          "artifactType": "workflow",
+          "artifactId": "workflowDailyShiftLifecycle"
+        }
+      ]
+    },
+    "defsPlan": {
+      "fileName": "workflows/workflowDailyShiftLifecycle.defs.ts",
+      "exportName": "workflowDailyShiftLifecycleDef",
+      "saveAsDefs": true
+    }
+  }
+} as const;
+
+export default workflowDailyShiftLifecycleDef;

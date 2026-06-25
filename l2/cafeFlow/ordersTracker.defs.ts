@@ -1,0 +1,256 @@
+/// <mls fileReference="_102050_/l2/cafeFlow/ordersTracker.defs.ts" enhancement="_blank"/>
+
+export const ordersTrackerPagePlan = {
+  "schemaVersion": "2026-06-06",
+  "artifactType": "page",
+  "artifactId": "ordersTracker",
+  "moduleName": "cafeFlow",
+  "status": "draft",
+  "source": {
+    "agentName": "agentPlanPageDefinition",
+    "stepId": 73,
+    "planId": ""
+  },
+  "data": {
+    "pageDefinition": {
+      "pageId": "ordersTracker",
+      "pageName": "Rastreador de Pedidos",
+      "actor": "managerOwner",
+      "purpose": "Localizar pedidos e cancelar quando necessário.",
+      "capabilities": [
+        "cancelOrder"
+      ],
+      "flowRefs": {
+        "experienceFlows": [],
+        "entityLifecycles": [],
+        "taskWorkflows": [
+          "workflowOrderLifecycle"
+        ],
+        "automations": []
+      },
+      "pluginRefs": [],
+      "mdmRefs": [
+        "order"
+      ],
+      "pageInputs": [],
+      "navigationRefs": [
+        {
+          "direction": "inbound",
+          "pageId": "shiftCloseReport",
+          "trigger": "Pendências de pedidos abertos"
+        }
+      ],
+      "sections": [
+        {
+          "sectionName": "Busca e Resultados de Pedidos",
+          "mode": "view",
+          "organisms": [
+            {
+              "organismName": "orderSearchFilters",
+              "purpose": "Buscar pedidos por número, cliente e status.",
+              "userActions": [
+                "Buscar pedido"
+              ],
+              "requiredEntities": [
+                "pedidoAggregate"
+              ],
+              "readsFields": [
+                "Order.id",
+                "Order.status",
+                "Order.createdAt",
+                "Order.totalAmount",
+                "Order.customerName"
+              ],
+              "writesFields": [],
+              "rulesApplied": []
+            },
+            {
+              "organismName": "ordersResultList",
+              "purpose": "Listar pedidos encontrados e selecionar para cancelamento.",
+              "userActions": [
+                "Selecionar pedido"
+              ],
+              "requiredEntities": [
+                "pedidoAggregate"
+              ],
+              "readsFields": [
+                "Order.id",
+                "Order.status",
+                "Order.createdAt",
+                "Order.totalAmount",
+                "Order.customerName"
+              ],
+              "writesFields": [],
+              "rulesApplied": []
+            }
+          ]
+        },
+        {
+          "sectionName": "Cancelamento de Pedido",
+          "mode": "edit",
+          "organisms": [
+            {
+              "organismName": "orderCancelForm",
+              "purpose": "Registrar motivo e confirmar cancelamento do pedido selecionado.",
+              "userActions": [
+                "Registrar motivo",
+                "Cancelar pedido"
+              ],
+              "requiredEntities": [
+                "pedidoAggregate",
+                "estoqueAggregate"
+              ],
+              "readsFields": [
+                "Order.id",
+                "Order.status"
+              ],
+              "writesFields": [
+                "Order.status",
+                "Order.updatedAt",
+                "stock_movement.reason"
+              ],
+              "rulesApplied": [
+                "ruleOrderStatusFlow"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bffCommands": [
+      {
+        "commandName": "listarPedidos",
+        "purpose": "Buscar pedidos por número/cliente/status.",
+        "kind": "query",
+        "input": [
+          {
+            "name": "searchTerm",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "customerName",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "dateFrom",
+            "type": "date",
+            "required": false
+          },
+          {
+            "name": "dateTo",
+            "type": "date",
+            "required": false
+          }
+        ],
+        "output": [
+          {
+            "name": "orderId",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "type": "string"
+          },
+          {
+            "name": "createdAt",
+            "type": "date"
+          },
+          {
+            "name": "totalAmount",
+            "type": "number"
+          },
+          {
+            "name": "customerName",
+            "type": "string"
+          }
+        ],
+        "readsEntities": [
+          "pedidoAggregate"
+        ],
+        "writesEntities": [],
+        "readsTables": [
+          "order_item"
+        ],
+        "writesTables": [],
+        "usecaseRefs": [
+          "listarPedidos"
+        ],
+        "layerContract": {
+          "controllerLayer": "layer_2_controllers",
+          "mustCallLayer": "layer_3_usecases",
+          "directTableAccessForbidden": true
+        },
+        "rulesApplied": []
+      },
+      {
+        "commandName": "cancelarPedido",
+        "purpose": "Cancelar pedido com motivo.",
+        "kind": "command",
+        "input": [
+          {
+            "name": "orderId",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "motivo",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "output": [
+          {
+            "name": "orderId",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "type": "string"
+          },
+          {
+            "name": "updatedAt",
+            "type": "date"
+          }
+        ],
+        "readsEntities": [
+          "pedidoAggregate",
+          "estoqueAggregate"
+        ],
+        "writesEntities": [
+          "pedidoAggregate",
+          "estoqueAggregate",
+          "metricasCafeFlow"
+        ],
+        "readsTables": [
+          "order_item"
+        ],
+        "writesTables": [
+          "stock_movement",
+          "today_sales_metrics",
+          "top_selling_items_metrics",
+          "low_stock_metrics"
+        ],
+        "usecaseRefs": [
+          "cancelarPedido"
+        ],
+        "layerContract": {
+          "controllerLayer": "layer_2_controllers",
+          "mustCallLayer": "layer_3_usecases",
+          "directTableAccessForbidden": true
+        },
+        "rulesApplied": [
+          "ruleOrderStatusFlow"
+        ]
+      }
+    ]
+  }
+} as const;
+
+export default ordersTrackerPagePlan;
