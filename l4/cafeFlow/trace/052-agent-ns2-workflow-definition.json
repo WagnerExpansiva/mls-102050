@@ -1,0 +1,95 @@
+{
+  "savedAt": "2026-06-25T17:42:50.865Z",
+  "agentName": "agentNs2WorkflowDefinition",
+  "stepId": 52,
+  "planning": null,
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitWorkflowDefinition",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "workflowDefinition": {
+            "workflowId": "dailyShiftOpenCloseWorkflow",
+            "title": "Abrir e fechar turno diário",
+            "executionMode": "sequential",
+            "trigger": "Gerente/owner inicia o dia/turno (abrir) ou encerra (fechar)",
+            "actors": [
+              "managerOwner"
+            ],
+            "states": [
+              "pendingOpen",
+              "opened",
+              "closing",
+              "closed"
+            ],
+            "transitions": [
+              {
+                "from": "pendingOpen",
+                "to": "opened",
+                "on": "openShift",
+                "by": "managerOwner"
+              },
+              {
+                "from": "opened",
+                "to": "closing",
+                "on": "requestClose",
+                "by": "managerOwner"
+              },
+              {
+                "from": "closing",
+                "to": "closed",
+                "on": "confirmClose",
+                "by": "managerOwner",
+                "guard": "closeConditionsMet"
+              }
+            ],
+            "operationIds": [
+              "generateShiftCloseReportOp"
+            ],
+            "entities": [
+              "MenuItem",
+              "Order",
+              "DailyShift",
+              "StockItem",
+              "MenuCategory",
+              "Table",
+              "RecipeLine",
+              "OrderLine",
+              "StockMovement"
+            ],
+            "rulesApplied": [],
+            "story": {
+              "actor": "managerOwner",
+              "goal": "Controlar o ciclo diário de operação abrindo e fechando o turno",
+              "soThat": "as vendas e operações fiquem organizadas por período e permitam conferência",
+              "steps": [
+                "Abrir um DailyShift no início do dia/turno",
+                "Operar o dia com pedidos vinculados ao turno aberto",
+                "Ao final, verificar condições de elegibilidade para fechamento",
+                "Fechar o DailyShift registrando o encerramento do turno"
+              ],
+              "outcome": "DailyShift aberto/fechado corretamente e pronto para relatórios/controle"
+            }
+          }
+        },
+        "questions": [],
+        "trace": [
+          "Received selector dailyShiftOpenCloseWorkflow",
+          "Extracted workflow metadata, story and orchestrated operations from reduced context",
+          "Defined lifecycle states: pendingOpen, opened, closing, closed",
+          "Mapped transitions for openShift, requestClose and confirmClose with managerOwner and closeConditionsMet guard",
+          "Referenced provided operationId generateShiftCloseReportOp",
+          "Referenced all provided canonical ontology entity ids",
+          "Assembled complete workflow definition with embedded story"
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 38,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

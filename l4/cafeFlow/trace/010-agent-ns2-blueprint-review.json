@@ -1,0 +1,86 @@
+{
+  "savedAt": "2026-06-25T17:40:07.468Z",
+  "agentName": "agentNs2BlueprintReview",
+  "stepId": 10,
+  "planning": {
+    "planId": "plan-blueprint-review",
+    "dependsOn": [
+      "plan-solution-blueprint"
+    ],
+    "executionMode": "sequential",
+    "executionHost": "client"
+  },
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitBlueprintReview",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "summary": "Blueprint consistente em atores↔capabilities e regras↔entidades; principais gaps: entidades MDM sem capability explícita de manutenção, ausência de lifecycleStates em entidades claramente stateful (Order, StockMovement) e possível mismatch de behaviorHint em capability de baixa automática de estoque.",
+          "findings": [
+            {
+              "severity": "warning",
+              "code": "MDM_ENTITY_NO_MANAGEMENT_CAPABILITY",
+              "message": "Entidades MDM MenuCategory e Table estão definidas, mas não há capability explícita para CRUD/gestão dessas listas (pode ficar implícito em manageMenuItemsAndRecipes/posCreateAndEditOrder, porém faltam ações dedicadas).",
+              "path": "ontology.entities.MenuCategory"
+            },
+            {
+              "severity": "warning",
+              "code": "MDM_ENTITY_NO_MANAGEMENT_CAPABILITY",
+              "message": "Entidade MDM Table está definida, mas não há capability explícita para cadastrar/editar/desativar mesas.",
+              "path": "ontology.entities.Table"
+            },
+            {
+              "severity": "warning",
+              "code": "STATEFUL_ENTITY_MISSING_LIFECYCLESTATES",
+              "message": "Order possui statusEnum, mas não lifecycleStates; para entidade claramente stateful com máquina de estados, padronizar usando lifecycleStates (ou alinhar convenção).",
+              "path": "ontology.entities.Order"
+            },
+            {
+              "severity": "warning",
+              "code": "STATEFUL_ENTITY_MISSING_LIFECYCLESTATES",
+              "message": "StockMovement é evento com statusEnum (pending/posted/reversed) e comportamento de reversão; considerar lifecycleStates para alinhar a processos de posting/estorno.",
+              "path": "ontology.entities.StockMovement"
+            },
+            {
+              "severity": "info",
+              "code": "BEHAVIORHINT_POSSIBLE_MISMATCH",
+              "message": "Capability autoDecrementInventoryFromOrders é descrita como consumo + registro de movimentações com tratamento de cancelamentos/estornos; isso parece mais 'workflow' stateful multi-step ou regra automática acoplada ao fluxo de pedido do que ação isolada do Caixa.",
+              "path": "capabilities[6]"
+            },
+            {
+              "severity": "info",
+              "code": "CAPABILITY_OWNERSHIP_CHECK",
+              "message": "Todas as capabilities possuem actor definido; não há capabilities órfãs.",
+              "path": "capabilities"
+            },
+            {
+              "severity": "info",
+              "code": "RULE_ENTITY_REFERENCE_OK",
+              "message": "Todas as regras referenciam apenas entidades existentes (Order, OrderLine, DailyShift, StockMovement, StockItem, RecipeLine).",
+              "path": "rules"
+            }
+          ]
+        },
+        "questions": [
+          "Deseja incluir capabilities explícitas para gerir MenuCategory e Table (CRUD), ou essas listas serão mantidas implicitamente dentro de outras telas/fluxos?",
+          "A convenção do projeto prefere lifecycleStates em vez de statusEnum para entidades stateful? (Hoje há mistura: DailyShift usa lifecycleStates; Order/StockMovement usam statusEnum).",
+          "A baixa automática de estoque ocorrerá ao 'sentToKitchen' ou ao 'completed'? E qual ator dispara (automático no sistema vs ação do Caixa)? Isso afeta o desenho do capability autoDecrementInventoryFromOrders."
+        ],
+        "trace": [
+          "Parsed module cafeFlow",
+          "Checked capabilities: all have actor; behaviorHint reviewed for potential mismatches",
+          "Checked entities: identified MDM entities without explicit management capabilities; checked stateful entities for lifecycle conventions",
+          "Checked rules: appliesTo references validated against ontology.entities",
+          "Checked for orphan entities/capabilities and unknown references: none found"
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 32,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "savedAt": "2026-06-25T17:42:23.200Z",
+  "agentName": "agentPlanOperationIndex",
+  "stepId": 20,
+  "planning": {
+    "planId": "plan-operation-index",
+    "dependsOn": [
+      "plan-behavior-classification"
+    ],
+    "executionMode": "sequential",
+    "executionHost": "client"
+  },
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitOperationIndex",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "operations": [
+            {
+              "operationId": "manageMenuItemsAndRecipesOp",
+              "title": "Gerenciar itens do cardápio e receitas (ingredientes)",
+              "actor": "managerOwner",
+              "entity": "MenuItem",
+              "kind": "update"
+            },
+            {
+              "operationId": "manageStockItemsOp",
+              "title": "Gerenciar itens de estoque",
+              "actor": "managerOwner",
+              "entity": "StockItem",
+              "kind": "update"
+            },
+            {
+              "operationId": "adjustOrReceiveStockOp",
+              "title": "Ajustar/receber estoque",
+              "actor": "managerOwner",
+              "entity": "StockMovement",
+              "kind": "create"
+            },
+            {
+              "operationId": "generateShiftCloseReportOp",
+              "title": "Gerar relatório de fechamento de turno",
+              "actor": "managerOwner",
+              "entity": "DailyShift",
+              "kind": "query"
+            }
+          ]
+        },
+        "questions": [],
+        "trace": [
+          "Input contained 4 classified operations; workflows referenced but their orchestrated operationIds already covered.",
+          "Validated each operation entity against provided ontology ids: MenuItem, StockItem, StockMovement, DailyShift all present.",
+          "No missing actorIds or kinds; kept operationIds stable as provided.",
+          "No additional direct actions inferred beyond classified list per instructions."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 36,
+    "interaction": null,
+    "nextSteps": null
+  }
+}
