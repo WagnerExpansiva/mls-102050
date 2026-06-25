@@ -1,0 +1,341 @@
+{
+  "savedAt": "2026-06-25T01:26:31.413Z",
+  "agentName": "agentPlanPageDefinition",
+  "stepId": 70,
+  "planning": null,
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitPageDefinitionPlan",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "pageDefinition": {
+            "pageId": "shiftCloseReport",
+            "pageName": "Fechamento de Turno",
+            "actor": "managerOwner",
+            "purpose": "Revisar resumo do turno e confirmar fechamento quando não há pedidos abertos.",
+            "capabilities": [
+              "closeDailyShift"
+            ],
+            "flowRefs": {
+              "experienceFlows": [],
+              "entityLifecycles": [
+                "workflowDailyShiftLifecycle"
+              ],
+              "taskWorkflows": [],
+              "automations": []
+            },
+            "pluginRefs": [],
+            "mdmRefs": [
+              "dailyShift",
+              "order"
+            ],
+            "pageInputs": [
+              {
+                "name": "dailyShiftId",
+                "type": "string",
+                "required": true,
+                "sources": [
+                  "routeParam"
+                ],
+                "description": "Identificador do turno diário em fechamento.",
+                "entityRef": "DailyShift",
+                "fieldRef": "DailyShift.id"
+              }
+            ],
+            "navigationRefs": [
+              {
+                "direction": "outbound",
+                "pageId": "ordersTracker",
+                "trigger": "Pedidos abertos identificados",
+                "description": "Redirecionar para gestão de pedidos pendentes antes do fechamento."
+              }
+            ],
+            "sections": [
+              {
+                "sectionName": "Seleção do Turno",
+                "mode": "view",
+                "organisms": [
+                  {
+                    "organismName": "TurnoSelecionado",
+                    "purpose": "Exibir o turno diário selecionado para fechamento.",
+                    "userActions": [
+                      "Confirmar turno a fechar"
+                    ],
+                    "requiredEntities": [
+                      "turnoDiarioAggregate"
+                    ],
+                    "readsFields": [
+                      "DailyShift.id",
+                      "DailyShift.shiftDate",
+                      "DailyShift.status",
+                      "DailyShift.openedAt"
+                    ],
+                    "writesFields": [],
+                    "rulesApplied": [
+                      "ruleShiftCloseNoOpenOrders"
+                    ]
+                  }
+                ]
+              },
+              {
+                "sectionName": "Resumo de Vendas do Turno",
+                "mode": "view",
+                "organisms": [
+                  {
+                    "organismName": "ResumoVendasTurno",
+                    "purpose": "Apresentar totais de vendas e pedidos do turno para conferência.",
+                    "userActions": [
+                      "Revisar resumo"
+                    ],
+                    "requiredEntities": [
+                      "metricasCafeFlow",
+                      "turnoDiarioAggregate"
+                    ],
+                    "readsFields": [
+                      "DailyShift.id",
+                      "DailyShift.shiftDate",
+                      "today_sales_metrics.totalSales",
+                      "today_sales_metrics.totalOrders",
+                      "today_sales_metrics.totalItems",
+                      "today_sales_metrics.averageTicket"
+                    ],
+                    "writesFields": [],
+                    "rulesApplied": []
+                  }
+                ]
+              },
+              {
+                "sectionName": "Pedidos Abertos",
+                "mode": "view",
+                "organisms": [
+                  {
+                    "organismName": "ListaPedidosAbertos",
+                    "purpose": "Listar pedidos pendentes que impedem o fechamento.",
+                    "userActions": [
+                      "Solicitar fechamento",
+                      "Abrir pedido no rastreador"
+                    ],
+                    "requiredEntities": [
+                      "pedidoAggregate"
+                    ],
+                    "readsFields": [
+                      "Order.id",
+                      "Order.status",
+                      "Order.total",
+                      "Order.createdAt"
+                    ],
+                    "writesFields": [],
+                    "rulesApplied": [
+                      "ruleShiftCloseNoOpenOrders"
+                    ]
+                  }
+                ]
+              },
+              {
+                "sectionName": "Confirmação de Fechamento",
+                "mode": "confirm",
+                "organisms": [
+                  {
+                    "organismName": "ConfirmarFechamentoTurno",
+                    "purpose": "Confirmar o fechamento do turno diário.",
+                    "userActions": [
+                      "Confirmar fechamento"
+                    ],
+                    "requiredEntities": [
+                      "turnoDiarioAggregate"
+                    ],
+                    "readsFields": [
+                      "DailyShift.id",
+                      "DailyShift.status"
+                    ],
+                    "writesFields": [
+                      "DailyShift.status",
+                      "DailyShift.closedAt"
+                    ],
+                    "rulesApplied": [
+                      "ruleShiftCloseNoOpenOrders"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "bffCommands": [
+            {
+              "commandName": "gerarResumoVendasDia",
+              "purpose": "Gerar resumo do turno para conferência.",
+              "kind": "query",
+              "input": [
+                {
+                  "name": "dailyShiftId",
+                  "type": "string",
+                  "required": true
+                }
+              ],
+              "output": [
+                {
+                  "name": "totalSales",
+                  "type": "number"
+                },
+                {
+                  "name": "totalOrders",
+                  "type": "number"
+                },
+                {
+                  "name": "totalItems",
+                  "type": "number"
+                },
+                {
+                  "name": "averageTicket",
+                  "type": "number"
+                },
+                {
+                  "name": "shiftStatus",
+                  "type": "string"
+                },
+                {
+                  "name": "shiftDate",
+                  "type": "date"
+                }
+              ],
+              "readsEntities": [
+                "metricasCafeFlow",
+                "turnoDiarioAggregate"
+              ],
+              "writesEntities": [],
+              "readsTables": [
+                "today_sales_metrics"
+              ],
+              "writesTables": [],
+              "usecaseRefs": [
+                "gerarResumoVendasDia"
+              ],
+              "layerContract": {
+                "controllerLayer": "layer_2_controllers",
+                "mustCallLayer": "layer_3_usecases",
+                "directTableAccessForbidden": true
+              },
+              "rulesApplied": []
+            },
+            {
+              "commandName": "listarPedidosAbertos",
+              "purpose": "Verificar pedidos abertos do turno.",
+              "kind": "query",
+              "input": [
+                {
+                  "name": "statusFilter",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "dailyShiftId",
+                  "type": "string",
+                  "required": false
+                }
+              ],
+              "output": [
+                {
+                  "name": "orderId",
+                  "type": "string"
+                },
+                {
+                  "name": "status",
+                  "type": "string"
+                },
+                {
+                  "name": "total",
+                  "type": "number"
+                },
+                {
+                  "name": "createdAt",
+                  "type": "date"
+                }
+              ],
+              "readsEntities": [
+                "pedidoAggregate"
+              ],
+              "writesEntities": [],
+              "readsTables": [
+                "order_item"
+              ],
+              "writesTables": [],
+              "usecaseRefs": [
+                "listarPedidos"
+              ],
+              "layerContract": {
+                "controllerLayer": "layer_2_controllers",
+                "mustCallLayer": "layer_3_usecases",
+                "directTableAccessForbidden": true
+              },
+              "rulesApplied": []
+            },
+            {
+              "commandName": "fecharTurnoDiario",
+              "purpose": "Fechar turno diário após confirmação.",
+              "kind": "command",
+              "input": [
+                {
+                  "name": "dailyShiftId",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "confirm",
+                  "type": "boolean",
+                  "required": true
+                }
+              ],
+              "output": [
+                {
+                  "name": "dailyShiftId",
+                  "type": "string"
+                },
+                {
+                  "name": "status",
+                  "type": "string"
+                },
+                {
+                  "name": "closedAt",
+                  "type": "date"
+                }
+              ],
+              "readsEntities": [
+                "turnoDiarioAggregate",
+                "pedidoAggregate"
+              ],
+              "writesEntities": [
+                "turnoDiarioAggregate"
+              ],
+              "readsTables": [],
+              "writesTables": [],
+              "usecaseRefs": [
+                "fecharTurnoDiario"
+              ],
+              "layerContract": {
+                "controllerLayer": "layer_2_controllers",
+                "mustCallLayer": "layer_3_usecases",
+                "directTableAccessForbidden": true
+              },
+              "rulesApplied": [
+                "ruleShiftCloseNoOpenOrders"
+              ]
+            }
+          ]
+        },
+        "questions": [],
+        "trace": [
+          "Defini a página de Fechamento de Turno para o ator gerente/proprietário com foco em revisar resumo e confirmar fechamento.",
+          "Incluí seleção do turno e verificação de pedidos abertos antes da confirmação para cumprir a regra de bloqueio.",
+          "Modelei três comandos BFF alinhados aos usecases: gerar resumo, listar pedidos abertos e fechar turno."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 61,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

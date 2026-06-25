@@ -1,0 +1,304 @@
+{
+  "savedAt": "2026-06-25T01:23:43.307Z",
+  "agentName": "agentPlanWorkflowDefinition",
+  "stepId": 71,
+  "planning": null,
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitWorkflowDefinitionPlan",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "workflowDefinition": {
+            "workflowId": "workflowStockManagement",
+            "title": "Gerenciamento de Estoque",
+            "purpose": "Controlar o cadastro de itens de estoque, registrar entradas, saídas e ajustes, e alimentar alertas de estoque baixo.",
+            "executionMode": "entityLifecycle",
+            "createsTask": false,
+            "taskConfig": {
+              "taskTitleTemplate": "",
+              "assigneeRules": [],
+              "slaRules": [],
+              "taskRoomRequired": false
+            },
+            "actors": [
+              "managerOwner"
+            ],
+            "states": [
+              {
+                "stateId": "stockItemDraft",
+                "description": "Item de estoque em criação, ainda não ativo."
+              },
+              {
+                "stateId": "stockItemActive",
+                "description": "Item de estoque ativo para uso e movimentações."
+              },
+              {
+                "stateId": "stockItemInactive",
+                "description": "Item de estoque inativo e fora de uso."
+              },
+              {
+                "stateId": "movementDraft",
+                "description": "Movimentação de estoque em preparação."
+              },
+              {
+                "stateId": "movementRecorded",
+                "description": "Movimentação de estoque registrada e aplicada ao saldo."
+              }
+            ],
+            "transitions": [
+              {
+                "from": "stockItemDraft",
+                "to": "stockItemActive",
+                "trigger": "criarItemEstoque",
+                "actor": "managerOwner",
+                "conditions": [],
+                "actions": [
+                  "StockItem.status = \"active\"",
+                  "StockItem.currentQuantity = input.currentQuantity",
+                  "StockItem.alertThreshold = input.alertThreshold",
+                  "StockItem.unitOfMeasure = input.unitOfMeasure",
+                  "StockItem.name = input.name",
+                  "StockItem.createdAt = now()",
+                  "StockItem.updatedAt = now()"
+                ],
+                "rulesApplied": [
+                  "ruleStockQuantityNonNegative"
+                ]
+              },
+              {
+                "from": "stockItemActive",
+                "to": "stockItemActive",
+                "trigger": "atualizarItemEstoque",
+                "actor": "managerOwner",
+                "conditions": [],
+                "actions": [
+                  "StockItem.name = input.name",
+                  "StockItem.unitOfMeasure = input.unitOfMeasure",
+                  "StockItem.alertThreshold = input.alertThreshold",
+                  "StockItem.updatedAt = now()"
+                ],
+                "rulesApplied": [
+                  "ruleStockQuantityNonNegative"
+                ]
+              },
+              {
+                "from": "stockItemActive",
+                "to": "stockItemInactive",
+                "trigger": "inativarItemEstoque",
+                "actor": "managerOwner",
+                "conditions": [],
+                "actions": [
+                  "StockItem.status = \"inactive\"",
+                  "StockItem.updatedAt = now()"
+                ],
+                "rulesApplied": []
+              },
+              {
+                "from": "stockItemInactive",
+                "to": "stockItemActive",
+                "trigger": "reativarItemEstoque",
+                "actor": "managerOwner",
+                "conditions": [],
+                "actions": [
+                  "StockItem.status = \"active\"",
+                  "StockItem.updatedAt = now()"
+                ],
+                "rulesApplied": []
+              },
+              {
+                "from": "movementDraft",
+                "to": "movementRecorded",
+                "trigger": "registrarEntradaEstoque",
+                "actor": "managerOwner",
+                "conditions": [],
+                "actions": [
+                  "StockMovement.stockItemId = input.stockItemId",
+                  "StockMovement.movementType = \"entrada\"",
+                  "StockMovement.quantity = input.quantity",
+                  "StockMovement.note = input.note",
+                  "StockMovement.occurredAt = input.occurredAt",
+                  "StockMovement.createdAt = now()",
+                  "StockMovement.updatedAt = now()",
+                  "StockItem.currentQuantity = StockItem.currentQuantity + input.quantity",
+                  "StockItem.updatedAt = now()"
+                ],
+                "rulesApplied": [
+                  "ruleStockQuantityNonNegative",
+                  "ruleLowStockAlert"
+                ]
+              },
+              {
+                "from": "movementDraft",
+                "to": "movementRecorded",
+                "trigger": "registrarSaidaEstoque",
+                "actor": "managerOwner",
+                "conditions": [],
+                "actions": [
+                  "StockMovement.stockItemId = input.stockItemId",
+                  "StockMovement.orderId = input.orderId",
+                  "StockMovement.movementType = \"saida\"",
+                  "StockMovement.quantity = input.quantity",
+                  "StockMovement.note = input.note",
+                  "StockMovement.occurredAt = input.occurredAt",
+                  "StockMovement.createdAt = now()",
+                  "StockMovement.updatedAt = now()",
+                  "StockItem.currentQuantity = StockItem.currentQuantity - input.quantity",
+                  "StockItem.updatedAt = now()"
+                ],
+                "rulesApplied": [
+                  "ruleStockQuantityNonNegative",
+                  "ruleLowStockAlert"
+                ]
+              },
+              {
+                "from": "movementDraft",
+                "to": "movementRecorded",
+                "trigger": "registrarAjusteEstoque",
+                "actor": "managerOwner",
+                "conditions": [],
+                "actions": [
+                  "StockMovement.stockItemId = input.stockItemId",
+                  "StockMovement.movementType = \"ajuste\"",
+                  "StockMovement.quantity = input.quantity",
+                  "StockMovement.note = input.note",
+                  "StockMovement.occurredAt = input.occurredAt",
+                  "StockMovement.createdAt = now()",
+                  "StockMovement.updatedAt = now()",
+                  "StockItem.currentQuantity = input.adjustedQuantity",
+                  "StockItem.updatedAt = now()"
+                ],
+                "rulesApplied": [
+                  "ruleStockQuantityNonNegative",
+                  "ruleLowStockAlert"
+                ]
+              },
+              {
+                "from": "stockItemActive",
+                "to": "stockItemActive",
+                "trigger": "listarItensEstoque",
+                "actor": "managerOwner",
+                "conditions": [],
+                "actions": [],
+                "rulesApplied": []
+              },
+              {
+                "from": "movementRecorded",
+                "to": "movementRecorded",
+                "trigger": "listarMovimentacoesEstoque",
+                "actor": "managerOwner",
+                "conditions": [],
+                "actions": [],
+                "rulesApplied": []
+              },
+              {
+                "from": "stockItemActive",
+                "to": "stockItemActive",
+                "trigger": "listarAlertasEstoqueBaixo",
+                "actor": "managerOwner",
+                "conditions": [],
+                "actions": [],
+                "rulesApplied": []
+              }
+            ],
+            "requiredEntities": [
+              "StockItem",
+              "StockMovement"
+            ],
+            "persistenceRefs": [
+              "stockMovement",
+              "lowStockMetrics"
+            ],
+            "usecaseRefs": [
+              "gerenciarItemEstoque",
+              "listarItensEstoque",
+              "registrarMovimentacaoEstoque",
+              "listarMovimentacoesEstoque",
+              "listarAlertasEstoqueBaixo"
+            ],
+            "metricRefs": [
+              "lowStockMetrics"
+            ],
+            "userActions": [
+              "criarItemEstoque",
+              "atualizarItemEstoque",
+              "inativarItemEstoque",
+              "reativarItemEstoque",
+              "registrarEntradaEstoque",
+              "registrarSaidaEstoque",
+              "registrarAjusteEstoque",
+              "listarItensEstoque",
+              "listarMovimentacoesEstoque",
+              "listarAlertasEstoqueBaixo"
+            ],
+            "relatedPages": [],
+            "relatedAgents": [],
+            "relatedPlugins": [],
+            "rulesApplied": [
+              "ruleStockQuantityNonNegative",
+              "ruleLowStockAlert"
+            ],
+            "implementationSuggestions": [
+              {
+                "suggestionId": "suggStockAutoDeduction",
+                "title": "Integração com baixa automática de pedidos",
+                "priority": "now",
+                "description": "As movimentações de saída devem ser geradas automaticamente pelo workflow de pedidos ao iniciar o preparo.",
+                "tradeoff": "Exige integração entre workflows e pode aumentar a complexidade de orquestração."
+              },
+              {
+                "suggestionId": "suggStockAlertThreshold",
+                "title": "Configuração de limite de alerta por item",
+                "priority": "soon",
+                "description": "Cada item de estoque deve ter um nível mínimo configurável para disparar o alerta de estoque baixo.",
+                "tradeoff": "Requer ajustes na gestão de cadastro e validações adicionais."
+              },
+              {
+                "suggestionId": "suggNoTaskForStock",
+                "title": "Sem criação de tarefas para movimentações de estoque",
+                "priority": "later",
+                "description": "Mantém o fluxo direto no painel de estoque sem geração de tarefas, usando somente estados e métricas.",
+                "tradeoff": "Pode reduzir rastreabilidade de pendências operacionais que poderiam ser tratadas como tarefas."
+              }
+            ],
+            "workflowScope": "singleModule",
+            "moduleRefs": [
+              "cafeFlow"
+            ],
+            "pageRefsByModule": [],
+            "entityRefsByModule": [
+              {
+                "moduleId": "cafeFlow",
+                "entity": "StockMovement"
+              }
+            ],
+            "writesArtifacts": [
+              {
+                "moduleId": "cafeFlow",
+                "artifactType": "workflow",
+                "artifactId": "workflowStockManagement"
+              }
+            ]
+          },
+          "defsPlan": {
+            "fileName": "workflows/workflowStockManagement.defs.ts",
+            "exportName": "workflowStockManagementDef",
+            "saveAsDefs": true
+          }
+        },
+        "questions": [],
+        "trace": [
+          "Workflow planejado conforme o índice, mantendo executionMode entityLifecycle e createsTask false.",
+          "Incluí transições para criação/atualização/inativação de item e registro de movimentações, com ações limitadas aos campos das entidades declaradas.",
+          "Mantive persistenceRefs somente para tabelas do módulo e métricas; StockItem é MDM e não foi referenciado como persistência de módulo."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 60,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

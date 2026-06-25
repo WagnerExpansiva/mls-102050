@@ -1,0 +1,43 @@
+{
+  "savedAt": "2026-06-25T01:22:10.382Z",
+  "agentName": "agentPlanUsecaseDefinition",
+  "stepId": 61,
+  "planning": null,
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitUsecaseDefinitionPlan",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "usecaseDefinition": {
+            "usecaseId": "listarAlertasEstoqueBaixo",
+            "commands": [
+              {
+                "commandId": "listarAlertasEstoqueBaixo",
+                "input": [],
+                "output": [
+                  {
+                    "name": "metricasCafeFlowList",
+                    "type": "metricasCafeFlow[]"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "questions": [],
+        "trace": [
+          "Usecase lista alertas de estoque baixo consultando low_stock_metrics e stock_item.",
+          "Não há parâmetros explícitos no contexto, então comando sem inputs.",
+          "Saída baseada em outputEntities: metricasCafeFlow."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 66,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

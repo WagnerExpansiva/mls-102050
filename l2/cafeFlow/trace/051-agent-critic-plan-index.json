@@ -1,0 +1,88 @@
+{
+  "savedAt": "2026-06-25T01:18:21.249Z",
+  "agentName": "agentCriticPlanIndex",
+  "stepId": 51,
+  "planning": {
+    "planId": "plan-index-critic:usecasePlan:1",
+    "dependsOn": [
+      "plan-usecase-entities"
+    ],
+    "executionMode": "sequential",
+    "executionHost": "client"
+  },
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitPlanIndexCritique",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "approved": false,
+          "errors": [
+            {
+              "code": "usecase.missingStockReversalOnCancel",
+              "message": "usecase cancelarPedido deve escrever stock_item e stock_movement para reverter baixa de estoque ao cancelar pedido já preparado, conforme exigido pela ação aprovada cancelOrder ('registra movimentação de reposição'); faltam estoqueAggregate em input/output entities e as tabelas de estoque em writesTables",
+              "path": "usecases[6]"
+            }
+          ],
+          "warnings": [
+            {
+              "code": "usecase.metricWrite.unjustified",
+              "message": "usecase abrirTurnoDiario escreve tabela métrica todaySalesMetrics sem mapear para medida/sourceWriteEvents; remover a escrita ou propor a medida faltante no índice de métricas",
+              "path": "usecases[0]"
+            },
+            {
+              "code": "usecase.metricWrite.unjustified",
+              "message": "usecase fecharTurnoDiario escreve tabela métrica todaySalesMetrics sem mapear para medida/sourceWriteEvents; remover a escrita ou propor a medida faltante no índice de métricas",
+              "path": "usecases[2]"
+            },
+            {
+              "code": "usecase.metricWrite.unjustified",
+              "message": "usecase criarPedido escreve tabela métrica todaySalesMetrics sem mapear para medida/sourceWriteEvents; remover a escrita ou propor a medida faltante no índice de métricas",
+              "path": "usecases[3]"
+            },
+            {
+              "code": "usecase.metricWrite.unjustified",
+              "message": "usecase criarPedido escreve tabela métrica topSellingItemsMetrics sem mapear para medida/sourceWriteEvents; remover a escrita ou propor a medida faltante no índice de métricas",
+              "path": "usecases[3]"
+            },
+            {
+              "code": "usecase.metricWrite.unjustified",
+              "message": "usecase atualizarStatusPedido escreve tabela métrica lowStockMetrics sem mapear para medida/sourceWriteEvents; remover a escrita ou propor a medida faltante no índice de métricas",
+              "path": "usecases[5]"
+            },
+            {
+              "code": "usecase.metricWrite.unjustified",
+              "message": "usecase cancelarPedido escreve tabela métrica todaySalesMetrics sem mapear para medida/sourceWriteEvents; remover a escrita ou propor a medida faltante no índice de métricas",
+              "path": "usecases[6]"
+            },
+            {
+              "code": "usecase.metricWrite.unjustified",
+              "message": "usecase cancelarPedido escreve tabela métrica topSellingItemsMetrics sem mapear para medida/sourceWriteEvents; remover a escrita ou propor a medida faltante no índice de métricas",
+              "path": "usecases[6]"
+            },
+            {
+              "code": "usecase.metricWrite.unjustified",
+              "message": "usecase registrarMovimentacaoEstoque escreve tabela métrica lowStockMetrics sem mapear para medida/sourceWriteEvents; remover a escrita ou propor a medida faltante no índice de métricas",
+              "path": "usecases[13]"
+            }
+          ],
+          "notes": []
+        },
+        "questions": [],
+        "trace": [
+          "Verificada cobertura de escrita em tabelas moduleOwned: menu_item_ingredient, order_item, stock_movement, today_sales_metrics, top_selling_items_metrics, low_stock_metrics — todas cobertas por usecases.",
+          "Verificada cobertura de leitura: toda tabela escrita possui usecase de leitura correspondente com writesTables vazio.",
+          "Verificada transição de ciclo de vida dos aggregates: turnoDiarioAggregate, pedidoAggregate, cardapioAggregate, estoqueAggregate cobertos por operações create/update/read/list.",
+          "Identificado gap em cancelarPedido: ação aprovada cancelOrder exige reversão de estoque, mas o usecase não inclui stock_item/stock_movement em writesTables nem estoqueAggregate em input/output.",
+          "Mantidos os 8 warnings determinísticos de metricWrite.unjustified."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 42,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

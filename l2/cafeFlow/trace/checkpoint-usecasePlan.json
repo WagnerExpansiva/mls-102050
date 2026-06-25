@@ -1,0 +1,862 @@
+{
+  "schemaVersion": "2026-06-06",
+  "artifactType": "indexCheckpoint",
+  "indexName": "usecasePlan",
+  "moduleName": "cafeFlow",
+  "status": "frozen",
+  "approvedAt": "2026-06-25T01:21:34.367Z",
+  "source": {
+    "agentName": "agentPlanUsecaseEntities",
+    "stepId": 21,
+    "planId": "plan-usecase-entities"
+  },
+  "healthReport": {
+    "localErrors": [],
+    "localWarnings": [
+      {
+        "severity": "warning",
+        "code": "usecase.metricWrite.unjustified",
+        "message": "usecase criarPedido writes metric table todaySalesMetrics but does not map to any of its measures/sourceWriteEvents; remove the write or propose the missing measure in the metrics index",
+        "path": "usecases[3]"
+      },
+      {
+        "severity": "warning",
+        "code": "usecase.metricWrite.unjustified",
+        "message": "usecase criarPedido writes metric table topSellingItemsMetrics but does not map to any of its measures/sourceWriteEvents; remove the write or propose the missing measure in the metrics index",
+        "path": "usecases[3]"
+      },
+      {
+        "severity": "warning",
+        "code": "usecase.metricWrite.unjustified",
+        "message": "usecase atualizarStatusPedido writes metric table topSellingItemsMetrics but does not map to any of its measures/sourceWriteEvents; remove the write or propose the missing measure in the metrics index",
+        "path": "usecases[5]"
+      },
+      {
+        "severity": "warning",
+        "code": "usecase.metricWrite.unjustified",
+        "message": "usecase atualizarStatusPedido writes metric table lowStockMetrics but does not map to any of its measures/sourceWriteEvents; remove the write or propose the missing measure in the metrics index",
+        "path": "usecases[5]"
+      },
+      {
+        "severity": "warning",
+        "code": "usecase.metricWrite.unjustified",
+        "message": "usecase cancelarPedido writes metric table todaySalesMetrics but does not map to any of its measures/sourceWriteEvents; remove the write or propose the missing measure in the metrics index",
+        "path": "usecases[6]"
+      },
+      {
+        "severity": "warning",
+        "code": "usecase.metricWrite.unjustified",
+        "message": "usecase cancelarPedido writes metric table topSellingItemsMetrics but does not map to any of its measures/sourceWriteEvents; remove the write or propose the missing measure in the metrics index",
+        "path": "usecases[6]"
+      },
+      {
+        "severity": "warning",
+        "code": "usecase.metricWrite.unjustified",
+        "message": "usecase cancelarPedido writes metric table lowStockMetrics but does not map to any of its measures/sourceWriteEvents; remove the write or propose the missing measure in the metrics index",
+        "path": "usecases[6]"
+      },
+      {
+        "severity": "warning",
+        "code": "usecase.metricWrite.unjustified",
+        "message": "usecase registrarMovimentacaoEstoque writes metric table lowStockMetrics but does not map to any of its measures/sourceWriteEvents; remove the write or propose the missing measure in the metrics index",
+        "path": "usecases[13]"
+      }
+    ],
+    "criticErrors": [],
+    "criticWarnings": [
+      {
+        "severity": "warning",
+        "code": "usecase.metricWrite.unjustified",
+        "message": "usecase criarPedido writes metric table todaySalesMetrics but does not map to any of its measures/sourceWriteEvents; remove the write or propose the missing measure in the metrics index",
+        "path": "usecases[3]"
+      },
+      {
+        "severity": "warning",
+        "code": "usecase.metricWrite.unjustified",
+        "message": "usecase criarPedido writes metric table topSellingItemsMetrics but does not map to any of its measures/sourceWriteEvents; remove the write or propose the missing measure in the metrics index",
+        "path": "usecases[3]"
+      },
+      {
+        "severity": "warning",
+        "code": "usecase.metricWrite.unjustified",
+        "message": "usecase atualizarStatusPedido writes metric table topSellingItemsMetrics but does not map to any of its measures/sourceWriteEvents; remove the write or propose the missing measure in the metrics index",
+        "path": "usecases[5]"
+      },
+      {
+        "severity": "warning",
+        "code": "usecase.metricWrite.unjustified",
+        "message": "usecase atualizarStatusPedido writes metric table lowStockMetrics but does not map to any of its measures/sourceWriteEvents; remove the write or propose the missing measure in the metrics index",
+        "path": "usecases[5]"
+      },
+      {
+        "severity": "warning",
+        "code": "usecase.metricWrite.unjustified",
+        "message": "usecase cancelarPedido writes metric table todaySalesMetrics but does not map to any of its measures/sourceWriteEvents; remove the write or propose the missing measure in the metrics index",
+        "path": "usecases[6]"
+      },
+      {
+        "severity": "warning",
+        "code": "usecase.metricWrite.unjustified",
+        "message": "usecase cancelarPedido writes metric table topSellingItemsMetrics but does not map to any of its measures/sourceWriteEvents; remove the write or propose the missing measure in the metrics index",
+        "path": "usecases[6]"
+      },
+      {
+        "severity": "warning",
+        "code": "usecase.metricWrite.unjustified",
+        "message": "usecase cancelarPedido writes metric table lowStockMetrics but does not map to any of its measures/sourceWriteEvents; remove the write or propose the missing measure in the metrics index",
+        "path": "usecases[6]"
+      },
+      {
+        "severity": "warning",
+        "code": "usecase.metricWrite.unjustified",
+        "message": "usecase registrarMovimentacaoEstoque writes metric table lowStockMetrics but does not map to any of its measures/sourceWriteEvents; remove the write or propose the missing measure in the metrics index",
+        "path": "usecases[13]"
+      }
+    ],
+    "attempts": 3,
+    "notes": []
+  },
+  "index": {
+    "runId": "provider-tool-call",
+    "stepId": "repair:usecasePlan",
+    "schemaVersion": "2026-06-02",
+    "status": "ok",
+    "result": {
+      "backendArchitecture": {
+        "pattern": "Layered Architecture (BFF/Controllers -> Usecases -> Entities/Tables)",
+        "layer1Responsibility": "Persistência e integrações externas (MDM, horizontais, plugins).",
+        "layer2Responsibility": "Controllers/BFF: orquestram requests e chamam usecases; sem acesso direto a tabelas.",
+        "layer3Responsibility": "Usecases: regras de negócio, operações e acesso às entidades agregadas (via layer_4_entities)."
+      },
+      "usecaseEntities": [
+        {
+          "usecaseEntityId": "turnoDiarioAggregate",
+          "title": "Turno Diário",
+          "purpose": "Gerenciar abertura/fechamento e consulta de turnos diários.",
+          "sourceTables": [
+            {
+              "tableName": "daily_shift",
+              "ownership": "mdmOwned"
+            }
+          ],
+          "allowedOperations": [
+            "create",
+            "update",
+            "read",
+            "list"
+          ],
+          "layer": "layer_3_usecases"
+        },
+        {
+          "usecaseEntityId": "pedidoAggregate",
+          "title": "Pedido",
+          "purpose": "Gerenciar pedidos e seus itens.",
+          "sourceTables": [
+            {
+              "tableName": "order",
+              "ownership": "mdmOwned"
+            },
+            {
+              "tableName": "order_item",
+              "ownership": "moduleOwned"
+            }
+          ],
+          "allowedOperations": [
+            "create",
+            "update",
+            "read",
+            "list"
+          ],
+          "layer": "layer_3_usecases"
+        },
+        {
+          "usecaseEntityId": "cardapioAggregate",
+          "title": "Cardápio",
+          "purpose": "Gerenciar itens e categorias do cardápio e seus ingredientes.",
+          "sourceTables": [
+            {
+              "tableName": "menu_item",
+              "ownership": "mdmOwned"
+            },
+            {
+              "tableName": "menu_category",
+              "ownership": "mdmOwned"
+            },
+            {
+              "tableName": "menu_item_ingredient",
+              "ownership": "moduleOwned"
+            }
+          ],
+          "allowedOperations": [
+            "create",
+            "update",
+            "delete",
+            "read",
+            "list"
+          ],
+          "layer": "layer_3_usecases"
+        },
+        {
+          "usecaseEntityId": "estoqueAggregate",
+          "title": "Estoque",
+          "purpose": "Gerenciar itens de estoque e suas movimentações.",
+          "sourceTables": [
+            {
+              "tableName": "stock_item",
+              "ownership": "mdmOwned"
+            },
+            {
+              "tableName": "stock_movement",
+              "ownership": "moduleOwned"
+            }
+          ],
+          "allowedOperations": [
+            "create",
+            "update",
+            "read",
+            "list"
+          ],
+          "layer": "layer_3_usecases"
+        },
+        {
+          "usecaseEntityId": "metricasCafeFlow",
+          "title": "Métricas CafeFlow",
+          "purpose": "Consultar e atualizar métricas operacionais do CafeFlow.",
+          "sourceTables": [
+            {
+              "tableName": "today_sales_metrics",
+              "ownership": "moduleOwned"
+            },
+            {
+              "tableName": "top_selling_items_metrics",
+              "ownership": "moduleOwned"
+            },
+            {
+              "tableName": "low_stock_metrics",
+              "ownership": "moduleOwned"
+            }
+          ],
+          "allowedOperations": [
+            "read",
+            "update"
+          ],
+          "layer": "layer_3_usecases"
+        }
+      ],
+      "usecases": [
+        {
+          "usecaseId": "abrirTurnoDiario",
+          "title": "Abrir Turno Diário",
+          "purpose": "Abrir um turno diário único para o dia atual.",
+          "actor": "attendantCashier",
+          "layer": "layer_3_usecases",
+          "inputEntities": [
+            "turnoDiarioAggregate"
+          ],
+          "outputEntities": [
+            "turnoDiarioAggregate"
+          ],
+          "readsTables": [
+            {
+              "tableName": "daily_shift",
+              "ownership": "mdmOwned"
+            }
+          ],
+          "writesTables": [
+            {
+              "tableName": "daily_shift",
+              "ownership": "mdmOwned"
+            }
+          ],
+          "rulesApplied": [
+            "ruleUniqueOpenShiftPerDay"
+          ]
+        },
+        {
+          "usecaseId": "listarTurnosDiarios",
+          "title": "Listar Turnos Diários",
+          "purpose": "Consultar turnos diários existentes.",
+          "actor": "attendantCashier",
+          "layer": "layer_3_usecases",
+          "inputEntities": [
+            "turnoDiarioAggregate"
+          ],
+          "outputEntities": [
+            "turnoDiarioAggregate"
+          ],
+          "readsTables": [
+            {
+              "tableName": "daily_shift",
+              "ownership": "mdmOwned"
+            }
+          ],
+          "writesTables": [],
+          "rulesApplied": []
+        },
+        {
+          "usecaseId": "fecharTurnoDiario",
+          "title": "Fechar Turno Diário",
+          "purpose": "Fechar o turno diário garantindo ausência de pedidos abertos.",
+          "actor": "managerOwner",
+          "layer": "layer_3_usecases",
+          "inputEntities": [
+            "turnoDiarioAggregate",
+            "pedidoAggregate"
+          ],
+          "outputEntities": [
+            "turnoDiarioAggregate"
+          ],
+          "readsTables": [
+            {
+              "tableName": "daily_shift",
+              "ownership": "mdmOwned"
+            },
+            {
+              "tableName": "order",
+              "ownership": "mdmOwned"
+            }
+          ],
+          "writesTables": [
+            {
+              "tableName": "daily_shift",
+              "ownership": "mdmOwned"
+            }
+          ],
+          "rulesApplied": [
+            "ruleShiftCloseNoOpenOrders"
+          ]
+        },
+        {
+          "usecaseId": "criarPedido",
+          "title": "Criar Pedido",
+          "purpose": "Registrar um novo pedido e seus itens.",
+          "actor": "attendantCashier",
+          "layer": "layer_3_usecases",
+          "inputEntities": [
+            "pedidoAggregate",
+            "turnoDiarioAggregate"
+          ],
+          "outputEntities": [
+            "pedidoAggregate"
+          ],
+          "readsTables": [
+            {
+              "tableName": "daily_shift",
+              "ownership": "mdmOwned"
+            },
+            {
+              "tableName": "menu_item",
+              "ownership": "mdmOwned"
+            }
+          ],
+          "writesTables": [
+            {
+              "tableName": "order",
+              "ownership": "mdmOwned"
+            },
+            {
+              "tableName": "order_item",
+              "ownership": "moduleOwned"
+            },
+            {
+              "tableName": "today_sales_metrics",
+              "ownership": "moduleOwned"
+            },
+            {
+              "tableName": "top_selling_items_metrics",
+              "ownership": "moduleOwned"
+            }
+          ],
+          "rulesApplied": [
+            "ruleOrderRequiresOpenShift"
+          ]
+        },
+        {
+          "usecaseId": "listarPedidos",
+          "title": "Listar Pedidos",
+          "purpose": "Consultar pedidos e seus itens por filtros.",
+          "actor": "attendantCashier",
+          "layer": "layer_3_usecases",
+          "inputEntities": [
+            "pedidoAggregate"
+          ],
+          "outputEntities": [
+            "pedidoAggregate"
+          ],
+          "readsTables": [
+            {
+              "tableName": "order",
+              "ownership": "mdmOwned"
+            },
+            {
+              "tableName": "order_item",
+              "ownership": "moduleOwned"
+            }
+          ],
+          "writesTables": [],
+          "rulesApplied": []
+        },
+        {
+          "usecaseId": "atualizarStatusPedido",
+          "title": "Atualizar Status do Pedido",
+          "purpose": "Atualizar status do pedido e iniciar baixa de estoque no preparo.",
+          "actor": "cook",
+          "layer": "layer_3_usecases",
+          "inputEntities": [
+            "pedidoAggregate",
+            "estoqueAggregate"
+          ],
+          "outputEntities": [
+            "pedidoAggregate",
+            "estoqueAggregate"
+          ],
+          "readsTables": [
+            {
+              "tableName": "order",
+              "ownership": "mdmOwned"
+            },
+            {
+              "tableName": "order_item",
+              "ownership": "moduleOwned"
+            },
+            {
+              "tableName": "stock_item",
+              "ownership": "mdmOwned"
+            }
+          ],
+          "writesTables": [
+            {
+              "tableName": "order",
+              "ownership": "mdmOwned"
+            },
+            {
+              "tableName": "stock_item",
+              "ownership": "mdmOwned"
+            },
+            {
+              "tableName": "stock_movement",
+              "ownership": "moduleOwned"
+            },
+            {
+              "tableName": "today_sales_metrics",
+              "ownership": "moduleOwned"
+            },
+            {
+              "tableName": "top_selling_items_metrics",
+              "ownership": "moduleOwned"
+            },
+            {
+              "tableName": "low_stock_metrics",
+              "ownership": "moduleOwned"
+            }
+          ],
+          "rulesApplied": [
+            "ruleOrderStatusFlow",
+            "ruleStockDeductionOnOrderPreparation",
+            "ruleStockQuantityNonNegative",
+            "ruleLowStockAlert"
+          ]
+        },
+        {
+          "usecaseId": "cancelarPedido",
+          "title": "Cancelar Pedido",
+          "purpose": "Cancelar um pedido e ajustar métricas de vendas.",
+          "actor": "managerOwner",
+          "layer": "layer_3_usecases",
+          "inputEntities": [
+            "pedidoAggregate",
+            "estoqueAggregate"
+          ],
+          "outputEntities": [
+            "pedidoAggregate",
+            "estoqueAggregate"
+          ],
+          "readsTables": [
+            {
+              "tableName": "order",
+              "ownership": "mdmOwned"
+            },
+            {
+              "tableName": "order_item",
+              "ownership": "moduleOwned"
+            },
+            {
+              "tableName": "stock_item",
+              "ownership": "mdmOwned"
+            }
+          ],
+          "writesTables": [
+            {
+              "tableName": "order",
+              "ownership": "mdmOwned"
+            },
+            {
+              "tableName": "stock_item",
+              "ownership": "mdmOwned"
+            },
+            {
+              "tableName": "stock_movement",
+              "ownership": "moduleOwned"
+            },
+            {
+              "tableName": "today_sales_metrics",
+              "ownership": "moduleOwned"
+            },
+            {
+              "tableName": "top_selling_items_metrics",
+              "ownership": "moduleOwned"
+            },
+            {
+              "tableName": "low_stock_metrics",
+              "ownership": "moduleOwned"
+            }
+          ],
+          "rulesApplied": [
+            "ruleOrderStatusFlow"
+          ]
+        },
+        {
+          "usecaseId": "gerenciarCategoriaCardapio",
+          "title": "Gerenciar Categoria do Cardápio",
+          "purpose": "Criar, editar ou remover categorias do cardápio.",
+          "actor": "managerOwner",
+          "layer": "layer_3_usecases",
+          "inputEntities": [
+            "cardapioAggregate"
+          ],
+          "outputEntities": [
+            "cardapioAggregate"
+          ],
+          "readsTables": [
+            {
+              "tableName": "menu_category",
+              "ownership": "mdmOwned"
+            }
+          ],
+          "writesTables": [
+            {
+              "tableName": "menu_category",
+              "ownership": "mdmOwned"
+            }
+          ],
+          "rulesApplied": []
+        },
+        {
+          "usecaseId": "listarCategoriasCardapio",
+          "title": "Listar Categorias do Cardápio",
+          "purpose": "Consultar categorias do cardápio.",
+          "actor": "managerOwner",
+          "layer": "layer_3_usecases",
+          "inputEntities": [
+            "cardapioAggregate"
+          ],
+          "outputEntities": [
+            "cardapioAggregate"
+          ],
+          "readsTables": [
+            {
+              "tableName": "menu_category",
+              "ownership": "mdmOwned"
+            }
+          ],
+          "writesTables": [],
+          "rulesApplied": []
+        },
+        {
+          "usecaseId": "gerenciarItemCardapio",
+          "title": "Gerenciar Item do Cardápio",
+          "purpose": "Criar, editar ou remover itens do cardápio e seus ingredientes.",
+          "actor": "managerOwner",
+          "layer": "layer_3_usecases",
+          "inputEntities": [
+            "cardapioAggregate"
+          ],
+          "outputEntities": [
+            "cardapioAggregate"
+          ],
+          "readsTables": [
+            {
+              "tableName": "menu_item",
+              "ownership": "mdmOwned"
+            },
+            {
+              "tableName": "menu_item_ingredient",
+              "ownership": "moduleOwned"
+            }
+          ],
+          "writesTables": [
+            {
+              "tableName": "menu_item",
+              "ownership": "mdmOwned"
+            },
+            {
+              "tableName": "menu_item_ingredient",
+              "ownership": "moduleOwned"
+            }
+          ],
+          "rulesApplied": [
+            "ruleMenuItemPricePositive"
+          ]
+        },
+        {
+          "usecaseId": "listarItensCardapio",
+          "title": "Listar Itens do Cardápio",
+          "purpose": "Consultar itens do cardápio e seus ingredientes.",
+          "actor": "managerOwner",
+          "layer": "layer_3_usecases",
+          "inputEntities": [
+            "cardapioAggregate"
+          ],
+          "outputEntities": [
+            "cardapioAggregate"
+          ],
+          "readsTables": [
+            {
+              "tableName": "menu_item",
+              "ownership": "mdmOwned"
+            },
+            {
+              "tableName": "menu_item_ingredient",
+              "ownership": "moduleOwned"
+            },
+            {
+              "tableName": "menu_category",
+              "ownership": "mdmOwned"
+            }
+          ],
+          "writesTables": [],
+          "rulesApplied": []
+        },
+        {
+          "usecaseId": "gerenciarItemEstoque",
+          "title": "Gerenciar Item de Estoque",
+          "purpose": "Criar, editar ou inativar itens de estoque.",
+          "actor": "managerOwner",
+          "layer": "layer_3_usecases",
+          "inputEntities": [
+            "estoqueAggregate"
+          ],
+          "outputEntities": [
+            "estoqueAggregate"
+          ],
+          "readsTables": [
+            {
+              "tableName": "stock_item",
+              "ownership": "mdmOwned"
+            }
+          ],
+          "writesTables": [
+            {
+              "tableName": "stock_item",
+              "ownership": "mdmOwned"
+            }
+          ],
+          "rulesApplied": [
+            "ruleStockQuantityNonNegative"
+          ]
+        },
+        {
+          "usecaseId": "listarItensEstoque",
+          "title": "Listar Itens de Estoque",
+          "purpose": "Consultar itens de estoque.",
+          "actor": "managerOwner",
+          "layer": "layer_3_usecases",
+          "inputEntities": [
+            "estoqueAggregate"
+          ],
+          "outputEntities": [
+            "estoqueAggregate"
+          ],
+          "readsTables": [
+            {
+              "tableName": "stock_item",
+              "ownership": "mdmOwned"
+            }
+          ],
+          "writesTables": [],
+          "rulesApplied": []
+        },
+        {
+          "usecaseId": "registrarMovimentacaoEstoque",
+          "title": "Registrar Movimentação de Estoque",
+          "purpose": "Registrar entrada/saída de estoque e atualizar métricas de estoque baixo.",
+          "actor": "managerOwner",
+          "layer": "layer_3_usecases",
+          "inputEntities": [
+            "estoqueAggregate"
+          ],
+          "outputEntities": [
+            "estoqueAggregate"
+          ],
+          "readsTables": [
+            {
+              "tableName": "stock_item",
+              "ownership": "mdmOwned"
+            }
+          ],
+          "writesTables": [
+            {
+              "tableName": "stock_movement",
+              "ownership": "moduleOwned"
+            },
+            {
+              "tableName": "stock_item",
+              "ownership": "mdmOwned"
+            },
+            {
+              "tableName": "low_stock_metrics",
+              "ownership": "moduleOwned"
+            }
+          ],
+          "rulesApplied": [
+            "ruleStockQuantityNonNegative",
+            "ruleLowStockAlert"
+          ]
+        },
+        {
+          "usecaseId": "listarMovimentacoesEstoque",
+          "title": "Listar Movimentações de Estoque",
+          "purpose": "Consultar movimentações de estoque.",
+          "actor": "managerOwner",
+          "layer": "layer_3_usecases",
+          "inputEntities": [
+            "estoqueAggregate"
+          ],
+          "outputEntities": [
+            "estoqueAggregate"
+          ],
+          "readsTables": [
+            {
+              "tableName": "stock_movement",
+              "ownership": "moduleOwned"
+            },
+            {
+              "tableName": "stock_item",
+              "ownership": "mdmOwned"
+            }
+          ],
+          "writesTables": [],
+          "rulesApplied": []
+        },
+        {
+          "usecaseId": "gerarResumoVendasDia",
+          "title": "Gerar Resumo de Vendas do Dia",
+          "purpose": "Consultar métricas de vendas do dia para o dashboard.",
+          "actor": "managerOwner",
+          "layer": "layer_3_usecases",
+          "inputEntities": [
+            "metricasCafeFlow"
+          ],
+          "outputEntities": [
+            "metricasCafeFlow"
+          ],
+          "readsTables": [
+            {
+              "tableName": "today_sales_metrics",
+              "ownership": "moduleOwned"
+            },
+            {
+              "tableName": "daily_shift",
+              "ownership": "mdmOwned"
+            }
+          ],
+          "writesTables": [],
+          "rulesApplied": []
+        },
+        {
+          "usecaseId": "sugerirItensParaPromover",
+          "title": "Sugerir Itens para Promover",
+          "purpose": "Sugerir itens com base nas métricas de venda.",
+          "actor": "managerOwner",
+          "layer": "layer_3_usecases",
+          "inputEntities": [
+            "metricasCafeFlow",
+            "cardapioAggregate"
+          ],
+          "outputEntities": [
+            "metricasCafeFlow"
+          ],
+          "readsTables": [
+            {
+              "tableName": "top_selling_items_metrics",
+              "ownership": "moduleOwned"
+            },
+            {
+              "tableName": "menu_item",
+              "ownership": "mdmOwned"
+            }
+          ],
+          "writesTables": [],
+          "rulesApplied": []
+        },
+        {
+          "usecaseId": "listarAlertasEstoqueBaixo",
+          "title": "Listar Alertas de Estoque Baixo",
+          "purpose": "Consultar alertas de estoque baixo.",
+          "actor": "managerOwner",
+          "layer": "layer_3_usecases",
+          "inputEntities": [
+            "metricasCafeFlow",
+            "estoqueAggregate"
+          ],
+          "outputEntities": [
+            "metricasCafeFlow"
+          ],
+          "readsTables": [
+            {
+              "tableName": "low_stock_metrics",
+              "ownership": "moduleOwned"
+            },
+            {
+              "tableName": "stock_item",
+              "ownership": "mdmOwned"
+            }
+          ],
+          "writesTables": [],
+          "rulesApplied": []
+        },
+        {
+          "usecaseId": "consultarAssistenteIA",
+          "title": "Consultar Assistente IA",
+          "purpose": "Fornecer dados agregados para o assistente de vendas respeitando privacidade.",
+          "actor": "managerOwner",
+          "layer": "layer_3_usecases",
+          "inputEntities": [
+            "metricasCafeFlow"
+          ],
+          "outputEntities": [
+            "metricasCafeFlow"
+          ],
+          "readsTables": [
+            {
+              "tableName": "today_sales_metrics",
+              "ownership": "moduleOwned"
+            },
+            {
+              "tableName": "top_selling_items_metrics",
+              "ownership": "moduleOwned"
+            },
+            {
+              "tableName": "low_stock_metrics",
+              "ownership": "moduleOwned"
+            }
+          ],
+          "writesTables": [],
+          "rulesApplied": [
+            "ruleLlmDataPrivacy"
+          ]
+        }
+      ],
+      "controllerRules": {
+        "bffMustCallUsecases": true,
+        "bffDirectTableAccessForbidden": true
+      }
+    },
+    "questions": [],
+    "trace": [
+      "Incluídas escritas de métricas em usecases que alteram pedidos e estoque para cobrir today_sales_metrics, top_selling_items_metrics e low_stock_metrics.",
+      "Adicionada atualização de low_stock_metrics em registrarMovimentacaoEstoque conforme alteração de estoque.",
+      "Mantidos identificadores e demais campos sem alteração."
+    ]
+  }
+}

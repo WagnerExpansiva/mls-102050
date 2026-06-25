@@ -1,0 +1,605 @@
+{
+  "savedAt": "2026-06-25T01:24:27.326Z",
+  "agentName": "agentPlanPageIndex",
+  "stepId": 26,
+  "planning": {
+    "planId": "plan-page-index",
+    "dependsOn": [
+      "plan-metrics-index",
+      "plan-workflow-index",
+      "plan-agents",
+      "plan-user-journeys"
+    ],
+    "executionMode": "sequential",
+    "executionHost": "client"
+  },
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitPageIndexPlan",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "pages": [
+            {
+              "pageId": "shiftOpen",
+              "pageName": "Abertura de Turno",
+              "actor": "attendantCashier",
+              "purpose": "Verificar turno aberto e abrir o turno diário com valor inicial de caixa.",
+              "capabilities": [
+                "openDailyShift"
+              ],
+              "flowRefs": {
+                "experienceFlows": [],
+                "entityLifecycles": [
+                  "workflowDailyShiftLifecycle"
+                ],
+                "taskWorkflows": [],
+                "automations": []
+              },
+              "pluginRefs": [],
+              "mdmRefs": [
+                "dailyShift"
+              ],
+              "primaryUserActions": [
+                "Abrir turno diário",
+                "Informar valor inicial de caixa",
+                "Verificar turno aberto"
+              ],
+              "pageInputHints": [],
+              "navigationRefs": [
+                {
+                  "direction": "outbound",
+                  "pageId": "posOrder",
+                  "trigger": "Turno aberto confirmado"
+                }
+              ],
+              "persistenceHints": [],
+              "usecaseHints": [
+                "listarTurnosDiarios",
+                "abrirTurnoDiario"
+              ],
+              "metricRefs": [],
+              "rulesApplied": [
+                "ruleUniqueOpenShiftPerDay"
+              ],
+              "bffCommandHints": [
+                {
+                  "name": "listarTurnosDiarios",
+                  "purpose": "Verificar se já existe turno aberto",
+                  "input": "data atual ou turno do dia",
+                  "output": "lista de turnos com status"
+                },
+                {
+                  "name": "abrirTurnoDiario",
+                  "purpose": "Abrir turno com valor inicial de caixa",
+                  "input": "valor inicial, data",
+                  "output": "turno diário aberto"
+                }
+              ]
+            },
+            {
+              "pageId": "posOrder",
+              "pageName": "POS de Pedidos",
+              "actor": "attendantCashier",
+              "purpose": "Registrar pedidos rápidos no balcão, selecionar itens e confirmar envio para a cozinha.",
+              "capabilities": [
+                "createOrder"
+              ],
+              "flowRefs": {
+                "experienceFlows": [],
+                "entityLifecycles": [],
+                "taskWorkflows": [
+                  "workflowOrderLifecycle"
+                ],
+                "automations": []
+              },
+              "pluginRefs": [],
+              "mdmRefs": [
+                "order",
+                "menu"
+              ],
+              "primaryUserActions": [
+                "Criar pedido",
+                "Adicionar itens",
+                "Confirmar pedido"
+              ],
+              "pageInputHints": [
+                "Turno diário aberto"
+              ],
+              "navigationRefs": [
+                {
+                  "direction": "inbound",
+                  "pageId": "shiftOpen",
+                  "trigger": "Turno aberto"
+                },
+                {
+                  "direction": "outbound",
+                  "pageId": "kitchenDisplay",
+                  "trigger": "Pedido confirmado"
+                }
+              ],
+              "persistenceHints": [
+                "orderItem"
+              ],
+              "usecaseHints": [
+                "criarPedido",
+                "listarCategoriasCardapio",
+                "listarItensCardapio"
+              ],
+              "metricRefs": [],
+              "rulesApplied": [
+                "ruleOrderRequiresOpenShift",
+                "ruleOrderStatusFlow",
+                "ruleMenuItemPricePositive"
+              ],
+              "bffCommandHints": [
+                {
+                  "name": "listarCategoriasCardapio",
+                  "purpose": "Listar categorias para navegação do cardápio",
+                  "input": "filtros opcionais",
+                  "output": "categorias do cardápio"
+                },
+                {
+                  "name": "listarItensCardapio",
+                  "purpose": "Listar itens do cardápio por categoria",
+                  "input": "categoria, filtros",
+                  "output": "itens com preço e status"
+                },
+                {
+                  "name": "criarPedido",
+                  "purpose": "Criar pedido em rascunho e adicionar itens",
+                  "input": "itens, quantidades, mesa/takeout",
+                  "output": "pedido criado com total"
+                }
+              ]
+            },
+            {
+              "pageId": "kitchenDisplay",
+              "pageName": "Display da Cozinha",
+              "actor": "cook",
+              "purpose": "Acompanhar fila de pedidos e atualizar status de preparo.",
+              "capabilities": [
+                "updateKitchenStatus"
+              ],
+              "flowRefs": {
+                "experienceFlows": [],
+                "entityLifecycles": [],
+                "taskWorkflows": [
+                  "workflowOrderLifecycle"
+                ],
+                "automations": []
+              },
+              "pluginRefs": [],
+              "mdmRefs": [
+                "order",
+                "stock"
+              ],
+              "primaryUserActions": [
+                "Ver fila de pedidos",
+                "Marcar preparando",
+                "Marcar pronto"
+              ],
+              "pageInputHints": [],
+              "navigationRefs": [
+                {
+                  "direction": "inbound",
+                  "pageId": "posOrder",
+                  "trigger": "Pedido enviado à cozinha"
+                }
+              ],
+              "persistenceHints": [
+                "stockMovement"
+              ],
+              "usecaseHints": [
+                "listarPedidos",
+                "atualizarStatusPedido"
+              ],
+              "metricRefs": [],
+              "rulesApplied": [
+                "ruleOrderStatusFlow",
+                "ruleStockDeductionOnOrderPreparation"
+              ],
+              "bffCommandHints": [
+                {
+                  "name": "listarPedidos",
+                  "purpose": "Listar pedidos recebidos/andamento para a fila",
+                  "input": "status, período",
+                  "output": "lista de pedidos com itens"
+                },
+                {
+                  "name": "atualizarStatusPedido",
+                  "purpose": "Atualizar status do pedido para preparando/pronto",
+                  "input": "pedidoId, novoStatus",
+                  "output": "pedido atualizado"
+                }
+              ]
+            },
+            {
+              "pageId": "menuManagement",
+              "pageName": "Gerenciamento de Cardápio",
+              "actor": "managerOwner",
+              "purpose": "Criar e editar categorias e itens do cardápio.",
+              "capabilities": [
+                "manageMenu"
+              ],
+              "flowRefs": {
+                "experienceFlows": [],
+                "entityLifecycles": [
+                  "workflowMenuManagement"
+                ],
+                "taskWorkflows": [],
+                "automations": []
+              },
+              "pluginRefs": [],
+              "mdmRefs": [
+                "menu"
+              ],
+              "primaryUserActions": [
+                "Gerenciar categorias",
+                "Gerenciar itens do cardápio"
+              ],
+              "pageInputHints": [],
+              "navigationRefs": [],
+              "persistenceHints": [
+                "menuItemIngredient"
+              ],
+              "usecaseHints": [
+                "listarCategoriasCardapio",
+                "gerenciarCategoriaCardapio",
+                "listarItensCardapio",
+                "gerenciarItemCardapio"
+              ],
+              "metricRefs": [],
+              "rulesApplied": [
+                "ruleMenuItemPricePositive"
+              ],
+              "bffCommandHints": [
+                {
+                  "name": "listarCategoriasCardapio",
+                  "purpose": "Exibir categorias atuais",
+                  "input": "filtros",
+                  "output": "categorias"
+                },
+                {
+                  "name": "gerenciarCategoriaCardapio",
+                  "purpose": "Criar/editar/remover categorias",
+                  "input": "dados da categoria e ação",
+                  "output": "categoria atualizada"
+                },
+                {
+                  "name": "listarItensCardapio",
+                  "purpose": "Exibir itens atuais",
+                  "input": "categoria, filtros",
+                  "output": "itens com preço e status"
+                },
+                {
+                  "name": "gerenciarItemCardapio",
+                  "purpose": "Criar/editar itens do cardápio",
+                  "input": "dados do item, ingredientes",
+                  "output": "item atualizado"
+                }
+              ]
+            },
+            {
+              "pageId": "stockManagement",
+              "pageName": "Gerenciamento de Estoque",
+              "actor": "managerOwner",
+              "purpose": "Revisar itens de estoque, ajustar quantidades e registrar movimentações.",
+              "capabilities": [
+                "manageStock"
+              ],
+              "flowRefs": {
+                "experienceFlows": [],
+                "entityLifecycles": [
+                  "workflowStockManagement"
+                ],
+                "taskWorkflows": [],
+                "automations": []
+              },
+              "pluginRefs": [],
+              "mdmRefs": [
+                "stock"
+              ],
+              "primaryUserActions": [
+                "Consultar estoque",
+                "Editar itens",
+                "Registrar movimentação"
+              ],
+              "pageInputHints": [],
+              "navigationRefs": [],
+              "persistenceHints": [
+                "stockMovement"
+              ],
+              "usecaseHints": [
+                "listarItensEstoque",
+                "gerenciarItemEstoque",
+                "registrarMovimentacaoEstoque",
+                "listarMovimentacoesEstoque",
+                "listarAlertasEstoqueBaixo"
+              ],
+              "metricRefs": [],
+              "rulesApplied": [
+                "ruleStockQuantityNonNegative",
+                "ruleLowStockAlert"
+              ],
+              "bffCommandHints": [
+                {
+                  "name": "listarItensEstoque",
+                  "purpose": "Exibir níveis atuais de estoque",
+                  "input": "filtros",
+                  "output": "itens com quantidade e status"
+                },
+                {
+                  "name": "gerenciarItemEstoque",
+                  "purpose": "Atualizar item de estoque e quantidades",
+                  "input": "dados do item e ajustes",
+                  "output": "item atualizado"
+                },
+                {
+                  "name": "registrarMovimentacaoEstoque",
+                  "purpose": "Registrar entrada/saída manual",
+                  "input": "item, tipo, quantidade, motivo",
+                  "output": "movimentação registrada"
+                },
+                {
+                  "name": "listarMovimentacoesEstoque",
+                  "purpose": "Exibir histórico de movimentações",
+                  "input": "período, item",
+                  "output": "lista de movimentações"
+                },
+                {
+                  "name": "listarAlertasEstoqueBaixo",
+                  "purpose": "Exibir alertas de estoque baixo",
+                  "input": "filtros",
+                  "output": "alertas ativos"
+                }
+              ]
+            },
+            {
+              "pageId": "shiftCloseReport",
+              "pageName": "Fechamento de Turno",
+              "actor": "managerOwner",
+              "purpose": "Revisar resumo do turno e confirmar fechamento quando não há pedidos abertos.",
+              "capabilities": [
+                "closeDailyShift"
+              ],
+              "flowRefs": {
+                "experienceFlows": [],
+                "entityLifecycles": [
+                  "workflowDailyShiftLifecycle"
+                ],
+                "taskWorkflows": [],
+                "automations": []
+              },
+              "pluginRefs": [],
+              "mdmRefs": [
+                "dailyShift",
+                "order"
+              ],
+              "primaryUserActions": [
+                "Revisar resumo",
+                "Solicitar fechamento",
+                "Confirmar fechamento"
+              ],
+              "pageInputHints": [],
+              "navigationRefs": [
+                {
+                  "direction": "outbound",
+                  "pageId": "ordersTracker",
+                  "trigger": "Pedidos abertos identificados"
+                }
+              ],
+              "persistenceHints": [],
+              "usecaseHints": [
+                "fecharTurnoDiario",
+                "listarPedidos",
+                "gerarResumoVendasDia"
+              ],
+              "metricRefs": [],
+              "rulesApplied": [
+                "ruleShiftCloseNoOpenOrders"
+              ],
+              "bffCommandHints": [
+                {
+                  "name": "gerarResumoVendasDia",
+                  "purpose": "Gerar resumo do turno para conferência",
+                  "input": "turnoId ou data",
+                  "output": "totais de vendas e pedidos"
+                },
+                {
+                  "name": "listarPedidos",
+                  "purpose": "Verificar pedidos abertos",
+                  "input": "status aberto/andamento",
+                  "output": "lista de pedidos pendentes"
+                },
+                {
+                  "name": "fecharTurnoDiario",
+                  "purpose": "Fechar turno diário",
+                  "input": "turnoId, confirmação",
+                  "output": "turno fechado e relatório"
+                }
+              ]
+            },
+            {
+              "pageId": "dashboard",
+              "pageName": "Dashboard de Métricas",
+              "actor": "managerOwner",
+              "purpose": "Acompanhar vendas do dia, itens mais vendidos e alertas de estoque baixo.",
+              "capabilities": [
+                "viewDashboard"
+              ],
+              "flowRefs": {
+                "experienceFlows": [],
+                "entityLifecycles": [],
+                "taskWorkflows": [],
+                "automations": []
+              },
+              "pluginRefs": [],
+              "mdmRefs": [
+                "order",
+                "stock",
+                "dailyShift",
+                "menu"
+              ],
+              "primaryUserActions": [
+                "Visualizar métricas",
+                "Filtrar período",
+                "Detalhar indicadores"
+              ],
+              "pageInputHints": [],
+              "navigationRefs": [],
+              "persistenceHints": [],
+              "usecaseHints": [
+                "gerarResumoVendasDia",
+                "listarAlertasEstoqueBaixo",
+                "sugerirItensParaPromover"
+              ],
+              "metricRefs": [
+                "todaySalesMetrics",
+                "topSellingItemsMetrics",
+                "lowStockMetrics"
+              ],
+              "rulesApplied": [],
+              "bffCommandHints": [
+                {
+                  "name": "gerarResumoVendasDia",
+                  "purpose": "Carregar métricas de vendas do dia",
+                  "input": "período",
+                  "output": "totais e volume de pedidos"
+                },
+                {
+                  "name": "listarAlertasEstoqueBaixo",
+                  "purpose": "Carregar alertas de estoque baixo",
+                  "input": "filtros",
+                  "output": "alertas"
+                },
+                {
+                  "name": "sugerirItensParaPromover",
+                  "purpose": "Carregar itens mais vendidos/sugestões",
+                  "input": "período",
+                  "output": "lista de itens e indicadores"
+                }
+              ]
+            },
+            {
+              "pageId": "aiAssistant",
+              "pageName": "Assistente IA de Vendas",
+              "actor": "managerOwner",
+              "purpose": "Enviar perguntas e receber insights de vendas com dados do negócio.",
+              "capabilities": [
+                "askSalesAssistant"
+              ],
+              "flowRefs": {
+                "experienceFlows": [
+                  "workflowSalesAssistant"
+                ],
+                "entityLifecycles": [],
+                "taskWorkflows": [],
+                "automations": []
+              },
+              "pluginRefs": [],
+              "mdmRefs": [
+                "order",
+                "menu",
+                "stock"
+              ],
+              "primaryUserActions": [
+                "Enviar pergunta",
+                "Avaliar resposta"
+              ],
+              "pageInputHints": [],
+              "navigationRefs": [],
+              "persistenceHints": [],
+              "usecaseHints": [
+                "consultarAssistenteIA"
+              ],
+              "metricRefs": [],
+              "rulesApplied": [
+                "ruleLlmDataPrivacy"
+              ],
+              "bffCommandHints": [
+                {
+                  "name": "consultarAssistenteIA",
+                  "purpose": "Enviar pergunta ao assistente e obter resposta",
+                  "input": "pergunta, contexto permitido",
+                  "output": "resposta com insights"
+                }
+              ]
+            },
+            {
+              "pageId": "ordersTracker",
+              "pageName": "Rastreador de Pedidos",
+              "actor": "managerOwner",
+              "purpose": "Localizar pedidos e cancelar quando necessário.",
+              "capabilities": [
+                "cancelOrder"
+              ],
+              "flowRefs": {
+                "experienceFlows": [],
+                "entityLifecycles": [],
+                "taskWorkflows": [
+                  "workflowOrderLifecycle"
+                ],
+                "automations": []
+              },
+              "pluginRefs": [],
+              "mdmRefs": [
+                "order"
+              ],
+              "primaryUserActions": [
+                "Buscar pedido",
+                "Cancelar pedido",
+                "Registrar motivo"
+              ],
+              "pageInputHints": [],
+              "navigationRefs": [
+                {
+                  "direction": "inbound",
+                  "pageId": "shiftCloseReport",
+                  "trigger": "Pendências de pedidos abertos"
+                }
+              ],
+              "persistenceHints": [],
+              "usecaseHints": [
+                "listarPedidos",
+                "cancelarPedido"
+              ],
+              "metricRefs": [],
+              "rulesApplied": [
+                "ruleOrderStatusFlow"
+              ],
+              "bffCommandHints": [
+                {
+                  "name": "listarPedidos",
+                  "purpose": "Buscar pedidos por número/cliente/status",
+                  "input": "termos de busca e filtros",
+                  "output": "lista de pedidos"
+                },
+                {
+                  "name": "cancelarPedido",
+                  "purpose": "Cancelar pedido com motivo",
+                  "input": "pedidoId, motivo",
+                  "output": "pedido cancelado"
+                }
+              ]
+            }
+          ]
+        },
+        "questions": [
+          "Há necessidade de tela específica para entrega/retirada após o status pronto, ou o fluxo termina na cozinha?",
+          "O POS precisa de seleção explícita de mesa/takeout como campo obrigatório para confirmação?"
+        ],
+        "trace": [
+          "Páginas derivadas dos pageHints das jornadas: shiftOpen, posOrder, kitchenDisplay, menuManagement, stockManagement, shiftCloseReport, dashboard, aiAssistant, ordersTracker.",
+          "Incluído dashboard de métricas conforme initialMetricsRequested e métricas habilitadas."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 60,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

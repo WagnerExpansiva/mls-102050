@@ -1,0 +1,42 @@
+{
+  "savedAt": "2026-06-25T01:22:41.299Z",
+  "agentName": "agentPlanUsecaseDefinition",
+  "stepId": 64,
+  "planning": null,
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitUsecaseDefinitionPlan",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "usecaseDefinition": {
+            "usecaseId": "consultarAssistenteIA",
+            "commands": [
+              {
+                "commandId": "consultarAssistenteIA",
+                "input": [],
+                "output": [
+                  {
+                    "name": "metricasCafeFlow",
+                    "type": "metricasCafeFlow"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "questions": [],
+        "trace": [
+          "Derivei um comando único para consultar dados agregados do assistente.",
+          "Sem parâmetros de entrada explícitos; retorna entidade de métricas agregadas."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 67,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

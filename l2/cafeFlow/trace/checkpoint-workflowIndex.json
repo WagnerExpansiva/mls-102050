@@ -1,0 +1,281 @@
+{
+  "schemaVersion": "2026-06-06",
+  "artifactType": "indexCheckpoint",
+  "indexName": "workflowIndex",
+  "moduleName": "cafeFlow",
+  "status": "frozen",
+  "approvedAt": "2026-06-25T01:23:04.316Z",
+  "source": {
+    "agentName": "agentPlanWorkflowIndex",
+    "stepId": 23,
+    "planId": "plan-workflow-index"
+  },
+  "healthReport": {
+    "localErrors": [],
+    "localWarnings": [],
+    "criticErrors": [],
+    "criticWarnings": [],
+    "attempts": 1,
+    "notes": []
+  },
+  "index": {
+    "runId": "provider-tool-call",
+    "stepId": "17-plan-workflow-index",
+    "schemaVersion": "2026-06-02",
+    "status": "ok",
+    "result": {
+      "workflows": [
+        {
+          "workflowId": "workflowOrderLifecycle",
+          "title": "Ciclo de Vida do Pedido",
+          "purpose": "Coordenar o fluxo completo do pedido desde o lançamento no POS até a entrega ou cancelamento, conectando atendente, cozinha e estoque em um único fluxo de trabalho.",
+          "executionMode": "taskWorkflow",
+          "createsTask": true,
+          "priority": "now",
+          "actors": [
+            "attendantCashier",
+            "cook",
+            "managerOwner"
+          ],
+          "relatedEntities": [
+            "Order",
+            "OrderItem"
+          ],
+          "persistenceRefs": [
+            "orderItem",
+            "todaySalesMetrics",
+            "topSellingItemsMetrics"
+          ],
+          "usecaseRefs": [
+            "criarPedido",
+            "listarPedidos",
+            "atualizarStatusPedido",
+            "cancelarPedido"
+          ],
+          "metricRefs": [
+            "todaySalesMetrics",
+            "topSellingItemsMetrics"
+          ],
+          "relatedCapabilities": [
+            "createOrder",
+            "updateKitchenStatus",
+            "cancelOrder"
+          ],
+          "rulesApplied": [
+            "ruleOrderRequiresOpenShift",
+            "ruleOrderStatusFlow",
+            "ruleStockDeductionOnOrderPreparation"
+          ],
+          "implementationSuggestions": [
+            {
+              "suggestionId": "suggKitchenDisplayAutoRefresh",
+              "title": "Atualização automática do display da cozinha",
+              "reason": "O display da cozinha deve refletir novos pedidos em tempo real sem recarregar a página.",
+              "priority": "now"
+            },
+            {
+              "suggestionId": "suggStockDeductionOnPreparing",
+              "title": "Baixa automática de estoque ao iniciar preparo",
+              "reason": "Garantir que a regra ruleStockDeductionOnOrderPreparation seja aplicada automaticamente quando o status mudar para preparing.",
+              "priority": "now"
+            },
+            {
+              "suggestionId": "suggOrderCancelJustification",
+              "title": "Exigir justificativa no cancelamento",
+              "reason": "Cancelamentos devem registrar uma justificativa obrigatória para auditoria e análise futura.",
+              "priority": "soon"
+            }
+          ]
+        },
+        {
+          "workflowId": "workflowDailyShiftLifecycle",
+          "title": "Ciclo de Vida do Turno Diário",
+          "purpose": "Controlar a abertura e o fechamento do turno diário, garantindo que apenas um turno esteja aberto por dia e que o fechamento só ocorra quando não houver pedidos pendentes.",
+          "executionMode": "entityLifecycle",
+          "createsTask": false,
+          "priority": "now",
+          "actors": [
+            "attendantCashier",
+            "managerOwner"
+          ],
+          "relatedEntities": [
+            "DailyShift"
+          ],
+          "persistenceRefs": [],
+          "usecaseRefs": [
+            "abrirTurnoDiario",
+            "listarTurnosDiarios",
+            "fecharTurnoDiario"
+          ],
+          "metricRefs": [],
+          "relatedCapabilities": [
+            "openDailyShift",
+            "closeDailyShift"
+          ],
+          "rulesApplied": [
+            "ruleShiftCloseNoOpenOrders",
+            "ruleUniqueOpenShiftPerDay"
+          ],
+          "implementationSuggestions": [
+            {
+              "suggestionId": "suggShiftOpenValidation",
+              "title": "Validação de turno aberto ao criar pedido",
+              "reason": "O sistema deve verificar automaticamente se existe um turno aberto antes de permitir a criação de pedidos.",
+              "priority": "now"
+            },
+            {
+              "suggestionId": "suggShiftCloseBlock",
+              "title": "Bloqueio de fechamento com pedidos abertos",
+              "reason": "O fechamento deve ser impedido se houver pedidos com status diferente de delivered ou cancelled.",
+              "priority": "now"
+            }
+          ]
+        },
+        {
+          "workflowId": "workflowMenuManagement",
+          "title": "Gerenciamento do Cardápio",
+          "purpose": "Permitir a criação, edição e inativação de categorias e itens do cardápio, incluindo a definição de ingredientes e preços.",
+          "executionMode": "entityLifecycle",
+          "createsTask": false,
+          "priority": "now",
+          "actors": [
+            "managerOwner"
+          ],
+          "relatedEntities": [
+            "MenuCategory",
+            "MenuItem",
+            "MenuItemIngredient"
+          ],
+          "persistenceRefs": [
+            "menuItemIngredient"
+          ],
+          "usecaseRefs": [
+            "gerenciarCategoriaCardapio",
+            "listarCategoriasCardapio",
+            "gerenciarItemCardapio",
+            "listarItensCardapio"
+          ],
+          "metricRefs": [],
+          "relatedCapabilities": [
+            "manageMenu"
+          ],
+          "rulesApplied": [
+            "ruleMenuItemPricePositive"
+          ],
+          "implementationSuggestions": [
+            {
+              "suggestionId": "suggMenuItemIngredientLink",
+              "title": "Vinculação de ingredientes a itens do cardápio",
+              "reason": "Permitir associar itens de estoque como ingredientes para futura baixa automática no preparo.",
+              "priority": "now"
+            },
+            {
+              "suggestionId": "suggMenuItemPhoto",
+              "title": "Suporte a imagem do item",
+              "reason": "Melhorar a identificação visual dos itens no POS e no display da cozinha.",
+              "priority": "later"
+            }
+          ]
+        },
+        {
+          "workflowId": "workflowStockManagement",
+          "title": "Gerenciamento de Estoque",
+          "purpose": "Controlar o cadastro de itens de estoque, registrar entradas, saídas e ajustes, e alimentar alertas de estoque baixo.",
+          "executionMode": "entityLifecycle",
+          "createsTask": false,
+          "priority": "now",
+          "actors": [
+            "managerOwner"
+          ],
+          "relatedEntities": [
+            "StockItem",
+            "StockMovement"
+          ],
+          "persistenceRefs": [
+            "stockMovement",
+            "lowStockMetrics"
+          ],
+          "usecaseRefs": [
+            "gerenciarItemEstoque",
+            "listarItensEstoque",
+            "registrarMovimentacaoEstoque",
+            "listarMovimentacoesEstoque",
+            "listarAlertasEstoqueBaixo"
+          ],
+          "metricRefs": [
+            "lowStockMetrics"
+          ],
+          "relatedCapabilities": [
+            "manageStock"
+          ],
+          "rulesApplied": [
+            "ruleStockQuantityNonNegative",
+            "ruleLowStockAlert"
+          ],
+          "implementationSuggestions": [
+            {
+              "suggestionId": "suggStockAutoDeduction",
+              "title": "Integração com baixa automática de pedidos",
+              "reason": "As movimentações de saída devem ser geradas automaticamente pelo workflow de pedidos ao iniciar o preparo.",
+              "priority": "now"
+            },
+            {
+              "suggestionId": "suggStockAlertThreshold",
+              "title": "Configuração de limite de alerta por item",
+              "reason": "Cada item de estoque deve ter um nível mínimo configurável para disparar o alerta de estoque baixo.",
+              "priority": "soon"
+            }
+          ]
+        },
+        {
+          "workflowId": "workflowSalesAssistant",
+          "title": "Consulta ao Assistente IA",
+          "purpose": "Permitir que o gerente consulte o assistente de IA para obter sugestões de vendas e análises baseadas nos dados do negócio.",
+          "executionMode": "uiState",
+          "createsTask": false,
+          "priority": "now",
+          "actors": [
+            "managerOwner"
+          ],
+          "relatedEntities": [],
+          "persistenceRefs": [],
+          "usecaseRefs": [
+            "consultarAssistenteIA",
+            "sugerirItensParaPromover"
+          ],
+          "metricRefs": [],
+          "relatedCapabilities": [
+            "askSalesAssistant"
+          ],
+          "rulesApplied": [
+            "ruleLlmDataPrivacy"
+          ],
+          "implementationSuggestions": [
+            {
+              "suggestionId": "suggLlmContextLimit",
+              "title": "Limitação de contexto sensível ao LLM",
+              "reason": "Garantir que dados pessoais de clientes ou financeiros detalhados não sejam enviados ao modelo de IA.",
+              "priority": "now"
+            },
+            {
+              "suggestionId": "suggLlmCache",
+              "title": "Cache de respostas frequentes",
+              "reason": "Melhorar performance e reduzir custos de API para perguntas repetitivas.",
+              "priority": "later"
+            }
+          ]
+        }
+      ]
+    },
+    "questions": [],
+    "trace": [
+      "Mapeadas 8 capacidades e 8 workflows aprovados para 5 workflows finais, unificando ciclo de vida do pedido e do turno",
+      "Pedido definido como taskWorkflow por envolver multi-step state, staff coordination entre atendente/cozinha e fulfillment",
+      "Turno diário definido como entityLifecycle com controle de transição open/closed e regras de unicidade e bloqueio",
+      "Cardápio e estoque mapeados como entityLifecycle por gerenciamento de entidades com regras de negócio e relacionamentos",
+      "Assistente IA mapeado como uiState por ser interface de consulta sem estado persistente próprio",
+      "Métricas vinculadas aos workflows que as alimentam: vendas e itens mais vendidos pelo pedido; estoque baixo pelo estoque",
+      "Tabelas module-owned vinculadas aos respectivos workflows: orderItem, menuItemIngredient e stockMovement"
+    ]
+  }
+}
