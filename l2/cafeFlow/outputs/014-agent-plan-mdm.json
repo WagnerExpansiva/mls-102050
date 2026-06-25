@@ -1,0 +1,142 @@
+{
+  "savedAt": "2026-06-25T01:11:29.092Z",
+  "agentName": "agentPlanMDM",
+  "stepId": 14,
+  "planning": {
+    "planId": "plan-mdm",
+    "dependsOn": [
+      "plan-finalize-solution-plan"
+    ],
+    "executionMode": "parallel_static",
+    "executionHost": "client"
+  },
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitMdmPlan",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "mdmDomains": [
+            {
+              "domainId": "menu",
+              "title": "Cardápio",
+              "masterEntities": [
+                "MenuItem",
+                "MenuCategory"
+              ],
+              "sourceOfTruth": "102034",
+              "consumers": [
+                "pagePos",
+                "pageMenuManagement",
+                "workflowCreateOrder",
+                "workflowManageMenu",
+                "usecaseEntityCreateOrder",
+                "usecaseEntityManageMenuItem",
+                "usecaseEntityManageMenuCategory",
+                "usecaseEntitySuggestPromotions",
+                "managerOwnerMetricTableTopSellingItems",
+                "agentSalesAssistant"
+              ],
+              "governanceRules": [
+                "ruleMenuItemPricePositive"
+              ]
+            },
+            {
+              "domainId": "stock",
+              "title": "Estoque",
+              "masterEntities": [
+                "StockItem"
+              ],
+              "sourceOfTruth": "102034",
+              "consumers": [
+                "pageStockManagement",
+                "workflowManageMenu",
+                "workflowManageStock",
+                "usecaseEntityManageMenuItem",
+                "usecaseEntityManageStockItem",
+                "usecaseEntityRegisterStockMovement",
+                "usecaseEntityCancelOrder",
+                "managerOwnerMetricTableLowStockAlerts",
+                "horizontalNotifications",
+                "horizontalAuditLog"
+              ],
+              "governanceRules": [
+                "ruleStockDeductionOnOrderPreparation",
+                "ruleLowStockAlert",
+                "ruleStockQuantityNonNegative"
+              ]
+            },
+            {
+              "domainId": "dailyShift",
+              "title": "Turno Diário",
+              "masterEntities": [
+                "DailyShift"
+              ],
+              "sourceOfTruth": "102034",
+              "consumers": [
+                "pageShiftClosingReport",
+                "workflowOpenDailyShift",
+                "workflowCloseDailyShift",
+                "usecaseEntityOpenDailyShift",
+                "usecaseEntityCloseDailyShift",
+                "usecaseEntityGenerateDailySalesSummary",
+                "managerOwnerMetricTableDailySales",
+                "horizontalAuditLog"
+              ],
+              "governanceRules": [
+                "ruleOrderRequiresOpenShift",
+                "ruleShiftCloseNoOpenOrders",
+                "ruleUniqueOpenShiftPerDay"
+              ]
+            },
+            {
+              "domainId": "order",
+              "title": "Pedido",
+              "masterEntities": [
+                "Order"
+              ],
+              "sourceOfTruth": "102034",
+              "consumers": [
+                "pageKitchenDisplay",
+                "workflowUpdateKitchenStatus",
+                "workflowCloseDailyShift",
+                "workflowCancelOrder",
+                "usecaseEntityCreateOrder",
+                "usecaseEntityUpdateOrderStatus",
+                "usecaseEntityCancelOrder",
+                "usecaseEntityCloseDailyShift",
+                "usecaseEntityGenerateDailySalesSummary",
+                "usecaseEntitySuggestPromotions",
+                "managerOwnerMetricTableDailySales",
+                "managerOwnerMetricTableTopSellingItems",
+                "horizontalNotifications",
+                "horizontalAuditLog",
+                "agentSalesAssistant"
+              ],
+              "governanceRules": [
+                "ruleOrderStatusFlow",
+                "ruleStockDeductionOnOrderPreparation",
+                "ruleStockQuantityNonNegative",
+                "ruleOrderRequiresOpenShift",
+                "ruleShiftCloseNoOpenOrders"
+              ]
+            }
+          ]
+        },
+        "questions": [],
+        "trace": [
+          "Dominios MDM inferidos da ontologia e artefatos aprovados: cardápio (MenuItem, MenuCategory), estoque (StockItem), turno diário (DailyShift) e pedido (Order).",
+          "Fonte de verdade definida como a infraestrutura compartilhada de MDM do projeto 102034, conforme inventário da plataforma.",
+          "Consumidores mapeados a partir das referências diretas em páginas, workflows, casos de uso, tabelas de métricas, agentes e módulos horizontais.",
+          "Regras de governança vinculadas aos domínios conforme regras de negócio da ontologia que aplicam restrições e validações aos dados mestres."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 35,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

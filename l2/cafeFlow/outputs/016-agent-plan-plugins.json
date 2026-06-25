@@ -1,0 +1,67 @@
+{
+  "savedAt": "2026-06-25T01:10:34.422Z",
+  "agentName": "agentPlanPlugins",
+  "stepId": 16,
+  "planning": {
+    "planId": "plan-plugins",
+    "dependsOn": [
+      "plan-finalize-solution-plan"
+    ],
+    "executionMode": "parallel_static",
+    "executionHost": "client"
+  },
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitPluginPlan",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "plugins": [
+            {
+              "pluginId": "impressora",
+              "provider": "impressora",
+              "priority": "later",
+              "reason": "Integração com impressora térmica de cozinha ainda não confirmada; pode ser adicionada em versão futura.",
+              "events": [
+                "order.created",
+                "order.sentToKitchen"
+              ],
+              "requiredCredentials": [],
+              "inputData": [
+                "pedido",
+                "itensDoPedido",
+                "mesaOuTakeout",
+                "observacoesDePreparo"
+              ],
+              "outputData": [
+                "comandaImpressa",
+                "statusImpressao"
+              ],
+              "webhooks": [],
+              "risks": [
+                "Dependência de hardware específico pode exigir testes adicionais e suporte local."
+              ],
+              "questions": [
+                "Qual modelo de impressora térmica e protocolo (USB, Ethernet, Bluetooth) o cliente pretende usar?"
+              ],
+              "resolution": "create_draft",
+              "pluginDefsFileRef": "_102050_/l2/plugins/impressora/plugin.defs.ts",
+              "moduleConnectionDefsFileRef": "_102050_/l2/cafeFlow/plugins/impressora.defs.ts"
+            }
+          ]
+        },
+        "questions": [],
+        "trace": [
+          "Planejado plugin para Impressora de Cozinha conforme decisão aceita com prioridade later.",
+          "Catálogo possui pluginId impressora e inventário indica create_draft para este módulo."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 43,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

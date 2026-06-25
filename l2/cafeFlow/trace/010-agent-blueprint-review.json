@@ -1,0 +1,124 @@
+{
+  "savedAt": "2026-06-25T00:38:33.095Z",
+  "agentName": "agentBlueprintReview",
+  "stepId": 10,
+  "planning": {
+    "planId": "plan-blueprint-review",
+    "dependsOn": [
+      "plan-solution-blueprint"
+    ],
+    "executionMode": "sequential",
+    "executionHost": "client"
+  },
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitBlueprintReview",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "issues": [
+            {
+              "severity": "error",
+              "code": "missing_usecase_for_open_shift",
+              "message": "A capacidade 'Abrir Turno Diário' possui ação de usuário explícita, mas a cobertura aponta para usecaseEntityCreateOrder (de criação de pedido) e não há workflow/usecaseEntity dedicado para abertura de turno. Além disso, ruleUniqueOpenShiftPerDay está aplicada ao usecase errado.",
+              "path": "coverage.openDailyShift / rules.ruleUniqueOpenShiftPerDay / artifactPlan.usecaseEntities",
+              "evidence": [
+                "coverage.openDailyShift.coveredBy inclui 'usecaseEntityCreateOrder'",
+                "userAction.openDailyShift existe sem workflow/usecaseEntity correspondente",
+                "rules.ruleUniqueOpenShiftPerDay.appliesTo inclui 'usecaseEntityCreateOrder'"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "cancel_action_without_capability",
+              "message": "A ação 'Cancelar Pedido' referencia capabilityId 'createOrder', que semanticamente é 'Lançar Pedido'. Cancelamento é uma capacidade/lifecycle distinta e carece de capability e usecaseEntity próprios.",
+              "path": "userActions.cancelOrder / capabilities",
+              "evidence": [
+                "userActions.cancelOrder.capabilityId = 'createOrder'",
+                "não existe capability 'cancelOrder'",
+                "não existe usecaseEntity para cancelamento"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "missing_usecase_for_stock_movement",
+              "message": "A ação 'Registrar Movimentação de Estoque' é um comando de criação que aplica regras de negócio, mas não possui usecaseEntity correspondente em layer_3.",
+              "path": "userActions.registerStockMovement / artifactPlan.usecaseEntities",
+              "evidence": [
+                "userActions.registerStockMovement.commandType = 'create'",
+                "userActions.registerStockMovement.rulesApplied inclui 'ruleStockQuantityNonNegative' e 'ruleLowStockAlert'",
+                "nenhum usecaseEntity em artifactPlan.usecaseEntities para registro de movimentação de estoque"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "missing_usecase_for_menu_category",
+              "message": "A ação 'Gerenciar Categoria do Cardápio' realiza operações de create/update/delete sob a capability manageMenu, mas não possui usecaseEntity correspondente em layer_3.",
+              "path": "userActions.manageMenuCategory / artifactPlan.usecaseEntities",
+              "evidence": [
+                "userActions.manageMenuCategory.commandType = 'create/update/delete'",
+                "nenhum usecaseEntity em artifactPlan.usecaseEntities para gerenciamento de categoria"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "unclear_cancellation_transition",
+              "message": "O status 'cancelled' está declarado no enum de Order, mas a ruleOrderStatusFlow descreve apenas o fluxo direto (received → preparing → ready → delivered). Não fica claro a partir de quais status o cancelamento é permitido.",
+              "path": "ontology.entities.Order.statusEnum / rules.ruleOrderStatusFlow",
+              "evidence": [
+                "ontology.entities.Order.statusEnum inclui 'cancelled'",
+                "rules.ruleOrderStatusFlow descreve apenas transições diretas"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "consider_workflows_for_lifecycle_actions",
+              "message": "Ações de lifecycle como abertura de turno e cancelamento de pedido possuem usecaseEntities recomendados, mas não possuem workflows dedicados. Considere adicionar workflows para manter consistência com os demais fluxos do blueprint.",
+              "path": "artifactPlan.workflows",
+              "evidence": [
+                "não existe workflowOpenDailyShift",
+                "não existe workflowCancelOrder"
+              ]
+            }
+          ],
+          "recommendedFixes": [
+            "Adicionar usecaseEntity 'usecaseEntityOpenDailyShift' em artifactPlan.usecaseEntities: actor 'attendantCashier', artifactType 'usecaseEntity', priority 'now', title 'Abrir Turno Diário', reason 'Caso de uso de backend para abertura do turno diário antes das vendas.', references ['mdmDailyShift'], rulesApplied ['ruleUniqueOpenShiftPerDay'].",
+            "Adicionar workflow 'workflowOpenDailyShift' em artifactPlan.workflows: actor 'attendantCashier', artifactType 'workflow', priority 'now', title 'Abrir Turno Diário', reason 'Fluxo de abertura do turno diário no início das operações.', references ['mdmDailyShift', 'usecaseEntityOpenDailyShift', 'pagePos'].",
+            "Atualizar coverage do capabilityId 'openDailyShift' para coveredBy ['openDailyShift', 'workflowOpenDailyShift', 'usecaseEntityOpenDailyShift'] e notes 'Atendente abre o turno diário explicitamente antes de criar pedidos.'.",
+            "Atualizar ruleUniqueOpenShiftPerDay.appliesTo para ['DailyShift', 'usecaseEntityOpenDailyShift'], removendo 'usecaseEntityCreateOrder'.",
+            "Adicionar capability 'cancelOrder': actor 'managerOwner', capabilityId 'cancelOrder', title 'Cancelar Pedido', description 'Cancelar um pedido e reverter baixa de estoque quando aplicável.', priority 'now'.",
+            "Atualizar userAction 'cancelOrder'.capabilityId para 'cancelOrder'.",
+            "Adicionar usecaseEntity 'usecaseEntityCancelOrder' em artifactPlan.usecaseEntities: actor 'managerOwner', artifactType 'usecaseEntity', priority 'now', title 'Cancelar Pedido', reason 'Caso de uso de backend para cancelamento de pedidos e reversão de estoque.', references ['mdmOrder', 'mdmStockItem'], rulesApplied ['ruleOrderStatusFlow', 'ruleStockQuantityNonNegative'].",
+            "Adicionar coverage para capabilityId 'cancelOrder': coveredBy ['cancelOrder', 'usecaseEntityCancelOrder'], notes 'Gerente cancela pedido e sistema reverte estoque se necessário.'.",
+            "Adicionar usecaseEntity 'usecaseEntityRegisterStockMovement' em artifactPlan.usecaseEntities: actor 'managerOwner', artifactType 'usecaseEntity', priority 'now', title 'Registrar Movimentação de Estoque', reason 'Caso de uso de backend para entradas, saídas e ajustes de estoque.', references ['mdmStockItem'], rulesApplied ['ruleStockQuantityNonNegative', 'ruleLowStockAlert'].",
+            "Adicionar usecaseEntity 'usecaseEntityManageMenuCategory' em artifactPlan.usecaseEntities: actor 'managerOwner', artifactType 'usecaseEntity', priority 'now', title 'Gerenciar Categoria do Cardápio', reason 'Caso de uso de backend para criação, edição e remoção de categorias do cardápio.', references ['mdmMenuItem'].",
+            "Atualizar ruleStockQuantityNonNegative.appliesTo para incluir 'usecaseEntityRegisterStockMovement'.",
+            "Atualizar ruleLowStockAlert.appliesTo para incluir 'usecaseEntityRegisterStockMovement'."
+          ]
+        },
+        "questions": [
+          "O CafeFlow precisa enviar comandas para impressora térmica da cozinha ou apenas exibir status em tela?",
+          "Como deve funcionar o alerta de estoque baixo: quantidade mínima configurada por item ou apenas visual?",
+          "Quais formas de pagamento e regras de taxas/serviço devem ser suportadas no MVP?",
+          "O atendente pode cancelar ou editar itens de um pedido depois que ele foi enviado à cozinha? A partir de quais status o cancelamento é permitido?",
+          "Qual o escopo mínimo desejado para resiliência offline em versões futuras?",
+          "A abertura do turno diário deve ser uma ação explícita do atendente no início do dia ou pode ser implícita ao criar o primeiro pedido?"
+        ],
+        "trace": [
+          "Revisão estrutural do blueprint CafeFlow concluída.",
+          "Identificada inconsistência na cobertura de openDailyShift, que aponta para usecaseEntityCreateOrder em vez de um usecase dedicado de abertura de turno.",
+          "Detectado userAction cancelOrder com capabilityId createOrder e ausência de usecaseEntity para cancelamento.",
+          "Detectados userActions registerStockMovement e manageMenuCategory sem usecaseEntities correspondentes em layer_3.",
+          "Sinalizado que regras ruleStockQuantityNonNegative e ruleLowStockAlert precisam ser vinculadas ao usecaseEntityRegisterStockMovement.",
+          "Sinalizada necessidade de esclarecer transições de status para cancelamento de pedido."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 35,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "savedAt": "2026-06-25T01:12:35.147Z",
+  "agentName": "agentCriticPlanIndex",
+  "stepId": 45,
+  "planning": {
+    "planId": "plan-index-critic:persistenceIndex:1",
+    "dependsOn": [
+      "plan-persistence-index"
+    ],
+    "executionMode": "sequential",
+    "executionHost": "client"
+  },
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitPlanIndexCritique",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "approved": true,
+          "errors": [],
+          "warnings": [
+            {
+              "code": "warn.persistencePattern.mismatch",
+              "message": "menuItemIngredient usa o padrão aggregateJsonDetails com embeddedEntities vazio e detailsColumnRecommended=true; se não houver entidades filhas embutidas, o padrão singleEntity seria mais adequado.",
+              "path": "tables[0].persistencePattern"
+            }
+          ]
+        },
+        "questions": [],
+        "trace": [
+          "Verificada propriedade ownership: todas as tabelas são moduleOwned.",
+          "Verificadas excludedEntities: entidades MDM listadas corretamente em excludedEntities.",
+          "Verificado tableKind: todas as tabelas são transactional.",
+          "Verificada necessidade: todas as tabelas derivam de entidades da ontologia e são referenciadas por artefatos aprovados.",
+          "Verificados readsByArtifacts/writesByArtifacts: todas as tabelas possuem leitores e escritores.",
+          "Aviso: menuItemIngredient utiliza aggregateJsonDetails sem embeddedEntities."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 38,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

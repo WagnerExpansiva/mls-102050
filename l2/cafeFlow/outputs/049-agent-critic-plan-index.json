@@ -1,0 +1,92 @@
+{
+  "savedAt": "2026-06-25T01:16:08.110Z",
+  "agentName": "agentCriticPlanIndex",
+  "stepId": 49,
+  "planning": {
+    "planId": "plan-index-critic:metricsIndex:2",
+    "dependsOn": [
+      "plan-metrics-index"
+    ],
+    "executionMode": "sequential",
+    "executionHost": "client"
+  },
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitPlanIndexCritique",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "approved": true,
+          "errors": [],
+          "warnings": [
+            {
+              "code": "metrics.sourceBaseTable.unknown",
+              "message": "A tabela de métricas todaySalesMetrics referencia a base table order que não é conhecida no módulo.",
+              "path": "metricTables[0]"
+            },
+            {
+              "code": "metrics.sourceBaseTable.unknown",
+              "message": "A tabela de métricas todaySalesMetrics referencia a base table order_item que não é conhecida no módulo.",
+              "path": "metricTables[0]"
+            },
+            {
+              "code": "metrics.sourceBaseTable.unknown",
+              "message": "A tabela de métricas todaySalesMetrics referencia a base table daily_shift que não é conhecida no módulo.",
+              "path": "metricTables[0]"
+            },
+            {
+              "code": "metrics.sourceBaseTable.unknown",
+              "message": "A tabela de métricas topSellingItemsMetrics referencia a base table order_item que não é conhecida no módulo.",
+              "path": "metricTables[1]"
+            },
+            {
+              "code": "metrics.sourceBaseTable.unknown",
+              "message": "A tabela de métricas topSellingItemsMetrics referencia a base table menu_item que não é conhecida no módulo.",
+              "path": "metricTables[1]"
+            },
+            {
+              "code": "metrics.sourceBaseTable.unknown",
+              "message": "A tabela de métricas lowStockMetrics referencia a base table stock_item que não é conhecida no módulo.",
+              "path": "metricTables[2]"
+            },
+            {
+              "code": "metrics.sourceBaseTable.unknown",
+              "message": "A tabela de métricas lowStockMetrics referencia a base table stock_movement que não é conhecida no módulo.",
+              "path": "metricTables[2]"
+            },
+            {
+              "code": "metrics.grain.ambiguous",
+              "message": "A medida orderCount na todaySalesMetrics pode sofrer dupla contagem devido à coexistência de dimensões orderId e orderItemId/menuItemId sem grain explícito.",
+              "path": "metricTables[0]"
+            },
+            {
+              "code": "metrics.sourceEvent.nonFact",
+              "message": "O evento menuItemUpdated em topSellingItemsMetrics não cria novos fatos de venda; verificar necessidade como fonte de derivação.",
+              "path": "metricTables[1]"
+            }
+          ],
+          "notes": [
+            "Todas as tabelas de métricas e o dashboard aprovados estão presentes, sem inflação de escopo.",
+            "O dashboard referencia exclusivamente métricas deste índice e aponta para o actorId managerOwner do plano final.",
+            "A responsabilidade de atualização está corretamente atribuída a layer_3_usecases em nível de plano.",
+            "Todas as tabelas de métricas possuem storageEngine postgresTimescaleDB."
+          ]
+        },
+        "questions": [],
+        "trace": [
+          "Revisado índice metricsIndex contra foco do contrato de métricas",
+          "Verificadas referências de base tables, entidades, eventos, dimensões, medidas, regras e dashboard",
+          "Confirmados warnings determinísticos de base tables desconhecidas",
+          "Avaliada conformidade com T-013 (dimensões de relacionamentos diretos da ontologia)",
+          "Aprovado sem erros bloqueantes"
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 41,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

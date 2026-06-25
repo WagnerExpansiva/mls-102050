@@ -1,0 +1,75 @@
+{
+  "savedAt": "2026-06-25T01:10:53.081Z",
+  "agentName": "agentPlanEntityDefinition",
+  "stepId": 41,
+  "planning": null,
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitEntityDefinitionPlan",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "entityDefinition": {
+            "entityId": "MenuItemIngredient",
+            "title": "Ingrediente do Item do Cardápio",
+            "description": "Relação entre um item do cardápio e os insumos necessários para sua produção, com quantidade por unidade vendida.",
+            "kind": "composition",
+            "ownership": "moduleOwned",
+            "fields": [
+              {
+                "fieldId": "menuItemIngredientId",
+                "type": "uuid",
+                "required": true,
+                "description": "Identificador único do ingrediente do item do cardápio"
+              },
+              {
+                "fieldId": "menuItemId",
+                "type": "uuid",
+                "required": true,
+                "description": "Referência ao item do cardápio ao qual o ingrediente pertence"
+              },
+              {
+                "fieldId": "stockItemId",
+                "type": "uuid",
+                "required": true,
+                "description": "Referência ao item de estoque utilizado como insumo na produção"
+              },
+              {
+                "fieldId": "quantity",
+                "type": "number",
+                "required": true,
+                "description": "Quantidade necessária do insumo por unidade vendida do item do cardápio"
+              },
+              {
+                "fieldId": "createdAt",
+                "type": "datetime",
+                "required": true,
+                "description": "Data e hora de criação do registro"
+              },
+              {
+                "fieldId": "updatedAt",
+                "type": "datetime",
+                "required": true,
+                "description": "Data e hora da última atualização do registro"
+              }
+            ],
+            "rulesApplied": []
+          }
+        },
+        "questions": [],
+        "trace": [
+          "Detalhamento da entidade MenuItemIngredient baseado no mapa reduzido fornecido",
+          "Incluídos campos de identidade (menuItemIngredientId), referências aos relacionamentos MenuItemHasIngredients (menuItemId) e IngredientUsesStockItem (stockItemId), atributo de negócio quantity e timestamps de auditoria (createdAt/updatedAt)",
+          "Nenhuma regra aplicável foi fornecida no contexto para esta entidade",
+          "Entidades de referência MenuItem e StockItem confirmadas em otherEntityIds, permitindo o detalhamento completo sem necessidade de novas informações"
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 46,
+    "interaction": null,
+    "nextSteps": null
+  }
+}

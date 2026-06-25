@@ -1,0 +1,107 @@
+{
+  "savedAt": "2026-06-25T01:14:33.140Z",
+  "agentName": "agentCriticPlanIndex",
+  "stepId": 47,
+  "planning": {
+    "planId": "plan-index-critic:metricsIndex:1",
+    "dependsOn": [
+      "plan-metrics-index"
+    ],
+    "executionMode": "sequential",
+    "executionHost": "client"
+  },
+  "status": "waiting_after_prompt",
+  "payload": {
+    "type": "flexible",
+    "result": {
+      "toolName": "submitPlanIndexCritique",
+      "arguments": {
+        "status": "ok",
+        "result": {
+          "approved": false,
+          "errors": [
+            {
+              "code": "metrics.dimension.duplicateEntity",
+              "message": "todaySalesMetrics declara shiftId (uuid) e dailyShiftId (text) para a mesma entidade DailyShift, gerando ambiguidade de schema.",
+              "path": "metricTables[0].dimensions"
+            },
+            {
+              "code": "metrics.dimension.typeInconsistent",
+              "message": "menuItemId é text em todaySalesMetrics mas uuid em topSellingItemsMetrics; dimensões FK para a mesma entidade devem ter o mesmo tipo.",
+              "path": "metricTables[0].dimensions[4]"
+            },
+            {
+              "code": "metrics.dimension.typeInconsistent",
+              "message": "orderId é text em lowStockMetrics mas uuid em todaySalesMetrics; dimensões FK para a mesma entidade devem ter o mesmo tipo.",
+              "path": "metricTables[2].dimensions[2]"
+            }
+          ],
+          "warnings": [
+            {
+              "code": "metrics.sourceBaseTable.unknown",
+              "message": "metric table todaySalesMetrics sources unknown base table order",
+              "path": "metricTables[0]"
+            },
+            {
+              "code": "metrics.sourceBaseTable.unknown",
+              "message": "metric table todaySalesMetrics sources unknown base table order_item",
+              "path": "metricTables[0]"
+            },
+            {
+              "code": "metrics.sourceBaseTable.unknown",
+              "message": "metric table todaySalesMetrics sources unknown base table daily_shift",
+              "path": "metricTables[0]"
+            },
+            {
+              "code": "metrics.sourceBaseTable.unknown",
+              "message": "metric table topSellingItemsMetrics sources unknown base table order_item",
+              "path": "metricTables[1]"
+            },
+            {
+              "code": "metrics.sourceBaseTable.unknown",
+              "message": "metric table topSellingItemsMetrics sources unknown base table menu_item",
+              "path": "metricTables[1]"
+            },
+            {
+              "code": "metrics.sourceBaseTable.unknown",
+              "message": "metric table lowStockMetrics sources unknown base table stock_item",
+              "path": "metricTables[2]"
+            },
+            {
+              "code": "metrics.sourceBaseTable.unknown",
+              "message": "metric table lowStockMetrics sources unknown base table stock_movement",
+              "path": "metricTables[2]"
+            },
+            {
+              "code": "metrics.dimension.typeSuspicious",
+              "message": "orderItemId em todaySalesMetrics usa tipo text enquanto a maioria das FKs de entidade usa uuid.",
+              "path": "metricTables[0].dimensions[3]"
+            },
+            {
+              "code": "metrics.dimension.typeSuspicious",
+              "message": "menuItemIngredientId em topSellingItemsMetrics usa tipo text enquanto a maioria das FKs de entidade usa uuid.",
+              "path": "metricTables[1].dimensions[3]"
+            }
+          ],
+          "notes": [
+            "As 3 tabelas de métricas e o dashboard aprovados estão presentes e corretamente vinculados.",
+            "Todas as tabelas usam storageEngine postgresTimescaleDB e updateResponsibility layer_3_usecases.",
+            "Dashboard aponta apenas para métricas do próprio índice e actor managerOwner é válido no plano final."
+          ]
+        },
+        "questions": [],
+        "trace": [
+          "Revisado índice de métricas contra foco do contrato e findings determinísticos.",
+          "Confirmada correspondência exata dos 3 metricTables e 1 metricDashboard aprovados.",
+          "Identificada dimensão duplicada DailyShift (shiftId/dailyShiftId) com tipos conflitantes em todaySalesMetrics.",
+          "Identificadas inconsistências de tipo FK para MenuItem e Order entre tabelas de métricas.",
+          "Repetidos 7 warnings de base table unknown dos findings determinísticos."
+        ]
+      }
+    },
+    "status": "completed",
+    "stepId": 39,
+    "interaction": null,
+    "nextSteps": null
+  }
+}
