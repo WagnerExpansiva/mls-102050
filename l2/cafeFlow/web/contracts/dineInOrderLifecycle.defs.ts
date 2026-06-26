@@ -9,58 +9,119 @@ export const definition = [
       {
         "name": "orderType",
         "type": "string",
-        "required": true
+        "sourceEntity": "Order",
+        "sourceField": "orderType",
+        "required": true,
+        "enum": [
+          "mesa",
+          "takeout"
+        ],
+        "description": "Tipo do pedido: mesa ou takeout"
       },
       {
         "name": "status",
         "type": "string",
-        "required": true
+        "sourceEntity": "Order",
+        "sourceField": "status",
+        "required": true,
+        "enum": [
+          "draft",
+          "sentToKitchen",
+          "inPreparation",
+          "ready",
+          "served",
+          "closed",
+          "cancelled"
+        ],
+        "lifecycleStates": [
+          "draft",
+          "sentToKitchen",
+          "inPreparation",
+          "ready",
+          "served",
+          "closed",
+          "cancelled"
+        ],
+        "description": "Status atual do pedido na coordenação com a cozinha"
       },
       {
         "name": "totalAmount",
         "type": "number",
-        "required": true
+        "sourceEntity": "Order",
+        "sourceField": "totalAmount",
+        "required": true,
+        "description": "Valor total do pedido com preços no momento da venda",
+        "sourceType": "money"
       },
       {
         "name": "notes",
         "type": "string",
-        "required": false
+        "sourceEntity": "Order",
+        "sourceField": "notes",
+        "required": false,
+        "description": "Observações gerais do pedido",
+        "sourceType": "text"
       },
       {
         "name": "customerName",
         "type": "string",
-        "required": false
+        "sourceEntity": "Order",
+        "sourceField": "customerName",
+        "required": false,
+        "description": "Nome do cliente para identificação do pedido"
       },
       {
         "name": "customerPhone",
         "type": "string",
-        "required": false
+        "sourceEntity": "Order",
+        "sourceField": "customerPhone",
+        "required": false,
+        "description": "Telefone de contato do cliente"
       },
       {
         "name": "numberOfGuests",
         "type": "number",
-        "required": false
+        "sourceEntity": "Order",
+        "sourceField": "numberOfGuests",
+        "required": false,
+        "description": "Número de pessoas na mesa"
       },
       {
         "name": "closedAt",
         "type": "date",
-        "required": false
+        "sourceEntity": "Order",
+        "sourceField": "closedAt",
+        "required": false,
+        "description": "Data e hora do fechamento do pedido",
+        "sourceType": "datetime"
       },
       {
         "name": "cancelledAt",
         "type": "date",
-        "required": false
+        "sourceEntity": "Order",
+        "sourceField": "cancelledAt",
+        "required": false,
+        "description": "Data e hora do cancelamento do pedido",
+        "sourceType": "datetime"
       },
       {
         "name": "cancellationReason",
         "type": "string",
-        "required": false
+        "sourceEntity": "Order",
+        "sourceField": "cancellationReason",
+        "required": false,
+        "description": "Motivo do cancelamento",
+        "sourceType": "text"
       }
     ],
     "output": [
       {
         "name": "orderId",
-        "type": "string"
+        "type": "string",
+        "sourceEntity": "Order",
+        "sourceField": "orderId",
+        "description": "Identificador único do pedido",
+        "sourceType": "uuid"
       }
     ],
     "readsEntities": [
@@ -98,33 +159,71 @@ export const definition = [
       {
         "name": "quantity",
         "type": "number",
-        "required": true
+        "sourceEntity": "OrderItem",
+        "sourceField": "quantity",
+        "required": true,
+        "description": "Quantidade solicitada do item"
       },
       {
         "name": "unitPrice",
         "type": "number",
-        "required": true
+        "sourceEntity": "OrderItem",
+        "sourceField": "unitPrice",
+        "required": true,
+        "description": "Preço unitário do item no momento do pedido",
+        "sourceType": "money"
       },
       {
         "name": "totalPrice",
         "type": "number",
-        "required": true
+        "sourceEntity": "OrderItem",
+        "sourceField": "totalPrice",
+        "required": true,
+        "description": "Preço total do item (quantidade × preço unitário)",
+        "sourceType": "money"
       },
       {
         "name": "observations",
         "type": "string",
-        "required": false
+        "sourceEntity": "OrderItem",
+        "sourceField": "observations",
+        "required": false,
+        "description": "Observações ou instruções especiais para o item",
+        "sourceType": "text"
       },
       {
         "name": "status",
         "type": "string",
-        "required": true
+        "sourceEntity": "OrderItem",
+        "sourceField": "status",
+        "required": true,
+        "enum": [
+          "new",
+          "sentToKitchen",
+          "inPreparation",
+          "ready",
+          "served",
+          "cancelled"
+        ],
+        "lifecycleStates": [
+          "new",
+          "sentToKitchen",
+          "inPreparation",
+          "ready",
+          "served",
+          "cancelled"
+        ],
+        "description": "Status de produção/atendimento do item"
       }
     ],
     "output": [
       {
         "name": "id",
-        "type": "string"
+        "type": "string",
+        "sourceEntity": "OrderItem",
+        "sourceField": "id",
+        "description": "Identificador único do item do pedido",
+        "sourceType": "uuid"
       }
     ],
     "readsEntities": [
@@ -160,13 +259,32 @@ export const definition = [
       {
         "name": "status",
         "type": "string",
-        "required": true
+        "sourceEntity": "KitchenTicket",
+        "sourceField": "status",
+        "required": true,
+        "enum": [
+          "open",
+          "inProgress",
+          "done",
+          "void"
+        ],
+        "lifecycleStates": [
+          "open",
+          "inProgress",
+          "done",
+          "void"
+        ],
+        "description": "Status atual do ticket na fila de preparo da cozinha"
       }
     ],
     "output": [
       {
         "name": "kitchenTicketId",
-        "type": "string"
+        "type": "string",
+        "sourceEntity": "KitchenTicket",
+        "sourceField": "kitchenTicketId",
+        "description": "Identificador único do ticket de cozinha",
+        "sourceType": "uuid"
       }
     ],
     "readsEntities": [
@@ -199,28 +317,65 @@ export const definition = [
       {
         "name": "status",
         "type": "string",
-        "required": true
+        "sourceEntity": "Order",
+        "sourceField": "status",
+        "required": true,
+        "enum": [
+          "draft",
+          "sentToKitchen",
+          "inPreparation",
+          "ready",
+          "served",
+          "closed",
+          "cancelled"
+        ],
+        "lifecycleStates": [
+          "draft",
+          "sentToKitchen",
+          "inPreparation",
+          "ready",
+          "served",
+          "closed",
+          "cancelled"
+        ],
+        "description": "Status atual do pedido na coordenação com a cozinha"
       },
       {
         "name": "closedAt",
         "type": "date",
-        "required": false
+        "sourceEntity": "Order",
+        "sourceField": "closedAt",
+        "required": false,
+        "description": "Data e hora do fechamento do pedido",
+        "sourceType": "datetime"
       },
       {
         "name": "cancelledAt",
         "type": "date",
-        "required": false
+        "sourceEntity": "Order",
+        "sourceField": "cancelledAt",
+        "required": false,
+        "description": "Data e hora do cancelamento do pedido",
+        "sourceType": "datetime"
       },
       {
         "name": "cancellationReason",
         "type": "string",
-        "required": false
+        "sourceEntity": "Order",
+        "sourceField": "cancellationReason",
+        "required": false,
+        "description": "Motivo do cancelamento",
+        "sourceType": "text"
       }
     ],
     "output": [
       {
         "name": "orderId",
-        "type": "string"
+        "type": "string",
+        "sourceEntity": "Order",
+        "sourceField": "orderId",
+        "description": "Identificador único do pedido",
+        "sourceType": "uuid"
       }
     ],
     "readsEntities": [
@@ -263,13 +418,30 @@ export const definition = [
       {
         "name": "status",
         "type": "string",
-        "required": true
+        "sourceEntity": "Table",
+        "sourceField": "status",
+        "required": true,
+        "enum": [
+          "available",
+          "occupied",
+          "disabled"
+        ],
+        "lifecycleStates": [
+          "available",
+          "occupied",
+          "disabled"
+        ],
+        "description": "Situação atual da mesa no ciclo de atendimento."
       }
     ],
     "output": [
       {
         "name": "tableId",
-        "type": "string"
+        "type": "string",
+        "sourceEntity": "Table",
+        "sourceField": "tableId",
+        "description": "Identificador único da mesa.",
+        "sourceType": "uuid"
       }
     ],
     "readsEntities": [

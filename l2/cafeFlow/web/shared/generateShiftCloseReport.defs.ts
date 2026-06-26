@@ -1,77 +1,173 @@
 /// <mls fileReference="_102050_/l2/cafeFlow/web/shared/generateShiftCloseReport.defs.ts" enhancement="_blank"/>
 
 export const definition = {
-  "bffCommands": [
+  "pageId": "generateShiftCloseReport",
+  "pageName": "Gerar relatório de fechamento de turno",
+  "moduleName": "cafeFlow",
+  "sourceKind": "operation",
+  "ownerIds": [
+    "operation:generateShiftCloseReport"
+  ],
+  "operationIds": [
+    "generateShiftCloseReport"
+  ],
+  "contractRef": {
+    "defPath": "_102050_/l2/cafeFlow/web/contracts/generateShiftCloseReport.defs.ts",
+    "tsPath": "_102050_/l2/cafeFlow/web/contracts/generateShiftCloseReport.ts"
+  },
+  "layoutRef": {
+    "defPath": "_102050_/l2/cafeFlow/web/desktop/page11/generateShiftCloseReport.defs.ts",
+    "layoutId": "generateShiftCloseReport"
+  },
+  "states": [
     {
-      "commandName": "generateShiftCloseReport",
-      "purpose": "Gerar relatório de fechamento de turno",
-      "kind": "query",
-      "input": [
-        {
-          "name": "status",
-          "type": "string",
-          "required": false
-        }
+      "stateKey": "ui.generateShiftCloseReport.status",
+      "name": "status",
+      "kind": "pageStatus",
+      "defaultValue": ""
+    },
+    {
+      "stateKey": "ui.generateShiftCloseReport.action.generateShiftCloseReport.status",
+      "name": "generateShiftCloseReportState",
+      "kind": "actionStatus",
+      "actionRef": "generateShiftCloseReport",
+      "valueSet": [
+        "idle",
+        "loading",
+        "success",
+        "error"
       ],
-      "output": [
-        {
-          "name": "dailyShiftId",
-          "type": "string"
-        },
-        {
-          "name": "shiftDate",
-          "type": "date"
-        },
-        {
-          "name": "status",
-          "type": "string"
-        },
-        {
-          "name": "openedAt",
-          "type": "date"
-        },
-        {
-          "name": "closedAt",
-          "type": "date"
-        },
-        {
-          "name": "openingCashBalance",
-          "type": "number"
-        },
-        {
-          "name": "closingCashBalance",
-          "type": "number"
-        },
-        {
-          "name": "totalSales",
-          "type": "number"
-        }
-      ],
-      "readsEntities": [
-        "DailyShift",
-        "Payment",
-        "CashMovement",
-        "Order",
-        "OrderItem"
-      ],
-      "writesEntities": [],
-      "readsTables": [],
-      "writesTables": [],
-      "usecaseRefs": [
-        "generateShiftCloseReport"
-      ],
-      "layerContract": {
-        "controllerLayer": "layer_2_controllers",
-        "mustCallLayer": "layer_3_usecases",
-        "directTableAccessForbidden": true
+      "defaultValue": "idle"
+    },
+    {
+      "stateKey": "ui.generateShiftCloseReport.input.generateShiftCloseReport.status",
+      "name": "generateShiftCloseReportStatus",
+      "kind": "input",
+      "contractRef": {
+        "commandName": "generateShiftCloseReport",
+        "direction": "input",
+        "field": "status"
       },
-      "rulesApplied": [
-        "paymentTimingByOrderType",
-        "aiOutputLanguageSelection"
-      ]
+      "defaultValue": ""
+    },
+    {
+      "stateKey": "ui.generateShiftCloseReport.input.generateShiftCloseReport.openedAt",
+      "name": "generateShiftCloseReportOpenedAt",
+      "kind": "input",
+      "contractRef": {
+        "commandName": "generateShiftCloseReport",
+        "direction": "input",
+        "field": "openedAt"
+      },
+      "defaultValue": ""
+    },
+    {
+      "stateKey": "ui.generateShiftCloseReport.input.generateShiftCloseReport.closedAt",
+      "name": "generateShiftCloseReportClosedAt",
+      "kind": "input",
+      "contractRef": {
+        "commandName": "generateShiftCloseReport",
+        "direction": "input",
+        "field": "closedAt"
+      },
+      "defaultValue": ""
+    },
+    {
+      "stateKey": "ui.generateShiftCloseReport.data.generateShiftCloseReport",
+      "name": "generateShiftCloseReportData",
+      "kind": "queryResult",
+      "contractRef": {
+        "commandName": "generateShiftCloseReport",
+        "direction": "output"
+      },
+      "collection": true,
+      "defaultValue": []
     }
   ],
-  "navigationRefs": []
+  "actions": [
+    {
+      "actionId": "generateShiftCloseReport",
+      "kind": "query",
+      "commandRef": "generateShiftCloseReport",
+      "routeKey": "cafeFlow.generateShiftCloseReport.generateShiftCloseReport",
+      "purpose": "Gerar relatório de fechamento de turno",
+      "methodName": "loadGenerateShiftCloseReport",
+      "handlerName": "handleGenerateShiftCloseReportClick",
+      "inputStateKeys": [
+        "ui.generateShiftCloseReport.input.generateShiftCloseReport.status",
+        "ui.generateShiftCloseReport.input.generateShiftCloseReport.openedAt",
+        "ui.generateShiftCloseReport.input.generateShiftCloseReport.closedAt"
+      ],
+      "outputStateKeys": [
+        "ui.generateShiftCloseReport.data.generateShiftCloseReport"
+      ],
+      "statusStateKey": "ui.generateShiftCloseReport.action.generateShiftCloseReport.status"
+    },
+    {
+      "actionId": "set.generateShiftCloseReportStatus",
+      "kind": "stateSetter",
+      "stateKey": "ui.generateShiftCloseReport.input.generateShiftCloseReport.status",
+      "methodName": "setGenerateShiftCloseReportStatus",
+      "handlerName": "handleGenerateShiftCloseReportStatusChange"
+    },
+    {
+      "actionId": "set.generateShiftCloseReportOpenedAt",
+      "kind": "stateSetter",
+      "stateKey": "ui.generateShiftCloseReport.input.generateShiftCloseReport.openedAt",
+      "methodName": "setGenerateShiftCloseReportOpenedAt",
+      "handlerName": "handleGenerateShiftCloseReportOpenedAtChange"
+    },
+    {
+      "actionId": "set.generateShiftCloseReportClosedAt",
+      "kind": "stateSetter",
+      "stateKey": "ui.generateShiftCloseReport.input.generateShiftCloseReport.closedAt",
+      "methodName": "setGenerateShiftCloseReportClosedAt",
+      "handlerName": "handleGenerateShiftCloseReportClosedAtChange"
+    }
+  ],
+  "initialLoads": [
+    {
+      "actionId": "generateShiftCloseReport",
+      "stateKey": "ui.generateShiftCloseReport.data.generateShiftCloseReport"
+    }
+  ],
+  "navigationRefs": [],
+  "i18n": {
+    "page.title": "Gerar relatório de fechamento de turno",
+    "section.filters.title": "Filtros do Turno",
+    "section.report.title": "Relatório de Fechamento",
+    "organism.shiftFilter.title": "Critérios de Seleção",
+    "organism.shiftCloseReport.title": "Resumo do Fechamento",
+    "molecule.filterForm.title": "Selecionar Turno",
+    "molecule.summaryPanel.title": "Resumo Financeiro",
+    "field.status.label": "Status",
+    "field.openedAt.label": "Data de Abertura",
+    "field.closedAt.label": "Data de Fechamento",
+    "field.openingCashBalance.label": "Valor Inicial em Caixa",
+    "field.closingCashBalance.label": "Valor Final em Caixa",
+    "field.totalSales.label": "Total de Vendas",
+    "field.totalPayments.label": "Total de Pagamentos",
+    "field.closingNotes.label": "Observações de Fechamento",
+    "action.generateShiftCloseReport.label": "Gerar Relatório",
+    "empty.report": "Nenhum relatório gerado. Ajuste os filtros e clique em Gerar Relatório."
+  },
+  "automation": {
+    "statePrefix": "ui.generateShiftCloseReport",
+    "stateKeys": [
+      "ui.generateShiftCloseReport.status",
+      "ui.generateShiftCloseReport.action.generateShiftCloseReport.status",
+      "ui.generateShiftCloseReport.input.generateShiftCloseReport.status",
+      "ui.generateShiftCloseReport.input.generateShiftCloseReport.openedAt",
+      "ui.generateShiftCloseReport.input.generateShiftCloseReport.closedAt",
+      "ui.generateShiftCloseReport.data.generateShiftCloseReport"
+    ],
+    "actionIds": [
+      "generateShiftCloseReport",
+      "set.generateShiftCloseReportStatus",
+      "set.generateShiftCloseReportOpenedAt",
+      "set.generateShiftCloseReportClosedAt"
+    ]
+  }
 };
 
 export const pipeline = [
@@ -81,7 +177,9 @@ export const pipeline = [
     "outputPath": "_102050_/l2/cafeFlow/web/shared/generateShiftCloseReport.ts",
     "defPath": "_102050_/l2/cafeFlow/web/shared/generateShiftCloseReport.defs.ts",
     "dependsFiles": [
-      "_102050_/l2/cafeFlow/web/contracts/generateShiftCloseReport.ts"
+      "_102050_/l2/cafeFlow/web/contracts/generateShiftCloseReport.defs.ts",
+      "_102050_/l2/cafeFlow/web/contracts/generateShiftCloseReport.ts",
+      "_102050_/l2/cafeFlow/web/desktop/page11/generateShiftCloseReport.defs.ts"
     ],
     "dependsOn": [],
     "skills": [

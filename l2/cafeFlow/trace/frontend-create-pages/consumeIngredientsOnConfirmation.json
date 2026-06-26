@@ -1,6 +1,6 @@
 {
-  "savedAt": "2026-06-26T06:21:40.109Z",
-  "status": "inProgress",
+  "savedAt": "2026-06-26T14:29:41.229Z",
+  "status": "done",
   "pageId": "consumeIngredientsOnConfirmation",
   "moduleName": "cafeFlow",
   "agent": "agentCfeCreatePage"

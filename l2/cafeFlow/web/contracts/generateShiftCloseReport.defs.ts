@@ -9,41 +9,109 @@ export const definition = [
       {
         "name": "status",
         "type": "string",
-        "required": false
+        "sourceEntity": "DailyShift",
+        "sourceField": "status",
+        "required": false,
+        "enum": [
+          "open",
+          "closed"
+        ],
+        "lifecycleStates": [
+          "open",
+          "closed"
+        ],
+        "description": "Estado atual do turno."
+      },
+      {
+        "name": "openedAt",
+        "type": "date",
+        "sourceEntity": "DailyShift",
+        "sourceField": "openedAt",
+        "required": false,
+        "description": "Data e hora de abertura do turno.",
+        "sourceType": "datetime"
+      },
+      {
+        "name": "closedAt",
+        "type": "date",
+        "sourceEntity": "DailyShift",
+        "sourceField": "closedAt",
+        "required": false,
+        "description": "Data e hora de fechamento do turno.",
+        "sourceType": "datetime"
       }
     ],
     "output": [
       {
-        "name": "dailyShiftId",
-        "type": "string"
-      },
-      {
-        "name": "shiftDate",
-        "type": "date"
-      },
-      {
         "name": "status",
-        "type": "string"
+        "type": "string",
+        "sourceEntity": "DailyShift",
+        "sourceField": "status",
+        "enum": [
+          "open",
+          "closed"
+        ],
+        "lifecycleStates": [
+          "open",
+          "closed"
+        ],
+        "description": "Estado atual do turno."
       },
       {
         "name": "openedAt",
-        "type": "date"
+        "type": "date",
+        "sourceEntity": "DailyShift",
+        "sourceField": "openedAt",
+        "description": "Data e hora de abertura do turno.",
+        "sourceType": "datetime"
       },
       {
         "name": "closedAt",
-        "type": "date"
+        "type": "date",
+        "sourceEntity": "DailyShift",
+        "sourceField": "closedAt",
+        "description": "Data e hora de fechamento do turno.",
+        "sourceType": "datetime"
       },
       {
         "name": "openingCashBalance",
-        "type": "number"
+        "type": "number",
+        "sourceEntity": "DailyShift",
+        "sourceField": "openingCashBalance",
+        "description": "Valor inicial em caixa ao abrir o turno.",
+        "sourceType": "money"
       },
       {
         "name": "closingCashBalance",
-        "type": "number"
+        "type": "number",
+        "sourceEntity": "DailyShift",
+        "sourceField": "closingCashBalance",
+        "description": "Valor final em caixa ao fechar o turno.",
+        "sourceType": "money"
       },
       {
         "name": "totalSales",
-        "type": "number"
+        "type": "number",
+        "sourceEntity": "DailyShift",
+        "sourceField": "totalSales",
+        "description": "Total consolidado de vendas no turno.",
+        "sourceType": "money"
+      },
+      {
+        "name": "totalPayments",
+        "type": "number",
+        "sourceEntity": "DailyShift",
+        "sourceField": "totalPayments",
+        "description": "Total consolidado de pagamentos recebidos no turno.",
+        "sourceType": "money"
+      },
+      {
+        "name": "closingNotes",
+        "type": "string",
+        "sourceEntity": "DailyShift",
+        "sourceField": "closingNotes",
+        "description": "Observações e relatório de fechamento do turno.",
+        "sourceType": "text"
       }
     ],
     "readsEntities": [

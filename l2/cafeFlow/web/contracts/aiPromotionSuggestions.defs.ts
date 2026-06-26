@@ -7,43 +7,138 @@ export const definition = [
     "kind": "query",
     "input": [
       {
+        "name": "id",
+        "type": "string",
+        "sourceEntity": "OrderItem",
+        "sourceField": "id",
+        "required": false,
+        "description": "Identificador único do item do pedido",
+        "sourceType": "uuid"
+      },
+      {
+        "name": "orderId",
+        "type": "string",
+        "sourceEntity": "OrderItem",
+        "sourceField": "orderId",
+        "required": false,
+        "description": "Referência ao pedido (Order) ao qual este item pertence",
+        "sourceType": "uuid"
+      },
+      {
+        "name": "menuItemId",
+        "type": "string",
+        "sourceEntity": "OrderItem",
+        "sourceField": "menuItemId",
+        "required": false,
+        "description": "Referência ao item do cardápio (MenuItem) solicitado",
+        "sourceType": "uuid"
+      },
+      {
+        "name": "kitchenTicketId",
+        "type": "string",
+        "sourceEntity": "OrderItem",
+        "sourceField": "kitchenTicketId",
+        "required": false,
+        "description": "Referência ao ticket de cozinha (KitchenTicket) quando o item exige preparo",
+        "sourceType": "uuid"
+      },
+      {
         "name": "status",
         "type": "string",
-        "required": false
+        "sourceEntity": "OrderItem",
+        "sourceField": "status",
+        "required": false,
+        "enum": [
+          "new",
+          "sentToKitchen",
+          "inPreparation",
+          "ready",
+          "served",
+          "cancelled"
+        ],
+        "lifecycleStates": [
+          "new",
+          "sentToKitchen",
+          "inPreparation",
+          "ready",
+          "served",
+          "cancelled"
+        ],
+        "description": "Status de produção/atendimento do item"
+      },
+      {
+        "name": "createdAt",
+        "type": "date",
+        "sourceEntity": "OrderItem",
+        "sourceField": "createdAt",
+        "required": false,
+        "description": "Data e hora de criação do registro",
+        "sourceType": "datetime"
       }
     ],
     "output": [
       {
         "name": "id",
-        "type": "string"
+        "type": "string",
+        "sourceEntity": "OrderItem",
+        "sourceField": "id",
+        "description": "Identificador único do item do pedido",
+        "sourceType": "uuid"
       },
       {
         "name": "orderId",
-        "type": "string"
+        "type": "string",
+        "sourceEntity": "OrderItem",
+        "sourceField": "orderId",
+        "description": "Referência ao pedido (Order) ao qual este item pertence",
+        "sourceType": "uuid"
       },
       {
         "name": "menuItemId",
-        "type": "string"
+        "type": "string",
+        "sourceEntity": "OrderItem",
+        "sourceField": "menuItemId",
+        "description": "Referência ao item do cardápio (MenuItem) solicitado",
+        "sourceType": "uuid"
       },
       {
         "name": "kitchenTicketId",
-        "type": "string"
+        "type": "string",
+        "sourceEntity": "OrderItem",
+        "sourceField": "kitchenTicketId",
+        "description": "Referência ao ticket de cozinha (KitchenTicket) quando o item exige preparo",
+        "sourceType": "uuid"
       },
       {
         "name": "quantity",
-        "type": "number"
+        "type": "number",
+        "sourceEntity": "OrderItem",
+        "sourceField": "quantity",
+        "description": "Quantidade solicitada do item"
       },
       {
         "name": "unitPrice",
-        "type": "number"
+        "type": "number",
+        "sourceEntity": "OrderItem",
+        "sourceField": "unitPrice",
+        "description": "Preço unitário do item no momento do pedido",
+        "sourceType": "money"
       },
       {
         "name": "totalPrice",
-        "type": "number"
+        "type": "number",
+        "sourceEntity": "OrderItem",
+        "sourceField": "totalPrice",
+        "description": "Preço total do item (quantidade × preço unitário)",
+        "sourceType": "money"
       },
       {
         "name": "observations",
-        "type": "string"
+        "type": "string",
+        "sourceEntity": "OrderItem",
+        "sourceField": "observations",
+        "description": "Observações ou instruções especiais para o item",
+        "sourceType": "text"
       }
     ],
     "readsEntities": [

@@ -9,28 +9,54 @@ export const definition = [
       {
         "name": "menuCategoryId",
         "type": "string",
-        "required": false
+        "sourceEntity": "MenuCategory",
+        "sourceField": "menuCategoryId",
+        "required": false,
+        "description": "Identificador único da categoria de cardápio",
+        "sourceType": "uuid"
       },
       {
         "name": "name",
         "type": "string",
-        "required": true
+        "sourceEntity": "MenuCategory",
+        "sourceField": "name",
+        "required": true,
+        "description": "Nome da categoria exibido no POS e relatórios (ex.: Cafés, Salgados, Doces)"
       },
       {
         "name": "description",
         "type": "string",
-        "required": false
+        "sourceEntity": "MenuCategory",
+        "sourceField": "description",
+        "required": false,
+        "description": "Descrição opcional da categoria para uso interno ou detalhamento",
+        "sourceType": "text"
       },
       {
         "name": "status",
         "type": "string",
-        "required": true
+        "sourceEntity": "MenuCategory",
+        "sourceField": "status",
+        "required": true,
+        "enum": [
+          "active",
+          "inactive"
+        ],
+        "lifecycleStates": [
+          "active",
+          "inactive"
+        ],
+        "description": "Estado do ciclo de vida da categoria"
       }
     ],
     "output": [
       {
         "name": "menuCategoryId",
-        "type": "string"
+        "type": "string",
+        "sourceEntity": "MenuCategory",
+        "sourceField": "menuCategoryId",
+        "description": "Identificador único da categoria de cardápio",
+        "sourceType": "uuid"
       }
     ],
     "readsEntities": [

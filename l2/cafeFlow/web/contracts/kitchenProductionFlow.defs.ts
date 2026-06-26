@@ -7,31 +7,113 @@ export const definition = [
     "kind": "query",
     "input": [
       {
+        "name": "kitchenTicketId",
+        "type": "string",
+        "sourceEntity": "KitchenTicket",
+        "sourceField": "kitchenTicketId",
+        "required": false,
+        "description": "Identificador único do ticket de cozinha",
+        "sourceType": "uuid"
+      },
+      {
+        "name": "orderId",
+        "type": "string",
+        "sourceEntity": "KitchenTicket",
+        "sourceField": "orderId",
+        "required": false,
+        "description": "Referência ao pedido que gerou este ticket para a fila de preparo",
+        "sourceType": "Order"
+      },
+      {
         "name": "status",
         "type": "string",
-        "required": false
+        "sourceEntity": "KitchenTicket",
+        "sourceField": "status",
+        "required": false,
+        "enum": [
+          "open",
+          "inProgress",
+          "done",
+          "void"
+        ],
+        "lifecycleStates": [
+          "open",
+          "inProgress",
+          "done",
+          "void"
+        ],
+        "description": "Status atual do ticket na fila de preparo da cozinha"
+      },
+      {
+        "name": "createdAt",
+        "type": "date",
+        "sourceEntity": "KitchenTicket",
+        "sourceField": "createdAt",
+        "required": false,
+        "description": "Data e hora de criação do ticket",
+        "sourceType": "datetime"
+      },
+      {
+        "name": "updatedAt",
+        "type": "date",
+        "sourceEntity": "KitchenTicket",
+        "sourceField": "updatedAt",
+        "required": false,
+        "description": "Data e hora da última atualização do ticket",
+        "sourceType": "datetime"
       }
     ],
     "output": [
       {
         "name": "kitchenTicketId",
-        "type": "string"
+        "type": "string",
+        "sourceEntity": "KitchenTicket",
+        "sourceField": "kitchenTicketId",
+        "description": "Identificador único do ticket de cozinha",
+        "sourceType": "uuid"
       },
       {
         "name": "orderId",
-        "type": "string"
+        "type": "string",
+        "sourceEntity": "KitchenTicket",
+        "sourceField": "orderId",
+        "description": "Referência ao pedido que gerou este ticket para a fila de preparo",
+        "sourceType": "Order"
       },
       {
         "name": "status",
-        "type": "string"
+        "type": "string",
+        "sourceEntity": "KitchenTicket",
+        "sourceField": "status",
+        "enum": [
+          "open",
+          "inProgress",
+          "done",
+          "void"
+        ],
+        "lifecycleStates": [
+          "open",
+          "inProgress",
+          "done",
+          "void"
+        ],
+        "description": "Status atual do ticket na fila de preparo da cozinha"
       },
       {
         "name": "createdAt",
-        "type": "date"
+        "type": "date",
+        "sourceEntity": "KitchenTicket",
+        "sourceField": "createdAt",
+        "description": "Data e hora de criação do ticket",
+        "sourceType": "datetime"
       },
       {
         "name": "updatedAt",
-        "type": "date"
+        "type": "date",
+        "sourceEntity": "KitchenTicket",
+        "sourceField": "updatedAt",
+        "description": "Data e hora da última atualização do ticket",
+        "sourceType": "datetime"
       }
     ],
     "readsEntities": [
@@ -60,13 +142,32 @@ export const definition = [
       {
         "name": "status",
         "type": "string",
-        "required": true
+        "sourceEntity": "KitchenTicket",
+        "sourceField": "status",
+        "required": true,
+        "enum": [
+          "open",
+          "inProgress",
+          "done",
+          "void"
+        ],
+        "lifecycleStates": [
+          "open",
+          "inProgress",
+          "done",
+          "void"
+        ],
+        "description": "Status atual do ticket na fila de preparo da cozinha"
       }
     ],
     "output": [
       {
         "name": "kitchenTicketId",
-        "type": "string"
+        "type": "string",
+        "sourceEntity": "KitchenTicket",
+        "sourceField": "kitchenTicketId",
+        "description": "Identificador único do ticket de cozinha",
+        "sourceType": "uuid"
       }
     ],
     "readsEntities": [
@@ -97,13 +198,36 @@ export const definition = [
       {
         "name": "status",
         "type": "string",
-        "required": true
+        "sourceEntity": "OrderItem",
+        "sourceField": "status",
+        "required": true,
+        "enum": [
+          "new",
+          "sentToKitchen",
+          "inPreparation",
+          "ready",
+          "served",
+          "cancelled"
+        ],
+        "lifecycleStates": [
+          "new",
+          "sentToKitchen",
+          "inPreparation",
+          "ready",
+          "served",
+          "cancelled"
+        ],
+        "description": "Status de produção/atendimento do item"
       }
     ],
     "output": [
       {
         "name": "id",
-        "type": "string"
+        "type": "string",
+        "sourceEntity": "OrderItem",
+        "sourceField": "id",
+        "description": "Identificador único do item do pedido",
+        "sourceType": "uuid"
       }
     ],
     "readsEntities": [

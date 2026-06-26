@@ -1,7 +1,7 @@
 {
-  "savedAt": "2026-06-26T14:29:04.887Z",
+  "savedAt": "2026-06-26T14:27:14.990Z",
   "status": "done",
-  "pageId": "openDailyShift",
+  "pageId": "generateShiftCloseReport",
   "moduleName": "cafeFlow",
   "agent": "agentCfeCreatePage"
 }

@@ -7,53 +7,99 @@ export const definition = [
     "kind": "query",
     "input": [
       {
-        "name": "orderType",
+        "name": "dailyShiftId",
         "type": "string",
-        "required": false
+        "sourceEntity": "Order",
+        "sourceField": "dailyShiftId",
+        "required": false,
+        "description": "Turno diário em que o pedido foi registrado",
+        "sourceType": "uuid"
       },
       {
         "name": "status",
         "type": "string",
-        "required": false
+        "sourceEntity": "Order",
+        "sourceField": "status",
+        "required": false,
+        "enum": [
+          "draft",
+          "sentToKitchen",
+          "inPreparation",
+          "ready",
+          "served",
+          "closed",
+          "cancelled"
+        ],
+        "lifecycleStates": [
+          "draft",
+          "sentToKitchen",
+          "inPreparation",
+          "ready",
+          "served",
+          "closed",
+          "cancelled"
+        ],
+        "description": "Status atual do pedido na coordenação com a cozinha"
       },
       {
-        "name": "customerName",
-        "type": "string",
-        "required": false
+        "name": "closedAt",
+        "type": "date",
+        "sourceEntity": "Order",
+        "sourceField": "closedAt",
+        "required": false,
+        "description": "Data e hora do fechamento do pedido",
+        "sourceType": "datetime"
       }
     ],
     "output": [
       {
-        "name": "orderId",
-        "type": "string"
-      },
-      {
         "name": "dailyShiftId",
-        "type": "string"
-      },
-      {
-        "name": "tableId",
-        "type": "string"
-      },
-      {
-        "name": "kitchenTicketId",
-        "type": "string"
-      },
-      {
-        "name": "orderType",
-        "type": "string"
+        "type": "string",
+        "sourceEntity": "Order",
+        "sourceField": "dailyShiftId",
+        "description": "Turno diário em que o pedido foi registrado",
+        "sourceType": "uuid"
       },
       {
         "name": "status",
-        "type": "string"
+        "type": "string",
+        "sourceEntity": "Order",
+        "sourceField": "status",
+        "enum": [
+          "draft",
+          "sentToKitchen",
+          "inPreparation",
+          "ready",
+          "served",
+          "closed",
+          "cancelled"
+        ],
+        "lifecycleStates": [
+          "draft",
+          "sentToKitchen",
+          "inPreparation",
+          "ready",
+          "served",
+          "closed",
+          "cancelled"
+        ],
+        "description": "Status atual do pedido na coordenação com a cozinha"
       },
       {
         "name": "totalAmount",
-        "type": "number"
+        "type": "number",
+        "sourceEntity": "Order",
+        "sourceField": "totalAmount",
+        "description": "Valor total do pedido com preços no momento da venda",
+        "sourceType": "money"
       },
       {
-        "name": "notes",
-        "type": "string"
+        "name": "closedAt",
+        "type": "date",
+        "sourceEntity": "Order",
+        "sourceField": "closedAt",
+        "description": "Data e hora do fechamento do pedido",
+        "sourceType": "datetime"
       }
     ],
     "readsEntities": [
