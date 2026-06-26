@@ -33,7 +33,7 @@ export const operationManageMenuItems = {
     "priority": "now"
   },
   "statusFrontend": "done",
-  "statusBackend": "inProgress"
+  "statusBackend": "done"
 } as const;
 
 export default operationManageMenuItems;

@@ -52,7 +52,7 @@ export const operationUpdateOrderStatus = {
     "priority": "now"
   },
   "statusFrontend": "done",
-  "statusBackend": "inProgress"
+  "statusBackend": "done"
 } as const;
 
 export default operationUpdateOrderStatus;

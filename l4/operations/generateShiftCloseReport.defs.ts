@@ -44,7 +44,7 @@ export const operationGenerateShiftCloseReport = {
     "priority": "now"
   },
   "statusFrontend": "done",
-  "statusBackend": "inProgress"
+  "statusBackend": "done"
 } as const;
 
 export default operationGenerateShiftCloseReport;

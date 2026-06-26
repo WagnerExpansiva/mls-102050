@@ -37,7 +37,7 @@ export const operationCreateStockConsumption = {
     "priority": "now"
   },
   "statusFrontend": "done",
-  "statusBackend": "inProgress"
+  "statusBackend": "done"
 } as const;
 
 export default operationCreateStockConsumption;
