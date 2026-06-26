@@ -38,7 +38,7 @@ export const operationManageInventoryItems = {
     "actor": "manager",
     "priority": "now"
   },
-  "statusFrontend": "toCreate",
+  "statusFrontend": "done",
   "statusBackend": "toCreate"
 } as const;
 

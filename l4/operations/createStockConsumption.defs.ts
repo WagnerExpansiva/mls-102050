@@ -36,7 +36,7 @@ export const operationCreateStockConsumption = {
     "actor": "attendant",
     "priority": "now"
   },
-  "statusFrontend": "toCreate",
+  "statusFrontend": "done",
   "statusBackend": "toCreate"
 } as const;
 

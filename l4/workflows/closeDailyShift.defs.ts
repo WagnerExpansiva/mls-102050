@@ -47,7 +47,7 @@ export const workflowCloseDailyShift = {
       "priority": "now"
     }
   ],
-  "statusFrontend": "toCreate",
+  "statusFrontend": "done",
   "statusBackend": "toCreate"
 } as const;
 

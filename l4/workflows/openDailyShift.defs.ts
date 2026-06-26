@@ -53,7 +53,7 @@ export const workflowOpenDailyShift = {
       "priority": "now"
     }
   ],
-  "statusFrontend": "toCreate",
+  "statusFrontend": "done",
   "statusBackend": "toCreate"
 } as const;
 

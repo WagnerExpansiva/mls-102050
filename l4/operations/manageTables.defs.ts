@@ -31,7 +31,7 @@ export const operationManageTables = {
     "actor": "manager",
     "priority": "soon"
   },
-  "statusFrontend": "toCreate",
+  "statusFrontend": "done",
   "statusBackend": "toCreate"
 } as const;
 

@@ -35,7 +35,7 @@ export const operationUpdateKitchenTicketStatus = {
     "actor": "cook",
     "priority": "now"
   },
-  "statusFrontend": "toCreate",
+  "statusFrontend": "done",
   "statusBackend": "toCreate"
 } as const;
 

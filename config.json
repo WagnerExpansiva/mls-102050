@@ -1,0 +1,284 @@
+{
+  "defaultProjectId": "102050",
+  "shellTemplates": {
+    "spa": "./_102033_/l2/shared/spa/index.html",
+    "pwa": "./_102033_/l2/shared/pwa/index.html"
+  },
+  "publication": {
+    "defaultTarget": "web",
+    "targets": {
+      "web": {
+        "assetBaseUrl": "",
+        "serveStaticFromServer": true,
+        "minify": false,
+        "sourcemap": true
+      }
+    }
+  },
+  "clientShell": {
+    "mode": "spa",
+    "activeProfile": "production",
+    "regions": {
+      "aside": {
+        "activeProfile": "defaultAura",
+        "profiles": {
+          "defaultAura": {
+            "renderer": {
+              "entrypoint": "/_102033_/l2/shared/layout/aura-aside.js",
+              "source": "../mls-102033/l2/shared/layout/aura-aside.ts",
+              "tag": "collab-aura-aside"
+            },
+            "widthPx": 280
+          }
+        }
+      }
+    }
+  },
+  "projects": {
+    "102027": {
+      "root": "../mls-102027",
+      "type": "lib"
+    },
+    "102029": {
+      "root": "../mls-102029",
+      "type": "lib"
+    },
+    "102033": {
+      "root": "../mls-102033",
+      "type": "master frontend"
+    },
+    "102034": {
+      "root": "../mls-102034",
+      "type": "master backend"
+    },
+    "102050": {
+      "root": ".",
+      "type": "client",
+      "modules": [
+        {
+          "moduleId": "cafeFlow",
+          "basePath": "/cafeFlow",
+          "shellMode": "spa",
+          "backendRouter": "./_102050_/l1/cafeFlow/layer_2_controllers/router.js",
+          "navigation": [
+            {
+              "id": "aiPromotionSuggestions",
+              "label": "Assistente IA: sugestões de itens para promover (últimos 7 dias)",
+              "href": "/cafeFlow/aiPromotionSuggestions",
+              "description": "Assistente IA: sugestões de itens para promover (últimos 7 dias)"
+            },
+            {
+              "id": "aiSalesSummary",
+              "label": "Assistente IA: resumo de vendas do dia",
+              "href": "/cafeFlow/aiSalesSummary",
+              "description": "Assistente IA: resumo de vendas do dia"
+            },
+            {
+              "id": "browseMenuForPos",
+              "label": "Consultar cardápio no POS",
+              "href": "/cafeFlow/browseMenuForPos",
+              "description": "Consultar cardápio no POS"
+            },
+            {
+              "id": "closeDailyShift",
+              "label": "Fechar turno diário (fechamento de caixa)",
+              "href": "/cafeFlow/closeDailyShift",
+              "description": "Fechar turno diário (fechamento de caixa)"
+            },
+            {
+              "id": "consumeIngredientsOnConfirmation",
+              "label": "Baixar estoque por consumo de ingredientes",
+              "href": "/cafeFlow/consumeIngredientsOnConfirmation",
+              "description": "Baixar estoque por consumo de ingredientes"
+            },
+            {
+              "id": "dineInOrderLifecycle",
+              "label": "Ciclo de pedido (mesa)",
+              "href": "/cafeFlow/dineInOrderLifecycle",
+              "description": "Ciclo de pedido (mesa)"
+            },
+            {
+              "id": "generateShiftCloseReport",
+              "label": "Gerar relatório de fechamento de turno",
+              "href": "/cafeFlow/generateShiftCloseReport",
+              "description": "Gerar relatório de fechamento de turno"
+            },
+            {
+              "id": "kitchenProductionFlow",
+              "label": "Fluxo de produção da cozinha",
+              "href": "/cafeFlow/kitchenProductionFlow",
+              "description": "Fluxo de produção da cozinha"
+            },
+            {
+              "id": "manageInventoryItems",
+              "label": "Gerenciar itens de estoque (ingredientes)",
+              "href": "/cafeFlow/manageInventoryItems",
+              "description": "Gerenciar itens de estoque (ingredientes)"
+            },
+            {
+              "id": "manageMenuCategories",
+              "label": "Gerenciar categorias do cardápio",
+              "href": "/cafeFlow/manageMenuCategories",
+              "description": "Gerenciar categorias do cardápio"
+            },
+            {
+              "id": "manageMenuItems",
+              "label": "Gerenciar itens do cardápio",
+              "href": "/cafeFlow/manageMenuItems",
+              "description": "Gerenciar itens do cardápio"
+            },
+            {
+              "id": "manageTables",
+              "label": "Gerenciar mesas",
+              "href": "/cafeFlow/manageTables",
+              "description": "Gerenciar mesas"
+            },
+            {
+              "id": "openDailyShift",
+              "label": "Abrir turno diário",
+              "href": "/cafeFlow/openDailyShift",
+              "description": "Abrir turno diário"
+            },
+            {
+              "id": "recordPayment",
+              "label": "Registrar pagamento/recebimento",
+              "href": "/cafeFlow/recordPayment",
+              "description": "Registrar pagamento/recebimento"
+            },
+            {
+              "id": "takeoutOrderLifecycle",
+              "label": "Ciclo de pedido (takeout)",
+              "href": "/cafeFlow/takeoutOrderLifecycle",
+              "description": "Ciclo de pedido (takeout)"
+            },
+            {
+              "id": "viewOperationalDashboard",
+              "label": "Ver dashboard operacional do dia",
+              "href": "/cafeFlow/viewOperationalDashboard",
+              "description": "Ver dashboard operacional do dia"
+            }
+          ],
+          "frontend": {
+            "layer": "l2",
+            "moduleEntrypoint": "./_102050_/l2/cafeFlow/module.js",
+            "moduleSource": "l2/cafeFlow/module.ts",
+            "pages": [
+              {
+                "pageId": "aiPromotionSuggestions",
+                "route": "/cafeFlow/aiPromotionSuggestions",
+                "source": "l2/cafeFlow/web/desktop/page11/aiPromotionSuggestions.ts",
+                "definition": "l2/cafeFlow/web/desktop/page11/aiPromotionSuggestions.defs.ts",
+                "componentTag": "cafe-flow--web--desktop--page11--ai-promotion-suggestions-102050"
+              },
+              {
+                "pageId": "aiSalesSummary",
+                "route": "/cafeFlow/aiSalesSummary",
+                "source": "l2/cafeFlow/web/desktop/page11/aiSalesSummary.ts",
+                "definition": "l2/cafeFlow/web/desktop/page11/aiSalesSummary.defs.ts",
+                "componentTag": "cafe-flow--web--desktop--page11--ai-sales-summary-102050"
+              },
+              {
+                "pageId": "browseMenuForPos",
+                "route": "/cafeFlow/browseMenuForPos",
+                "source": "l2/cafeFlow/web/desktop/page11/browseMenuForPos.ts",
+                "definition": "l2/cafeFlow/web/desktop/page11/browseMenuForPos.defs.ts",
+                "componentTag": "cafe-flow--web--desktop--page11--browse-menu-for-pos-102050"
+              },
+              {
+                "pageId": "closeDailyShift",
+                "route": "/cafeFlow/closeDailyShift",
+                "source": "l2/cafeFlow/web/desktop/page11/closeDailyShift.ts",
+                "definition": "l2/cafeFlow/web/desktop/page11/closeDailyShift.defs.ts",
+                "componentTag": "cafe-flow--web--desktop--page11--close-daily-shift-102050"
+              },
+              {
+                "pageId": "consumeIngredientsOnConfirmation",
+                "route": "/cafeFlow/consumeIngredientsOnConfirmation",
+                "source": "l2/cafeFlow/web/desktop/page11/consumeIngredientsOnConfirmation.ts",
+                "definition": "l2/cafeFlow/web/desktop/page11/consumeIngredientsOnConfirmation.defs.ts",
+                "componentTag": "cafe-flow--web--desktop--page11--consume-ingredients-on-confirmation-102050"
+              },
+              {
+                "pageId": "dineInOrderLifecycle",
+                "route": "/cafeFlow/dineInOrderLifecycle",
+                "source": "l2/cafeFlow/web/desktop/page11/dineInOrderLifecycle.ts",
+                "definition": "l2/cafeFlow/web/desktop/page11/dineInOrderLifecycle.defs.ts",
+                "componentTag": "cafe-flow--web--desktop--page11--dine-in-order-lifecycle-102050"
+              },
+              {
+                "pageId": "generateShiftCloseReport",
+                "route": "/cafeFlow/generateShiftCloseReport",
+                "source": "l2/cafeFlow/web/desktop/page11/generateShiftCloseReport.ts",
+                "definition": "l2/cafeFlow/web/desktop/page11/generateShiftCloseReport.defs.ts",
+                "componentTag": "cafe-flow--web--desktop--page11--generate-shift-close-report-102050"
+              },
+              {
+                "pageId": "kitchenProductionFlow",
+                "route": "/cafeFlow/kitchenProductionFlow",
+                "source": "l2/cafeFlow/web/desktop/page11/kitchenProductionFlow.ts",
+                "definition": "l2/cafeFlow/web/desktop/page11/kitchenProductionFlow.defs.ts",
+                "componentTag": "cafe-flow--web--desktop--page11--kitchen-production-flow-102050"
+              },
+              {
+                "pageId": "manageInventoryItems",
+                "route": "/cafeFlow/manageInventoryItems",
+                "source": "l2/cafeFlow/web/desktop/page11/manageInventoryItems.ts",
+                "definition": "l2/cafeFlow/web/desktop/page11/manageInventoryItems.defs.ts",
+                "componentTag": "cafe-flow--web--desktop--page11--manage-inventory-items-102050"
+              },
+              {
+                "pageId": "manageMenuCategories",
+                "route": "/cafeFlow/manageMenuCategories",
+                "source": "l2/cafeFlow/web/desktop/page11/manageMenuCategories.ts",
+                "definition": "l2/cafeFlow/web/desktop/page11/manageMenuCategories.defs.ts",
+                "componentTag": "cafe-flow--web--desktop--page11--manage-menu-categories-102050"
+              },
+              {
+                "pageId": "manageMenuItems",
+                "route": "/cafeFlow/manageMenuItems",
+                "source": "l2/cafeFlow/web/desktop/page11/manageMenuItems.ts",
+                "definition": "l2/cafeFlow/web/desktop/page11/manageMenuItems.defs.ts",
+                "componentTag": "cafe-flow--web--desktop--page11--manage-menu-items-102050"
+              },
+              {
+                "pageId": "manageTables",
+                "route": "/cafeFlow/manageTables",
+                "source": "l2/cafeFlow/web/desktop/page11/manageTables.ts",
+                "definition": "l2/cafeFlow/web/desktop/page11/manageTables.defs.ts",
+                "componentTag": "cafe-flow--web--desktop--page11--manage-tables-102050"
+              },
+              {
+                "pageId": "openDailyShift",
+                "route": "/cafeFlow/openDailyShift",
+                "source": "l2/cafeFlow/web/desktop/page11/openDailyShift.ts",
+                "definition": "l2/cafeFlow/web/desktop/page11/openDailyShift.defs.ts",
+                "componentTag": "cafe-flow--web--desktop--page11--open-daily-shift-102050"
+              },
+              {
+                "pageId": "recordPayment",
+                "route": "/cafeFlow/recordPayment",
+                "source": "l2/cafeFlow/web/desktop/page11/recordPayment.ts",
+                "definition": "l2/cafeFlow/web/desktop/page11/recordPayment.defs.ts",
+                "componentTag": "cafe-flow--web--desktop--page11--record-payment-102050"
+              },
+              {
+                "pageId": "takeoutOrderLifecycle",
+                "route": "/cafeFlow/takeoutOrderLifecycle",
+                "source": "l2/cafeFlow/web/desktop/page11/takeoutOrderLifecycle.ts",
+                "definition": "l2/cafeFlow/web/desktop/page11/takeoutOrderLifecycle.defs.ts",
+                "componentTag": "cafe-flow--web--desktop--page11--takeout-order-lifecycle-102050"
+              },
+              {
+                "pageId": "viewOperationalDashboard",
+                "route": "/cafeFlow/viewOperationalDashboard",
+                "source": "l2/cafeFlow/web/desktop/page11/viewOperationalDashboard.ts",
+                "definition": "l2/cafeFlow/web/desktop/page11/viewOperationalDashboard.defs.ts",
+                "componentTag": "cafe-flow--web--desktop--page11--view-operational-dashboard-102050"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

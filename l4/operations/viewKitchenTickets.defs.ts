@@ -27,7 +27,7 @@ export const operationViewKitchenTickets = {
     "actor": "cook",
     "priority": "now"
   },
-  "statusFrontend": "toCreate",
+  "statusFrontend": "done",
   "statusBackend": "toCreate"
 } as const;
 
