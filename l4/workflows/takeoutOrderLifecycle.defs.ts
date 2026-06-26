@@ -106,7 +106,7 @@ export const workflowTakeoutOrderLifecycle = {
     }
   ],
   "statusFrontend": "done",
-  "statusBackend": "toCreate"
+  "statusBackend": "inProgress"
 } as const;
 
 export default workflowTakeoutOrderLifecycle;

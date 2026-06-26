@@ -32,8 +32,8 @@ export const operationCreateKitchenTicket = {
     "actor": "attendant",
     "priority": "now"
   },
-  "statusFrontend": "toCreate",
-  "statusBackend": "toCreate"
+  "statusFrontend": "done",
+  "statusBackend": "inProgress"
 } as const;
 
 export default operationCreateKitchenTicket;

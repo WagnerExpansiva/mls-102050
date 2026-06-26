@@ -29,8 +29,8 @@ export const operationAiPromotionSuggestions = {
     "actor": "manager",
     "priority": "soon"
   },
-  "statusFrontend": "toCreate",
-  "statusBackend": "toCreate"
+  "statusFrontend": "done",
+  "statusBackend": "inProgress"
 } as const;
 
 export default operationAiPromotionSuggestions;
