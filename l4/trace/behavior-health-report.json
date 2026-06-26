@@ -1,0 +1,51 @@
+{
+  "moduleName": "cafeFlow",
+  "savedAt": "2026-06-26T01:01:41.234Z",
+  "report": {
+    "passed": false,
+    "counts": {
+      "entities": 13,
+      "workflows": 6,
+      "operations": 21
+    },
+    "errors": [
+      {
+        "severity": "error",
+        "code": "workflow.operation.unknown",
+        "message": "workflow closeDailyShift: orchestrated operation 'updateDailyShiftStatus' does not exist"
+      },
+      {
+        "severity": "error",
+        "code": "workflow.operation.unknown",
+        "message": "workflow closeDailyShift: orchestrated operation 'recordClosingCashMovement' does not exist"
+      }
+    ],
+    "warnings": [
+      {
+        "severity": "warning",
+        "code": "capability.multiowned",
+        "message": "capability 'openDailyShift' is owned by 3 behaviors"
+      },
+      {
+        "severity": "warning",
+        "code": "capability.multiowned",
+        "message": "capability 'takeoutOrderLifecycle' is owned by 5 behaviors"
+      },
+      {
+        "severity": "warning",
+        "code": "capability.multiowned",
+        "message": "capability 'dineInOrderLifecycle' is owned by 2 behaviors"
+      },
+      {
+        "severity": "warning",
+        "code": "capability.multiowned",
+        "message": "capability 'kitchenProductionFlow' is owned by 3 behaviors"
+      },
+      {
+        "severity": "warning",
+        "code": "capability.multiowned",
+        "message": "capability 'consumeIngredientsOnConfirmation' is owned by 3 behaviors"
+      }
+    ]
+  }
+}
