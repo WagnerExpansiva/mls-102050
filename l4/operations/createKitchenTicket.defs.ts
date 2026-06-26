@@ -33,7 +33,7 @@ export const operationCreateKitchenTicket = {
     "priority": "now"
   },
   "statusFrontend": "toCreate",
-  "statusBackend": "toCreate"
+  "statusBackend": "done"
 } as const;
 
 export default operationCreateKitchenTicket;

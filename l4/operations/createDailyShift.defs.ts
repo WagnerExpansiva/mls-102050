@@ -40,7 +40,7 @@ export const operationCreateDailyShift = {
     "priority": "now"
   },
   "statusFrontend": "toCreate",
-  "statusBackend": "toCreate"
+  "statusBackend": "done"
 } as const;
 
 export default operationCreateDailyShift;

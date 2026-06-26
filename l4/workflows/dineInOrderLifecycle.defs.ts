@@ -109,7 +109,7 @@ export const workflowDineInOrderLifecycle = {
     }
   ],
   "statusFrontend": "toCreate",
-  "statusBackend": "toCreate"
+  "statusBackend": "done"
 } as const;
 
 export default workflowDineInOrderLifecycle;

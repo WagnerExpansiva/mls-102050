@@ -54,7 +54,7 @@ export const workflowOpenDailyShift = {
     }
   ],
   "statusFrontend": "toCreate",
-  "statusBackend": "toCreate"
+  "statusBackend": "done"
 } as const;
 
 export default workflowOpenDailyShift;

@@ -32,7 +32,7 @@ export const operationBrowseMenuForPos = {
     "priority": "now"
   },
   "statusFrontend": "toCreate",
-  "statusBackend": "toCreate"
+  "statusBackend": "done"
 } as const;
 
 export default operationBrowseMenuForPos;
