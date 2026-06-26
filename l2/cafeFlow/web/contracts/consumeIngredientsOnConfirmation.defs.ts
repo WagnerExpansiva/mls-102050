@@ -9,23 +9,41 @@ export const definition = [
       {
         "name": "quantity",
         "type": "number",
-        "required": true
+        "sourceEntity": "StockConsumption",
+        "sourceField": "quantity",
+        "required": true,
+        "description": "Quantidade consumida do ingrediente."
       },
       {
         "name": "status",
         "type": "string",
-        "required": true
+        "sourceEntity": "StockConsumption",
+        "sourceField": "status",
+        "required": true,
+        "enum": [
+          "posted",
+          "voided"
+        ],
+        "description": "Situação do evento de consumo (lançado ou estornado)."
       },
       {
         "name": "consumedAt",
         "type": "date",
-        "required": true
+        "sourceEntity": "StockConsumption",
+        "sourceField": "consumedAt",
+        "required": true,
+        "description": "Data e hora em que o consumo ocorreu.",
+        "sourceType": "datetime"
       }
     ],
     "output": [
       {
         "name": "id",
-        "type": "string"
+        "type": "string",
+        "sourceEntity": "StockConsumption",
+        "sourceField": "id",
+        "description": "Identificador único do evento de consumo de estoque.",
+        "sourceType": "uuid"
       }
     ],
     "readsEntities": [

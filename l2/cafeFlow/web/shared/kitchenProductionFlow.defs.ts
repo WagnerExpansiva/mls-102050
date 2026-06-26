@@ -1,135 +1,336 @@
 /// <mls fileReference="_102050_/l2/cafeFlow/web/shared/kitchenProductionFlow.defs.ts" enhancement="_blank"/>
 
 export const definition = {
-  "bffCommands": [
+  "pageId": "kitchenProductionFlow",
+  "pageName": "Fluxo de produção da cozinha",
+  "moduleName": "cafeFlow",
+  "sourceKind": "workflow",
+  "ownerIds": [
+    "workflow:kitchenProductionFlow",
+    "operation:viewKitchenTickets",
+    "operation:updateKitchenTicketStatus",
+    "operation:updateOrderItemStatus"
+  ],
+  "operationIds": [
+    "viewKitchenTickets",
+    "updateKitchenTicketStatus",
+    "updateOrderItemStatus"
+  ],
+  "contractRef": {
+    "defPath": "_102050_/l2/cafeFlow/web/contracts/kitchenProductionFlow.defs.ts",
+    "tsPath": "_102050_/l2/cafeFlow/web/contracts/kitchenProductionFlow.ts"
+  },
+  "layoutRef": {
+    "defPath": "_102050_/l2/cafeFlow/web/desktop/page11/kitchenProductionFlow.defs.ts",
+    "layoutId": "kitchenProductionFlow.default"
+  },
+  "states": [
     {
-      "commandName": "viewKitchenTickets",
-      "purpose": "Consultar tickets da cozinha",
-      "kind": "query",
-      "input": [
-        {
-          "name": "status",
-          "type": "string",
-          "required": false
-        }
-      ],
-      "output": [
-        {
-          "name": "kitchenTicketId",
-          "type": "string"
-        },
-        {
-          "name": "orderId",
-          "type": "string"
-        },
-        {
-          "name": "status",
-          "type": "string"
-        },
-        {
-          "name": "createdAt",
-          "type": "date"
-        },
-        {
-          "name": "updatedAt",
-          "type": "date"
-        }
-      ],
-      "readsEntities": [
-        "KitchenTicket"
-      ],
-      "writesEntities": [],
-      "readsTables": [],
-      "writesTables": [],
-      "usecaseRefs": [
-        "viewKitchenTickets"
-      ],
-      "layerContract": {
-        "controllerLayer": "layer_2_controllers",
-        "mustCallLayer": "layer_3_usecases",
-        "directTableAccessForbidden": true
-      },
-      "rulesApplied": [
-        "orderStatusTransitions"
-      ]
+      "stateKey": "ui.kitchenProductionFlow.status",
+      "name": "status",
+      "kind": "pageStatus",
+      "defaultValue": ""
     },
     {
-      "commandName": "updateKitchenTicketStatus",
-      "purpose": "Atualizar status do ticket de cozinha",
-      "kind": "command",
-      "input": [
-        {
-          "name": "status",
-          "type": "string",
-          "required": true
-        }
+      "stateKey": "ui.kitchenProductionFlow.action.viewKitchenTickets.status",
+      "name": "viewKitchenTicketsState",
+      "kind": "actionStatus",
+      "actionRef": "viewKitchenTickets",
+      "valueSet": [
+        "idle",
+        "loading",
+        "success",
+        "error"
       ],
-      "output": [
-        {
-          "name": "kitchenTicketId",
-          "type": "string"
-        }
-      ],
-      "readsEntities": [
-        "KitchenTicket"
-      ],
-      "writesEntities": [
-        "KitchenTicket"
-      ],
-      "readsTables": [],
-      "writesTables": [],
-      "usecaseRefs": [
-        "updateKitchenTicketStatus"
-      ],
-      "layerContract": {
-        "controllerLayer": "layer_2_controllers",
-        "mustCallLayer": "layer_3_usecases",
-        "directTableAccessForbidden": true
-      },
-      "rulesApplied": [
-        "orderStatusTransitions"
-      ]
+      "defaultValue": "idle"
     },
     {
-      "commandName": "updateOrderItemStatus",
-      "purpose": "Atualizar status de item do pedido",
-      "kind": "command",
-      "input": [
-        {
-          "name": "status",
-          "type": "string",
-          "required": true
-        }
-      ],
-      "output": [
-        {
-          "name": "id",
-          "type": "string"
-        }
-      ],
-      "readsEntities": [
-        "OrderItem"
-      ],
-      "writesEntities": [
-        "OrderItem"
-      ],
-      "readsTables": [],
-      "writesTables": [],
-      "usecaseRefs": [
-        "updateOrderItemStatus"
-      ],
-      "layerContract": {
-        "controllerLayer": "layer_2_controllers",
-        "mustCallLayer": "layer_3_usecases",
-        "directTableAccessForbidden": true
+      "stateKey": "ui.kitchenProductionFlow.input.viewKitchenTickets.kitchenTicketId",
+      "name": "viewKitchenTicketsKitchenTicketId",
+      "kind": "input",
+      "contractRef": {
+        "commandName": "viewKitchenTickets",
+        "direction": "input",
+        "field": "kitchenTicketId"
       },
-      "rulesApplied": [
-        "orderStatusTransitions",
-        "ingredientConsumptionTrigger"
-      ]
+      "defaultValue": ""
+    },
+    {
+      "stateKey": "ui.kitchenProductionFlow.input.viewKitchenTickets.orderId",
+      "name": "viewKitchenTicketsOrderId",
+      "kind": "input",
+      "contractRef": {
+        "commandName": "viewKitchenTickets",
+        "direction": "input",
+        "field": "orderId"
+      },
+      "defaultValue": ""
+    },
+    {
+      "stateKey": "ui.kitchenProductionFlow.input.viewKitchenTickets.status",
+      "name": "viewKitchenTicketsStatus",
+      "kind": "input",
+      "contractRef": {
+        "commandName": "viewKitchenTickets",
+        "direction": "input",
+        "field": "status"
+      },
+      "defaultValue": ""
+    },
+    {
+      "stateKey": "ui.kitchenProductionFlow.input.viewKitchenTickets.createdAt",
+      "name": "viewKitchenTicketsCreatedAt",
+      "kind": "input",
+      "contractRef": {
+        "commandName": "viewKitchenTickets",
+        "direction": "input",
+        "field": "createdAt"
+      },
+      "defaultValue": ""
+    },
+    {
+      "stateKey": "ui.kitchenProductionFlow.input.viewKitchenTickets.updatedAt",
+      "name": "viewKitchenTicketsUpdatedAt",
+      "kind": "input",
+      "contractRef": {
+        "commandName": "viewKitchenTickets",
+        "direction": "input",
+        "field": "updatedAt"
+      },
+      "defaultValue": ""
+    },
+    {
+      "stateKey": "ui.kitchenProductionFlow.data.viewKitchenTickets",
+      "name": "viewKitchenTicketsData",
+      "kind": "queryResult",
+      "contractRef": {
+        "commandName": "viewKitchenTickets",
+        "direction": "output"
+      },
+      "collection": true,
+      "defaultValue": []
+    },
+    {
+      "stateKey": "ui.kitchenProductionFlow.action.updateKitchenTicketStatus.status",
+      "name": "updateKitchenTicketStatusState",
+      "kind": "actionStatus",
+      "actionRef": "updateKitchenTicketStatus",
+      "valueSet": [
+        "idle",
+        "loading",
+        "success",
+        "error"
+      ],
+      "defaultValue": "idle"
+    },
+    {
+      "stateKey": "ui.kitchenProductionFlow.input.updateKitchenTicketStatus.status",
+      "name": "updateKitchenTicketStatusStatus",
+      "kind": "input",
+      "contractRef": {
+        "commandName": "updateKitchenTicketStatus",
+        "direction": "input",
+        "field": "status"
+      },
+      "defaultValue": ""
+    },
+    {
+      "stateKey": "ui.kitchenProductionFlow.action.updateOrderItemStatus.status",
+      "name": "updateOrderItemStatusState",
+      "kind": "actionStatus",
+      "actionRef": "updateOrderItemStatus",
+      "valueSet": [
+        "idle",
+        "loading",
+        "success",
+        "error"
+      ],
+      "defaultValue": "idle"
+    },
+    {
+      "stateKey": "ui.kitchenProductionFlow.input.updateOrderItemStatus.status",
+      "name": "updateOrderItemStatusStatus",
+      "kind": "input",
+      "contractRef": {
+        "commandName": "updateOrderItemStatus",
+        "direction": "input",
+        "field": "status"
+      },
+      "defaultValue": ""
     }
   ],
-  "navigationRefs": []
+  "actions": [
+    {
+      "actionId": "viewKitchenTickets",
+      "kind": "query",
+      "commandRef": "viewKitchenTickets",
+      "routeKey": "cafeFlow.kitchenProductionFlow.viewKitchenTickets",
+      "purpose": "Consultar tickets da cozinha",
+      "methodName": "loadViewKitchenTickets",
+      "handlerName": "handleViewKitchenTicketsClick",
+      "inputStateKeys": [
+        "ui.kitchenProductionFlow.input.viewKitchenTickets.kitchenTicketId",
+        "ui.kitchenProductionFlow.input.viewKitchenTickets.orderId",
+        "ui.kitchenProductionFlow.input.viewKitchenTickets.status",
+        "ui.kitchenProductionFlow.input.viewKitchenTickets.createdAt",
+        "ui.kitchenProductionFlow.input.viewKitchenTickets.updatedAt"
+      ],
+      "outputStateKeys": [
+        "ui.kitchenProductionFlow.data.viewKitchenTickets"
+      ],
+      "statusStateKey": "ui.kitchenProductionFlow.action.viewKitchenTickets.status"
+    },
+    {
+      "actionId": "updateKitchenTicketStatus",
+      "kind": "command",
+      "commandRef": "updateKitchenTicketStatus",
+      "routeKey": "cafeFlow.kitchenProductionFlow.updateKitchenTicketStatus",
+      "purpose": "Atualizar status do ticket de cozinha",
+      "methodName": "updateKitchenTicketStatus",
+      "handlerName": "handleUpdateKitchenTicketStatusClick",
+      "inputStateKeys": [
+        "ui.kitchenProductionFlow.input.updateKitchenTicketStatus.status"
+      ],
+      "outputStateKeys": [],
+      "statusStateKey": "ui.kitchenProductionFlow.action.updateKitchenTicketStatus.status"
+    },
+    {
+      "actionId": "updateOrderItemStatus",
+      "kind": "command",
+      "commandRef": "updateOrderItemStatus",
+      "routeKey": "cafeFlow.kitchenProductionFlow.updateOrderItemStatus",
+      "purpose": "Atualizar status de item do pedido",
+      "methodName": "updateOrderItemStatus",
+      "handlerName": "handleUpdateOrderItemStatusClick",
+      "inputStateKeys": [
+        "ui.kitchenProductionFlow.input.updateOrderItemStatus.status"
+      ],
+      "outputStateKeys": [],
+      "statusStateKey": "ui.kitchenProductionFlow.action.updateOrderItemStatus.status"
+    },
+    {
+      "actionId": "set.viewKitchenTicketsKitchenTicketId",
+      "kind": "stateSetter",
+      "stateKey": "ui.kitchenProductionFlow.input.viewKitchenTickets.kitchenTicketId",
+      "methodName": "setViewKitchenTicketsKitchenTicketId",
+      "handlerName": "handleViewKitchenTicketsKitchenTicketIdChange"
+    },
+    {
+      "actionId": "set.viewKitchenTicketsOrderId",
+      "kind": "stateSetter",
+      "stateKey": "ui.kitchenProductionFlow.input.viewKitchenTickets.orderId",
+      "methodName": "setViewKitchenTicketsOrderId",
+      "handlerName": "handleViewKitchenTicketsOrderIdChange"
+    },
+    {
+      "actionId": "set.viewKitchenTicketsStatus",
+      "kind": "stateSetter",
+      "stateKey": "ui.kitchenProductionFlow.input.viewKitchenTickets.status",
+      "methodName": "setViewKitchenTicketsStatus",
+      "handlerName": "handleViewKitchenTicketsStatusChange"
+    },
+    {
+      "actionId": "set.viewKitchenTicketsCreatedAt",
+      "kind": "stateSetter",
+      "stateKey": "ui.kitchenProductionFlow.input.viewKitchenTickets.createdAt",
+      "methodName": "setViewKitchenTicketsCreatedAt",
+      "handlerName": "handleViewKitchenTicketsCreatedAtChange"
+    },
+    {
+      "actionId": "set.viewKitchenTicketsUpdatedAt",
+      "kind": "stateSetter",
+      "stateKey": "ui.kitchenProductionFlow.input.viewKitchenTickets.updatedAt",
+      "methodName": "setViewKitchenTicketsUpdatedAt",
+      "handlerName": "handleViewKitchenTicketsUpdatedAtChange"
+    },
+    {
+      "actionId": "set.updateKitchenTicketStatusStatus",
+      "kind": "stateSetter",
+      "stateKey": "ui.kitchenProductionFlow.input.updateKitchenTicketStatus.status",
+      "methodName": "setUpdateKitchenTicketStatusStatus",
+      "handlerName": "handleUpdateKitchenTicketStatusStatusChange"
+    },
+    {
+      "actionId": "set.updateOrderItemStatusStatus",
+      "kind": "stateSetter",
+      "stateKey": "ui.kitchenProductionFlow.input.updateOrderItemStatus.status",
+      "methodName": "setUpdateOrderItemStatusStatus",
+      "handlerName": "handleUpdateOrderItemStatusStatusChange"
+    }
+  ],
+  "initialLoads": [
+    {
+      "actionId": "viewKitchenTickets",
+      "stateKey": "ui.kitchenProductionFlow.data.viewKitchenTickets"
+    }
+  ],
+  "navigationRefs": [],
+  "i18n": {
+    "section.kitchenProductionFlow.title": "Fluxo de produção da cozinha",
+    "organism.viewKitchenTickets.title": "Fila de Tickets da Cozinha",
+    "organism.updateKitchenTicketStatus.title": "Atualizar Status do Ticket",
+    "organism.updateOrderItemStatus.title": "Itens do Pedido",
+    "filter.status.label": "Status",
+    "filter.orderId.label": "Pedido",
+    "action.applyFilters.label": "Filtrar",
+    "column.kitchenTicketId.label": "Ticket",
+    "column.orderId.label": "Pedido",
+    "column.status.label": "Status",
+    "column.createdAt.label": "Criado em",
+    "column.updatedAt.label": "Atualizado em",
+    "toolbar.refresh.label": "Atualizar",
+    "rowAction.selectTicket.label": "Selecionar",
+    "empty.tickets.label": "Nenhum ticket encontrado",
+    "field.kitchenTicketId.label": "Ticket",
+    "field.orderId.label": "Pedido",
+    "field.status.label": "Status atual",
+    "field.createdAt.label": "Criado em",
+    "empty.selectedTicket.label": "Selecione um ticket para visualizar detalhes",
+    "action.startPreparation.label": "Iniciar Preparo",
+    "action.finishPreparation.label": "Finalizar Preparo",
+    "action.cancelTicket.label": "Cancelar Ticket",
+    "column.itemId.label": "Item",
+    "column.menuItemId.label": "Produto",
+    "column.quantity.label": "Qtd",
+    "column.observations.label": "Observações",
+    "column.itemStatus.label": "Status",
+    "column.itemUpdatedAt.label": "Atualizado em",
+    "rowAction.selectItem.label": "Selecionar",
+    "empty.orderItems.label": "Nenhum item encontrado para este ticket",
+    "action.markInPreparation.label": "Em Preparo",
+    "action.markReady.label": "Pronto",
+    "action.markServed.label": "Servido",
+    "action.cancelItem.label": "Cancelar Item"
+  },
+  "automation": {
+    "statePrefix": "ui.kitchenProductionFlow",
+    "stateKeys": [
+      "ui.kitchenProductionFlow.status",
+      "ui.kitchenProductionFlow.action.viewKitchenTickets.status",
+      "ui.kitchenProductionFlow.input.viewKitchenTickets.kitchenTicketId",
+      "ui.kitchenProductionFlow.input.viewKitchenTickets.orderId",
+      "ui.kitchenProductionFlow.input.viewKitchenTickets.status",
+      "ui.kitchenProductionFlow.input.viewKitchenTickets.createdAt",
+      "ui.kitchenProductionFlow.input.viewKitchenTickets.updatedAt",
+      "ui.kitchenProductionFlow.data.viewKitchenTickets",
+      "ui.kitchenProductionFlow.action.updateKitchenTicketStatus.status",
+      "ui.kitchenProductionFlow.input.updateKitchenTicketStatus.status",
+      "ui.kitchenProductionFlow.action.updateOrderItemStatus.status",
+      "ui.kitchenProductionFlow.input.updateOrderItemStatus.status"
+    ],
+    "actionIds": [
+      "viewKitchenTickets",
+      "updateKitchenTicketStatus",
+      "updateOrderItemStatus",
+      "set.viewKitchenTicketsKitchenTicketId",
+      "set.viewKitchenTicketsOrderId",
+      "set.viewKitchenTicketsStatus",
+      "set.viewKitchenTicketsCreatedAt",
+      "set.viewKitchenTicketsUpdatedAt",
+      "set.updateKitchenTicketStatusStatus",
+      "set.updateOrderItemStatusStatus"
+    ]
+  }
 };
 
 export const pipeline = [
@@ -139,7 +340,9 @@ export const pipeline = [
     "outputPath": "_102050_/l2/cafeFlow/web/shared/kitchenProductionFlow.ts",
     "defPath": "_102050_/l2/cafeFlow/web/shared/kitchenProductionFlow.defs.ts",
     "dependsFiles": [
-      "_102050_/l2/cafeFlow/web/contracts/kitchenProductionFlow.ts"
+      "_102050_/l2/cafeFlow/web/contracts/kitchenProductionFlow.defs.ts",
+      "_102050_/l2/cafeFlow/web/contracts/kitchenProductionFlow.ts",
+      "_102050_/l2/cafeFlow/web/desktop/page11/kitchenProductionFlow.defs.ts"
     ],
     "dependsOn": [],
     "skills": [

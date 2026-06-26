@@ -9,38 +9,69 @@ export const definition = [
       {
         "name": "name",
         "type": "string",
-        "required": true
+        "sourceEntity": "InventoryItem",
+        "sourceField": "name",
+        "required": true,
+        "description": "Nome do ingrediente ou insumo"
       },
       {
         "name": "description",
         "type": "string",
-        "required": false
+        "sourceEntity": "InventoryItem",
+        "sourceField": "description",
+        "required": false,
+        "description": "Descrição detalhada do item",
+        "sourceType": "text"
       },
       {
         "name": "unit",
         "type": "string",
-        "required": true
+        "sourceEntity": "InventoryItem",
+        "sourceField": "unit",
+        "required": true,
+        "description": "Unidade de medida (ex.: kg, L, unidade, gramas)"
       },
       {
         "name": "currentQuantity",
         "type": "number",
-        "required": true
+        "sourceEntity": "InventoryItem",
+        "sourceField": "currentQuantity",
+        "required": true,
+        "description": "Quantidade atual disponível em estoque"
       },
       {
         "name": "minimumLevel",
         "type": "number",
-        "required": true
+        "sourceEntity": "InventoryItem",
+        "sourceField": "minimumLevel",
+        "required": true,
+        "description": "Nível mínimo para geração de alerta de baixo estoque"
       },
       {
         "name": "status",
         "type": "string",
-        "required": true
+        "sourceEntity": "InventoryItem",
+        "sourceField": "status",
+        "required": true,
+        "enum": [
+          "active",
+          "inactive"
+        ],
+        "lifecycleStates": [
+          "active",
+          "inactive"
+        ],
+        "description": "Estado do ciclo de vida do item"
       }
     ],
     "output": [
       {
         "name": "inventoryItemId",
-        "type": "string"
+        "type": "string",
+        "sourceEntity": "InventoryItem",
+        "sourceField": "inventoryItemId",
+        "description": "Identificador único do item de estoque",
+        "sourceType": "uuid"
       }
     ],
     "readsEntities": [

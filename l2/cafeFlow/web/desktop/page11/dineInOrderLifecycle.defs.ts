@@ -25,19 +25,19 @@ export const definition = {
   "navigationRefs": [],
   "sections": [
     {
-      "id": "sec-dinein-lifecycle",
+      "id": "sec_dineInLifecycle",
       "type": "section",
       "sectionName": "Ciclo de pedido (mesa)",
-      "titleKey": "dineInOrderLifecycle.section.title",
+      "titleKey": "section.dineInLifecycle.title",
       "mode": "edit",
       "order": 10,
       "organisms": [
         {
-          "id": "org-create-order",
-          "type": "organism",
+          "id": "org_createOrder",
+          "type": "formPanel",
           "organismName": "CreateOrder",
-          "titleKey": "dineInOrderLifecycle.createOrder.title",
-          "purpose": "Criar pedido",
+          "titleKey": "organism.createOrder.title",
+          "purpose": "Criar pedido dine-in selecionando mesa e definindo dados iniciais",
           "userActions": [
             "createOrder"
           ],
@@ -46,8 +46,23 @@ export const definition = {
             "DailyShift",
             "Table"
           ],
-          "readsFields": [],
-          "writesFields": [],
+          "readsFields": [
+            "Table.number",
+            "Table.status",
+            "DailyShift.status",
+            "DailyShift.dailyShiftId"
+          ],
+          "writesFields": [
+            "Order.orderType",
+            "Order.status",
+            "Order.totalAmount",
+            "Order.notes",
+            "Order.customerName",
+            "Order.customerPhone",
+            "Order.numberOfGuests",
+            "Order.tableId",
+            "Order.dailyShiftId"
+          ],
           "rulesApplied": [
             "orderStatusTransitions",
             "paymentTimingByOrderType",
@@ -56,128 +71,25 @@ export const definition = {
             "tableOccupancyConsistency"
           ],
           "order": 10,
-          "molecules": [
+          "moleculeRefs": [
             {
-              "id": "mol-create-order-form",
+              "id": "mol_createOrder_form",
               "type": "form",
-              "order": 10,
-              "titleKey": "dineInOrderLifecycle.createOrder.form.title",
-              "fields": [
-                {
-                  "id": "fld-create-order-orderType",
-                  "field": "orderType",
-                  "labelKey": "dineInOrderLifecycle.fields.orderType",
-                  "order": 10,
-                  "required": true,
-                  "inputType": "select"
-                },
-                {
-                  "id": "fld-create-order-status",
-                  "field": "status",
-                  "labelKey": "dineInOrderLifecycle.fields.status",
-                  "order": 20,
-                  "required": true,
-                  "inputType": "select"
-                },
-                {
-                  "id": "fld-create-order-totalAmount",
-                  "field": "totalAmount",
-                  "labelKey": "dineInOrderLifecycle.fields.totalAmount",
-                  "order": 30,
-                  "required": true,
-                  "inputType": "money"
-                },
-                {
-                  "id": "fld-create-order-notes",
-                  "field": "notes",
-                  "labelKey": "dineInOrderLifecycle.fields.notes",
-                  "order": 40,
-                  "required": false,
-                  "inputType": "text"
-                },
-                {
-                  "id": "fld-create-order-customerName",
-                  "field": "customerName",
-                  "labelKey": "dineInOrderLifecycle.fields.customerName",
-                  "order": 50,
-                  "required": false,
-                  "inputType": "text"
-                },
-                {
-                  "id": "fld-create-order-customerPhone",
-                  "field": "customerPhone",
-                  "labelKey": "dineInOrderLifecycle.fields.customerPhone",
-                  "order": 60,
-                  "required": false,
-                  "inputType": "text"
-                },
-                {
-                  "id": "fld-create-order-numberOfGuests",
-                  "field": "numberOfGuests",
-                  "labelKey": "dineInOrderLifecycle.fields.numberOfGuests",
-                  "order": 70,
-                  "required": false,
-                  "inputType": "number"
-                },
-                {
-                  "id": "fld-create-order-closedAt",
-                  "field": "closedAt",
-                  "labelKey": "dineInOrderLifecycle.fields.closedAt",
-                  "order": 80,
-                  "required": false,
-                  "inputType": "datetime"
-                },
-                {
-                  "id": "fld-create-order-cancelledAt",
-                  "field": "cancelledAt",
-                  "labelKey": "dineInOrderLifecycle.fields.cancelledAt",
-                  "order": 90,
-                  "required": false,
-                  "inputType": "datetime"
-                },
-                {
-                  "id": "fld-create-order-cancellationReason",
-                  "field": "cancellationReason",
-                  "labelKey": "dineInOrderLifecycle.fields.cancellationReason",
-                  "order": 100,
-                  "required": false,
-                  "inputType": "text"
-                }
-              ],
-              "columns": [],
-              "filters": [],
-              "toolbar": [],
-              "rowActions": [],
-              "actions": []
+              "order": 10
             },
             {
-              "id": "mol-create-order-actions",
+              "id": "mol_createOrder_actionBar",
               "type": "actionBar",
-              "order": 20,
-              "titleKey": "dineInOrderLifecycle.createOrder.actions.title",
-              "fields": [],
-              "columns": [],
-              "filters": [],
-              "toolbar": [],
-              "rowActions": [],
-              "actions": [
-                {
-                  "id": "act-create-order-submit",
-                  "action": "createOrder",
-                  "labelKey": "dineInOrderLifecycle.actions.createOrder",
-                  "order": 10,
-                  "displayHint": "primary"
-                }
-              ]
+              "order": 20
             }
           ]
         },
         {
-          "id": "org-add-order-item",
-          "type": "organism",
+          "id": "org_addOrderItem",
+          "type": "formPanel",
           "organismName": "AddOrderItem",
-          "titleKey": "dineInOrderLifecycle.addOrderItem.title",
-          "purpose": "Adicionar item ao pedido",
+          "titleKey": "organism.addOrderItem.title",
+          "purpose": "Adicionar itens do cardápio ao pedido atual com quantidade e observações",
           "userActions": [
             "addOrderItem"
           ],
@@ -187,95 +99,52 @@ export const definition = {
             "Order",
             "StockConsumption"
           ],
-          "readsFields": [],
-          "writesFields": [],
+          "readsFields": [
+            "MenuItem.name",
+            "MenuItem.price",
+            "MenuItem.menuItemId",
+            "MenuItem.status",
+            "Order.orderId",
+            "Order.status"
+          ],
+          "writesFields": [
+            "OrderItem.menuItemId",
+            "OrderItem.quantity",
+            "OrderItem.unitPrice",
+            "OrderItem.totalPrice",
+            "OrderItem.observations",
+            "OrderItem.status",
+            "OrderItem.orderId"
+          ],
           "rulesApplied": [
             "orderStatusTransitions",
             "ingredientConsumptionTrigger"
           ],
           "order": 20,
-          "molecules": [
+          "moleculeRefs": [
             {
-              "id": "mol-add-order-item-form",
+              "id": "mol_addOrderItem_form",
               "type": "form",
-              "order": 10,
-              "titleKey": "dineInOrderLifecycle.addOrderItem.form.title",
-              "fields": [
-                {
-                  "id": "fld-add-item-quantity",
-                  "field": "quantity",
-                  "labelKey": "dineInOrderLifecycle.fields.quantity",
-                  "order": 10,
-                  "required": true,
-                  "inputType": "number"
-                },
-                {
-                  "id": "fld-add-item-unitPrice",
-                  "field": "unitPrice",
-                  "labelKey": "dineInOrderLifecycle.fields.unitPrice",
-                  "order": 20,
-                  "required": true,
-                  "inputType": "money"
-                },
-                {
-                  "id": "fld-add-item-totalPrice",
-                  "field": "totalPrice",
-                  "labelKey": "dineInOrderLifecycle.fields.totalPrice",
-                  "order": 30,
-                  "required": true,
-                  "inputType": "money"
-                },
-                {
-                  "id": "fld-add-item-observations",
-                  "field": "observations",
-                  "labelKey": "dineInOrderLifecycle.fields.observations",
-                  "order": 40,
-                  "required": false,
-                  "inputType": "text"
-                },
-                {
-                  "id": "fld-add-item-status",
-                  "field": "status",
-                  "labelKey": "dineInOrderLifecycle.fields.itemStatus",
-                  "order": 50,
-                  "required": true,
-                  "inputType": "select"
-                }
-              ],
-              "columns": [],
-              "filters": [],
-              "toolbar": [],
-              "rowActions": [],
-              "actions": []
+              "order": 10
             },
             {
-              "id": "mol-add-order-item-actions",
+              "id": "mol_addOrderItem_actionBar",
               "type": "actionBar",
-              "order": 20,
-              "titleKey": "dineInOrderLifecycle.addOrderItem.actions.title",
-              "fields": [],
-              "columns": [],
-              "filters": [],
-              "toolbar": [],
-              "rowActions": [],
-              "actions": [
-                {
-                  "id": "act-add-order-item-submit",
-                  "action": "addOrderItem",
-                  "labelKey": "dineInOrderLifecycle.actions.addOrderItem",
-                  "order": 10,
-                  "displayHint": "primary"
-                }
-              ]
+              "order": 20
+            },
+            {
+              "id": "mol_orderItems_table",
+              "type": "groupviewtable.mlDataTable",
+              "order": 30
             }
           ]
         },
         {
-          "id": "org-create-kitchen-ticket",
-          "type": "organism",
+          "id": "org_createKitchenTicket",
+          "type": "actionPanel",
           "organismName": "CreateKitchenTicket",
-          "titleKey": "dineInOrderLifecycle.createKitchenTicket.title",
-          "purpose": "Criar ticket de cozinha",
+          "titleKey": "organism.createKitchenTicket.title",
+          "purpose": "Enviar pedido para a cozinha criando ticket de preparo",
           "userActions": [
             "createKitchenTicket"
           ],
@@ -284,62 +153,41 @@ export const definition = {
             "Order",
             "OrderItem"
           ],
-          "readsFields": [],
-          "writesFields": [],
+          "readsFields": [
+            "Order.orderId",
+            "Order.status",
+            "OrderItem.id",
+            "OrderItem.menuItemId",
+            "OrderItem.quantity",
+            "KitchenTicket.status"
+          ],
+          "writesFields": [
+            "KitchenTicket.orderId",
+            "KitchenTicket.status"
+          ],
           "rulesApplied": [
             "orderStatusTransitions"
           ],
           "order": 30,
-          "molecules": [
+          "moleculeRefs": [
             {
-              "id": "mol-create-kitchen-ticket-form",
-              "type": "form",
-              "order": 10,
-              "titleKey": "dineInOrderLifecycle.createKitchenTicket.form.title",
-              "fields": [
-                {
-                  "id": "fld-kitchen-ticket-status",
-                  "field": "status",
-                  "labelKey": "dineInOrderLifecycle.fields.kitchenTicketStatus",
-                  "order": 10,
-                  "required": true,
-                  "inputType": "select"
-                }
-              ],
-              "columns": [],
-              "filters": [],
-              "toolbar": [],
-              "rowActions": [],
-              "actions": []
+              "id": "mol_kitchenTicket_summary",
+              "type": "summaryPanel",
+              "order": 10
             },
             {
-              "id": "mol-create-kitchen-ticket-actions",
+              "id": "mol_createKitchenTicket_actionBar",
               "type": "actionBar",
-              "order": 20,
-              "titleKey": "dineInOrderLifecycle.createKitchenTicket.actions.title",
-              "fields": [],
-              "columns": [],
-              "filters": [],
-              "toolbar": [],
-              "rowActions": [],
-              "actions": [
-                {
-                  "id": "act-create-kitchen-ticket-submit",
-                  "action": "createKitchenTicket",
-                  "labelKey": "dineInOrderLifecycle.actions.createKitchenTicket",
-                  "order": 10,
-                  "displayHint": "primary"
-                }
-              ]
+              "order": 20
             }
           ]
         },
         {
-          "id": "org-update-order-status",
-          "type": "organism",
+          "id": "org_updateOrderStatus",
+          "type": "statusPanel",
           "organismName": "UpdateOrderStatus",
-          "titleKey": "dineInOrderLifecycle.updateOrderStatus.title",
-          "purpose": "Atualizar status do pedido",
+          "titleKey": "organism.updateOrderStatus.title",
+          "purpose": "Acompanhar e atualizar o status do pedido durante o serviço",
           "userActions": [
             "updateOrderStatus"
           ],
@@ -356,7 +204,9 @@ export const definition = {
           "readsFields": [
             "Order.status",
             "Order.orderType",
-            "Order.tableId"
+            "Order.tableId",
+            "Order.orderId",
+            "KitchenTicket.status"
           ],
           "writesFields": [
             "Order.status",
@@ -373,121 +223,42 @@ export const definition = {
             "tableOccupancyConsistency"
           ],
           "order": 40,
-          "molecules": [
+          "moleculeRefs": [
             {
-              "id": "mol-order-summary",
-              "type": "summaryPanel",
-              "order": 10,
-              "titleKey": "dineInOrderLifecycle.updateOrderStatus.summary.title",
-              "fields": [
-                {
-                  "id": "fld-order-status",
-                  "field": "Order.status",
-                  "labelKey": "dineInOrderLifecycle.fields.status",
-                  "order": 10,
-                  "required": false
-                },
-                {
-                  "id": "fld-order-type",
-                  "field": "Order.orderType",
-                  "labelKey": "dineInOrderLifecycle.fields.orderType",
-                  "order": 20,
-                  "required": false
-                },
-                {
-                  "id": "fld-order-table",
-                  "field": "Order.tableId",
-                  "labelKey": "dineInOrderLifecycle.fields.tableId",
-                  "order": 30,
-                  "required": false
-                }
-              ],
-              "columns": [],
-              "filters": [],
-              "toolbar": [],
-              "rowActions": [],
-              "actions": []
+              "id": "mol_orderStatus_timeline",
+              "type": "statusTimeline",
+              "stateKey": "currentOrder.status",
+              "order": 10
             },
             {
-              "id": "mol-update-order-status-form",
+              "id": "mol_updateOrderStatus_form",
               "type": "form",
-              "order": 20,
-              "titleKey": "dineInOrderLifecycle.updateOrderStatus.form.title",
-              "fields": [
-                {
-                  "id": "fld-update-order-status",
-                  "field": "status",
-                  "labelKey": "dineInOrderLifecycle.fields.status",
-                  "order": 10,
-                  "required": true,
-                  "inputType": "select"
-                },
-                {
-                  "id": "fld-update-order-closedAt",
-                  "field": "closedAt",
-                  "labelKey": "dineInOrderLifecycle.fields.closedAt",
-                  "order": 20,
-                  "required": false,
-                  "inputType": "datetime"
-                },
-                {
-                  "id": "fld-update-order-cancelledAt",
-                  "field": "cancelledAt",
-                  "labelKey": "dineInOrderLifecycle.fields.cancelledAt",
-                  "order": 30,
-                  "required": false,
-                  "inputType": "datetime"
-                },
-                {
-                  "id": "fld-update-order-cancel-reason",
-                  "field": "cancellationReason",
-                  "labelKey": "dineInOrderLifecycle.fields.cancellationReason",
-                  "order": 40,
-                  "required": false,
-                  "inputType": "text"
-                }
-              ],
-              "columns": [],
-              "filters": [],
-              "toolbar": [],
-              "rowActions": [],
-              "actions": []
+              "order": 20
             },
             {
-              "id": "mol-update-order-status-actions",
+              "id": "mol_updateOrderStatus_actionBar",
               "type": "actionBar",
-              "order": 30,
-              "titleKey": "dineInOrderLifecycle.updateOrderStatus.actions.title",
-              "fields": [],
-              "columns": [],
-              "filters": [],
-              "toolbar": [],
-              "rowActions": [],
-              "actions": [
-                {
-                  "id": "act-update-order-status-submit",
-                  "action": "updateOrderStatus",
-                  "labelKey": "dineInOrderLifecycle.actions.updateOrderStatus",
-                  "order": 10,
-                  "displayHint": "primary"
-                }
-              ]
+              "order": 30
             }
           ]
         },
         {
-          "id": "org-update-table-status",
-          "type": "organism",
+          "id": "org_updateTableStatus",
+          "type": "formPanel",
           "organismName": "UpdateTableStatus",
-          "titleKey": "dineInOrderLifecycle.updateTableStatus.title",
-          "purpose": "Atualizar ocupação da mesa",
+          "titleKey": "organism.updateTableStatus.title",
+          "purpose": "Atualizar ocupação da mesa ao finalizar o ciclo do pedido",
           "userActions": [
             "updateTableStatus"
           ],
           "requiredEntities": [
             "Table"
           ],
-          "readsFields": [],
+          "readsFields": [
+            "Table.tableId",
+            "Table.number",
+            "Table.status"
+          ],
           "writesFields": [
             "Table.status",
             "Table.updatedAt"
@@ -496,47 +267,16 @@ export const definition = {
             "tableOccupancyConsistency"
           ],
           "order": 50,
-          "molecules": [
+          "moleculeRefs": [
             {
-              "id": "mol-update-table-status-form",
+              "id": "mol_updateTableStatus_form",
               "type": "form",
-              "order": 10,
-              "titleKey": "dineInOrderLifecycle.updateTableStatus.form.title",
-              "fields": [
-                {
-                  "id": "fld-update-table-status",
-                  "field": "status",
-                  "labelKey": "dineInOrderLifecycle.fields.tableStatus",
-                  "order": 10,
-                  "required": true,
-                  "inputType": "select"
-                }
-              ],
-              "columns": [],
-              "filters": [],
-              "toolbar": [],
-              "rowActions": [],
-              "actions": []
+              "order": 10
             },
             {
-              "id": "mol-update-table-status-actions",
+              "id": "mol_updateTableStatus_actionBar",
               "type": "actionBar",
-              "order": 20,
-              "titleKey": "dineInOrderLifecycle.updateTableStatus.actions.title",
-              "fields": [],
-              "columns": [],
-              "filters": [],
-              "toolbar": [],
-              "rowActions": [],
-              "actions": [
-                {
-                  "id": "act-update-table-status-submit",
-                  "action": "updateTableStatus",
-                  "labelKey": "dineInOrderLifecycle.actions.updateTableStatus",
-                  "order": 10,
-                  "displayHint": "primary"
-                }
-              ]
+              "order": 20
             }
           ]
         }
@@ -544,23 +284,23 @@ export const definition = {
     }
   ],
   "layout": {
-    "id": "dineInOrderLifecycle.layout.v1",
+    "id": "dineInOrderLifecycle_default",
     "type": "page",
     "sections": [
       {
-        "id": "sec-dinein-lifecycle",
+        "id": "sec_dineInLifecycle",
         "type": "section",
         "sectionName": "Ciclo de pedido (mesa)",
-        "titleKey": "dineInOrderLifecycle.section.title",
+        "titleKey": "section.dineInLifecycle.title",
         "mode": "edit",
         "order": 10,
         "organisms": [
           {
-            "id": "org-create-order",
-            "type": "organism",
+            "id": "org_createOrder",
+            "type": "formPanel",
             "organismName": "CreateOrder",
-            "titleKey": "dineInOrderLifecycle.createOrder.title",
-            "purpose": "Criar pedido",
+            "titleKey": "organism.createOrder.title",
+            "purpose": "Criar pedido dine-in selecionando mesa e definindo dados iniciais",
             "userActions": [
               "createOrder"
             ],
@@ -569,8 +309,23 @@ export const definition = {
               "DailyShift",
               "Table"
             ],
-            "readsFields": [],
-            "writesFields": [],
+            "readsFields": [
+              "Table.number",
+              "Table.status",
+              "DailyShift.status",
+              "DailyShift.dailyShiftId"
+            ],
+            "writesFields": [
+              "Order.orderType",
+              "Order.status",
+              "Order.totalAmount",
+              "Order.notes",
+              "Order.customerName",
+              "Order.customerPhone",
+              "Order.numberOfGuests",
+              "Order.tableId",
+              "Order.dailyShiftId"
+            ],
             "rulesApplied": [
               "orderStatusTransitions",
               "paymentTimingByOrderType",
@@ -581,90 +336,90 @@ export const definition = {
             "order": 10,
             "molecules": [
               {
-                "id": "mol-create-order-form",
+                "id": "mol_createOrder_form",
                 "type": "form",
                 "order": 10,
-                "titleKey": "dineInOrderLifecycle.createOrder.form.title",
                 "fields": [
                   {
-                    "id": "fld-create-order-orderType",
+                    "id": "fld_orderType",
                     "field": "orderType",
-                    "labelKey": "dineInOrderLifecycle.fields.orderType",
+                    "labelKey": "field.orderType.label",
                     "order": 10,
                     "required": true,
-                    "inputType": "select"
+                    "inputType": "select",
+                    "source": "Order.orderType",
+                    "stateKey": "ui.dineInOrderLifecycle.input.createOrder.orderType"
                   },
                   {
-                    "id": "fld-create-order-status",
-                    "field": "status",
-                    "labelKey": "dineInOrderLifecycle.fields.status",
+                    "id": "fld_tableId",
+                    "field": "tableId",
+                    "labelKey": "field.tableId.label",
                     "order": 20,
-                    "required": true,
-                    "inputType": "select"
+                    "required": false,
+                    "inputType": "select",
+                    "source": "Table.tableId",
+                    "stateKey": "ui.dineInOrderLifecycle.input.createOrder.tableId"
                   },
                   {
-                    "id": "fld-create-order-totalAmount",
-                    "field": "totalAmount",
-                    "labelKey": "dineInOrderLifecycle.fields.totalAmount",
+                    "id": "fld_numberOfGuests",
+                    "field": "numberOfGuests",
+                    "labelKey": "field.numberOfGuests.label",
                     "order": 30,
-                    "required": true,
-                    "inputType": "money"
+                    "required": false,
+                    "inputType": "number",
+                    "source": "Order.numberOfGuests",
+                    "stateKey": "ui.dineInOrderLifecycle.input.createOrder.numberOfGuests"
                   },
                   {
-                    "id": "fld-create-order-notes",
-                    "field": "notes",
-                    "labelKey": "dineInOrderLifecycle.fields.notes",
+                    "id": "fld_customerName",
+                    "field": "customerName",
+                    "labelKey": "field.customerName.label",
                     "order": 40,
                     "required": false,
-                    "inputType": "text"
+                    "inputType": "text",
+                    "source": "Order.customerName",
+                    "stateKey": "ui.dineInOrderLifecycle.input.createOrder.customerName"
                   },
                   {
-                    "id": "fld-create-order-customerName",
-                    "field": "customerName",
-                    "labelKey": "dineInOrderLifecycle.fields.customerName",
+                    "id": "fld_customerPhone",
+                    "field": "customerPhone",
+                    "labelKey": "field.customerPhone.label",
                     "order": 50,
                     "required": false,
-                    "inputType": "text"
+                    "inputType": "text",
+                    "source": "Order.customerPhone",
+                    "stateKey": "ui.dineInOrderLifecycle.input.createOrder.customerPhone"
                   },
                   {
-                    "id": "fld-create-order-customerPhone",
-                    "field": "customerPhone",
-                    "labelKey": "dineInOrderLifecycle.fields.customerPhone",
+                    "id": "fld_notes",
+                    "field": "notes",
+                    "labelKey": "field.notes.label",
                     "order": 60,
                     "required": false,
-                    "inputType": "text"
+                    "inputType": "textarea",
+                    "source": "Order.notes",
+                    "stateKey": "ui.dineInOrderLifecycle.input.createOrder.notes"
                   },
                   {
-                    "id": "fld-create-order-numberOfGuests",
-                    "field": "numberOfGuests",
-                    "labelKey": "dineInOrderLifecycle.fields.numberOfGuests",
+                    "id": "fld_totalAmount",
+                    "field": "totalAmount",
+                    "labelKey": "field.totalAmount.label",
                     "order": 70,
-                    "required": false,
-                    "inputType": "number"
+                    "required": true,
+                    "inputType": "number",
+                    "format": "money",
+                    "source": "Order.totalAmount",
+                    "stateKey": "ui.dineInOrderLifecycle.input.createOrder.totalAmount"
                   },
                   {
-                    "id": "fld-create-order-closedAt",
-                    "field": "closedAt",
-                    "labelKey": "dineInOrderLifecycle.fields.closedAt",
+                    "id": "fld_orderStatus",
+                    "field": "status",
+                    "labelKey": "field.orderStatus.label",
                     "order": 80,
-                    "required": false,
-                    "inputType": "datetime"
-                  },
-                  {
-                    "id": "fld-create-order-cancelledAt",
-                    "field": "cancelledAt",
-                    "labelKey": "dineInOrderLifecycle.fields.cancelledAt",
-                    "order": 90,
-                    "required": false,
-                    "inputType": "datetime"
-                  },
-                  {
-                    "id": "fld-create-order-cancellationReason",
-                    "field": "cancellationReason",
-                    "labelKey": "dineInOrderLifecycle.fields.cancellationReason",
-                    "order": 100,
-                    "required": false,
-                    "inputType": "text"
+                    "required": true,
+                    "inputType": "hidden",
+                    "source": "Order.status",
+                    "stateKey": "ui.dineInOrderLifecycle.input.createOrder.status"
                   }
                 ],
                 "columns": [],
@@ -674,10 +429,9 @@ export const definition = {
                 "actions": []
               },
               {
-                "id": "mol-create-order-actions",
+                "id": "mol_createOrder_actionBar",
                 "type": "actionBar",
                 "order": 20,
-                "titleKey": "dineInOrderLifecycle.createOrder.actions.title",
                 "fields": [],
                 "columns": [],
                 "filters": [],
@@ -685,22 +439,23 @@ export const definition = {
                 "rowActions": [],
                 "actions": [
                   {
-                    "id": "act-create-order-submit",
+                    "id": "act_createOrder",
                     "action": "createOrder",
-                    "labelKey": "dineInOrderLifecycle.actions.createOrder",
+                    "labelKey": "action.createOrder.label",
                     "order": 10,
-                    "displayHint": "primary"
+                    "displayHint": "primary",
+                    "actionKey": "createOrder"
                   }
                 ]
               }
             ]
           },
           {
-            "id": "org-add-order-item",
-            "type": "organism",
+            "id": "org_addOrderItem",
+            "type": "formPanel",
             "organismName": "AddOrderItem",
-            "titleKey": "dineInOrderLifecycle.addOrderItem.title",
-            "purpose": "Adicionar item ao pedido",
+            "titleKey": "organism.addOrderItem.title",
+            "purpose": "Adicionar itens do cardápio ao pedido atual com quantidade e observações",
             "userActions": [
               "addOrderItem"
             ],
@@ -710,8 +465,23 @@ export const definition = {
               "Order",
               "StockConsumption"
             ],
-            "readsFields": [],
-            "writesFields": [],
+            "readsFields": [
+              "MenuItem.name",
+              "MenuItem.price",
+              "MenuItem.menuItemId",
+              "MenuItem.status",
+              "Order.orderId",
+              "Order.status"
+            ],
+            "writesFields": [
+              "OrderItem.menuItemId",
+              "OrderItem.quantity",
+              "OrderItem.unitPrice",
+              "OrderItem.totalPrice",
+              "OrderItem.observations",
+              "OrderItem.status",
+              "OrderItem.orderId"
+            ],
             "rulesApplied": [
               "orderStatusTransitions",
               "ingredientConsumptionTrigger"
@@ -719,50 +489,71 @@ export const definition = {
             "order": 20,
             "molecules": [
               {
-                "id": "mol-add-order-item-form",
+                "id": "mol_addOrderItem_form",
                 "type": "form",
                 "order": 10,
-                "titleKey": "dineInOrderLifecycle.addOrderItem.form.title",
                 "fields": [
                   {
-                    "id": "fld-add-item-quantity",
-                    "field": "quantity",
-                    "labelKey": "dineInOrderLifecycle.fields.quantity",
+                    "id": "fld_menuItemId",
+                    "field": "menuItemId",
+                    "labelKey": "field.menuItemId.label",
                     "order": 10,
                     "required": true,
-                    "inputType": "number"
+                    "inputType": "select",
+                    "source": "MenuItem.menuItemId",
+                    "stateKey": "ui.dineInOrderLifecycle.input.addOrderItem.menuItemId"
                   },
                   {
-                    "id": "fld-add-item-unitPrice",
-                    "field": "unitPrice",
-                    "labelKey": "dineInOrderLifecycle.fields.unitPrice",
+                    "id": "fld_quantity",
+                    "field": "quantity",
+                    "labelKey": "field.quantity.label",
                     "order": 20,
                     "required": true,
-                    "inputType": "money"
+                    "inputType": "number",
+                    "source": "OrderItem.quantity",
+                    "stateKey": "ui.dineInOrderLifecycle.input.addOrderItem.quantity"
                   },
                   {
-                    "id": "fld-add-item-totalPrice",
-                    "field": "totalPrice",
-                    "labelKey": "dineInOrderLifecycle.fields.totalPrice",
+                    "id": "fld_unitPrice",
+                    "field": "unitPrice",
+                    "labelKey": "field.unitPrice.label",
                     "order": 30,
                     "required": true,
-                    "inputType": "money"
+                    "inputType": "number",
+                    "format": "money",
+                    "source": "OrderItem.unitPrice",
+                    "stateKey": "ui.dineInOrderLifecycle.input.addOrderItem.unitPrice"
                   },
                   {
-                    "id": "fld-add-item-observations",
-                    "field": "observations",
-                    "labelKey": "dineInOrderLifecycle.fields.observations",
+                    "id": "fld_totalPrice",
+                    "field": "totalPrice",
+                    "labelKey": "field.totalPrice.label",
                     "order": 40,
-                    "required": false,
-                    "inputType": "text"
+                    "required": true,
+                    "inputType": "number",
+                    "format": "money",
+                    "source": "OrderItem.totalPrice",
+                    "stateKey": "ui.dineInOrderLifecycle.input.addOrderItem.totalPrice"
                   },
                   {
-                    "id": "fld-add-item-status",
-                    "field": "status",
-                    "labelKey": "dineInOrderLifecycle.fields.itemStatus",
+                    "id": "fld_observations",
+                    "field": "observations",
+                    "labelKey": "field.observations.label",
                     "order": 50,
+                    "required": false,
+                    "inputType": "textarea",
+                    "source": "OrderItem.observations",
+                    "stateKey": "ui.dineInOrderLifecycle.input.addOrderItem.observations"
+                  },
+                  {
+                    "id": "fld_itemStatus",
+                    "field": "status",
+                    "labelKey": "field.itemStatus.label",
+                    "order": 60,
                     "required": true,
-                    "inputType": "select"
+                    "inputType": "hidden",
+                    "source": "OrderItem.status",
+                    "stateKey": "ui.dineInOrderLifecycle.input.addOrderItem.status"
                   }
                 ],
                 "columns": [],
@@ -772,10 +563,9 @@ export const definition = {
                 "actions": []
               },
               {
-                "id": "mol-add-order-item-actions",
+                "id": "mol_addOrderItem_actionBar",
                 "type": "actionBar",
                 "order": 20,
-                "titleKey": "dineInOrderLifecycle.addOrderItem.actions.title",
                 "fields": [],
                 "columns": [],
                 "filters": [],
@@ -783,22 +573,100 @@ export const definition = {
                 "rowActions": [],
                 "actions": [
                   {
-                    "id": "act-add-order-item-submit",
+                    "id": "act_addOrderItem",
                     "action": "addOrderItem",
-                    "labelKey": "dineInOrderLifecycle.actions.addOrderItem",
+                    "labelKey": "action.addOrderItem.label",
                     "order": 10,
-                    "displayHint": "primary"
+                    "displayHint": "primary",
+                    "actionKey": "addOrderItem"
                   }
                 ]
+              },
+              {
+                "id": "mol_orderItems_table",
+                "type": "groupviewtable.mlDataTable",
+                "order": 30,
+                "binding": "orderItems",
+                "emptyKey": "empty.orderItems",
+                "displayHint": "compact",
+                "fields": [],
+                "columns": [
+                  {
+                    "id": "col_item_menuItemId",
+                    "field": "menuItemId",
+                    "labelKey": "column.menuItemId.label",
+                    "order": 10,
+                    "required": false,
+                    "inputType": "text",
+                    "source": "MenuItem.name",
+                    "stateKey": "ui.dineInOrderLifecycle.data.addOrderItem"
+                  },
+                  {
+                    "id": "col_item_quantity",
+                    "field": "quantity",
+                    "labelKey": "column.quantity.label",
+                    "order": 20,
+                    "required": false,
+                    "inputType": "number",
+                    "source": "OrderItem.quantity",
+                    "stateKey": "ui.dineInOrderLifecycle.data.addOrderItem"
+                  },
+                  {
+                    "id": "col_item_unitPrice",
+                    "field": "unitPrice",
+                    "labelKey": "column.unitPrice.label",
+                    "order": 30,
+                    "required": false,
+                    "inputType": "number",
+                    "format": "money",
+                    "source": "OrderItem.unitPrice",
+                    "stateKey": "ui.dineInOrderLifecycle.data.addOrderItem"
+                  },
+                  {
+                    "id": "col_item_totalPrice",
+                    "field": "totalPrice",
+                    "labelKey": "column.totalPrice.label",
+                    "order": 40,
+                    "required": false,
+                    "inputType": "number",
+                    "format": "money",
+                    "source": "OrderItem.totalPrice",
+                    "stateKey": "ui.dineInOrderLifecycle.data.addOrderItem"
+                  },
+                  {
+                    "id": "col_item_observations",
+                    "field": "observations",
+                    "labelKey": "column.observations.label",
+                    "order": 50,
+                    "required": false,
+                    "inputType": "text",
+                    "source": "OrderItem.observations",
+                    "stateKey": "ui.dineInOrderLifecycle.data.addOrderItem"
+                  },
+                  {
+                    "id": "col_item_status",
+                    "field": "status",
+                    "labelKey": "column.itemStatus.label",
+                    "order": 60,
+                    "required": false,
+                    "inputType": "text",
+                    "source": "OrderItem.status",
+                    "stateKey": "ui.dineInOrderLifecycle.data.addOrderItem"
+                  }
+                ],
+                "filters": [],
+                "toolbar": [],
+                "rowActions": [],
+                "actions": []
               }
             ]
           },
           {
-            "id": "org-create-kitchen-ticket",
-            "type": "organism",
+            "id": "org_createKitchenTicket",
+            "type": "actionPanel",
             "organismName": "CreateKitchenTicket",
-            "titleKey": "dineInOrderLifecycle.createKitchenTicket.title",
-            "purpose": "Criar ticket de cozinha",
+            "titleKey": "organism.createKitchenTicket.title",
+            "purpose": "Enviar pedido para a cozinha criando ticket de preparo",
             "userActions": [
               "createKitchenTicket"
             ],
@@ -807,26 +675,57 @@ export const definition = {
               "Order",
               "OrderItem"
             ],
-            "readsFields": [],
-            "writesFields": [],
+            "readsFields": [
+              "Order.orderId",
+              "Order.status",
+              "OrderItem.id",
+              "OrderItem.menuItemId",
+              "OrderItem.quantity",
+              "KitchenTicket.status"
+            ],
+            "writesFields": [
+              "KitchenTicket.orderId",
+              "KitchenTicket.status"
+            ],
             "rulesApplied": [
               "orderStatusTransitions"
             ],
             "order": 30,
             "molecules": [
               {
-                "id": "mol-create-kitchen-ticket-form",
-                "type": "form",
+                "id": "mol_kitchenTicket_summary",
+                "type": "summaryPanel",
                 "order": 10,
-                "titleKey": "dineInOrderLifecycle.createKitchenTicket.form.title",
                 "fields": [
                   {
-                    "id": "fld-kitchen-ticket-status",
-                    "field": "status",
-                    "labelKey": "dineInOrderLifecycle.fields.kitchenTicketStatus",
+                    "id": "fld_kt_orderId",
+                    "field": "orderId",
+                    "labelKey": "field.orderId.label",
                     "order": 10,
-                    "required": true,
-                    "inputType": "select"
+                    "required": false,
+                    "inputType": "text",
+                    "source": "Order.orderId",
+                    "stateKey": "ui.dineInOrderLifecycle.input.createKitchenTicket.orderId"
+                  },
+                  {
+                    "id": "fld_kt_orderStatus",
+                    "field": "status",
+                    "labelKey": "field.orderStatus.label",
+                    "order": 20,
+                    "required": false,
+                    "inputType": "text",
+                    "source": "Order.status",
+                    "stateKey": "ui.dineInOrderLifecycle.input.createKitchenTicket.status"
+                  },
+                  {
+                    "id": "fld_kt_ticketStatus",
+                    "field": "status",
+                    "labelKey": "field.kitchenTicketStatus.label",
+                    "order": 30,
+                    "required": false,
+                    "inputType": "hidden",
+                    "source": "KitchenTicket.status",
+                    "stateKey": "ui.dineInOrderLifecycle.input.createKitchenTicket.status"
                   }
                 ],
                 "columns": [],
@@ -836,10 +735,9 @@ export const definition = {
                 "actions": []
               },
               {
-                "id": "mol-create-kitchen-ticket-actions",
+                "id": "mol_createKitchenTicket_actionBar",
                 "type": "actionBar",
                 "order": 20,
-                "titleKey": "dineInOrderLifecycle.createKitchenTicket.actions.title",
                 "fields": [],
                 "columns": [],
                 "filters": [],
@@ -847,22 +745,23 @@ export const definition = {
                 "rowActions": [],
                 "actions": [
                   {
-                    "id": "act-create-kitchen-ticket-submit",
+                    "id": "act_createKitchenTicket",
                     "action": "createKitchenTicket",
-                    "labelKey": "dineInOrderLifecycle.actions.createKitchenTicket",
+                    "labelKey": "action.createKitchenTicket.label",
                     "order": 10,
-                    "displayHint": "primary"
+                    "displayHint": "primary",
+                    "actionKey": "createKitchenTicket"
                   }
                 ]
               }
             ]
           },
           {
-            "id": "org-update-order-status",
-            "type": "organism",
+            "id": "org_updateOrderStatus",
+            "type": "statusPanel",
             "organismName": "UpdateOrderStatus",
-            "titleKey": "dineInOrderLifecycle.updateOrderStatus.title",
-            "purpose": "Atualizar status do pedido",
+            "titleKey": "organism.updateOrderStatus.title",
+            "purpose": "Acompanhar e atualizar o status do pedido durante o serviço",
             "userActions": [
               "updateOrderStatus"
             ],
@@ -879,7 +778,9 @@ export const definition = {
             "readsFields": [
               "Order.status",
               "Order.orderType",
-              "Order.tableId"
+              "Order.tableId",
+              "Order.orderId",
+              "KitchenTicket.status"
             ],
             "writesFields": [
               "Order.status",
@@ -898,33 +799,13 @@ export const definition = {
             "order": 40,
             "molecules": [
               {
-                "id": "mol-order-summary",
-                "type": "summaryPanel",
+                "id": "mol_orderStatus_timeline",
+                "type": "statusTimeline",
                 "order": 10,
-                "titleKey": "dineInOrderLifecycle.updateOrderStatus.summary.title",
-                "fields": [
-                  {
-                    "id": "fld-order-status",
-                    "field": "Order.status",
-                    "labelKey": "dineInOrderLifecycle.fields.status",
-                    "order": 10,
-                    "required": false
-                  },
-                  {
-                    "id": "fld-order-type",
-                    "field": "Order.orderType",
-                    "labelKey": "dineInOrderLifecycle.fields.orderType",
-                    "order": 20,
-                    "required": false
-                  },
-                  {
-                    "id": "fld-order-table",
-                    "field": "Order.tableId",
-                    "labelKey": "dineInOrderLifecycle.fields.tableId",
-                    "order": 30,
-                    "required": false
-                  }
-                ],
+                "binding": "orderLifecycleStates",
+                "displayHint": "horizontal",
+                "stateKey": "currentOrder.status",
+                "fields": [],
                 "columns": [],
                 "filters": [],
                 "toolbar": [],
@@ -932,42 +813,29 @@ export const definition = {
                 "actions": []
               },
               {
-                "id": "mol-update-order-status-form",
+                "id": "mol_updateOrderStatus_form",
                 "type": "form",
                 "order": 20,
-                "titleKey": "dineInOrderLifecycle.updateOrderStatus.form.title",
                 "fields": [
                   {
-                    "id": "fld-update-order-status",
+                    "id": "fld_updateStatus",
                     "field": "status",
-                    "labelKey": "dineInOrderLifecycle.fields.status",
+                    "labelKey": "field.updateStatus.label",
                     "order": 10,
                     "required": true,
-                    "inputType": "select"
+                    "inputType": "select",
+                    "source": "Order.status",
+                    "stateKey": "ui.dineInOrderLifecycle.input.updateOrderStatus.status"
                   },
                   {
-                    "id": "fld-update-order-closedAt",
-                    "field": "closedAt",
-                    "labelKey": "dineInOrderLifecycle.fields.closedAt",
+                    "id": "fld_cancellationReason",
+                    "field": "cancellationReason",
+                    "labelKey": "field.cancellationReason.label",
                     "order": 20,
                     "required": false,
-                    "inputType": "datetime"
-                  },
-                  {
-                    "id": "fld-update-order-cancelledAt",
-                    "field": "cancelledAt",
-                    "labelKey": "dineInOrderLifecycle.fields.cancelledAt",
-                    "order": 30,
-                    "required": false,
-                    "inputType": "datetime"
-                  },
-                  {
-                    "id": "fld-update-order-cancel-reason",
-                    "field": "cancellationReason",
-                    "labelKey": "dineInOrderLifecycle.fields.cancellationReason",
-                    "order": 40,
-                    "required": false,
-                    "inputType": "text"
+                    "inputType": "textarea",
+                    "source": "Order.cancellationReason",
+                    "stateKey": "ui.dineInOrderLifecycle.input.updateOrderStatus.cancellationReason"
                   }
                 ],
                 "columns": [],
@@ -977,10 +845,9 @@ export const definition = {
                 "actions": []
               },
               {
-                "id": "mol-update-order-status-actions",
+                "id": "mol_updateOrderStatus_actionBar",
                 "type": "actionBar",
                 "order": 30,
-                "titleKey": "dineInOrderLifecycle.updateOrderStatus.actions.title",
                 "fields": [],
                 "columns": [],
                 "filters": [],
@@ -988,29 +855,42 @@ export const definition = {
                 "rowActions": [],
                 "actions": [
                   {
-                    "id": "act-update-order-status-submit",
+                    "id": "act_updateOrderStatus",
                     "action": "updateOrderStatus",
-                    "labelKey": "dineInOrderLifecycle.actions.updateOrderStatus",
+                    "labelKey": "action.updateOrderStatus.label",
                     "order": 10,
-                    "displayHint": "primary"
+                    "displayHint": "primary",
+                    "actionKey": "updateOrderStatus"
+                  },
+                  {
+                    "id": "act_cancelOrder",
+                    "action": "updateOrderStatus",
+                    "labelKey": "action.cancelOrder.label",
+                    "order": 20,
+                    "displayHint": "danger",
+                    "actionKey": "updateOrderStatus"
                   }
                 ]
               }
             ]
           },
           {
-            "id": "org-update-table-status",
-            "type": "organism",
+            "id": "org_updateTableStatus",
+            "type": "formPanel",
             "organismName": "UpdateTableStatus",
-            "titleKey": "dineInOrderLifecycle.updateTableStatus.title",
-            "purpose": "Atualizar ocupação da mesa",
+            "titleKey": "organism.updateTableStatus.title",
+            "purpose": "Atualizar ocupação da mesa ao finalizar o ciclo do pedido",
             "userActions": [
               "updateTableStatus"
             ],
             "requiredEntities": [
               "Table"
             ],
-            "readsFields": [],
+            "readsFields": [
+              "Table.tableId",
+              "Table.number",
+              "Table.status"
+            ],
             "writesFields": [
               "Table.status",
               "Table.updatedAt"
@@ -1021,18 +901,19 @@ export const definition = {
             "order": 50,
             "molecules": [
               {
-                "id": "mol-update-table-status-form",
+                "id": "mol_updateTableStatus_form",
                 "type": "form",
                 "order": 10,
-                "titleKey": "dineInOrderLifecycle.updateTableStatus.form.title",
                 "fields": [
                   {
-                    "id": "fld-update-table-status",
+                    "id": "fld_tableStatus",
                     "field": "status",
-                    "labelKey": "dineInOrderLifecycle.fields.tableStatus",
+                    "labelKey": "field.tableStatus.label",
                     "order": 10,
                     "required": true,
-                    "inputType": "select"
+                    "inputType": "select",
+                    "source": "Table.status",
+                    "stateKey": "ui.dineInOrderLifecycle.input.updateTableStatus.status"
                   }
                 ],
                 "columns": [],
@@ -1042,10 +923,9 @@ export const definition = {
                 "actions": []
               },
               {
-                "id": "mol-update-table-status-actions",
+                "id": "mol_updateTableStatus_actionBar",
                 "type": "actionBar",
                 "order": 20,
-                "titleKey": "dineInOrderLifecycle.updateTableStatus.actions.title",
                 "fields": [],
                 "columns": [],
                 "filters": [],
@@ -1053,11 +933,12 @@ export const definition = {
                 "rowActions": [],
                 "actions": [
                   {
-                    "id": "act-update-table-status-submit",
+                    "id": "act_updateTableStatus",
                     "action": "updateTableStatus",
-                    "labelKey": "dineInOrderLifecycle.actions.updateTableStatus",
+                    "labelKey": "action.updateTableStatus.label",
                     "order": 10,
-                    "displayHint": "primary"
+                    "displayHint": "primary",
+                    "actionKey": "updateTableStatus"
                   }
                 ]
               }
@@ -1068,77 +949,137 @@ export const definition = {
     ]
   },
   "i18n": {
-    "dineInOrderLifecycle.section.title": "Ciclo de pedido (mesa)",
-    "dineInOrderLifecycle.createOrder.title": "Criar pedido",
-    "dineInOrderLifecycle.createOrder.form.title": "Dados do pedido",
-    "dineInOrderLifecycle.createOrder.actions.title": "Ações do pedido",
-    "dineInOrderLifecycle.addOrderItem.title": "Adicionar item ao pedido",
-    "dineInOrderLifecycle.addOrderItem.form.title": "Dados do item",
-    "dineInOrderLifecycle.addOrderItem.actions.title": "Ações do item",
-    "dineInOrderLifecycle.createKitchenTicket.title": "Criar ticket de cozinha",
-    "dineInOrderLifecycle.createKitchenTicket.form.title": "Dados do ticket",
-    "dineInOrderLifecycle.createKitchenTicket.actions.title": "Ações do ticket",
-    "dineInOrderLifecycle.updateOrderStatus.title": "Atualizar status do pedido",
-    "dineInOrderLifecycle.updateOrderStatus.summary.title": "Resumo do pedido",
-    "dineInOrderLifecycle.updateOrderStatus.form.title": "Atualização de status",
-    "dineInOrderLifecycle.updateOrderStatus.actions.title": "Ações de status",
-    "dineInOrderLifecycle.updateTableStatus.title": "Atualizar ocupação da mesa",
-    "dineInOrderLifecycle.updateTableStatus.form.title": "Status da mesa",
-    "dineInOrderLifecycle.updateTableStatus.actions.title": "Ações da mesa",
-    "dineInOrderLifecycle.fields.orderType": "Tipo de pedido",
-    "dineInOrderLifecycle.fields.status": "Status do pedido",
-    "dineInOrderLifecycle.fields.totalAmount": "Total",
-    "dineInOrderLifecycle.fields.notes": "Observações",
-    "dineInOrderLifecycle.fields.customerName": "Nome do cliente",
-    "dineInOrderLifecycle.fields.customerPhone": "Telefone do cliente",
-    "dineInOrderLifecycle.fields.numberOfGuests": "Número de pessoas",
-    "dineInOrderLifecycle.fields.closedAt": "Fechado em",
-    "dineInOrderLifecycle.fields.cancelledAt": "Cancelado em",
-    "dineInOrderLifecycle.fields.cancellationReason": "Motivo do cancelamento",
-    "dineInOrderLifecycle.fields.quantity": "Quantidade",
-    "dineInOrderLifecycle.fields.unitPrice": "Preço unitário",
-    "dineInOrderLifecycle.fields.totalPrice": "Preço total",
-    "dineInOrderLifecycle.fields.observations": "Observações do item",
-    "dineInOrderLifecycle.fields.itemStatus": "Status do item",
-    "dineInOrderLifecycle.fields.kitchenTicketStatus": "Status do ticket",
-    "dineInOrderLifecycle.fields.tableId": "Mesa",
-    "dineInOrderLifecycle.fields.tableStatus": "Status da mesa",
-    "dineInOrderLifecycle.actions.createOrder": "Criar pedido",
-    "dineInOrderLifecycle.actions.addOrderItem": "Adicionar item",
-    "dineInOrderLifecycle.actions.createKitchenTicket": "Enviar para cozinha",
-    "dineInOrderLifecycle.actions.updateOrderStatus": "Atualizar status",
-    "dineInOrderLifecycle.actions.updateTableStatus": "Atualizar mesa"
+    "section.dineInLifecycle.title": "Ciclo de pedido (mesa)",
+    "organism.createOrder.title": "Criar pedido",
+    "organism.addOrderItem.title": "Adicionar itens ao pedido",
+    "organism.createKitchenTicket.title": "Enviar para cozinha",
+    "organism.updateOrderStatus.title": "Status do pedido",
+    "organism.updateTableStatus.title": "Ocupação da mesa",
+    "field.orderType.label": "Tipo do pedido",
+    "field.tableId.label": "Mesa",
+    "field.numberOfGuests.label": "Número de pessoas",
+    "field.customerName.label": "Nome do cliente",
+    "field.customerPhone.label": "Telefone do cliente",
+    "field.notes.label": "Observações gerais",
+    "field.totalAmount.label": "Valor total",
+    "field.orderStatus.label": "Status do pedido",
+    "field.menuItemId.label": "Item do cardápio",
+    "field.quantity.label": "Quantidade",
+    "field.unitPrice.label": "Preço unitário",
+    "field.totalPrice.label": "Preço total",
+    "field.observations.label": "Observações do item",
+    "field.itemStatus.label": "Status do item",
+    "field.orderId.label": "Pedido",
+    "field.kitchenTicketStatus.label": "Status do ticket",
+    "field.updateStatus.label": "Novo status",
+    "field.cancellationReason.label": "Motivo do cancelamento",
+    "field.tableStatus.label": "Status da mesa",
+    "column.menuItemId.label": "Item",
+    "column.quantity.label": "Qtd.",
+    "column.unitPrice.label": "Preço unit.",
+    "column.totalPrice.label": "Preço total",
+    "column.observations.label": "Observações",
+    "column.itemStatus.label": "Status",
+    "action.createOrder.label": "Criar pedido",
+    "action.addOrderItem.label": "Adicionar item",
+    "action.createKitchenTicket.label": "Enviar para cozinha",
+    "action.updateOrderStatus.label": "Atualizar status",
+    "action.cancelOrder.label": "Cancelar pedido",
+    "action.updateTableStatus.label": "Atualizar mesa",
+    "empty.orderItems": "Nenhum item adicionado ao pedido ainda."
   },
   "dataBindings": [
     {
-      "id": "bind-create-order",
-      "source": "bffCommand",
+      "id": "bind_createOrder",
+      "source": "bff",
+      "entity": "Order",
       "command": "createOrder",
-      "description": "Criar pedido"
+      "description": "Cria um novo pedido dine-in com mesa e dados iniciais",
+      "stateKey": "ui.dineInOrderLifecycle.data.createOrder",
+      "inputStateKeys": [
+        "ui.dineInOrderLifecycle.input.createOrder.orderType",
+        "ui.dineInOrderLifecycle.input.createOrder.status",
+        "ui.dineInOrderLifecycle.input.createOrder.totalAmount",
+        "ui.dineInOrderLifecycle.input.createOrder.notes",
+        "ui.dineInOrderLifecycle.input.createOrder.customerName",
+        "ui.dineInOrderLifecycle.input.createOrder.customerPhone",
+        "ui.dineInOrderLifecycle.input.createOrder.numberOfGuests",
+        "ui.dineInOrderLifecycle.input.createOrder.closedAt",
+        "ui.dineInOrderLifecycle.input.createOrder.cancelledAt",
+        "ui.dineInOrderLifecycle.input.createOrder.cancellationReason"
+      ]
     },
     {
-      "id": "bind-add-order-item",
-      "source": "bffCommand",
+      "id": "bind_addOrderItem",
+      "source": "bff",
+      "entity": "OrderItem",
       "command": "addOrderItem",
-      "description": "Adicionar item ao pedido"
+      "description": "Adiciona um item do cardápio ao pedido atual",
+      "stateKey": "ui.dineInOrderLifecycle.data.addOrderItem",
+      "inputStateKeys": [
+        "ui.dineInOrderLifecycle.input.addOrderItem.quantity",
+        "ui.dineInOrderLifecycle.input.addOrderItem.unitPrice",
+        "ui.dineInOrderLifecycle.input.addOrderItem.totalPrice",
+        "ui.dineInOrderLifecycle.input.addOrderItem.observations",
+        "ui.dineInOrderLifecycle.input.addOrderItem.status"
+      ]
     },
     {
-      "id": "bind-create-kitchen-ticket",
-      "source": "bffCommand",
+      "id": "bind_orderItems",
+      "source": "bff",
+      "entity": "OrderItem",
+      "description": "Lista de itens do pedido atual para exibição em tabela",
+      "stateKey": "orderItems"
+    },
+    {
+      "id": "bind_createKitchenTicket",
+      "source": "bff",
+      "entity": "KitchenTicket",
       "command": "createKitchenTicket",
-      "description": "Criar ticket de cozinha"
+      "description": "Cria ticket de cozinha enviando o pedido para preparo",
+      "stateKey": "ui.dineInOrderLifecycle.data.createKitchenTicket",
+      "inputStateKeys": [
+        "ui.dineInOrderLifecycle.input.createKitchenTicket.status"
+      ]
     },
     {
-      "id": "bind-update-order-status",
-      "source": "bffCommand",
+      "id": "bind_updateOrderStatus",
+      "source": "bff",
+      "entity": "Order",
       "command": "updateOrderStatus",
-      "description": "Atualizar status do pedido"
+      "description": "Atualiza o status do pedido no ciclo de serviço",
+      "stateKey": "ui.dineInOrderLifecycle.data.updateOrderStatus",
+      "inputStateKeys": [
+        "ui.dineInOrderLifecycle.input.updateOrderStatus.status",
+        "ui.dineInOrderLifecycle.input.updateOrderStatus.closedAt",
+        "ui.dineInOrderLifecycle.input.updateOrderStatus.cancelledAt",
+        "ui.dineInOrderLifecycle.input.updateOrderStatus.cancellationReason"
+      ]
     },
     {
-      "id": "bind-update-table-status",
-      "source": "bffCommand",
+      "id": "bind_updateTableStatus",
+      "source": "bff",
+      "entity": "Table",
       "command": "updateTableStatus",
-      "description": "Atualizar ocupação da mesa"
+      "description": "Atualiza o status de ocupação da mesa",
+      "stateKey": "ui.dineInOrderLifecycle.data.updateTableStatus",
+      "inputStateKeys": [
+        "ui.dineInOrderLifecycle.input.updateTableStatus.status"
+      ]
+    },
+    {
+      "id": "bind_currentOrder",
+      "source": "bff",
+      "entity": "Order",
+      "description": "Pedido atual em edição no ciclo",
+      "stateKey": "currentOrder"
+    },
+    {
+      "id": "bind_orderLifecycleStates",
+      "source": "workflow",
+      "entity": "Order",
+      "description": "Estados do ciclo de vida do pedido para timeline",
+      "stateKey": "orderLifecycleStates"
     }
   ]
 };

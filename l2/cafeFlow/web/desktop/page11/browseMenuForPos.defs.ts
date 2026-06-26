@@ -20,19 +20,19 @@ export const definition = {
   "navigationRefs": [],
   "sections": [
     {
-      "id": "section.browseMenuForPos.main",
+      "id": "sec-browse-menu",
       "type": "section",
       "sectionName": "Consultar cardápio no POS",
-      "titleKey": "browseMenuForPos.section.title",
+      "titleKey": "section.browseMenu.title",
       "mode": "view",
       "order": 10,
       "organisms": [
         {
-          "id": "organism.browseMenuForPos.menuBrowser",
-          "type": "organism",
-          "organismName": "BrowseMenuForPos",
-          "titleKey": "browseMenuForPos.organism.title",
-          "purpose": "Consultar cardápio no POS",
+          "id": "org-filters",
+          "type": "filter",
+          "organismName": "MenuItemFilters",
+          "titleKey": "organism.filters.title",
+          "purpose": "Filtrar itens do cardápio no POS",
           "userActions": [
             "browseMenuForPos"
           ],
@@ -40,13 +40,44 @@ export const definition = {
             "MenuItem",
             "MenuCategory"
           ],
+          "readsFields": [],
+          "writesFields": [],
+          "rulesApplied": [
+            "aiOutputLanguageSelection"
+          ],
+          "order": 10,
+          "moleculeRefs": [
+            {
+              "id": "mol-filter-form",
+              "type": "form",
+              "stateKey": "ui.browseMenuForPos.data.browseMenuForPos",
+              "order": 10
+            },
+            {
+              "id": "mol-filter-actions",
+              "type": "actionBar",
+              "stateKey": "ui.browseMenuForPos.data.browseMenuForPos",
+              "order": 20
+            }
+          ]
+        },
+        {
+          "id": "org-results",
+          "type": "list",
+          "organismName": "MenuItemResults",
+          "titleKey": "organism.results.title",
+          "purpose": "Exibir resultados da consulta de cardápio",
+          "userActions": [],
+          "requiredEntities": [
+            "MenuItem"
+          ],
           "readsFields": [
+            "menuItemId",
             "menuCategoryId",
             "name",
-            "status",
-            "menuItemId",
             "description",
             "price",
+            "status",
             "createdAt",
             "updatedAt"
           ],
@@ -54,129 +85,13 @@ export const definition = {
           "rulesApplied": [
             "aiOutputLanguageSelection"
           ],
-          "order": 10,
-          "molecules": [
+          "order": 20,
+          "moleculeRefs": [
             {
-              "id": "molecule.browseMenuForPos.filterForm",
-              "type": "form",
-              "order": 10,
-              "titleKey": "browseMenuForPos.filterForm.title",
-              "submitAction": "browseMenuForPos",
-              "fields": [
-                {
-                  "id": "field.filter.menuCategoryId",
-                  "field": "menuCategoryId",
-                  "labelKey": "browseMenuForPos.field.menuCategoryId",
-                  "order": 10,
-                  "required": false,
-                  "inputType": "text",
-                  "source": "browseMenuForPos.input"
-                },
-                {
-                  "id": "field.filter.name",
-                  "field": "name",
-                  "labelKey": "browseMenuForPos.field.name",
-                  "order": 20,
-                  "required": false,
-                  "inputType": "text",
-                  "source": "browseMenuForPos.input"
-                },
-                {
-                  "id": "field.filter.status",
-                  "field": "status",
-                  "labelKey": "browseMenuForPos.field.status",
-                  "order": 30,
-                  "required": false,
-                  "inputType": "text",
-                  "source": "browseMenuForPos.input"
-                }
-              ],
-              "columns": [],
-              "filters": [],
-              "toolbar": [],
-              "rowActions": [],
-              "actions": []
-            },
-            {
-              "id": "molecule.browseMenuForPos.resultsTable",
+              "id": "mol-results-table",
               "type": "groupviewtable.mlDataTable",
-              "order": 20,
-              "titleKey": "browseMenuForPos.resultsTable.title",
-              "source": "browseMenuForPos.output",
-              "fields": [],
-              "columns": [
-                {
-                  "id": "col.menuItemId",
-                  "field": "menuItemId",
-                  "labelKey": "browseMenuForPos.col.menuItemId",
-                  "order": 10,
-                  "required": false
-                },
-                {
-                  "id": "col.menuCategoryId",
-                  "field": "menuCategoryId",
-                  "labelKey": "browseMenuForPos.col.menuCategoryId",
-                  "order": 20,
-                  "required": false
-                },
-                {
-                  "id": "col.name",
-                  "field": "name",
-                  "labelKey": "browseMenuForPos.col.name",
-                  "order": 30,
-                  "required": false
-                },
-                {
-                  "id": "col.description",
-                  "field": "description",
-                  "labelKey": "browseMenuForPos.col.description",
-                  "order": 40,
-                  "required": false
-                },
-                {
-                  "id": "col.price",
-                  "field": "price",
-                  "labelKey": "browseMenuForPos.col.price",
-                  "order": 50,
-                  "required": false,
-                  "format": "money"
-                },
-                {
-                  "id": "col.status",
-                  "field": "status",
-                  "labelKey": "browseMenuForPos.col.status",
-                  "order": 60,
-                  "required": false
-                },
-                {
-                  "id": "col.createdAt",
-                  "field": "createdAt",
-                  "labelKey": "browseMenuForPos.col.createdAt",
-                  "order": 70,
-                  "required": false,
-                  "format": "date"
-                },
-                {
-                  "id": "col.updatedAt",
-                  "field": "updatedAt",
-                  "labelKey": "browseMenuForPos.col.updatedAt",
-                  "order": 80,
-                  "required": false,
-                  "format": "date"
-                }
-              ],
-              "filters": [],
-              "toolbar": [
-                {
-                  "id": "tb.refresh",
-                  "action": "browseMenuForPos",
-                  "labelKey": "browseMenuForPos.action.refresh",
-                  "order": 10,
-                  "displayHint": "primary"
-                }
-              ],
-              "rowActions": [],
-              "actions": []
+              "stateKey": "browseMenuForPosResult",
+              "order": 10
             }
           ]
         }
@@ -184,23 +99,23 @@ export const definition = {
     }
   ],
   "layout": {
-    "id": "browseMenuForPos.layout.v1",
+    "id": "browseMenuForPos-layout",
     "type": "page",
     "sections": [
       {
-        "id": "section.browseMenuForPos.main",
+        "id": "sec-browse-menu",
         "type": "section",
         "sectionName": "Consultar cardápio no POS",
-        "titleKey": "browseMenuForPos.section.title",
+        "titleKey": "section.browseMenu.title",
         "mode": "view",
         "order": 10,
         "organisms": [
           {
-            "id": "organism.browseMenuForPos.menuBrowser",
-            "type": "organism",
-            "organismName": "BrowseMenuForPos",
-            "titleKey": "browseMenuForPos.organism.title",
-            "purpose": "Consultar cardápio no POS",
+            "id": "org-filters",
+            "type": "filter",
+            "organismName": "MenuItemFilters",
+            "titleKey": "organism.filters.title",
+            "purpose": "Filtrar itens do cardápio no POS",
             "userActions": [
               "browseMenuForPos"
             ],
@@ -208,16 +123,7 @@ export const definition = {
               "MenuItem",
               "MenuCategory"
             ],
-            "readsFields": [
-              "menuCategoryId",
-              "name",
-              "status",
-              "menuItemId",
-              "description",
-              "price",
-              "createdAt",
-              "updatedAt"
-            ],
+            "readsFields": [],
             "writesFields": [],
             "rulesApplied": [
               "aiOutputLanguageSelection"
@@ -225,38 +131,38 @@ export const definition = {
             "order": 10,
             "molecules": [
               {
-                "id": "molecule.browseMenuForPos.filterForm",
+                "id": "mol-filter-form",
                 "type": "form",
                 "order": 10,
-                "titleKey": "browseMenuForPos.filterForm.title",
-                "submitAction": "browseMenuForPos",
+                "stateKey": "ui.browseMenuForPos.data.browseMenuForPos",
                 "fields": [
                   {
-                    "id": "field.filter.menuCategoryId",
+                    "id": "fld-menu-category-id",
                     "field": "menuCategoryId",
-                    "labelKey": "browseMenuForPos.field.menuCategoryId",
+                    "labelKey": "field.menuCategoryId",
                     "order": 10,
                     "required": false,
-                    "inputType": "text",
-                    "source": "browseMenuForPos.input"
+                    "inputType": "select",
+                    "source": "MenuCategory",
+                    "stateKey": "ui.browseMenuForPos.input.browseMenuForPos.menuCategoryId"
                   },
                   {
-                    "id": "field.filter.name",
+                    "id": "fld-name",
                     "field": "name",
-                    "labelKey": "browseMenuForPos.field.name",
+                    "labelKey": "field.name",
                     "order": 20,
                     "required": false,
                     "inputType": "text",
-                    "source": "browseMenuForPos.input"
+                    "stateKey": "ui.browseMenuForPos.input.browseMenuForPos.name"
                   },
                   {
-                    "id": "field.filter.status",
+                    "id": "fld-status",
                     "field": "status",
-                    "labelKey": "browseMenuForPos.field.status",
+                    "labelKey": "field.status",
                     "order": 30,
                     "required": false,
-                    "inputType": "text",
-                    "source": "browseMenuForPos.input"
+                    "inputType": "select",
+                    "stateKey": "ui.browseMenuForPos.input.browseMenuForPos.status"
                   }
                 ],
                 "columns": [],
@@ -266,81 +172,109 @@ export const definition = {
                 "actions": []
               },
               {
-                "id": "molecule.browseMenuForPos.resultsTable",
-                "type": "groupviewtable.mlDataTable",
+                "id": "mol-filter-actions",
+                "type": "actionBar",
                 "order": 20,
-                "titleKey": "browseMenuForPos.resultsTable.title",
-                "source": "browseMenuForPos.output",
+                "fields": [],
+                "columns": [],
+                "filters": [],
+                "toolbar": [],
+                "rowActions": [],
+                "actions": [
+                  {
+                    "id": "act-browse-menu",
+                    "action": "browseMenuForPos",
+                    "labelKey": "action.browseMenuForPos",
+                    "order": 10,
+                    "displayHint": "primary",
+                    "actionKey": "browseMenuForPos"
+                  }
+                ],
+                "stateKey": "ui.browseMenuForPos.data.browseMenuForPos"
+              }
+            ]
+          },
+          {
+            "id": "org-results",
+            "type": "list",
+            "organismName": "MenuItemResults",
+            "titleKey": "organism.results.title",
+            "purpose": "Exibir resultados da consulta de cardápio",
+            "userActions": [],
+            "requiredEntities": [
+              "MenuItem"
+            ],
+            "readsFields": [
+              "menuItemId",
+              "menuCategoryId",
+              "name",
+              "description",
+              "price",
+              "status",
+              "createdAt",
+              "updatedAt"
+            ],
+            "writesFields": [],
+            "rulesApplied": [
+              "aiOutputLanguageSelection"
+            ],
+            "order": 20,
+            "molecules": [
+              {
+                "id": "mol-results-table",
+                "type": "groupviewtable.mlDataTable",
+                "order": 10,
+                "source": "browseMenuForPos",
+                "emptyKey": "table.empty",
+                "stateKey": "browseMenuForPosResult",
                 "fields": [],
                 "columns": [
                   {
-                    "id": "col.menuItemId",
-                    "field": "menuItemId",
-                    "labelKey": "browseMenuForPos.col.menuItemId",
+                    "id": "col-name",
+                    "field": "name",
+                    "labelKey": "column.name",
                     "order": 10,
                     "required": false
                   },
                   {
-                    "id": "col.menuCategoryId",
-                    "field": "menuCategoryId",
-                    "labelKey": "browseMenuForPos.col.menuCategoryId",
+                    "id": "col-description",
+                    "field": "description",
+                    "labelKey": "column.description",
                     "order": 20,
                     "required": false
                   },
                   {
-                    "id": "col.name",
-                    "field": "name",
-                    "labelKey": "browseMenuForPos.col.name",
-                    "order": 30,
-                    "required": false
-                  },
-                  {
-                    "id": "col.description",
-                    "field": "description",
-                    "labelKey": "browseMenuForPos.col.description",
-                    "order": 40,
-                    "required": false
-                  },
-                  {
-                    "id": "col.price",
+                    "id": "col-price",
                     "field": "price",
-                    "labelKey": "browseMenuForPos.col.price",
-                    "order": 50,
+                    "labelKey": "column.price",
+                    "order": 30,
                     "required": false,
                     "format": "money"
                   },
                   {
-                    "id": "col.status",
+                    "id": "col-status",
                     "field": "status",
-                    "labelKey": "browseMenuForPos.col.status",
-                    "order": 60,
+                    "labelKey": "column.status",
+                    "order": 40,
                     "required": false
                   },
                   {
-                    "id": "col.createdAt",
-                    "field": "createdAt",
-                    "labelKey": "browseMenuForPos.col.createdAt",
-                    "order": 70,
-                    "required": false,
-                    "format": "date"
-                  },
-                  {
-                    "id": "col.updatedAt",
-                    "field": "updatedAt",
-                    "labelKey": "browseMenuForPos.col.updatedAt",
-                    "order": 80,
-                    "required": false,
-                    "format": "date"
+                    "id": "col-menu-category-id",
+                    "field": "menuCategoryId",
+                    "labelKey": "column.menuCategoryId",
+                    "order": 50,
+                    "required": false
                   }
                 ],
                 "filters": [],
                 "toolbar": [
                   {
-                    "id": "tb.refresh",
+                    "id": "act-refresh",
                     "action": "browseMenuForPos",
-                    "labelKey": "browseMenuForPos.action.refresh",
+                    "labelKey": "action.refresh",
                     "order": 10,
-                    "displayHint": "primary"
+                    "displayHint": "secondary",
+                    "actionKey": "browseMenuForPos"
                   }
                 ],
                 "rowActions": [],
@@ -353,29 +287,37 @@ export const definition = {
     ]
   },
   "i18n": {
-    "browseMenuForPos.section.title": "Consultar cardápio no POS",
-    "browseMenuForPos.organism.title": "Consultar cardápio no POS",
-    "browseMenuForPos.filterForm.title": "Filtros do cardápio",
-    "browseMenuForPos.field.menuCategoryId": "Categoria",
-    "browseMenuForPos.field.name": "Nome do item",
-    "browseMenuForPos.field.status": "Status",
-    "browseMenuForPos.resultsTable.title": "Itens do cardápio",
-    "browseMenuForPos.col.menuItemId": "ID do item",
-    "browseMenuForPos.col.menuCategoryId": "Categoria",
-    "browseMenuForPos.col.name": "Nome",
-    "browseMenuForPos.col.description": "Descrição",
-    "browseMenuForPos.col.price": "Preço",
-    "browseMenuForPos.col.status": "Status",
-    "browseMenuForPos.col.createdAt": "Criado em",
-    "browseMenuForPos.col.updatedAt": "Atualizado em",
-    "browseMenuForPos.action.refresh": "Atualizar"
+    "section.browseMenu.title": "Consultar cardápio no POS",
+    "organism.filters.title": "Filtros",
+    "organism.results.title": "Itens do cardápio",
+    "field.menuCategoryId": "Categoria",
+    "field.name": "Nome",
+    "field.status": "Status",
+    "column.name": "Nome",
+    "column.description": "Descrição",
+    "column.price": "Preço",
+    "column.status": "Status",
+    "column.menuCategoryId": "Categoria",
+    "action.browseMenuForPos": "Buscar",
+    "action.refresh": "Atualizar",
+    "table.empty": "Nenhum item encontrado"
   },
   "dataBindings": [
     {
-      "id": "binding.browseMenuForPos.query",
-      "source": "bff",
+      "id": "bind-browse-menu",
+      "source": "command",
+      "entity": "MenuItem",
       "command": "browseMenuForPos",
-      "description": "Consultar cardápio no POS"
+      "description": "Consultar cardápio no POS",
+      "stateKey": "ui.browseMenuForPos.data.browseMenuForPos",
+      "inputStateKeys": [
+        "ui.browseMenuForPos.input.browseMenuForPos.menuItemId",
+        "ui.browseMenuForPos.input.browseMenuForPos.menuCategoryId",
+        "ui.browseMenuForPos.input.browseMenuForPos.name",
+        "ui.browseMenuForPos.input.browseMenuForPos.status",
+        "ui.browseMenuForPos.input.browseMenuForPos.createdAt",
+        "ui.browseMenuForPos.input.browseMenuForPos.updatedAt"
+      ]
     }
   ]
 };

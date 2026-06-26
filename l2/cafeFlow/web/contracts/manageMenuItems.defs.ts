@@ -9,38 +9,74 @@ export const definition = [
       {
         "name": "menuItemId",
         "type": "string",
-        "required": false
+        "sourceEntity": "MenuItem",
+        "sourceField": "menuItemId",
+        "required": false,
+        "description": "Identificador único do item do cardápio",
+        "sourceType": "uuid"
       },
       {
         "name": "menuCategoryId",
         "type": "string",
-        "required": false
+        "sourceEntity": "MenuItem",
+        "sourceField": "menuCategoryId",
+        "required": false,
+        "description": "Referência à categoria do cardápio à qual o item pertence",
+        "sourceType": "uuid"
       },
       {
         "name": "name",
         "type": "string",
-        "required": true
+        "sourceEntity": "MenuItem",
+        "sourceField": "name",
+        "required": true,
+        "description": "Nome do item (ex.: cappuccino, pão de queijo)"
       },
       {
         "name": "description",
         "type": "string",
-        "required": false
+        "sourceEntity": "MenuItem",
+        "sourceField": "description",
+        "required": false,
+        "description": "Descrição detalhada do item",
+        "sourceType": "text"
       },
       {
         "name": "price",
         "type": "number",
-        "required": true
+        "sourceEntity": "MenuItem",
+        "sourceField": "price",
+        "required": true,
+        "description": "Preço de venda do item",
+        "sourceType": "money"
       },
       {
         "name": "status",
         "type": "string",
-        "required": true
+        "sourceEntity": "MenuItem",
+        "sourceField": "status",
+        "required": true,
+        "enum": [
+          "draft",
+          "active",
+          "inactive"
+        ],
+        "lifecycleStates": [
+          "draft",
+          "active",
+          "inactive"
+        ],
+        "description": "Estado do ciclo de vida do item"
       }
     ],
     "output": [
       {
         "name": "menuItemId",
-        "type": "string"
+        "type": "string",
+        "sourceEntity": "MenuItem",
+        "sourceField": "menuItemId",
+        "description": "Identificador único do item do cardápio",
+        "sourceType": "uuid"
       }
     ],
     "readsEntities": [

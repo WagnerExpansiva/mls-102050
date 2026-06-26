@@ -1,6 +1,6 @@
 {
-  "savedAt": "2026-06-26T06:21:56.281Z",
-  "status": "inProgress",
+  "savedAt": "2026-06-26T14:29:41.274Z",
+  "status": "done",
   "pageId": "takeoutOrderLifecycle",
   "moduleName": "cafeFlow",
   "agent": "agentCfeCreatePage"

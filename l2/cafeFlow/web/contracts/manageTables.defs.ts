@@ -9,23 +9,47 @@ export const definition = [
       {
         "name": "tableId",
         "type": "string",
-        "required": false
+        "sourceEntity": "Table",
+        "sourceField": "tableId",
+        "required": false,
+        "description": "Identificador único da mesa.",
+        "sourceType": "uuid"
       },
       {
         "name": "number",
         "type": "string",
-        "required": true
+        "sourceEntity": "Table",
+        "sourceField": "number",
+        "required": true,
+        "description": "Número ou identificador da mesa no salão."
       },
       {
         "name": "status",
         "type": "string",
-        "required": true
+        "sourceEntity": "Table",
+        "sourceField": "status",
+        "required": true,
+        "enum": [
+          "available",
+          "occupied",
+          "disabled"
+        ],
+        "lifecycleStates": [
+          "available",
+          "occupied",
+          "disabled"
+        ],
+        "description": "Situação atual da mesa no ciclo de atendimento."
       }
     ],
     "output": [
       {
         "name": "tableId",
-        "type": "string"
+        "type": "string",
+        "sourceEntity": "Table",
+        "sourceField": "tableId",
+        "description": "Identificador único da mesa.",
+        "sourceType": "uuid"
       }
     ],
     "readsEntities": [
