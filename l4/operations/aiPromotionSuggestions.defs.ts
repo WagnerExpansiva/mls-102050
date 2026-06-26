@@ -30,7 +30,7 @@ export const operationAiPromotionSuggestions = {
     "priority": "soon"
   },
   "statusFrontend": "done",
-  "statusBackend": "inProgress"
+  "statusBackend": "done"
 } as const;
 
 export default operationAiPromotionSuggestions;

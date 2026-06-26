@@ -39,7 +39,7 @@ export const operationManageInventoryItems = {
     "priority": "now"
   },
   "statusFrontend": "done",
-  "statusBackend": "inProgress"
+  "statusBackend": "done"
 } as const;
 
 export default operationManageInventoryItems;

@@ -49,7 +49,7 @@ export const workflowConsumeIngredientsOnConfirmation = {
     }
   ],
   "statusFrontend": "toCreate",
-  "statusBackend": "toCreate"
+  "statusBackend": "done"
 } as const;
 
 export default workflowConsumeIngredientsOnConfirmation;

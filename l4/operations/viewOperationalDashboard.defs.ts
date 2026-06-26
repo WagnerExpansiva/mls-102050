@@ -34,7 +34,7 @@ export const operationViewOperationalDashboard = {
     "priority": "now"
   },
   "statusFrontend": "done",
-  "statusBackend": "inProgress"
+  "statusBackend": "done"
 } as const;
 
 export default operationViewOperationalDashboard;

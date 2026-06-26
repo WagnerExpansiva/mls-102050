@@ -37,7 +37,7 @@ export const operationAiSalesSummary = {
     "priority": "soon"
   },
   "statusFrontend": "done",
-  "statusBackend": "inProgress"
+  "statusBackend": "done"
 } as const;
 
 export default operationAiSalesSummary;
