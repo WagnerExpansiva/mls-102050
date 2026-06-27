@@ -12,15 +12,14 @@ export const inventoryItemRepositoryAdapter = {
     "planId": ""
   },
   "data": {
-    "className": "InventoryItemRepositoryAdapter",
+    "className": "InventoryItemRepository",
     "entityId": "InventoryItem",
     "portRef": "IInventoryItemRepository",
     "tableRef": "inventory_items",
-    "mdmReads": [],
     "notes": [
-      "Maps aggregate root scalars to real columns; non-indexed fields to details JSONB",
-      "No MDM refs or embedded members",
-      "ctx.data available for persistence context"
+      "Real columns: inventory_item_id, status, created_at",
+      "Details JSONB: name, description, unit, current_quantity, minimum_level, updated_at",
+      "ctx.data used for row<->domain mapping"
     ]
   }
 } as const;
@@ -40,7 +39,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_4.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/repositoryAdapter.md",
       "_102034_.d.ts"
     ],
     "agent": "agentMaterializeGen"

@@ -36,7 +36,7 @@ export const operationUpdateOrderItemStatus = {
     "actor": "cook",
     "priority": "now"
   },
-  "statusFrontend": "done",
+  "statusFrontend": "toCreate",
   "statusBackend": "done"
 } as const;
 

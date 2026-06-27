@@ -25,13 +25,13 @@ export const openDailyShiftUsecase = {
     ],
     "transactional": true,
     "steps": [
-      "Validate no DailyShift is currently OPEN via DailyShift port",
-      "Create DailyShift with shiftDate=today, status=OPEN, openedAt=now, openingCashBalance via DailyShift port",
-      "Apply paymentTimingByOrderType defaults for the new shift",
-      "Select language via aiOutputLanguageSelection for shift locale",
-      "Record opening CashMovement (movementType=OPENING) linked to the new shift",
-      "Persist DailyShift and CashMovement atomically",
-      "Return opened shift with dailyShiftId"
+      "Step 1 - Validate: check no other DailyShift is OPEN for the same or overlapping date via DailyShift port",
+      "Step 2 - Create Shift: create DailyShift with shiftDate, status=OPEN, openedAt=now, openingCashBalance",
+      "Step 3 - Configure: apply paymentTimingByOrderType rule to set payment flow defaults for the shift",
+      "Step 4 - Language: apply aiOutputLanguageSelection rule for shift default language",
+      "Step 5 - Record Cash: record opening CashMovement (movementType=OPENING) linked to the shift",
+      "Step 6 - Persist: save DailyShift and CashMovement within transaction",
+      "Return opened DailyShift with dailyShiftId and initial cash balance"
     ]
   }
 } as const;
@@ -50,7 +50,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_3.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
     ],
     "rulesApplied": [

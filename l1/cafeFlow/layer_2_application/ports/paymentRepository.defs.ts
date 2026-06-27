@@ -17,44 +17,39 @@ export const paymentRepositoryPort = {
     "methods": [
       {
         "name": "getById",
+        "returns": "Payment | null",
         "params": [
-          "id: PaymentId"
-        ],
-        "returns": "Payment"
+          "paymentId: PaymentId"
+        ]
       },
       {
         "name": "list",
+        "returns": "Payment[]",
         "params": [
           "filter: PaymentFilter"
-        ],
-        "returns": "Payment[]"
+        ]
       },
       {
         "name": "save",
+        "returns": "void",
         "params": [
           "payment: Payment"
-        ],
-        "returns": "void"
+        ]
       },
       {
         "name": "findByOrder",
+        "returns": "Payment[]",
         "params": [
           "orderId: OrderId"
-        ],
-        "returns": "Payment[]"
+        ]
       },
       {
         "name": "findByDateRange",
+        "returns": "Payment[]",
         "params": [
-          "start: PaymentDate",
-          "end: PaymentDate"
-        ],
-        "returns": "Payment[]"
-      },
-      {
-        "name": "findPending",
-        "params": [],
-        "returns": "Payment[]"
+          "start: LocalDateTime",
+          "end: LocalDateTime"
+        ]
       }
     ]
   }
@@ -73,7 +68,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_3.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/repositoryPort.md",
       "_102034_.d.ts"
     ],
     "agent": "agentMaterializeGen"

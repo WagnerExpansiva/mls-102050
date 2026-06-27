@@ -12,15 +12,14 @@ export const paymentRepositoryAdapter = {
     "planId": ""
   },
   "data": {
-    "className": "PaymentRepositoryAdapter",
+    "className": "PaymentRepository",
     "entityId": "Payment",
     "portRef": "IPaymentRepository",
     "tableRef": "payments",
-    "mdmReads": [],
     "notes": [
-      "Maps aggregate root scalars to real columns; non-indexed fields to details JSONB",
-      "No MDM refs or embedded members",
-      "ctx.data available for persistence context"
+      "Real columns: payment_id, order_id, daily_shift_id, status, created_at",
+      "Details JSONB: method, amount, updated_at",
+      "ctx.data used for row<->domain mapping"
     ]
   }
 } as const;
@@ -40,7 +39,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_4.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/repositoryAdapter.md",
       "_102034_.d.ts"
     ],
     "agent": "agentMaterializeGen"

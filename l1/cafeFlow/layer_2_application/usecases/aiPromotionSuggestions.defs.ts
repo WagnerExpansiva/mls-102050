@@ -25,9 +25,9 @@ export const aiPromotionSuggestionsUsecase = {
     "steps": [
       "Read recent OrderItem history via Order port to identify top-selling and slow-moving items",
       "Read MenuItem catalog via MenuItem port for pricing and category context",
-      "Aggregate sales volume and revenue per MenuItem",
-      "Call AI service with aggregated data to generate promotion suggestions",
-      "Return structured promotion recommendations"
+      "Aggregate sales data by MenuItem and time window",
+      "Generate promotion suggestions (bundles, discounts, featured items) based on sales patterns",
+      "Return structured list of promotion suggestions with rationale"
     ]
   }
 } as const;
@@ -48,7 +48,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_3.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
     ],
     "agent": "agentMaterializeGen"

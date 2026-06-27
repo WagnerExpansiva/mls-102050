@@ -26,14 +26,14 @@ export const createStockConsumptionUsecase = {
     ],
     "transactional": true,
     "steps": [
-      "Fetch Order and its OrderItems via Order port",
-      "For each OrderItem, fetch MenuItem and resolve RecipeComponent ingredients via MenuItem port",
-      "Calculate required quantity per InventoryItem based on recipe and item quantity",
-      "Check current InventoryItem quantities via InventoryItem port",
-      "Deduct consumed quantities from InventoryItem aggregates",
-      "Create StockConsumption records linking OrderItem to InventoryItem with consumed amounts",
-      "Persist updated InventoryItems and StockConsumption records",
-      "Flag any InventoryItem that falls below minimumLevel"
+      "Read Order and its OrderItems via Order port",
+      "Read MenuItem recipes (RecipeComponent) via MenuItem port for each OrderItem",
+      "Apply ingredientConsumptionTrigger rule to compute required quantities per InventoryItem",
+      "Read current InventoryItem quantities via InventoryItem port",
+      "Create StockConsumption entries for each consumed ingredient",
+      "Decrement InventoryItem.currentQuantity and update status if below minimumLevel",
+      "Persist StockConsumption and updated InventoryItem within transaction",
+      "Return list of created StockConsumption entries with updated inventory levels"
     ]
   }
 } as const;
@@ -56,7 +56,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_3.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
     ],
     "rulesApplied": [

@@ -26,14 +26,15 @@ export const consumeIngredientsOnConfirmationUsecase = {
     ],
     "transactional": true,
     "steps": [
-      "Fetch Order and all OrderItems via Order port upon order confirmation event",
-      "For each OrderItem, fetch MenuItem and resolve RecipeComponent to InventoryItem mappings via MenuItem port",
-      "Calculate total consumption quantity per InventoryItem across all OrderItems",
-      "Deduct quantities from InventoryItem aggregates via InventoryItem port",
-      "Create StockConsumption records for each consumed ingredient",
-      "Flag any InventoryItem falling below minimumLevel",
-      "Persist all InventoryItem updates and StockConsumption records atomically",
-      "Return consumption summary with any low-stock alerts"
+      "Read Order and all OrderItems via Order port after status changed to CONFIRMED",
+      "For each OrderItem, read MenuItem recipe components via MenuItem port",
+      "Apply ingredientConsumptionTrigger rule to compute total ingredient quantities needed",
+      "Read current InventoryItem stock levels via InventoryItem port",
+      "Validate sufficient stock exists for all ingredients",
+      "Create StockConsumption entries for each ingredient deduction",
+      "Decrement InventoryItem.currentQuantity and update status per inventoryLowStockThreshold",
+      "Persist all StockConsumption and InventoryItem updates within transaction",
+      "Return consumption summary with per-ingredient deductions and updated stock levels"
     ]
   }
 } as const;
@@ -56,7 +57,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_3.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
     ],
     "rulesApplied": [

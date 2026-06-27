@@ -12,7 +12,7 @@ export const menuItemRepositoryAdapter = {
     "planId": ""
   },
   "data": {
-    "className": "MenuItemRepositoryAdapter",
+    "className": "MenuItemRepository",
     "entityId": "MenuItem",
     "portRef": "IMenuItemRepository",
     "tableRef": "menu_items",
@@ -20,9 +20,9 @@ export const menuItemRepositoryAdapter = {
       "MenuCategory"
     ],
     "notes": [
-      "Maps aggregate root scalars to real columns; non-indexed fields and RecipeComponent[] to details JSONB",
-      "Resolves MenuCategory mdmRef through shared 102034 MDM runtime (no local MDM table)",
-      "ctx.data available for persistence context"
+      "Real columns: menu_item_id, menu_category_id, status, created_at",
+      "Details JSONB: name, description, price, updated_at, recipe_components (embedded RecipeComponent[])",
+      "Resolves MenuCategory via MDM 102034 using menu_category_id; ctx.data used for MDM fetch and domain mapping"
     ]
   }
 } as const;
@@ -42,7 +42,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_4.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/repositoryAdapter.md",
       "_102034_.d.ts"
     ],
     "agent": "agentMaterializeGen"

@@ -29,14 +29,15 @@ export const createOrderUsecase = {
     ],
     "transactional": true,
     "steps": [
-      "Validate DailyShift is OPEN via DailyShift port",
-      "If orderType is DINE_IN, validate table availability per tableOccupancyConsistency and assign tableId",
-      "Determine payment timing per paymentTimingByOrderType rule (prepaid for takeout/delivery, postpaid for dine-in)",
-      "Create Order with status=OPEN, dailyShiftId, orderType, tableId (if applicable)",
-      "Apply aiOutputLanguageSelection for order locale",
-      "Set initial orderStatusTransitions state",
-      "Persist Order via Order port",
-      "Return created order with generated orderId"
+      "Validate an open DailyShift exists via DailyShift port",
+      "Apply orderStatusTransitions rule to set initial Order status (OPEN)",
+      "Apply paymentTimingByOrderType rule based on orderType (DINE_IN, TAKEOUT, DELIVERY)",
+      "If DINE_IN, validate Table availability and apply tableOccupancyConsistency rule",
+      "Apply aiOutputLanguageSelection rule for order language",
+      "Create Order entity with orderType, tableId (if dine-in), dailyShiftId, totalAmount=0",
+      "If ingredientConsumptionTrigger applies at creation, prepare StockConsumption entries",
+      "Persist Order (and update Table status if dine-in) within transaction",
+      "Return created Order with generated orderId"
     ]
   }
 } as const;
@@ -57,7 +58,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_3.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
     ],
     "rulesApplied": [

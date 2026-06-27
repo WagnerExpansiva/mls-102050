@@ -19,9 +19,11 @@ export const manageMenuCategoriesUsecase = {
     "ports": [],
     "transactional": true,
     "steps": [
-      "Perform CRUD operation on MenuCategory (create/update/delete)",
-      "Validate category name uniqueness and display order",
-      "Persist changes and return updated MenuCategory(ies)"
+      "Validate MenuCategory name is non-empty and unique",
+      "For update: verify category exists and no orphan MenuItem references remain if deleting",
+      "Create/Update/Delete MenuCategory entity",
+      "Persist within transaction",
+      "Return created/updated/deleted MenuCategory confirmation"
     ]
   }
 } as const;
@@ -37,7 +39,8 @@ export const pipeline = [
     "dependsFiles": [],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_3.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
     ],
     "agent": "agentMaterializeGen"

@@ -22,10 +22,10 @@ export const recordOpeningCashMovementUsecase = {
     "transactional": true,
     "steps": [
       "Validate DailyShift exists and is OPEN via DailyShift port",
-      "Create CashMovement with dailyShiftId, movementType=OPENING, amount, reason",
-      "Set createdAt and updatedAt timestamps",
-      "Persist CashMovement linked to DailyShift",
-      "Return created cash movement"
+      "Create CashMovement entity with movementType=OPENING, amount, reason, dailyShiftId",
+      "Update DailyShift.openingCashBalance with the movement amount",
+      "Persist CashMovement and updated DailyShift within transaction",
+      "Return created CashMovement with id and updated shift balance"
     ]
   }
 } as const;
@@ -44,7 +44,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_3.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
     ],
     "agent": "agentMaterializeGen"

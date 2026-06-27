@@ -19,11 +19,11 @@ export const updateKitchenTicketStatusUsecase = {
     "ports": [],
     "transactional": true,
     "steps": [
-      "Fetch KitchenTicket by id",
-      "Validate current status allows transition to target status per orderStatusTransitions",
-      "Update KitchenTicket.status and set updatedAt",
-      "Persist updated KitchenTicket",
-      "Return updated ticket"
+      "Read KitchenTicket by id",
+      "Apply orderStatusTransitions rule to validate the status transition (PENDING -> IN_PROGRESS -> READY -> COMPLETED)",
+      "Update KitchenTicket.status and updatedAt",
+      "Persist within transaction",
+      "Return updated KitchenTicket with new status"
     ]
   }
 } as const;
@@ -39,7 +39,8 @@ export const pipeline = [
     "dependsFiles": [],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_3.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
     ],
     "agent": "agentMaterializeGen"

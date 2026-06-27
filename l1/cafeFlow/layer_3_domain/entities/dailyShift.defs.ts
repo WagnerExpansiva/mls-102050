@@ -97,11 +97,12 @@ export const dailyShiftDomainEntity = {
     ],
     "invariants": [
       "only one DailyShift per shiftDate may be open at a time",
-      "when status is closed, closedAt and closingCashBalance must be set",
       "status can only transition from open to closed",
-      "cash movements cannot be added to a closed shift",
-      "openingCashBalance must be set when the shift is opened",
-      "totalSales and totalPayments are computed from associated orders and payments during the shift"
+      "closedAt must be set when status is closed",
+      "closedAt must be after openedAt",
+      "openingCashBalance must be set when status is open",
+      "closingCashBalance and totalSales must be set when status is closed",
+      "cannot add CashMovements to a closed shift"
     ],
     "valueObjects": [
       {
@@ -171,7 +172,8 @@ export const pipeline = [
     "dependsFiles": [],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_4.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/domainEntity.md",
       "_102034_.d.ts"
     ],
     "agent": "agentMaterializeGen"

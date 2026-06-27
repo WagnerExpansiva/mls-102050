@@ -17,43 +17,36 @@ export const inventoryItemRepositoryPort = {
     "methods": [
       {
         "name": "getById",
+        "returns": "InventoryItem | null",
         "params": [
-          "id: InventoryItemId"
-        ],
-        "returns": "InventoryItem"
+          "inventoryItemId: InventoryItemId"
+        ]
       },
       {
         "name": "list",
+        "returns": "InventoryItem[]",
         "params": [
           "filter: InventoryItemFilter"
-        ],
-        "returns": "InventoryItem[]"
+        ]
       },
       {
         "name": "save",
+        "returns": "void",
         "params": [
           "inventoryItem: InventoryItem"
-        ],
-        "returns": "void"
-      },
-      {
-        "name": "findLowStock",
-        "params": [],
-        "returns": "InventoryItem[]"
+        ]
       },
       {
         "name": "findBySku",
+        "returns": "InventoryItem | null",
         "params": [
           "sku: Sku"
-        ],
-        "returns": "InventoryItem | null"
+        ]
       },
       {
-        "name": "findBySupplier",
-        "params": [
-          "supplierId: SupplierId"
-        ],
-        "returns": "InventoryItem[]"
+        "name": "findBelowReorderLevel",
+        "returns": "InventoryItem[]",
+        "params": []
       }
     ]
   }
@@ -72,7 +65,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_3.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/repositoryPort.md",
       "_102034_.d.ts"
     ],
     "agent": "agentMaterializeGen"

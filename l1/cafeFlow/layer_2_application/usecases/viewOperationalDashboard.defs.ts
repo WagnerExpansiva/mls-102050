@@ -27,13 +27,13 @@ export const viewOperationalDashboardUsecase = {
     ],
     "transactional": false,
     "steps": [
-      "Fetch current DailyShift via DailyShift port",
-      "Read active and recent Orders via Order port for the current shift",
-      "Read Payments via Payment port for the current shift",
-      "Apply paymentTimingByOrderType to categorize revenue by order type",
-      "Select dashboard language via aiOutputLanguageSelection",
-      "Aggregate KPIs: total sales, open orders, kitchen load, payment breakdown",
-      "Return structured dashboard data"
+      "Read current open DailyShift via DailyShift port",
+      "Read active and recent Orders for the shift via Order port",
+      "Read Payments for the shift via Payment port",
+      "Apply paymentTimingByOrderType rule to categorize revenue by order type",
+      "Apply aiOutputLanguageSelection rule for dashboard labels and language",
+      "Compute real-time metrics: open orders, kitchen load, revenue, table occupancy, payment totals",
+      "Return dashboard data structure with KPIs and breakdowns"
     ]
   }
 } as const;
@@ -56,7 +56,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_3.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
     ],
     "rulesApplied": [

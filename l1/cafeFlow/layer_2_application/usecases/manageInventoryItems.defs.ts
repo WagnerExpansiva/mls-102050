@@ -25,11 +25,12 @@ export const manageInventoryItemsUsecase = {
     ],
     "transactional": true,
     "steps": [
-      "Perform CRUD operation (create/update/delete) on InventoryItem via InventoryItem port",
-      "Validate name, unit, currentQuantity, and minimumLevel fields",
-      "After update, evaluate inventoryLowStockThreshold: if currentQuantity <= minimumLevel, set status to LOW_STOCK",
-      "Check ingredientConsumptionTrigger dependencies to ensure item is not referenced in pending consumptions before deletion",
-      "Persist changes and return updated InventoryItem(s)"
+      "Read existing InventoryItem by id (for update) or list all (for browse) via InventoryItem port",
+      "For create/update: validate name, unit, minimumLevel, currentQuantity fields",
+      "Apply inventoryLowStockThreshold rule to set status (OK, LOW, CRITICAL) based on currentQuantity vs minimumLevel",
+      "If ingredientConsumptionTrigger context applies, validate no pending consumptions conflict",
+      "Persist InventoryItem changes within transaction",
+      "Return created/updated InventoryItem with computed status"
     ]
   }
 } as const;
@@ -48,7 +49,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_3.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
     ],
     "rulesApplied": [

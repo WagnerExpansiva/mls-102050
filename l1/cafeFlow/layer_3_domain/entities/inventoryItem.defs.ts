@@ -78,12 +78,11 @@ export const inventoryItemDomainEntity = {
       "inactive"
     ],
     "invariants": [
-      "currentQuantity must be greater than or equal to zero",
+      "currentQuantity must not be negative",
       "minimumLevel must be greater than or equal to zero",
       "name must not be empty",
       "unit must not be empty",
-      "status can transition from active to inactive and inactive to active",
-      "when currentQuantity falls below minimumLevel a low-stock alert condition is triggered"
+      "status can only transition between active and inactive"
     ],
     "valueObjects": []
   }
@@ -100,7 +99,8 @@ export const pipeline = [
     "dependsFiles": [],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_4.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/domainEntity.md",
       "_102034_.d.ts"
     ],
     "agent": "agentMaterializeGen"

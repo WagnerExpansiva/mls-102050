@@ -24,10 +24,13 @@ export const manageMenuItemsUsecase = {
     ],
     "transactional": true,
     "steps": [
-      "Perform CRUD operation on MenuItem via MenuItem port",
-      "Validate name, price, category assignment, and availability fields",
-      "Apply aiOutputLanguageSelection for localized name/description fields",
-      "Persist changes and return updated MenuItem(s)"
+      "Read existing MenuItem by id (for update) or list all (for browse) via MenuItem port",
+      "Validate MenuItem fields: name, price, category, availability",
+      "Apply aiOutputLanguageSelection rule for localized name/description fields",
+      "For create: assign to MenuCategory and set initial availability",
+      "For update: validate category exists and price is positive",
+      "Persist MenuItem within transaction",
+      "Return created/updated MenuItem with category reference"
     ]
   }
 } as const;
@@ -46,7 +49,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_3.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
     ],
     "rulesApplied": [

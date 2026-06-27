@@ -19,9 +19,9 @@ export const viewKitchenTicketsUsecase = {
     "ports": [],
     "transactional": false,
     "steps": [
-      "Query KitchenTickets with optional status filter",
-      "Sort by creation time (oldest first for FIFO production)",
-      "Return list of kitchen tickets with line items"
+      "Read KitchenTickets filtered by status, date, or station",
+      "Sort by priority and creation time",
+      "Return list of KitchenTickets with item details and current status"
     ]
   }
 } as const;
@@ -37,7 +37,8 @@ export const pipeline = [
     "dependsFiles": [],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_3.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
     ],
     "agent": "agentMaterializeGen"

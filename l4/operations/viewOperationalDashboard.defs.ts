@@ -33,7 +33,7 @@ export const operationViewOperationalDashboard = {
     "actor": "manager",
     "priority": "now"
   },
-  "statusFrontend": "done",
+  "statusFrontend": "toCreate",
   "statusBackend": "done"
 } as const;
 

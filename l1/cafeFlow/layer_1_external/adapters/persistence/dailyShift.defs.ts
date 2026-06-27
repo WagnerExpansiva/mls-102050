@@ -17,27 +17,27 @@ export const dailyShiftTableDefinition = {
     "columns": [
       {
         "name": "daily_shift_id",
-        "type": "string",
+        "type": "uuid",
         "nullable": false,
-        "description": "pk/fk"
+        "description": "PK/FK identifier for daily shift"
       },
       {
         "name": "status",
-        "type": "string",
+        "type": "varchar",
         "nullable": false,
-        "description": "status"
+        "description": "Status of the daily shift"
       },
       {
         "name": "created_at",
         "type": "timestamp",
         "nullable": false,
-        "description": "ordering"
+        "description": "Creation timestamp for ordering"
       },
       {
         "name": "details",
         "type": "jsonb",
         "nullable": true,
-        "description": "shiftDate, openedAt, closedAt, openingCashBalance, closingCashBalance, totalSales, totalPayments, closingNotes, updatedAt"
+        "description": "Contains shiftDate, openedAt, closedAt, openingCashBalance, closingCashBalance, totalSales, totalPayments, closingNotes, updatedAt and child collection CashMovement"
       }
     ],
     "primaryKey": [
@@ -82,7 +82,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_1.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/persistenceTable.md",
       "_102034_.d.ts"
     ],
     "afterSaveBackEnd": "_102021_/l2/agentMaterializeSolution/registerBackEnd.ts?registerLayer1",

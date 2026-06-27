@@ -74,10 +74,10 @@ export const menuItemDomainEntity = {
       "inactive"
     ],
     "invariants": [
-      "price must be greater than or equal to zero",
+      "price must be greater than zero",
       "name must not be empty",
-      "status can transition from draft to active, active to inactive, and inactive back to active",
-      "at least one RecipeComponent should exist for an active MenuItem"
+      "status can only transition from draft to active, active to inactive, and inactive to active",
+      "cannot delete a MenuItem referenced by active OrderItems"
     ],
     "valueObjects": [
       {
@@ -137,7 +137,8 @@ export const pipeline = [
     "dependsFiles": [],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_4.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/domainEntity.md",
       "_102034_.d.ts"
     ],
     "agent": "agentMaterializeGen"
