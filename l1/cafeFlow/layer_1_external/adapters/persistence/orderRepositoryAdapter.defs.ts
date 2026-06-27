@@ -12,7 +12,7 @@ export const orderRepositoryAdapter = {
     "planId": ""
   },
   "data": {
-    "className": "OrderRepositoryAdapter",
+    "className": "OrderRepository",
     "entityId": "Order",
     "portRef": "IOrderRepository",
     "tableRef": "orders",
@@ -20,9 +20,9 @@ export const orderRepositoryAdapter = {
       "Table"
     ],
     "notes": [
-      "Maps aggregate root scalars to real columns; non-indexed fields, OrderItem[] and KitchenTicket[] to details JSONB",
-      "Resolves Table mdmRef through shared 102034 MDM runtime (no local MDM table)",
-      "ctx.data available for persistence context"
+      "Real columns: order_id, daily_shift_id, table_id, kitchen_ticket_id, order_type, status, created_at",
+      "Details JSONB: total_amount, notes, customer_name, customer_phone, number_of_guests, closed_at, cancelled_at, cancellation_reason, updated_at, order_items (embedded OrderItem[]), kitchen_tickets (embedded KitchenTicket[])",
+      "Resolves Table via MDM 102034 using table_id; ctx.data used for MDM fetch and domain mapping"
     ]
   }
 } as const;
@@ -42,7 +42,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_4.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/repositoryAdapter.md",
       "_102034_.d.ts"
     ],
     "agent": "agentMaterializeGen"

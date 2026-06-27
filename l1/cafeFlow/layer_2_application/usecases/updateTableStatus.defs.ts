@@ -19,11 +19,11 @@ export const updateTableStatusUsecase = {
     "ports": [],
     "transactional": true,
     "steps": [
-      "Fetch Table by id",
-      "Validate tableOccupancyConsistency: cannot set AVAILABLE if active orders exist; cannot set OCCUPIED without linked order",
-      "Update Table.status and set updatedAt",
-      "Persist updated Table",
-      "Return updated table"
+      "Read Table by id",
+      "Apply tableOccupancyConsistency rule: validate no conflicting active Orders if setting to AVAILABLE",
+      "Update Table.status (AVAILABLE, OCCUPIED, RESERVED, CLEANING) and updatedAt",
+      "Persist within transaction",
+      "Return updated Table with new status"
     ]
   }
 } as const;
@@ -39,7 +39,8 @@ export const pipeline = [
     "dependsFiles": [],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_3.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
     ],
     "agent": "agentMaterializeGen"

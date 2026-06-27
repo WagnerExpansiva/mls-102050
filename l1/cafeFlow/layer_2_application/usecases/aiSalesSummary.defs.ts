@@ -26,13 +26,13 @@ export const aiSalesSummaryUsecase = {
     ],
     "transactional": false,
     "steps": [
-      "Determine target language via aiOutputLanguageSelection rule",
-      "Read Orders filtered by date range and dailyShiftId via Order port",
-      "Read DailyShift summary data via DailyShift port",
-      "Read MenuItem metadata via MenuItem port for item-level breakdown",
-      "Aggregate totalAmount, status distribution, and closedAt timestamps",
-      "Call AI service with aggregated data and selected language to produce sales summary",
-      "Return formatted summary text and structured metrics"
+      "Read DailyShift for the requested period via DailyShift port",
+      "Read closed Orders within the shift date range via Order port",
+      "Read OrderItem details and MenuItem info for breakdown via MenuItem port",
+      "Apply aiOutputLanguageSelection rule to determine output language",
+      "Compute total sales, order count, average ticket, top items, sales by category",
+      "Generate natural-language summary in selected language",
+      "Return structured summary with metrics and narrative text"
     ]
   }
 } as const;
@@ -55,7 +55,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_3.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
     ],
     "rulesApplied": [

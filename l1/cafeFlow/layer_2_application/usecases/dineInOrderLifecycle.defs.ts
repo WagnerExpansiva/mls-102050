@@ -23,19 +23,19 @@ export const dineInOrderLifecycleUsecase = {
     "rulesApplied": [
       "orderStatusTransitions",
       "paymentTimingByOrderType",
+      "ingredientConsumptionTrigger",
       "tableOccupancyConsistency"
     ],
     "transactional": true,
     "steps": [
-      "Validate DailyShift is OPEN via DailyShift port",
-      "Validate and reserve Table per tableOccupancyConsistency (set OCCUPIED)",
-      "Create Order with orderType=DINE_IN, status=OPEN, tableId via Order port",
-      "Add OrderItems to the order (delegates to addOrderItem logic)",
-      "Transition order to SENT and create KitchenTicket",
-      "On kitchen readiness, transition items to READY then SERVED",
-      "Process payment post-meal per paymentTimingByOrderType (dine-in = postpaid)",
-      "Transition order to CLOSED, release Table per tableOccupancyConsistency",
-      "Return completed order lifecycle result"
+      "Step 1 - Create Order: validate open DailyShift, assign Table (tableOccupancyConsistency), set orderType=DINE_IN, status=OPEN",
+      "Step 2 - Add Items: add OrderItems with MenuItem references, recalculate totals",
+      "Step 3 - Confirm Order: transition status OPEN -> CONFIRMED (orderStatusTransitions), trigger ingredientConsumptionTrigger",
+      "Step 4 - Kitchen: create KitchenTicket, track preparation through statuses",
+      "Step 5 - Serve: update OrderItem statuses to SERVED as kitchen completes items",
+      "Step 6 - Payment: apply paymentTimingByOrderType (DINE_IN pays at end), record Payment(s)",
+      "Step 7 - Close: validate all items served and payments complete, transition to CLOSED, free Table (tableOccupancyConsistency)",
+      "Return final Order state with full lifecycle summary"
     ]
   }
 } as const;
@@ -56,12 +56,14 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_3.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
     ],
     "rulesApplied": [
       "orderStatusTransitions",
       "paymentTimingByOrderType",
+      "ingredientConsumptionTrigger",
       "tableOccupancyConsistency"
     ],
     "agent": "agentMaterializeGen"

@@ -32,7 +32,7 @@ export const operationManageMenuItems = {
     "actor": "manager",
     "priority": "now"
   },
-  "statusFrontend": "done",
+  "statusFrontend": "toCreate",
   "statusBackend": "done"
 } as const;
 

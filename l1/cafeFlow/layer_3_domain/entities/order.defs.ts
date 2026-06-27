@@ -136,12 +136,12 @@ export const orderDomainEntity = {
     "invariants": [
       "totalAmount must equal the sum of all OrderItem.totalPrice",
       "when orderType is mesa, tableId is required",
-      "when orderType is mesa, numberOfGuests should be greater than zero",
-      "status transitions must follow: draft -> sentToKitchen -> inPreparation -> ready -> served -> closed; cancelled can occur from any state before closed",
-      "when status is closed, closedAt must be set",
-      "when status is cancelled, cancelledAt and cancellationReason must be set",
-      "an order cannot be modified after it is closed or cancelled",
-      "at least one OrderItem is required before sending to kitchen"
+      "when orderType is takeout, tableId must be null",
+      "status transitions must follow: draft -> sentToKitchen -> inPreparation -> ready -> served -> closed; any state can go to cancelled",
+      "closedAt must be set when status is closed",
+      "cancelledAt and cancellationReason must be set when status is cancelled",
+      "cannot add or modify OrderItems after status is sentToKitchen or beyond",
+      "numberOfGuests must be greater than zero when provided"
     ],
     "valueObjects": [
       {
@@ -281,7 +281,8 @@ export const pipeline = [
     "dependsFiles": [],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_4.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/domainEntity.md",
       "_102034_.d.ts"
     ],
     "agent": "agentMaterializeGen"

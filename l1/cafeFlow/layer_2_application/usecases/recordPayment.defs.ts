@@ -26,13 +26,13 @@ export const recordPaymentUsecase = {
     ],
     "transactional": true,
     "steps": [
-      "Fetch Order via Order port to validate it exists and is in a payable status",
-      "Fetch DailyShift via DailyShift port to validate shift is OPEN",
-      "Apply paymentTimingByOrderType: validate payment timing matches order type rules (e.g., takeout must be prepaid)",
-      "Create Payment with orderId, amount, method, and shift reference",
-      "Persist Payment via Payment port",
-      "Update Order payment status if fully paid",
-      "Return recorded payment"
+      "Read Order by id via Order port to validate it exists and is payable",
+      "Read DailyShift via DailyShift port to validate shift is OPEN",
+      "Apply paymentTimingByOrderType rule to validate payment is allowed at this stage for the order type",
+      "Create Payment entity with amount, method, order reference, dailyShift reference",
+      "Validate payment amount does not exceed Order.totalAmount (or remaining balance)",
+      "Persist Payment within transaction",
+      "Return created Payment with id and updated order balance"
     ]
   }
 } as const;
@@ -55,7 +55,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_3.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
     ],
     "rulesApplied": [

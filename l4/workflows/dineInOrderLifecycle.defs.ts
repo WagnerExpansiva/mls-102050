@@ -108,7 +108,7 @@ export const workflowDineInOrderLifecycle = {
       "priority": "now"
     }
   ],
-  "statusFrontend": "done",
+  "statusFrontend": "toCreate",
   "statusBackend": "done"
 } as const;
 

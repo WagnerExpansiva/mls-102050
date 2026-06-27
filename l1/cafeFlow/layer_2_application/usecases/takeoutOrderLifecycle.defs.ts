@@ -22,18 +22,19 @@ export const takeoutOrderLifecycleUsecase = {
     ],
     "rulesApplied": [
       "orderStatusTransitions",
-      "paymentTimingByOrderType"
+      "paymentTimingByOrderType",
+      "ingredientConsumptionTrigger"
     ],
     "transactional": true,
     "steps": [
-      "Validate DailyShift is OPEN via DailyShift port",
-      "Create Order with orderType=TAKEOUT, status=OPEN via Order port (no table assignment needed)",
-      "Add OrderItems to the order (delegates to addOrderItem logic)",
-      "Process payment upfront per paymentTimingByOrderType (takeout = prepaid)",
-      "Transition order to SENT and create KitchenTicket",
-      "On kitchen readiness, transition items to READY",
-      "Customer picks up; transition order to CLOSED",
-      "Return completed order lifecycle result"
+      "Step 1 - Create Order: validate open DailyShift, set orderType=TAKEOUT, status=OPEN (no Table assignment needed)",
+      "Step 2 - Add Items: add OrderItems with MenuItem references, recalculate totals",
+      "Step 3 - Payment: apply paymentTimingByOrderType (TAKEOUT may require payment upfront), record Payment(s)",
+      "Step 4 - Confirm Order: transition status OPEN -> CONFIRMED (orderStatusTransitions), trigger ingredientConsumptionTrigger",
+      "Step 5 - Kitchen: create KitchenTicket, track preparation through statuses",
+      "Step 6 - Ready: transition all OrderItems to READY, notify customer for pickup",
+      "Step 7 - Close: transition Order to CLOSED after pickup confirmation",
+      "Return final Order state with full lifecycle summary"
     ]
   }
 } as const;
@@ -54,12 +55,14 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_3.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
     ],
     "rulesApplied": [
       "orderStatusTransitions",
-      "paymentTimingByOrderType"
+      "paymentTimingByOrderType",
+      "ingredientConsumptionTrigger"
     ],
     "agent": "agentMaterializeGen"
   }

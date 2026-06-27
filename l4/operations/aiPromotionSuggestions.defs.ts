@@ -29,7 +29,7 @@ export const operationAiPromotionSuggestions = {
     "actor": "manager",
     "priority": "soon"
   },
-  "statusFrontend": "done",
+  "statusFrontend": "toCreate",
   "statusBackend": "done"
 } as const;
 

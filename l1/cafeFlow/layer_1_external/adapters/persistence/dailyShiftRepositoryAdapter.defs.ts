@@ -12,15 +12,14 @@ export const dailyShiftRepositoryAdapter = {
     "planId": ""
   },
   "data": {
-    "className": "DailyShiftRepositoryAdapter",
+    "className": "DailyShiftRepository",
     "entityId": "DailyShift",
     "portRef": "IDailyShiftRepository",
     "tableRef": "daily_shifts",
-    "mdmReads": [],
     "notes": [
-      "Maps aggregate root scalars to real columns; non-indexed fields and CashMovement[] to details JSONB",
-      "No MDM refs",
-      "ctx.data available for persistence context"
+      "Real columns: daily_shift_id, status, created_at",
+      "Details JSONB: shift_date, opened_at, closed_at, opening_cash_balance, closing_cash_balance, total_sales, total_payments, closing_notes, updated_at, cash_movements (embedded CashMovement[])",
+      "ctx.data used for row<->domain mapping"
     ]
   }
 } as const;
@@ -40,7 +39,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_4.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/repositoryAdapter.md",
       "_102034_.d.ts"
     ],
     "agent": "agentMaterializeGen"

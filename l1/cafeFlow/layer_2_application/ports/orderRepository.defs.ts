@@ -17,44 +17,45 @@ export const orderRepositoryPort = {
     "methods": [
       {
         "name": "getById",
+        "returns": "Order | null",
         "params": [
-          "id: OrderId"
-        ],
-        "returns": "Order"
+          "orderId: OrderId"
+        ]
       },
       {
         "name": "list",
+        "returns": "Order[]",
         "params": [
           "filter: OrderFilter"
-        ],
-        "returns": "Order[]"
+        ]
       },
       {
         "name": "save",
+        "returns": "void",
         "params": [
           "order: Order"
-        ],
-        "returns": "void"
+        ]
       },
       {
-        "name": "findActiveByTable",
+        "name": "findByTable",
+        "returns": "Order[]",
         "params": [
           "tableId: TableId"
-        ],
-        "returns": "Order[]"
+        ]
       },
       {
-        "name": "findByDateRange",
+        "name": "findByStatus",
+        "returns": "Order[]",
         "params": [
-          "start: OrderDate",
-          "end: OrderDate"
-        ],
-        "returns": "Order[]"
+          "status: OrderStatus"
+        ]
       },
       {
-        "name": "findWithPendingKitchenTickets",
-        "params": [],
-        "returns": "Order[]"
+        "name": "findOpenByTable",
+        "returns": "Order | null",
+        "params": [
+          "tableId: TableId"
+        ]
       }
     ]
   }
@@ -73,7 +74,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_3.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/repositoryPort.md",
       "_102034_.d.ts"
     ],
     "agent": "agentMaterializeGen"

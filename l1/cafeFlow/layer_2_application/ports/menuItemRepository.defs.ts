@@ -17,43 +17,36 @@ export const menuItemRepositoryPort = {
     "methods": [
       {
         "name": "getById",
+        "returns": "MenuItem | null",
         "params": [
-          "id: MenuItemId"
-        ],
-        "returns": "MenuItem"
+          "menuItemId: MenuItemId"
+        ]
       },
       {
         "name": "list",
+        "returns": "MenuItem[]",
         "params": [
           "filter: MenuItemFilter"
-        ],
-        "returns": "MenuItem[]"
+        ]
       },
       {
         "name": "save",
+        "returns": "void",
         "params": [
           "menuItem: MenuItem"
-        ],
-        "returns": "void"
+        ]
       },
       {
         "name": "findByCategory",
+        "returns": "MenuItem[]",
         "params": [
-          "category: Category"
-        ],
-        "returns": "MenuItem[]"
+          "categoryId: CategoryId"
+        ]
       },
       {
         "name": "findAvailable",
-        "params": [],
-        "returns": "MenuItem[]"
-      },
-      {
-        "name": "findByName",
-        "params": [
-          "name: MenuItemName"
-        ],
-        "returns": "MenuItem | null"
+        "returns": "MenuItem[]",
+        "params": []
       }
     ]
   }
@@ -72,7 +65,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_3.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/repositoryPort.md",
       "_102034_.d.ts"
     ],
     "agent": "agentMaterializeGen"

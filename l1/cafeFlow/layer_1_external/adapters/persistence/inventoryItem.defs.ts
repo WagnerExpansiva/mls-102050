@@ -17,27 +17,27 @@ export const inventoryItemTableDefinition = {
     "columns": [
       {
         "name": "inventory_item_id",
-        "type": "string",
+        "type": "uuid",
         "nullable": false,
-        "description": "pk/fk"
+        "description": "PK/FK identifier for inventory item"
       },
       {
         "name": "status",
-        "type": "string",
+        "type": "varchar",
         "nullable": false,
-        "description": "status"
+        "description": "Status of the inventory item"
       },
       {
         "name": "created_at",
         "type": "timestamp",
         "nullable": false,
-        "description": "ordering"
+        "description": "Creation timestamp for ordering"
       },
       {
         "name": "details",
         "type": "jsonb",
         "nullable": true,
-        "description": "name, description, unit, currentQuantity, minimumLevel, updatedAt"
+        "description": "Contains name, description, unit, currentQuantity, minimumLevel, updatedAt"
       }
     ],
     "primaryKey": [
@@ -80,7 +80,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_1.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/persistenceTable.md",
       "_102034_.d.ts"
     ],
     "afterSaveBackEnd": "_102021_/l2/agentMaterializeSolution/registerBackEnd.ts?registerLayer1",

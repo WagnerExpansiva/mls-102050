@@ -19,10 +19,11 @@ export const manageTablesUsecase = {
     "ports": [],
     "transactional": true,
     "steps": [
-      "Perform CRUD operation on Table (create/update/delete)",
-      "Validate table number uniqueness and capacity fields",
-      "Apply tableOccupancyConsistency: prevent deletion or status change if table has active orders",
-      "Persist changes and return updated Table(s)"
+      "Validate Table fields: number/label, capacity, area/zone",
+      "Apply tableOccupancyConsistency rule: ensure no active Orders reference a table being deleted or deactivated",
+      "Create/Update/Delete Table entity",
+      "Persist within transaction",
+      "Return created/updated Table with current status"
     ]
   }
 } as const;
@@ -38,7 +39,8 @@ export const pipeline = [
     "dependsFiles": [],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_3.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
     ],
     "agent": "agentMaterializeGen"

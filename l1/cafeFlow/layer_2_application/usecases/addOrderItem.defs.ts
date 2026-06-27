@@ -26,12 +26,13 @@ export const addOrderItemUsecase = {
     ],
     "transactional": true,
     "steps": [
-      "Validate order exists and is in an editable status (OPEN or SENT) per orderStatusTransitions",
-      "Fetch MenuItem by id to validate availability and current price",
-      "Create OrderItem with quantity, notes, and unit price snapshot from MenuItem",
-      "Add OrderItem to Order aggregate and recompute Order.totalAmount",
-      "Persist Order with new OrderItem via Order port",
-      "If order status triggers ingredient consumption, enqueue stock consumption for the new item"
+      "Validate order exists and is in a status that allows adding items (OPEN or similar) via Order port",
+      "Validate referenced MenuItem exists and is available via MenuItem port",
+      "Create OrderItem entity with quantity, notes, and unit price from MenuItem",
+      "Add OrderItem to Order aggregate and recalculate Order.totalAmount",
+      "Persist Order (with new OrderItem) via Order port within transaction",
+      "If ingredientConsumptionTrigger applies, enqueue or create StockConsumption for the new item",
+      "Return created OrderItem with id and computed totals"
     ]
   }
 } as const;
@@ -52,7 +53,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_3.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
     ],
     "rulesApplied": [

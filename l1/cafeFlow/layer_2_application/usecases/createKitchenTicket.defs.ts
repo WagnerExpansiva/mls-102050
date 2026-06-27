@@ -24,13 +24,12 @@ export const createKitchenTicketUsecase = {
     ],
     "transactional": true,
     "steps": [
-      "Fetch Order and its OrderItems via Order port",
-      "Validate order status allows kitchen ticket creation per orderStatusTransitions (must be SENT or beyond)",
+      "Read Order and its OrderItems via Order port",
+      "Validate Order status allows kitchen ticket creation per orderStatusTransitions rule",
       "Filter OrderItems that require kitchen preparation",
-      "Create KitchenTicket with line items mapped from OrderItems",
-      "Set KitchenTicket status to PENDING",
-      "Persist KitchenTicket",
-      "Return created ticket"
+      "Create KitchenTicket entity with items, order reference, and initial status=PENDING",
+      "Persist KitchenTicket within transaction",
+      "Return created KitchenTicket with id and item list"
     ]
   }
 } as const;
@@ -49,7 +48,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_3.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
     ],
     "rulesApplied": [

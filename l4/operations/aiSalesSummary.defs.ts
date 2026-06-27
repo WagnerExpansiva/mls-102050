@@ -36,7 +36,7 @@ export const operationAiSalesSummary = {
     "actor": "manager",
     "priority": "soon"
   },
-  "statusFrontend": "done",
+  "statusFrontend": "toCreate",
   "statusBackend": "done"
 } as const;
 

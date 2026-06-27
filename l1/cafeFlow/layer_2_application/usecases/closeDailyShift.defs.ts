@@ -27,15 +27,15 @@ export const closeDailyShiftUsecase = {
     ],
     "transactional": true,
     "steps": [
-      "Fetch DailyShift via DailyShift port and validate status is OPEN",
-      "Verify all Orders for the shift are CLOSED or CANCELLED via Order port",
-      "Reconcile all Payments via Payment port against order totals",
-      "Apply paymentTimingByOrderType to validate payment completeness per order type",
-      "Calculate closingCashBalance from openingCashBalance + cash payments + cash movements",
-      "Select language via aiOutputLanguageSelection for closing notes",
-      "Update DailyShift: status=CLOSED, closedAt=now, closingCashBalance, closingNotes, totalSales, totalPayments",
-      "Persist DailyShift via DailyShift port",
-      "Return closed shift summary"
+      "Read DailyShift by id via DailyShift port and validate it is OPEN",
+      "Read all Orders for the shift via Order port and validate all are CLOSED or CANCELLED",
+      "Read all Payments and CashMovements for the shift via Payment port",
+      "Apply paymentTimingByOrderType rule to reconcile payments by order type",
+      "Compute closingCashBalance, totalSales, totalPayments, and variance",
+      "Apply aiOutputLanguageSelection rule for closing notes language",
+      "Update DailyShift: status=CLOSED, closedAt, closingCashBalance, closingNotes, totals",
+      "Persist DailyShift within transaction",
+      "Return closed DailyShift with reconciliation summary"
     ]
   }
 } as const;
@@ -58,7 +58,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_3.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
     ],
     "rulesApplied": [

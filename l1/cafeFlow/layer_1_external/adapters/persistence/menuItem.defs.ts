@@ -17,33 +17,33 @@ export const menuItemTableDefinition = {
     "columns": [
       {
         "name": "menu_item_id",
-        "type": "string",
+        "type": "uuid",
         "nullable": false,
-        "description": "pk/fk"
+        "description": "PK/FK identifier for menu item"
       },
       {
         "name": "menu_category_id",
-        "type": "string",
+        "type": "uuid",
         "nullable": false,
-        "description": "pk/fk"
+        "description": "FK to menu category"
       },
       {
         "name": "status",
-        "type": "string",
+        "type": "varchar",
         "nullable": false,
-        "description": "status"
+        "description": "Status of the menu item"
       },
       {
         "name": "created_at",
         "type": "timestamp",
         "nullable": false,
-        "description": "ordering"
+        "description": "Creation timestamp for ordering"
       },
       {
         "name": "details",
         "type": "jsonb",
         "nullable": true,
-        "description": "name, description, price, updatedAt"
+        "description": "Contains name, description, price, updatedAt and child collection RecipeComponent"
       }
     ],
     "primaryKey": [
@@ -95,7 +95,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_1.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/persistenceTable.md",
       "_102034_.d.ts"
     ],
     "afterSaveBackEnd": "_102021_/l2/agentMaterializeSolution/registerBackEnd.ts?registerLayer1",

@@ -35,7 +35,7 @@ export const operationRecordOpeningCashMovement = {
     "actor": "cashier",
     "priority": "now"
   },
-  "statusFrontend": "done",
+  "statusFrontend": "toCreate",
   "statusBackend": "done"
 } as const;
 

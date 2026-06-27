@@ -27,14 +27,14 @@ export const generateShiftCloseReportUsecase = {
     ],
     "transactional": false,
     "steps": [
-      "Fetch DailyShift by id via DailyShift port including openingCashBalance, closingCashBalance, openedAt, closedAt, status",
-      "Read all Payments for the shift via Payment port",
-      "Read all Orders and OrderItems for the shift via Order port",
-      "Apply paymentTimingByOrderType to categorize payments by order type",
-      "Select report language via aiOutputLanguageSelection",
-      "Calculate totalSales, totalPayments, cash reconciliation, and variance",
-      "Compile closingNotes and summary metrics",
-      "Return structured shift close report"
+      "Read DailyShift by id via DailyShift port",
+      "Read all Payments for the shift period via Payment port",
+      "Read all closed Orders for the shift via Order port",
+      "Apply paymentTimingByOrderType rule to categorize payments by order type",
+      "Apply aiOutputLanguageSelection rule for report language",
+      "Compute totalSales, totalPayments, cash reconciliation, and variance",
+      "Generate structured report with sections: sales summary, payment breakdown, cash movements, notes",
+      "Return report with metrics and narrative summary"
     ]
   }
 } as const;
@@ -57,7 +57,8 @@ export const pipeline = [
     ],
     "dependsOn": [],
     "skills": [
-      "_102021_/l2/skills/layer_3.md",
+      "_102021_/l2/agentChangeBackend/skills/architecture.md",
+      "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
     ],
     "rulesApplied": [
