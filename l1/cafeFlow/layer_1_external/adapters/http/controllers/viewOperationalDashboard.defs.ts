@@ -14,8 +14,22 @@ export const viewOperationalDashboardController = {
   "data": {
     "pageId": "viewOperationalDashboard",
     "controllerName": "ViewOperationalDashboardController",
-    "handlers": [],
-    "routes": []
+    "ownerKind": "operation",
+    "outputSource": "usecase",
+    "handlers": [
+      {
+        "handlerName": "cafeFlowViewOperationalDashboardHandler",
+        "command": "viewOperationalDashboard",
+        "usecaseRef": "viewOperationalDashboard",
+        "kind": "query"
+      }
+    ],
+    "routes": [
+      {
+        "key": "cafeFlow.viewOperationalDashboard.viewOperationalDashboard",
+        "handlerName": "cafeFlowViewOperationalDashboardHandler"
+      }
+    ]
   }
 } as const;
 
@@ -28,7 +42,7 @@ export const pipeline = [
     "outputPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/viewOperationalDashboard.ts",
     "defPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/viewOperationalDashboard.defs.ts",
     "dependsFiles": [
-      "_102050_/l2/cafeFlow/web/contracts/viewOperationalDashboard.ts"
+      "_102050_/l1/cafeFlow/layer_2_application/usecases/viewOperationalDashboard.d.ts"
     ],
     "dependsOn": [],
     "skills": [

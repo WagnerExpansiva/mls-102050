@@ -26,13 +26,13 @@ export const recordPaymentUsecase = {
     ],
     "transactional": true,
     "steps": [
-      "Read Order by id via Order port to validate it exists and is payable",
-      "Read DailyShift via DailyShift port to validate shift is OPEN",
-      "Apply paymentTimingByOrderType rule to validate payment is allowed at this stage for the order type",
-      "Create Payment entity with amount, method, order reference, dailyShift reference",
-      "Validate payment amount does not exceed Order.totalAmount (or remaining balance)",
-      "Persist Payment within transaction",
-      "Return created Payment with id and updated order balance"
+      "Read Order via Order port to verify it exists and accepts payments",
+      "Read DailyShift via DailyShift port to verify shift is OPEN",
+      "Apply paymentTimingByOrderType rule to validate payment timing is allowed for orderType",
+      "Create Payment entity linked to Order and DailyShift",
+      "Persist Payment via Payment port",
+      "Update Order payment status if fully paid",
+      "Return recorded payment"
     ]
   }
 } as const;

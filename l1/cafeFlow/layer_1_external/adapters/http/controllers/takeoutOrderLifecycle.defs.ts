@@ -14,8 +14,22 @@ export const takeoutOrderLifecycleController = {
   "data": {
     "pageId": "takeoutOrderLifecycle",
     "controllerName": "TakeoutOrderLifecycleController",
-    "handlers": [],
-    "routes": []
+    "ownerKind": "workflow",
+    "outputSource": "usecase",
+    "handlers": [
+      {
+        "handlerName": "cafeFlowTakeoutOrderLifecycleHandler",
+        "command": "takeoutOrderLifecycle",
+        "usecaseRef": "takeoutOrderLifecycle",
+        "kind": "command"
+      }
+    ],
+    "routes": [
+      {
+        "key": "cafeFlow.takeoutOrderLifecycle.takeoutOrderLifecycle",
+        "handlerName": "cafeFlowTakeoutOrderLifecycleHandler"
+      }
+    ]
   }
 } as const;
 
@@ -28,7 +42,7 @@ export const pipeline = [
     "outputPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/takeoutOrderLifecycle.ts",
     "defPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/takeoutOrderLifecycle.defs.ts",
     "dependsFiles": [
-      "_102050_/l2/cafeFlow/web/contracts/takeoutOrderLifecycle.ts"
+      "_102050_/l1/cafeFlow/layer_2_application/usecases/takeoutOrderLifecycle.d.ts"
     ],
     "dependsOn": [],
     "skills": [

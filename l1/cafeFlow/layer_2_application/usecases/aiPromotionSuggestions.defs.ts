@@ -23,11 +23,11 @@ export const aiPromotionSuggestionsUsecase = {
     "rulesApplied": [],
     "transactional": false,
     "steps": [
-      "Read recent OrderItem history via Order port to identify top-selling and slow-moving items",
-      "Read MenuItem catalog via MenuItem port for pricing and category context",
-      "Aggregate sales data by MenuItem and time window",
-      "Generate promotion suggestions (bundles, discounts, featured items) based on sales patterns",
-      "Return structured list of promotion suggestions with rationale"
+      "Read recent OrderItem history via Order port",
+      "Read MenuItem catalog via MenuItem port",
+      "Aggregate sales frequency and revenue per MenuItem",
+      "Generate promotion suggestions based on sales patterns",
+      "Return structured suggestion list"
     ]
   }
 } as const;

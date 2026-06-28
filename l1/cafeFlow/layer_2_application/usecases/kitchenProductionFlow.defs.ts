@@ -20,18 +20,17 @@ export const kitchenProductionFlowUsecase = {
       "Order"
     ],
     "rulesApplied": [
-      "orderStatusTransitions"
+      "orderStatusTransitions",
+      "ingredientConsumptionTrigger"
     ],
     "transactional": true,
     "steps": [
-      "Step 1 - Receive: read confirmed Order and its OrderItems via Order port",
-      "Step 2 - Create Tickets: generate KitchenTicket(s) grouped by preparation station",
-      "Step 3 - Start Production: transition KitchenTicket status PENDING -> IN_PROGRESS (orderStatusTransitions)",
-      "Step 4 - Item Completion: as each item finishes, update OrderItem status to READY",
-      "Step 5 - Ticket Completion: when all items on a ticket are READY, transition ticket to READY",
-      "Step 6 - Serve: transition OrderItem READY -> SERVED, mark KitchenTicket COMPLETED",
-      "Step 7 - Verify: confirm all KitchenTickets are COMPLETED before allowing Order to close",
-      "Return production flow summary with ticket and item status timeline"
+      "Step 1 — Receive Order: read Order and its OrderItems via Order port",
+      "Step 2 — Create Ticket: invoke createKitchenTicket (apply orderStatusTransitions)",
+      "Step 3 — Track Progress: invoke updateOrderItemStatus as each item progresses (PENDING → IN_PROGRESS → READY)",
+      "Step 4 — Update Ticket: invoke updateKitchenTicketStatus when all items are READY (apply orderStatusTransitions)",
+      "Step 5 — Trigger Consumption: apply ingredientConsumptionTrigger rule when items are confirmed",
+      "Return production flow result with ticket and item statuses"
     ]
   }
 } as const;
@@ -55,7 +54,8 @@ export const pipeline = [
       "_102034_.d.ts"
     ],
     "rulesApplied": [
-      "orderStatusTransitions"
+      "orderStatusTransitions",
+      "ingredientConsumptionTrigger"
     ],
     "agent": "agentMaterializeGen"
   }

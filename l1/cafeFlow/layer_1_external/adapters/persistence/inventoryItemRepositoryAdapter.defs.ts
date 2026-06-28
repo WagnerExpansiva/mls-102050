@@ -12,14 +12,13 @@ export const inventoryItemRepositoryAdapter = {
     "planId": ""
   },
   "data": {
-    "className": "InventoryItemRepository",
     "entityId": "InventoryItem",
+    "className": "InventoryItemRepository",
     "portRef": "IInventoryItemRepository",
     "tableRef": "inventory_items",
     "notes": [
-      "Real columns: inventory_item_id, status, created_at",
-      "Details JSONB: name, description, unit, current_quantity, minimum_level, updated_at",
-      "ctx.data used for row<->domain mapping"
+      "columns: inventory_item_id, status, created_at",
+      "details JSONB: name, description, unit, currentQuantity, minimumLevel, updatedAt"
     ]
   }
 } as const;

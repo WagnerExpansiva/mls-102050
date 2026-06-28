@@ -25,12 +25,13 @@ export const manageInventoryItemsUsecase = {
     ],
     "transactional": true,
     "steps": [
-      "Read existing InventoryItem by id (for update) or list all (for browse) via InventoryItem port",
-      "For create/update: validate name, unit, minimumLevel, currentQuantity fields",
-      "Apply inventoryLowStockThreshold rule to set status (OK, LOW, CRITICAL) based on currentQuantity vs minimumLevel",
-      "If ingredientConsumptionTrigger context applies, validate no pending consumptions conflict",
-      "Persist InventoryItem changes within transaction",
-      "Return created/updated InventoryItem with computed status"
+      "Read existing InventoryItem via InventoryItem port (for updates)",
+      "Validate input fields (name, unit, currentQuantity, minimumLevel)",
+      "Create or update InventoryItem entity",
+      "Apply inventoryLowStockThreshold rule to set status=LOW_STOCK if below minimumLevel",
+      "Apply ingredientConsumptionTrigger rule to verify item is not locked by pending consumptions",
+      "Persist InventoryItem via InventoryItem port",
+      "Return updated item"
     ]
   }
 } as const;

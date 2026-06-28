@@ -24,13 +24,12 @@ export const manageMenuItemsUsecase = {
     ],
     "transactional": true,
     "steps": [
-      "Read existing MenuItem by id (for update) or list all (for browse) via MenuItem port",
-      "Validate MenuItem fields: name, price, category, availability",
+      "Read existing MenuItem via MenuItem port (for updates)",
+      "Validate referenced MenuCategory exists",
       "Apply aiOutputLanguageSelection rule for localized name/description fields",
-      "For create: assign to MenuCategory and set initial availability",
-      "For update: validate category exists and price is positive",
-      "Persist MenuItem within transaction",
-      "Return created/updated MenuItem with category reference"
+      "Create or update MenuItem entity",
+      "Persist MenuItem via MenuItem port",
+      "Return updated item"
     ]
   }
 } as const;

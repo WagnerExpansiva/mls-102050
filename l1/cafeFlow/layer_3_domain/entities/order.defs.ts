@@ -140,7 +140,8 @@ export const orderDomainEntity = {
       "status transitions must follow: draft -> sentToKitchen -> inPreparation -> ready -> served -> closed; any state can go to cancelled",
       "closedAt must be set when status is closed",
       "cancelledAt and cancellationReason must be set when status is cancelled",
-      "cannot add or modify OrderItems after status is sentToKitchen or beyond",
+      "cannot modify OrderItems after status is sentToKitchen",
+      "dailyShift must be open when Order is created",
       "numberOfGuests must be greater than zero when provided"
     ],
     "valueObjects": [

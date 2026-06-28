@@ -17,13 +17,16 @@ export const manageTablesUsecase = {
     "inputTypeName": "ManageTablesInput",
     "outputTypeName": "ManageTablesOutput",
     "ports": [],
+    "rulesApplied": [
+      "tableOccupancyConsistency"
+    ],
     "transactional": true,
     "steps": [
-      "Validate Table fields: number/label, capacity, area/zone",
-      "Apply tableOccupancyConsistency rule: ensure no active Orders reference a table being deleted or deactivated",
-      "Create/Update/Delete Table entity",
-      "Persist within transaction",
-      "Return created/updated Table with current status"
+      "Read existing Table (for updates)",
+      "Apply tableOccupancyConsistency rule to prevent changes that conflict with active orders",
+      "Create or update Table entity",
+      "Persist via repository",
+      "Return table"
     ]
   }
 } as const;
@@ -42,6 +45,9 @@ export const pipeline = [
       "_102021_/l2/agentChangeBackend/skills/architecture.md",
       "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
+    ],
+    "rulesApplied": [
+      "tableOccupancyConsistency"
     ],
     "agent": "agentMaterializeGen"
   }

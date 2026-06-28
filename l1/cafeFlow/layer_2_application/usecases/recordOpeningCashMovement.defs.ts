@@ -19,13 +19,14 @@ export const recordOpeningCashMovementUsecase = {
     "ports": [
       "DailyShift"
     ],
+    "rulesApplied": [],
     "transactional": true,
     "steps": [
       "Validate DailyShift exists and is OPEN via DailyShift port",
-      "Create CashMovement entity with movementType=OPENING, amount, reason, dailyShiftId",
-      "Update DailyShift.openingCashBalance with the movement amount",
-      "Persist CashMovement and updated DailyShift within transaction",
-      "Return created CashMovement with id and updated shift balance"
+      "Create CashMovement entity with movementType=OPENING, amount, reason",
+      "Link CashMovement to dailyShiftId",
+      "Persist CashMovement",
+      "Return created movement"
     ]
   }
 } as const;

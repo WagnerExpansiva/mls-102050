@@ -14,8 +14,22 @@ export const generateShiftCloseReportController = {
   "data": {
     "pageId": "generateShiftCloseReport",
     "controllerName": "GenerateShiftCloseReportController",
-    "handlers": [],
-    "routes": []
+    "ownerKind": "operation",
+    "outputSource": "usecase",
+    "handlers": [
+      {
+        "handlerName": "cafeFlowGenerateShiftCloseReportHandler",
+        "command": "generateShiftCloseReport",
+        "usecaseRef": "generateShiftCloseReport",
+        "kind": "query"
+      }
+    ],
+    "routes": [
+      {
+        "key": "cafeFlow.generateShiftCloseReport.generateShiftCloseReport",
+        "handlerName": "cafeFlowGenerateShiftCloseReportHandler"
+      }
+    ]
   }
 } as const;
 
@@ -28,7 +42,7 @@ export const pipeline = [
     "outputPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/generateShiftCloseReport.ts",
     "defPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/generateShiftCloseReport.defs.ts",
     "dependsFiles": [
-      "_102050_/l2/cafeFlow/web/contracts/generateShiftCloseReport.ts"
+      "_102050_/l1/cafeFlow/layer_2_application/usecases/generateShiftCloseReport.d.ts"
     ],
     "dependsOn": [],
     "skills": [

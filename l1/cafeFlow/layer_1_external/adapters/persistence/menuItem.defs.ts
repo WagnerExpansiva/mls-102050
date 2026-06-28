@@ -19,7 +19,7 @@ export const menuItemTableDefinition = {
         "name": "menu_item_id",
         "type": "uuid",
         "nullable": false,
-        "description": "PK/FK identifier for menu item"
+        "description": "PK/FK identifier"
       },
       {
         "name": "menu_category_id",
@@ -31,19 +31,19 @@ export const menuItemTableDefinition = {
         "name": "status",
         "type": "varchar",
         "nullable": false,
-        "description": "Status of the menu item"
+        "description": "Status field"
       },
       {
         "name": "created_at",
         "type": "timestamp",
         "nullable": false,
-        "description": "Creation timestamp for ordering"
+        "description": "Ordering timestamp"
       },
       {
         "name": "details",
         "type": "jsonb",
         "nullable": true,
-        "description": "Contains name, description, price, updatedAt and child collection RecipeComponent"
+        "description": "Contains: name, description, price, updatedAt"
       }
     ],
     "primaryKey": [

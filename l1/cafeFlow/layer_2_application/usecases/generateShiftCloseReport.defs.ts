@@ -27,14 +27,14 @@ export const generateShiftCloseReportUsecase = {
     ],
     "transactional": false,
     "steps": [
-      "Read DailyShift by id via DailyShift port",
-      "Read all Payments for the shift period via Payment port",
-      "Read all closed Orders for the shift via Order port",
-      "Apply paymentTimingByOrderType rule to categorize payments by order type",
+      "Read DailyShift via DailyShift port",
+      "Read all Payments for the shift via Payment port",
+      "Read all Orders for the shift via Order port",
+      "Read OrderItems for revenue breakdown",
+      "Apply paymentTimingByOrderType rule to categorize payments",
+      "Compute totalSales, totalPayments, cash reconciliation",
       "Apply aiOutputLanguageSelection rule for report language",
-      "Compute totalSales, totalPayments, cash reconciliation, and variance",
-      "Generate structured report with sections: sales summary, payment breakdown, cash movements, notes",
-      "Return report with metrics and narrative summary"
+      "Return structured shift close report"
     ]
   }
 } as const;

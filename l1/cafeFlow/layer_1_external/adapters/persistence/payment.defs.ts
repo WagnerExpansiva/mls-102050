@@ -19,7 +19,7 @@ export const paymentTableDefinition = {
         "name": "payment_id",
         "type": "uuid",
         "nullable": false,
-        "description": "PK/FK identifier for payment"
+        "description": "PK/FK identifier"
       },
       {
         "name": "order_id",
@@ -37,19 +37,19 @@ export const paymentTableDefinition = {
         "name": "status",
         "type": "varchar",
         "nullable": false,
-        "description": "Status of the payment"
+        "description": "Status field"
       },
       {
         "name": "created_at",
         "type": "timestamp",
         "nullable": false,
-        "description": "Creation timestamp for ordering"
+        "description": "Ordering timestamp"
       },
       {
         "name": "details",
         "type": "jsonb",
         "nullable": true,
-        "description": "Contains method, amount, updatedAt"
+        "description": "Contains: method, amount, updatedAt"
       }
     ],
     "primaryKey": [

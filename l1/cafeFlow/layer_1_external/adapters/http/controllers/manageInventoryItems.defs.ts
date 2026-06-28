@@ -14,8 +14,22 @@ export const manageInventoryItemsController = {
   "data": {
     "pageId": "manageInventoryItems",
     "controllerName": "ManageInventoryItemsController",
-    "handlers": [],
-    "routes": []
+    "ownerKind": "operation",
+    "outputSource": "usecase",
+    "handlers": [
+      {
+        "handlerName": "cafeFlowManageInventoryItemsHandler",
+        "command": "manageInventoryItems",
+        "usecaseRef": "manageInventoryItems",
+        "kind": "update"
+      }
+    ],
+    "routes": [
+      {
+        "key": "cafeFlow.manageInventoryItems.manageInventoryItems",
+        "handlerName": "cafeFlowManageInventoryItemsHandler"
+      }
+    ]
   }
 } as const;
 
@@ -28,7 +42,7 @@ export const pipeline = [
     "outputPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/manageInventoryItems.ts",
     "defPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/manageInventoryItems.defs.ts",
     "dependsFiles": [
-      "_102050_/l2/cafeFlow/web/contracts/manageInventoryItems.ts"
+      "_102050_/l1/cafeFlow/layer_2_application/usecases/manageInventoryItems.d.ts"
     ],
     "dependsOn": [],
     "skills": [

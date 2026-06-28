@@ -14,8 +14,22 @@ export const aiPromotionSuggestionsController = {
   "data": {
     "pageId": "aiPromotionSuggestions",
     "controllerName": "AiPromotionSuggestionsController",
-    "handlers": [],
-    "routes": []
+    "ownerKind": "operation",
+    "outputSource": "usecase",
+    "handlers": [
+      {
+        "handlerName": "cafeFlowAiPromotionSuggestionsHandler",
+        "command": "aiPromotionSuggestions",
+        "usecaseRef": "aiPromotionSuggestions",
+        "kind": "query"
+      }
+    ],
+    "routes": [
+      {
+        "key": "cafeFlow.aiPromotionSuggestions.aiPromotionSuggestions",
+        "handlerName": "cafeFlowAiPromotionSuggestionsHandler"
+      }
+    ]
   }
 } as const;
 
@@ -28,7 +42,7 @@ export const pipeline = [
     "outputPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/aiPromotionSuggestions.ts",
     "defPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/aiPromotionSuggestions.defs.ts",
     "dependsFiles": [
-      "_102050_/l2/cafeFlow/web/contracts/aiPromotionSuggestions.ts"
+      "_102050_/l1/cafeFlow/layer_2_application/usecases/aiPromotionSuggestions.d.ts"
     ],
     "dependsOn": [],
     "skills": [

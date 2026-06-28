@@ -17,11 +17,11 @@ export const viewKitchenTicketsUsecase = {
     "inputTypeName": "ViewKitchenTicketsInput",
     "outputTypeName": "ViewKitchenTicketsOutput",
     "ports": [],
+    "rulesApplied": [],
     "transactional": false,
     "steps": [
-      "Read KitchenTickets filtered by status, date, or station",
-      "Sort by priority and creation time",
-      "Return list of KitchenTickets with item details and current status"
+      "Read KitchenTickets filtered by status/date via repository",
+      "Return list of tickets with associated order references"
     ]
   }
 } as const;

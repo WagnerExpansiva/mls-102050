@@ -17,14 +17,18 @@ export const updateOrderItemStatusUsecase = {
     "inputTypeName": "UpdateOrderItemStatusInput",
     "outputTypeName": "UpdateOrderItemStatusOutput",
     "ports": [],
+    "rulesApplied": [
+      "orderStatusTransitions",
+      "ingredientConsumptionTrigger"
+    ],
     "transactional": true,
     "steps": [
       "Read OrderItem by id",
-      "Apply orderStatusTransitions rule to validate item status transition (PENDING -> PREPARING -> READY -> SERVED)",
+      "Apply orderStatusTransitions rule to validate target status is reachable",
       "Update OrderItem.status and updatedAt",
-      "If ingredientConsumptionTrigger applies on status change to READY/SERVED, enqueue stock consumption",
-      "Persist within transaction",
-      "Return updated OrderItem with new status"
+      "If status transitions to CONFIRMED, apply ingredientConsumptionTrigger rule to enqueue stock consumption",
+      "Persist via repository",
+      "Return updated item"
     ]
   }
 } as const;
@@ -43,6 +47,10 @@ export const pipeline = [
       "_102021_/l2/agentChangeBackend/skills/architecture.md",
       "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
+    ],
+    "rulesApplied": [
+      "orderStatusTransitions",
+      "ingredientConsumptionTrigger"
     ],
     "agent": "agentMaterializeGen"
   }

@@ -27,13 +27,14 @@ export const viewOperationalDashboardUsecase = {
     ],
     "transactional": false,
     "steps": [
-      "Read current open DailyShift via DailyShift port",
-      "Read active and recent Orders for the shift via Order port",
+      "Read current DailyShift via DailyShift port",
+      "Read active Orders for the shift via Order port",
       "Read Payments for the shift via Payment port",
-      "Apply paymentTimingByOrderType rule to categorize revenue by order type",
-      "Apply aiOutputLanguageSelection rule for dashboard labels and language",
-      "Compute real-time metrics: open orders, kitchen load, revenue, table occupancy, payment totals",
-      "Return dashboard data structure with KPIs and breakdowns"
+      "Read CashMovements for the shift",
+      "Apply paymentTimingByOrderType rule to categorize revenue",
+      "Apply aiOutputLanguageSelection rule for dashboard labels",
+      "Compute real-time metrics: open orders, revenue, kitchen load",
+      "Return dashboard data structure"
     ]
   }
 } as const;

@@ -77,7 +77,7 @@ export const menuItemDomainEntity = {
       "price must be greater than zero",
       "name must not be empty",
       "status can only transition from draft to active, active to inactive, and inactive to active",
-      "cannot delete a MenuItem referenced by active OrderItems"
+      "cannot delete a MenuItem that is referenced by active Orders"
     ],
     "valueObjects": [
       {

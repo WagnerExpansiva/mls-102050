@@ -96,13 +96,15 @@ export const dailyShiftDomainEntity = {
       "closed"
     ],
     "invariants": [
-      "only one DailyShift per shiftDate may be open at a time",
+      "only one DailyShift can be open at a time",
       "status can only transition from open to closed",
       "closedAt must be set when status is closed",
       "closedAt must be after openedAt",
-      "openingCashBalance must be set when status is open",
-      "closingCashBalance and totalSales must be set when status is closed",
-      "cannot add CashMovements to a closed shift"
+      "cannot add Orders or CashMovements to a closed DailyShift",
+      "closingCashBalance must be set when status is closed",
+      "totalSales must equal the sum of all closed Order.totalAmount for this shift",
+      "totalPayments must equal the sum of all captured Payment.amount for this shift",
+      "openingCashBalance must be greater than or equal to zero"
     ],
     "valueObjects": [
       {

@@ -14,8 +14,22 @@ export const manageTablesController = {
   "data": {
     "pageId": "manageTables",
     "controllerName": "ManageTablesController",
-    "handlers": [],
-    "routes": []
+    "ownerKind": "operation",
+    "outputSource": "usecase",
+    "handlers": [
+      {
+        "handlerName": "cafeFlowManageTablesHandler",
+        "command": "manageTables",
+        "usecaseRef": "manageTables",
+        "kind": "update"
+      }
+    ],
+    "routes": [
+      {
+        "key": "cafeFlow.manageTables.manageTables",
+        "handlerName": "cafeFlowManageTablesHandler"
+      }
+    ]
   }
 } as const;
 
@@ -28,7 +42,7 @@ export const pipeline = [
     "outputPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/manageTables.ts",
     "defPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/manageTables.defs.ts",
     "dependsFiles": [
-      "_102050_/l2/cafeFlow/web/contracts/manageTables.ts"
+      "_102050_/l1/cafeFlow/layer_2_application/usecases/manageTables.d.ts"
     ],
     "dependsOn": [],
     "skills": [

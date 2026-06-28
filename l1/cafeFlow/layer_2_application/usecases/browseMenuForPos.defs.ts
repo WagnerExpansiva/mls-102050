@@ -24,10 +24,10 @@ export const browseMenuForPosUsecase = {
     ],
     "transactional": false,
     "steps": [
-      "Read all active MenuItem entries grouped by MenuCategory via MenuItem port",
-      "Apply aiOutputLanguageSelection rule to localize item names and descriptions",
-      "Filter out unavailable or inactive items",
-      "Return categorized menu tree with prices, images, and availability flags"
+      "Read all MenuItem entries grouped by MenuCategory via MenuItem port",
+      "Apply aiOutputLanguageSelection rule to localize item names/descriptions",
+      "Filter out unavailable items",
+      "Return structured menu tree for POS display"
     ]
   }
 } as const;

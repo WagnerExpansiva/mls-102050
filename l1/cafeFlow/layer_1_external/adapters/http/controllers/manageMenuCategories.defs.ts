@@ -14,8 +14,22 @@ export const manageMenuCategoriesController = {
   "data": {
     "pageId": "manageMenuCategories",
     "controllerName": "ManageMenuCategoriesController",
-    "handlers": [],
-    "routes": []
+    "ownerKind": "operation",
+    "outputSource": "usecase",
+    "handlers": [
+      {
+        "handlerName": "cafeFlowManageMenuCategoriesHandler",
+        "command": "manageMenuCategories",
+        "usecaseRef": "manageMenuCategories",
+        "kind": "update"
+      }
+    ],
+    "routes": [
+      {
+        "key": "cafeFlow.manageMenuCategories.manageMenuCategories",
+        "handlerName": "cafeFlowManageMenuCategoriesHandler"
+      }
+    ]
   }
 } as const;
 
@@ -28,7 +42,7 @@ export const pipeline = [
     "outputPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/manageMenuCategories.ts",
     "defPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/manageMenuCategories.defs.ts",
     "dependsFiles": [
-      "_102050_/l2/cafeFlow/web/contracts/manageMenuCategories.ts"
+      "_102050_/l1/cafeFlow/layer_2_application/usecases/manageMenuCategories.d.ts"
     ],
     "dependsOn": [],
     "skills": [

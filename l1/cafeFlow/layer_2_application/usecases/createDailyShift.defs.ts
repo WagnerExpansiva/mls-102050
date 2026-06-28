@@ -25,12 +25,12 @@ export const createDailyShiftUsecase = {
     ],
     "transactional": true,
     "steps": [
-      "Check no open DailyShift exists for the same shiftDate via DailyShift port",
+      "Validate no open DailyShift exists for the same shiftDate via DailyShift port",
       "Create DailyShift entity with shiftDate, openingCashBalance, openedAt, status=OPEN",
-      "Apply paymentTimingByOrderType rule to set expected payment flow configuration",
-      "Apply aiOutputLanguageSelection rule for default shift language",
-      "Persist DailyShift via DailyShift port within transaction",
-      "Return created DailyShift with generated dailyShiftId"
+      "Apply paymentTimingByOrderType rule to set expected payment flows",
+      "Apply aiOutputLanguageSelection rule for localized shift metadata",
+      "Persist DailyShift via DailyShift port",
+      "Return created shift with generated dailyShiftId"
     ]
   }
 } as const;
