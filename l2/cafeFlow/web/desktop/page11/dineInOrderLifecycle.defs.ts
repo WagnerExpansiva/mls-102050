@@ -25,7 +25,7 @@ export const definition = {
   "navigationRefs": [],
   "sections": [
     {
-      "id": "section-dineInOrderLifecycle",
+      "id": "section_dine_in_order_lifecycle",
       "type": "section",
       "sectionName": "Ciclo de pedido (mesa)",
       "titleKey": "section.dineInOrderLifecycle.title",
@@ -33,7 +33,7 @@ export const definition = {
       "order": 10,
       "organisms": [
         {
-          "id": "organism-createOrder",
+          "id": "org_create_order",
           "type": "organism",
           "organismName": "CreateOrder",
           "titleKey": "organism.createOrder.title",
@@ -58,7 +58,7 @@ export const definition = {
           "order": 10,
           "intentionRefs": [
             {
-              "id": "intention-createOrder-form",
+              "id": "intent_create_order_form",
               "intent": "commandForm",
               "action": "createOrder",
               "submitAction": "createOrder",
@@ -67,7 +67,7 @@ export const definition = {
           ]
         },
         {
-          "id": "organism-addOrderItem",
+          "id": "org_add_order_item",
           "type": "organism",
           "organismName": "AddOrderItem",
           "titleKey": "organism.addOrderItem.title",
@@ -90,7 +90,7 @@ export const definition = {
           "order": 20,
           "intentionRefs": [
             {
-              "id": "intention-addOrderItem-form",
+              "id": "intent_add_order_item_form",
               "intent": "commandForm",
               "action": "addOrderItem",
               "submitAction": "addOrderItem",
@@ -99,7 +99,7 @@ export const definition = {
           ]
         },
         {
-          "id": "organism-createKitchenTicket",
+          "id": "org_create_kitchen_ticket",
           "type": "organism",
           "organismName": "CreateKitchenTicket",
           "titleKey": "organism.createKitchenTicket.title",
@@ -120,7 +120,7 @@ export const definition = {
           "order": 30,
           "intentionRefs": [
             {
-              "id": "intention-createKitchenTicket-form",
+              "id": "intent_create_kitchen_ticket_form",
               "intent": "commandForm",
               "action": "createKitchenTicket",
               "submitAction": "createKitchenTicket",
@@ -129,7 +129,7 @@ export const definition = {
           ]
         },
         {
-          "id": "organism-updateOrderStatus",
+          "id": "org_update_order_status",
           "type": "organism",
           "organismName": "UpdateOrderStatus",
           "titleKey": "organism.updateOrderStatus.title",
@@ -169,7 +169,7 @@ export const definition = {
           "order": 40,
           "intentionRefs": [
             {
-              "id": "intention-updateOrderStatus-form",
+              "id": "intent_update_order_status_form",
               "intent": "commandForm",
               "action": "updateOrderStatus",
               "submitAction": "updateOrderStatus",
@@ -178,7 +178,7 @@ export const definition = {
           ]
         },
         {
-          "id": "organism-updateTableStatus",
+          "id": "org_update_table_status",
           "type": "organism",
           "organismName": "UpdateTableStatus",
           "titleKey": "organism.updateTableStatus.title",
@@ -200,7 +200,7 @@ export const definition = {
           "order": 50,
           "intentionRefs": [
             {
-              "id": "intention-updateTableStatus-form",
+              "id": "intent_update_table_status_form",
               "intent": "commandForm",
               "action": "updateTableStatus",
               "submitAction": "updateTableStatus",
@@ -212,11 +212,11 @@ export const definition = {
     }
   ],
   "layout": {
-    "id": "dineInOrderLifecycleLayout",
+    "id": "dineInOrderLifecycle.layout",
     "type": "page",
     "sections": [
       {
-        "id": "section-dineInOrderLifecycle",
+        "id": "section_dine_in_order_lifecycle",
         "type": "section",
         "sectionName": "Ciclo de pedido (mesa)",
         "titleKey": "section.dineInOrderLifecycle.title",
@@ -224,7 +224,7 @@ export const definition = {
         "order": 10,
         "organisms": [
           {
-            "id": "organism-createOrder",
+            "id": "org_create_order",
             "type": "organism",
             "organismName": "CreateOrder",
             "titleKey": "organism.createOrder.title",
@@ -249,98 +249,98 @@ export const definition = {
             "order": 10,
             "intentions": [
               {
-                "id": "intention-createOrder-form",
+                "id": "intent_create_order_form",
                 "intent": "commandForm",
                 "order": 10,
-                "titleKey": "intention.createOrder.form.title",
+                "titleKey": "intent.createOrder.form.title",
                 "action": "createOrder",
                 "submitAction": "createOrder",
                 "fields": [
                   {
-                    "id": "field-createOrder-orderType",
+                    "id": "field_createOrder_orderType",
                     "field": "orderType",
-                    "labelKey": "field.orderType.label",
+                    "labelKey": "field.createOrder.orderType",
                     "order": 10,
                     "required": true,
                     "inputType": "select",
                     "stateKey": "ui.dineInOrderLifecycle.input.createOrder.orderType"
                   },
                   {
-                    "id": "field-createOrder-status",
+                    "id": "field_createOrder_status",
                     "field": "status",
-                    "labelKey": "field.status.label",
+                    "labelKey": "field.createOrder.status",
                     "order": 20,
                     "required": true,
                     "inputType": "select",
                     "stateKey": "ui.dineInOrderLifecycle.input.createOrder.status"
                   },
                   {
-                    "id": "field-createOrder-totalAmount",
+                    "id": "field_createOrder_totalAmount",
                     "field": "totalAmount",
-                    "labelKey": "field.totalAmount.label",
+                    "labelKey": "field.createOrder.totalAmount",
                     "order": 30,
                     "required": true,
                     "inputType": "money",
                     "stateKey": "ui.dineInOrderLifecycle.input.createOrder.totalAmount"
                   },
                   {
-                    "id": "field-createOrder-notes",
+                    "id": "field_createOrder_notes",
                     "field": "notes",
-                    "labelKey": "field.notes.label",
+                    "labelKey": "field.createOrder.notes",
                     "order": 40,
                     "required": false,
                     "inputType": "text",
                     "stateKey": "ui.dineInOrderLifecycle.input.createOrder.notes"
                   },
                   {
-                    "id": "field-createOrder-customerName",
+                    "id": "field_createOrder_customerName",
                     "field": "customerName",
-                    "labelKey": "field.customerName.label",
+                    "labelKey": "field.createOrder.customerName",
                     "order": 50,
                     "required": false,
                     "inputType": "text",
                     "stateKey": "ui.dineInOrderLifecycle.input.createOrder.customerName"
                   },
                   {
-                    "id": "field-createOrder-customerPhone",
+                    "id": "field_createOrder_customerPhone",
                     "field": "customerPhone",
-                    "labelKey": "field.customerPhone.label",
+                    "labelKey": "field.createOrder.customerPhone",
                     "order": 60,
                     "required": false,
                     "inputType": "text",
                     "stateKey": "ui.dineInOrderLifecycle.input.createOrder.customerPhone"
                   },
                   {
-                    "id": "field-createOrder-numberOfGuests",
+                    "id": "field_createOrder_numberOfGuests",
                     "field": "numberOfGuests",
-                    "labelKey": "field.numberOfGuests.label",
+                    "labelKey": "field.createOrder.numberOfGuests",
                     "order": 70,
                     "required": false,
                     "inputType": "number",
                     "stateKey": "ui.dineInOrderLifecycle.input.createOrder.numberOfGuests"
                   },
                   {
-                    "id": "field-createOrder-closedAt",
+                    "id": "field_createOrder_closedAt",
                     "field": "closedAt",
-                    "labelKey": "field.closedAt.label",
+                    "labelKey": "field.createOrder.closedAt",
                     "order": 80,
                     "required": false,
                     "inputType": "datetime",
                     "stateKey": "ui.dineInOrderLifecycle.input.createOrder.closedAt"
                   },
                   {
-                    "id": "field-createOrder-cancelledAt",
+                    "id": "field_createOrder_cancelledAt",
                     "field": "cancelledAt",
-                    "labelKey": "field.cancelledAt.label",
+                    "labelKey": "field.createOrder.cancelledAt",
                     "order": 90,
                     "required": false,
                     "inputType": "datetime",
                     "stateKey": "ui.dineInOrderLifecycle.input.createOrder.cancelledAt"
                   },
                   {
-                    "id": "field-createOrder-cancellationReason",
+                    "id": "field_createOrder_cancellationReason",
                     "field": "cancellationReason",
-                    "labelKey": "field.cancellationReason.label",
+                    "labelKey": "field.createOrder.cancellationReason",
                     "order": 100,
                     "required": false,
                     "inputType": "text",
@@ -353,11 +353,10 @@ export const definition = {
                 "rowActions": [],
                 "actions": [
                   {
-                    "id": "action-createOrder-submit",
+                    "id": "action_createOrder_submit",
                     "action": "createOrder",
-                    "labelKey": "action.createOrder.label",
+                    "labelKey": "action.createOrder.submit",
                     "order": 10,
-                    "displayHint": "primary",
                     "actionKey": "createOrder"
                   }
                 ]
@@ -365,7 +364,7 @@ export const definition = {
             ]
           },
           {
-            "id": "organism-addOrderItem",
+            "id": "org_add_order_item",
             "type": "organism",
             "organismName": "AddOrderItem",
             "titleKey": "organism.addOrderItem.title",
@@ -388,53 +387,53 @@ export const definition = {
             "order": 20,
             "intentions": [
               {
-                "id": "intention-addOrderItem-form",
+                "id": "intent_add_order_item_form",
                 "intent": "commandForm",
                 "order": 10,
-                "titleKey": "intention.addOrderItem.form.title",
+                "titleKey": "intent.addOrderItem.form.title",
                 "action": "addOrderItem",
                 "submitAction": "addOrderItem",
                 "fields": [
                   {
-                    "id": "field-addOrderItem-quantity",
+                    "id": "field_addOrderItem_quantity",
                     "field": "quantity",
-                    "labelKey": "field.quantity.label",
+                    "labelKey": "field.addOrderItem.quantity",
                     "order": 10,
                     "required": true,
                     "inputType": "number",
                     "stateKey": "ui.dineInOrderLifecycle.input.addOrderItem.quantity"
                   },
                   {
-                    "id": "field-addOrderItem-unitPrice",
+                    "id": "field_addOrderItem_unitPrice",
                     "field": "unitPrice",
-                    "labelKey": "field.unitPrice.label",
+                    "labelKey": "field.addOrderItem.unitPrice",
                     "order": 20,
                     "required": true,
                     "inputType": "money",
                     "stateKey": "ui.dineInOrderLifecycle.input.addOrderItem.unitPrice"
                   },
                   {
-                    "id": "field-addOrderItem-totalPrice",
+                    "id": "field_addOrderItem_totalPrice",
                     "field": "totalPrice",
-                    "labelKey": "field.totalPrice.label",
+                    "labelKey": "field.addOrderItem.totalPrice",
                     "order": 30,
                     "required": true,
                     "inputType": "money",
                     "stateKey": "ui.dineInOrderLifecycle.input.addOrderItem.totalPrice"
                   },
                   {
-                    "id": "field-addOrderItem-observations",
+                    "id": "field_addOrderItem_observations",
                     "field": "observations",
-                    "labelKey": "field.observations.label",
+                    "labelKey": "field.addOrderItem.observations",
                     "order": 40,
                     "required": false,
                     "inputType": "text",
                     "stateKey": "ui.dineInOrderLifecycle.input.addOrderItem.observations"
                   },
                   {
-                    "id": "field-addOrderItem-status",
+                    "id": "field_addOrderItem_status",
                     "field": "status",
-                    "labelKey": "field.status.label",
+                    "labelKey": "field.addOrderItem.status",
                     "order": 50,
                     "required": true,
                     "inputType": "select",
@@ -447,11 +446,10 @@ export const definition = {
                 "rowActions": [],
                 "actions": [
                   {
-                    "id": "action-addOrderItem-submit",
+                    "id": "action_addOrderItem_submit",
                     "action": "addOrderItem",
-                    "labelKey": "action.addOrderItem.label",
+                    "labelKey": "action.addOrderItem.submit",
                     "order": 10,
-                    "displayHint": "primary",
                     "actionKey": "addOrderItem"
                   }
                 ]
@@ -459,7 +457,7 @@ export const definition = {
             ]
           },
           {
-            "id": "organism-createKitchenTicket",
+            "id": "org_create_kitchen_ticket",
             "type": "organism",
             "organismName": "CreateKitchenTicket",
             "titleKey": "organism.createKitchenTicket.title",
@@ -480,17 +478,17 @@ export const definition = {
             "order": 30,
             "intentions": [
               {
-                "id": "intention-createKitchenTicket-form",
+                "id": "intent_create_kitchen_ticket_form",
                 "intent": "commandForm",
                 "order": 10,
-                "titleKey": "intention.createKitchenTicket.form.title",
+                "titleKey": "intent.createKitchenTicket.form.title",
                 "action": "createKitchenTicket",
                 "submitAction": "createKitchenTicket",
                 "fields": [
                   {
-                    "id": "field-createKitchenTicket-status",
+                    "id": "field_createKitchenTicket_status",
                     "field": "status",
-                    "labelKey": "field.kitchenTicketStatus.label",
+                    "labelKey": "field.createKitchenTicket.status",
                     "order": 10,
                     "required": true,
                     "inputType": "select",
@@ -503,11 +501,10 @@ export const definition = {
                 "rowActions": [],
                 "actions": [
                   {
-                    "id": "action-createKitchenTicket-submit",
+                    "id": "action_createKitchenTicket_submit",
                     "action": "createKitchenTicket",
-                    "labelKey": "action.createKitchenTicket.label",
+                    "labelKey": "action.createKitchenTicket.submit",
                     "order": 10,
-                    "displayHint": "primary",
                     "actionKey": "createKitchenTicket"
                   }
                 ]
@@ -515,7 +512,7 @@ export const definition = {
             ]
           },
           {
-            "id": "organism-updateOrderStatus",
+            "id": "org_update_order_status",
             "type": "organism",
             "organismName": "UpdateOrderStatus",
             "titleKey": "organism.updateOrderStatus.title",
@@ -555,44 +552,44 @@ export const definition = {
             "order": 40,
             "intentions": [
               {
-                "id": "intention-updateOrderStatus-form",
+                "id": "intent_update_order_status_form",
                 "intent": "commandForm",
                 "order": 10,
-                "titleKey": "intention.updateOrderStatus.form.title",
+                "titleKey": "intent.updateOrderStatus.form.title",
                 "action": "updateOrderStatus",
                 "submitAction": "updateOrderStatus",
                 "fields": [
                   {
-                    "id": "field-updateOrderStatus-status",
+                    "id": "field_updateOrderStatus_status",
                     "field": "status",
-                    "labelKey": "field.status.label",
+                    "labelKey": "field.updateOrderStatus.status",
                     "order": 10,
                     "required": true,
                     "inputType": "select",
                     "stateKey": "ui.dineInOrderLifecycle.input.updateOrderStatus.status"
                   },
                   {
-                    "id": "field-updateOrderStatus-closedAt",
+                    "id": "field_updateOrderStatus_closedAt",
                     "field": "closedAt",
-                    "labelKey": "field.closedAt.label",
+                    "labelKey": "field.updateOrderStatus.closedAt",
                     "order": 20,
                     "required": false,
                     "inputType": "datetime",
                     "stateKey": "ui.dineInOrderLifecycle.input.updateOrderStatus.closedAt"
                   },
                   {
-                    "id": "field-updateOrderStatus-cancelledAt",
+                    "id": "field_updateOrderStatus_cancelledAt",
                     "field": "cancelledAt",
-                    "labelKey": "field.cancelledAt.label",
+                    "labelKey": "field.updateOrderStatus.cancelledAt",
                     "order": 30,
                     "required": false,
                     "inputType": "datetime",
                     "stateKey": "ui.dineInOrderLifecycle.input.updateOrderStatus.cancelledAt"
                   },
                   {
-                    "id": "field-updateOrderStatus-cancellationReason",
+                    "id": "field_updateOrderStatus_cancellationReason",
                     "field": "cancellationReason",
-                    "labelKey": "field.cancellationReason.label",
+                    "labelKey": "field.updateOrderStatus.cancellationReason",
                     "order": 40,
                     "required": false,
                     "inputType": "text",
@@ -605,11 +602,10 @@ export const definition = {
                 "rowActions": [],
                 "actions": [
                   {
-                    "id": "action-updateOrderStatus-submit",
+                    "id": "action_updateOrderStatus_submit",
                     "action": "updateOrderStatus",
-                    "labelKey": "action.updateOrderStatus.label",
+                    "labelKey": "action.updateOrderStatus.submit",
                     "order": 10,
-                    "displayHint": "primary",
                     "actionKey": "updateOrderStatus"
                   }
                 ]
@@ -617,7 +613,7 @@ export const definition = {
             ]
           },
           {
-            "id": "organism-updateTableStatus",
+            "id": "org_update_table_status",
             "type": "organism",
             "organismName": "UpdateTableStatus",
             "titleKey": "organism.updateTableStatus.title",
@@ -639,17 +635,17 @@ export const definition = {
             "order": 50,
             "intentions": [
               {
-                "id": "intention-updateTableStatus-form",
+                "id": "intent_update_table_status_form",
                 "intent": "commandForm",
                 "order": 10,
-                "titleKey": "intention.updateTableStatus.form.title",
+                "titleKey": "intent.updateTableStatus.form.title",
                 "action": "updateTableStatus",
                 "submitAction": "updateTableStatus",
                 "fields": [
                   {
-                    "id": "field-updateTableStatus-status",
+                    "id": "field_updateTableStatus_status",
                     "field": "status",
-                    "labelKey": "field.tableStatus.label",
+                    "labelKey": "field.updateTableStatus.status",
                     "order": 10,
                     "required": true,
                     "inputType": "select",
@@ -662,11 +658,10 @@ export const definition = {
                 "rowActions": [],
                 "actions": [
                   {
-                    "id": "action-updateTableStatus-submit",
+                    "id": "action_updateTableStatus_submit",
                     "action": "updateTableStatus",
-                    "labelKey": "action.updateTableStatus.label",
+                    "labelKey": "action.updateTableStatus.submit",
                     "order": 10,
-                    "displayHint": "primary",
                     "actionKey": "updateTableStatus"
                   }
                 ]

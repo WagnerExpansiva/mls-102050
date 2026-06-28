@@ -17,7 +17,7 @@ export const definition = {
   },
   "layoutRef": {
     "defPath": "_102050_/l2/cafeFlow/web/desktop/page11/aiSalesSummary.defs.ts",
-    "layoutId": "aiSalesSummaryLayout"
+    "layoutId": "aiSalesSummary.layout"
   },
   "states": [
     {
@@ -133,18 +133,18 @@ export const definition = {
   ],
   "navigationRefs": [],
   "i18n": {
-    "aiSalesSummary.section.title": "Assistente IA: resumo de vendas do dia",
-    "aiSalesSummary.organism.title": "Assistente IA: resumo de vendas do dia",
-    "aiSalesSummary.form.title": "Parâmetros do resumo",
-    "aiSalesSummary.results.title": "Resultados do resumo",
-    "aiSalesSummary.field.dailyShiftId": "Turno diário",
-    "aiSalesSummary.field.status": "Status do pedido",
-    "aiSalesSummary.field.closedAt": "Fechado em",
-    "aiSalesSummary.action.run": "Gerar resumo",
-    "aiSalesSummary.col.dailyShiftId": "Turno diário",
-    "aiSalesSummary.col.status": "Status",
-    "aiSalesSummary.col.totalAmount": "Total do pedido",
-    "aiSalesSummary.col.closedAt": "Fechado em"
+    "aiSalesSummary.section.main.title": "Assistente IA: resumo de vendas do dia",
+    "aiSalesSummary.organism.main.title": "Resumo de vendas por IA",
+    "aiSalesSummary.intent.filters.title": "Filtros do resumo",
+    "aiSalesSummary.intent.results.title": "Resultados do resumo",
+    "aiSalesSummary.field.dailyShiftId.label": "Turno diário",
+    "aiSalesSummary.field.status.label": "Status do pedido",
+    "aiSalesSummary.field.closedAt.label": "Data de fechamento",
+    "aiSalesSummary.action.run.label": "Gerar resumo",
+    "aiSalesSummary.col.dailyShiftId.label": "Turno diário",
+    "aiSalesSummary.col.status.label": "Status",
+    "aiSalesSummary.col.totalAmount.label": "Total",
+    "aiSalesSummary.col.closedAt.label": "Fechado em"
   },
   "automation": {
     "statePrefix": "ui.aiSalesSummary",

@@ -17,7 +17,7 @@ export const definition = {
   },
   "layoutRef": {
     "defPath": "_102050_/l2/cafeFlow/web/desktop/page11/recordPayment.defs.ts",
-    "layoutId": "recordPaymentLayout"
+    "layoutId": "recordPayment.default"
   },
   "states": [
     {
@@ -115,21 +115,13 @@ export const definition = {
   "initialLoads": [],
   "navigationRefs": [],
   "i18n": {
-    "recordPayment.page.title": "Registrar pagamento/recebimento",
     "recordPayment.section.title": "Registrar pagamento/recebimento",
     "recordPayment.organism.title": "Registrar pagamento/recebimento",
-    "recordPayment.order.summary.title": "Resumo do pedido",
-    "recordPayment.order.field.orderId": "Pedido",
-    "recordPayment.order.field.orderType": "Tipo do pedido",
-    "recordPayment.order.field.status": "Status do pedido",
-    "recordPayment.order.field.totalAmount": "Total do pedido",
-    "recordPayment.order.field.tableId": "Mesa",
-    "recordPayment.order.field.customerName": "Cliente",
-    "recordPayment.payment.form.title": "Dados do pagamento",
-    "recordPayment.payment.field.method": "Método de pagamento",
-    "recordPayment.payment.field.amount": "Valor",
-    "recordPayment.payment.field.status": "Status do pagamento",
-    "recordPayment.action.submit": "Registrar pagamento"
+    "recordPayment.form.title": "Command Form",
+    "recordPayment.field.method": "Method",
+    "recordPayment.field.amount": "Amount",
+    "recordPayment.field.status": "Status",
+    "recordPayment.action.submit": "Record Payment"
   },
   "automation": {
     "statePrefix": "ui.recordPayment",

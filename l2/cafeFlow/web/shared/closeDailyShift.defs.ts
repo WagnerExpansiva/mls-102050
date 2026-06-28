@@ -18,7 +18,7 @@ export const definition = {
   },
   "layoutRef": {
     "defPath": "_102050_/l2/cafeFlow/web/desktop/page11/closeDailyShift.defs.ts",
-    "layoutId": "closeDailyShiftLayout"
+    "layoutId": "closeDailyShift.layout"
   },
   "states": [
     {
@@ -448,21 +448,21 @@ export const definition = {
   "i18n": {
     "closeDailyShift.section.main.title": "Fechar turno diário (fechamento de caixa)",
     "closeDailyShift.organism.updateDailyShiftStatus.title": "Atualizar status do turno",
-    "closeDailyShift.organism.recordClosingCashMovement.title": "Registrar fechamento do caixa",
+    "closeDailyShift.organism.recordClosingCashMovement.title": "Registrar movimento de fechamento",
     "closeDailyShift.intent.updateDailyShiftStatus.title": "Atualizar status do turno",
     "closeDailyShift.intent.recordClosingCashMovement.title": "Registrar movimento de fechamento",
-    "closeDailyShift.field.dailyShiftId": "ID do turno",
-    "closeDailyShift.field.shiftDate": "Data do turno",
-    "closeDailyShift.field.status": "Status do turno",
-    "closeDailyShift.field.openedAt": "Abertura do turno",
-    "closeDailyShift.field.closedAt": "Fechamento do turno",
-    "closeDailyShift.field.openingCashBalance": "Saldo inicial em caixa",
-    "closeDailyShift.field.closingCashBalance": "Saldo final em caixa",
-    "closeDailyShift.field.totalSales": "Total de vendas",
-    "closeDailyShift.field.totalPayments": "Total de pagamentos",
-    "closeDailyShift.field.closingNotes": "Observações de fechamento",
-    "closeDailyShift.action.updateDailyShiftStatus": "Atualizar status",
-    "closeDailyShift.action.recordClosingCashMovement": "Registrar fechamento"
+    "closeDailyShift.field.dailyShiftId.label": "ID do turno",
+    "closeDailyShift.field.shiftDate.label": "Data do turno",
+    "closeDailyShift.field.status.label": "Status do turno",
+    "closeDailyShift.field.openedAt.label": "Abertura",
+    "closeDailyShift.field.closedAt.label": "Fechamento",
+    "closeDailyShift.field.openingCashBalance.label": "Saldo inicial em caixa",
+    "closeDailyShift.field.closingCashBalance.label": "Saldo final em caixa",
+    "closeDailyShift.field.totalSales.label": "Total de vendas",
+    "closeDailyShift.field.totalPayments.label": "Total de pagamentos",
+    "closeDailyShift.field.closingNotes.label": "Observações de fechamento",
+    "closeDailyShift.action.updateDailyShiftStatus.label": "Atualizar status do turno",
+    "closeDailyShift.action.recordClosingCashMovement.label": "Registrar movimento de fechamento"
   },
   "automation": {
     "statePrefix": "ui.closeDailyShift",

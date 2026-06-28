@@ -118,11 +118,11 @@ export const definition = {
   "i18n": {
     "consumeIngredientsOnConfirmation.section.main.title": "Baixar estoque por consumo de ingredientes",
     "consumeIngredientsOnConfirmation.organism.createStockConsumption.title": "Registrar consumo de estoque",
-    "consumeIngredientsOnConfirmation.intention.createStockConsumption.title": "Command Form",
-    "consumeIngredientsOnConfirmation.field.quantity.label": "Quantity",
-    "consumeIngredientsOnConfirmation.field.status.label": "Status",
-    "consumeIngredientsOnConfirmation.field.consumedAt.label": "Consumed At",
-    "consumeIngredientsOnConfirmation.action.createStockConsumption.label": "Create Stock Consumption"
+    "consumeIngredientsOnConfirmation.intent.createStockConsumption.form.title": "Registrar consumo de estoque",
+    "consumeIngredientsOnConfirmation.field.quantity.label": "Quantidade consumida",
+    "consumeIngredientsOnConfirmation.field.status.label": "Situação do consumo",
+    "consumeIngredientsOnConfirmation.field.consumedAt.label": "Data e hora do consumo",
+    "consumeIngredientsOnConfirmation.action.createStockConsumption.label": "Registrar consumo"
   },
   "automation": {
     "statePrefix": "ui.consumeIngredientsOnConfirmation",

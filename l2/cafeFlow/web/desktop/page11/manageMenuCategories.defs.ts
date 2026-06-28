@@ -20,18 +20,18 @@ export const definition = {
   "navigationRefs": [],
   "sections": [
     {
-      "id": "section.manageMenuCategories",
+      "id": "sec_manage_menu_categories",
       "type": "section",
       "sectionName": "Gerenciar categorias do cardápio",
-      "titleKey": "section.manageMenuCategories.title",
+      "titleKey": "manageMenuCategories.section.title",
       "mode": "edit",
       "order": 10,
       "organisms": [
         {
-          "id": "organism.manageMenuCategories",
-          "type": "organism",
+          "id": "org_manage_menu_categories",
+          "type": "form",
           "organismName": "ManageMenuCategories",
-          "titleKey": "organism.manageMenuCategories.title",
+          "titleKey": "manageMenuCategories.organism.title",
           "purpose": "Gerenciar categorias do cardápio",
           "userActions": [
             "manageMenuCategories"
@@ -50,10 +50,8 @@ export const definition = {
           "order": 10,
           "intentionRefs": [
             {
-              "id": "intention.manageMenuCategories.form",
+              "id": "int_manage_menu_categories_form",
               "intent": "commandForm",
-              "action": "manageMenuCategories",
-              "submitAction": "manageMenuCategories",
               "order": 10
             }
           ]
@@ -66,18 +64,18 @@ export const definition = {
     "type": "page",
     "sections": [
       {
-        "id": "section.manageMenuCategories",
+        "id": "sec_manage_menu_categories",
         "type": "section",
         "sectionName": "Gerenciar categorias do cardápio",
-        "titleKey": "section.manageMenuCategories.title",
+        "titleKey": "manageMenuCategories.section.title",
         "mode": "edit",
         "order": 10,
         "organisms": [
           {
-            "id": "organism.manageMenuCategories",
-            "type": "organism",
+            "id": "org_manage_menu_categories",
+            "type": "form",
             "organismName": "ManageMenuCategories",
-            "titleKey": "organism.manageMenuCategories.title",
+            "titleKey": "manageMenuCategories.organism.title",
             "purpose": "Gerenciar categorias do cardápio",
             "userActions": [
               "manageMenuCategories"
@@ -96,44 +94,42 @@ export const definition = {
             "order": 10,
             "intentions": [
               {
-                "id": "intention.manageMenuCategories.form",
+                "id": "int_manage_menu_categories_form",
                 "intent": "commandForm",
                 "order": 10,
-                "titleKey": "intention.manageMenuCategories.form.title",
-                "action": "manageMenuCategories",
-                "submitAction": "manageMenuCategories",
+                "titleKey": "manageMenuCategories.form.title",
                 "fields": [
                   {
-                    "id": "field.menuCategoryId",
+                    "id": "fld_menuCategoryId",
                     "field": "menuCategoryId",
-                    "labelKey": "field.menuCategoryId.label",
+                    "labelKey": "manageMenuCategories.field.menuCategoryId",
                     "order": 10,
                     "required": false,
                     "inputType": "text",
                     "stateKey": "ui.manageMenuCategories.input.manageMenuCategories.menuCategoryId"
                   },
                   {
-                    "id": "field.name",
+                    "id": "fld_name",
                     "field": "name",
-                    "labelKey": "field.name.label",
+                    "labelKey": "manageMenuCategories.field.name",
                     "order": 20,
                     "required": true,
                     "inputType": "text",
                     "stateKey": "ui.manageMenuCategories.input.manageMenuCategories.name"
                   },
                   {
-                    "id": "field.description",
+                    "id": "fld_description",
                     "field": "description",
-                    "labelKey": "field.description.label",
+                    "labelKey": "manageMenuCategories.field.description",
                     "order": 30,
                     "required": false,
                     "inputType": "textarea",
                     "stateKey": "ui.manageMenuCategories.input.manageMenuCategories.description"
                   },
                   {
-                    "id": "field.status",
+                    "id": "fld_status",
                     "field": "status",
-                    "labelKey": "field.status.label",
+                    "labelKey": "manageMenuCategories.field.status",
                     "order": 40,
                     "required": true,
                     "inputType": "select",
@@ -146,10 +142,11 @@ export const definition = {
                 "rowActions": [],
                 "actions": [
                   {
-                    "id": "action.manageMenuCategories",
+                    "id": "act_manage_menu_categories_submit",
                     "action": "manageMenuCategories",
-                    "labelKey": "action.manageMenuCategories.label",
+                    "labelKey": "manageMenuCategories.action.submit",
                     "order": 10,
+                    "displayHint": "primary",
                     "actionKey": "manageMenuCategories"
                   }
                 ]

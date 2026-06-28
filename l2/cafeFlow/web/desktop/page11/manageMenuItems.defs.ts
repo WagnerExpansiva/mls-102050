@@ -29,7 +29,7 @@ export const definition = {
       "organisms": [
         {
           "id": "organism.manageMenuItems",
-          "type": "organism",
+          "type": "form",
           "organismName": "ManageMenuItems",
           "titleKey": "manageMenuItems.organism.title",
           "purpose": "Gerenciar itens do cardápio",
@@ -46,9 +46,7 @@ export const definition = {
             "name",
             "description",
             "price",
-            "status",
-            "createdAt",
-            "updatedAt"
+            "status"
           ],
           "writesFields": [
             "menuItemId",
@@ -64,15 +62,13 @@ export const definition = {
           "order": 10,
           "intentionRefs": [
             {
-              "id": "intention.manageMenuItems.list",
-              "intent": "queryList",
+              "id": "intention.manageMenuItems.form",
+              "intent": "commandForm",
               "order": 10
             },
             {
-              "id": "intention.manageMenuItems.form",
-              "intent": "commandForm",
-              "action": "manageMenuItems",
-              "submitAction": "manageMenuItems",
+              "id": "intention.manageMenuItems.actions",
+              "intent": "actionList",
               "order": 20
             }
           ]
@@ -81,7 +77,7 @@ export const definition = {
     }
   ],
   "layout": {
-    "id": "manageMenuItems.default",
+    "id": "manageMenuItems.layout",
     "type": "page",
     "sections": [
       {
@@ -94,7 +90,7 @@ export const definition = {
         "organisms": [
           {
             "id": "organism.manageMenuItems",
-            "type": "organism",
+            "type": "form",
             "organismName": "ManageMenuItems",
             "titleKey": "manageMenuItems.organism.title",
             "purpose": "Gerenciar itens do cardápio",
@@ -111,9 +107,7 @@ export const definition = {
               "name",
               "description",
               "price",
-              "status",
-              "createdAt",
-              "updatedAt"
+              "status"
             ],
             "writesFields": [
               "menuItemId",
@@ -129,93 +123,10 @@ export const definition = {
             "order": 10,
             "intentions": [
               {
-                "id": "intention.manageMenuItems.list",
-                "intent": "queryList",
-                "order": 10,
-                "titleKey": "manageMenuItems.list.title",
-                "fields": [],
-                "columns": [
-                  {
-                    "id": "col.menuItemId",
-                    "field": "menuItemId",
-                    "labelKey": "manageMenuItems.field.menuItemId",
-                    "order": 10,
-                    "required": false,
-                    "stateKey": "ui.manageMenuItems.data.manageMenuItems"
-                  },
-                  {
-                    "id": "col.name",
-                    "field": "name",
-                    "labelKey": "manageMenuItems.field.name",
-                    "order": 20,
-                    "required": false,
-                    "stateKey": "ui.manageMenuItems.data.manageMenuItems"
-                  },
-                  {
-                    "id": "col.menuCategoryId",
-                    "field": "menuCategoryId",
-                    "labelKey": "manageMenuItems.field.menuCategoryId",
-                    "order": 30,
-                    "required": false,
-                    "stateKey": "ui.manageMenuItems.data.manageMenuItems"
-                  },
-                  {
-                    "id": "col.price",
-                    "field": "price",
-                    "labelKey": "manageMenuItems.field.price",
-                    "order": 40,
-                    "required": false,
-                    "stateKey": "ui.manageMenuItems.data.manageMenuItems"
-                  },
-                  {
-                    "id": "col.status",
-                    "field": "status",
-                    "labelKey": "manageMenuItems.field.status",
-                    "order": 50,
-                    "required": false,
-                    "stateKey": "ui.manageMenuItems.data.manageMenuItems"
-                  }
-                ],
-                "filters": [
-                  {
-                    "id": "filter.name",
-                    "field": "name",
-                    "labelKey": "manageMenuItems.filter.name",
-                    "order": 10,
-                    "required": false,
-                    "inputType": "text",
-                    "stateKey": "ui.manageMenuItems.input.manageMenuItems.name"
-                  },
-                  {
-                    "id": "filter.menuCategoryId",
-                    "field": "menuCategoryId",
-                    "labelKey": "manageMenuItems.filter.menuCategoryId",
-                    "order": 20,
-                    "required": false,
-                    "inputType": "select",
-                    "stateKey": "ui.manageMenuItems.input.manageMenuItems.menuCategoryId"
-                  },
-                  {
-                    "id": "filter.status",
-                    "field": "status",
-                    "labelKey": "manageMenuItems.filter.status",
-                    "order": 30,
-                    "required": false,
-                    "inputType": "select",
-                    "stateKey": "ui.manageMenuItems.input.manageMenuItems.status"
-                  }
-                ],
-                "toolbar": [],
-                "rowActions": [],
-                "actions": []
-              },
-              {
                 "id": "intention.manageMenuItems.form",
                 "intent": "commandForm",
-                "order": 20,
+                "order": 10,
                 "titleKey": "manageMenuItems.form.title",
-                "action": "manageMenuItems",
-                "submitAction": "manageMenuItems",
                 "fields": [
                   {
                     "id": "field.menuItemId",
@@ -232,7 +143,7 @@ export const definition = {
                     "labelKey": "manageMenuItems.field.menuCategoryId",
                     "order": 20,
                     "required": false,
-                    "inputType": "select",
+                    "inputType": "text",
                     "stateKey": "ui.manageMenuItems.input.manageMenuItems.menuCategoryId"
                   },
                   {
@@ -259,8 +170,7 @@ export const definition = {
                     "labelKey": "manageMenuItems.field.price",
                     "order": 50,
                     "required": true,
-                    "inputType": "number",
-                    "format": "money",
+                    "inputType": "money",
                     "stateKey": "ui.manageMenuItems.input.manageMenuItems.price"
                   },
                   {
@@ -277,13 +187,24 @@ export const definition = {
                 "filters": [],
                 "toolbar": [],
                 "rowActions": [],
+                "actions": []
+              },
+              {
+                "id": "intention.manageMenuItems.actions",
+                "intent": "actionList",
+                "order": 20,
+                "titleKey": "manageMenuItems.actions.title",
+                "fields": [],
+                "columns": [],
+                "filters": [],
+                "toolbar": [],
+                "rowActions": [],
                 "actions": [
                   {
                     "id": "action.manageMenuItems.submit",
                     "action": "manageMenuItems",
                     "labelKey": "manageMenuItems.action.submit",
                     "order": 10,
-                    "displayHint": "primary",
                     "actionKey": "manageMenuItems"
                   }
                 ]

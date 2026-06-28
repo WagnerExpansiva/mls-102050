@@ -20,18 +20,18 @@ export const definition = {
   "navigationRefs": [],
   "sections": [
     {
-      "id": "section-generate-shift-close-report",
+      "id": "sec-generate-shift-close-report",
       "type": "section",
       "sectionName": "Gerar relatório de fechamento de turno",
-      "titleKey": "section.generateShiftCloseReport.title",
+      "titleKey": "generateShiftCloseReport.section.title",
       "mode": "view",
       "order": 10,
       "organisms": [
         {
-          "id": "organism-generate-shift-close-report",
-          "type": "organism",
+          "id": "org-generate-shift-close-report",
+          "type": "panel",
           "organismName": "GenerateShiftCloseReport",
-          "titleKey": "organism.generateShiftCloseReport.title",
+          "titleKey": "generateShiftCloseReport.organism.title",
           "purpose": "Gerar relatório de fechamento de turno",
           "userActions": [
             "generateShiftCloseReport"
@@ -61,15 +61,13 @@ export const definition = {
           "order": 10,
           "intentionRefs": [
             {
-              "id": "intention-shift-close-report-filters",
+              "id": "int-generate-shift-close-report-filters",
               "intent": "commandForm",
               "stateKey": "ui.generateShiftCloseReport.data.generateShiftCloseReport",
-              "action": "generateShiftCloseReport",
-              "submitAction": "generateShiftCloseReport",
               "order": 10
             },
             {
-              "id": "intention-shift-close-report-summary",
+              "id": "int-generate-shift-close-report-summary",
               "intent": "summary",
               "stateKey": "ui.generateShiftCloseReport.data.generateShiftCloseReport",
               "order": 20
@@ -84,18 +82,18 @@ export const definition = {
     "type": "page",
     "sections": [
       {
-        "id": "section-generate-shift-close-report",
+        "id": "sec-generate-shift-close-report",
         "type": "section",
         "sectionName": "Gerar relatório de fechamento de turno",
-        "titleKey": "section.generateShiftCloseReport.title",
+        "titleKey": "generateShiftCloseReport.section.title",
         "mode": "view",
         "order": 10,
         "organisms": [
           {
-            "id": "organism-generate-shift-close-report",
-            "type": "organism",
+            "id": "org-generate-shift-close-report",
+            "type": "panel",
             "organismName": "GenerateShiftCloseReport",
-            "titleKey": "organism.generateShiftCloseReport.title",
+            "titleKey": "generateShiftCloseReport.organism.title",
             "purpose": "Gerar relatório de fechamento de turno",
             "userActions": [
               "generateShiftCloseReport"
@@ -125,45 +123,36 @@ export const definition = {
             "order": 10,
             "intentions": [
               {
-                "id": "intention-shift-close-report-filters",
+                "id": "int-generate-shift-close-report-filters",
                 "intent": "commandForm",
                 "order": 10,
-                "titleKey": "intention.shiftCloseReport.filters.title",
-                "action": "generateShiftCloseReport",
-                "submitAction": "generateShiftCloseReport",
-                "emptyKey": "intention.shiftCloseReport.filters.empty",
+                "titleKey": "generateShiftCloseReport.filters.title",
                 "fields": [
                   {
-                    "id": "field-status",
+                    "id": "fld-generate-status",
                     "field": "status",
-                    "labelKey": "field.status.label",
+                    "labelKey": "generateShiftCloseReport.filters.status",
                     "order": 10,
                     "required": false,
                     "inputType": "select",
-                    "format": "string",
-                    "source": "DailyShift.status",
                     "stateKey": "ui.generateShiftCloseReport.input.generateShiftCloseReport.status"
                   },
                   {
-                    "id": "field-openedAt",
+                    "id": "fld-generate-openedAt",
                     "field": "openedAt",
-                    "labelKey": "field.openedAt.label",
+                    "labelKey": "generateShiftCloseReport.filters.openedAt",
                     "order": 20,
                     "required": false,
-                    "inputType": "datetime",
-                    "format": "date",
-                    "source": "DailyShift.openedAt",
+                    "inputType": "date",
                     "stateKey": "ui.generateShiftCloseReport.input.generateShiftCloseReport.openedAt"
                   },
                   {
-                    "id": "field-closedAt",
+                    "id": "fld-generate-closedAt",
                     "field": "closedAt",
-                    "labelKey": "field.closedAt.label",
+                    "labelKey": "generateShiftCloseReport.filters.closedAt",
                     "order": 30,
                     "required": false,
-                    "inputType": "datetime",
-                    "format": "date",
-                    "source": "DailyShift.closedAt",
+                    "inputType": "date",
                     "stateKey": "ui.generateShiftCloseReport.input.generateShiftCloseReport.closedAt"
                   }
                 ],
@@ -173,9 +162,9 @@ export const definition = {
                 "rowActions": [],
                 "actions": [
                   {
-                    "id": "action-generate-report",
+                    "id": "act-generate-shift-close-report",
                     "action": "generateShiftCloseReport",
-                    "labelKey": "action.generateShiftCloseReport.label",
+                    "labelKey": "generateShiftCloseReport.actions.generate",
                     "order": 10,
                     "actionKey": "generateShiftCloseReport"
                   }
@@ -183,99 +172,75 @@ export const definition = {
                 "stateKey": "ui.generateShiftCloseReport.data.generateShiftCloseReport"
               },
               {
-                "id": "intention-shift-close-report-summary",
+                "id": "int-generate-shift-close-report-summary",
                 "intent": "summary",
                 "order": 20,
-                "titleKey": "intention.shiftCloseReport.summary.title",
-                "emptyKey": "intention.shiftCloseReport.summary.empty",
+                "titleKey": "generateShiftCloseReport.summary.title",
                 "fields": [
                   {
-                    "id": "field-summary-status",
+                    "id": "fld-summary-status",
                     "field": "status",
-                    "labelKey": "field.status.label",
+                    "labelKey": "generateShiftCloseReport.summary.status",
                     "order": 10,
                     "required": false,
-                    "inputType": "text",
-                    "format": "string",
-                    "source": "DailyShift.status",
                     "stateKey": "ui.generateShiftCloseReport.input.generateShiftCloseReport.status"
                   },
                   {
-                    "id": "field-summary-openedAt",
+                    "id": "fld-summary-openedAt",
                     "field": "openedAt",
-                    "labelKey": "field.openedAt.label",
+                    "labelKey": "generateShiftCloseReport.summary.openedAt",
                     "order": 20,
                     "required": false,
-                    "inputType": "datetime",
-                    "format": "date",
-                    "source": "DailyShift.openedAt",
                     "stateKey": "ui.generateShiftCloseReport.input.generateShiftCloseReport.openedAt"
                   },
                   {
-                    "id": "field-summary-closedAt",
+                    "id": "fld-summary-closedAt",
                     "field": "closedAt",
-                    "labelKey": "field.closedAt.label",
+                    "labelKey": "generateShiftCloseReport.summary.closedAt",
                     "order": 30,
                     "required": false,
-                    "inputType": "datetime",
-                    "format": "date",
-                    "source": "DailyShift.closedAt",
                     "stateKey": "ui.generateShiftCloseReport.input.generateShiftCloseReport.closedAt"
                   },
                   {
-                    "id": "field-summary-openingCashBalance",
+                    "id": "fld-summary-openingCashBalance",
                     "field": "openingCashBalance",
-                    "labelKey": "field.openingCashBalance.label",
+                    "labelKey": "generateShiftCloseReport.summary.openingCashBalance",
                     "order": 40,
                     "required": false,
-                    "inputType": "money",
-                    "format": "number",
-                    "source": "DailyShift.openingCashBalance",
-                    "stateKey": "ui.generateShiftCloseReport.input.generateShiftCloseReport.openingCashBalance"
+                    "stateKey": "ui.generateShiftCloseReport.data.generateShiftCloseReport"
                   },
                   {
-                    "id": "field-summary-closingCashBalance",
+                    "id": "fld-summary-closingCashBalance",
                     "field": "closingCashBalance",
-                    "labelKey": "field.closingCashBalance.label",
+                    "labelKey": "generateShiftCloseReport.summary.closingCashBalance",
                     "order": 50,
                     "required": false,
-                    "inputType": "money",
-                    "format": "number",
-                    "source": "DailyShift.closingCashBalance",
-                    "stateKey": "ui.generateShiftCloseReport.input.generateShiftCloseReport.closingCashBalance"
+                    "stateKey": "ui.generateShiftCloseReport.data.generateShiftCloseReport"
                   },
                   {
-                    "id": "field-summary-totalSales",
+                    "id": "fld-summary-totalSales",
                     "field": "totalSales",
-                    "labelKey": "field.totalSales.label",
+                    "labelKey": "generateShiftCloseReport.summary.totalSales",
                     "order": 60,
                     "required": false,
-                    "inputType": "money",
-                    "format": "number",
-                    "source": "DailyShift.totalSales",
-                    "stateKey": "ui.generateShiftCloseReport.input.generateShiftCloseReport.totalSales"
+                    "stateKey": "ui.generateShiftCloseReport.data.generateShiftCloseReport"
                   },
                   {
-                    "id": "field-summary-totalPayments",
+                    "id": "fld-summary-totalPayments",
                     "field": "totalPayments",
-                    "labelKey": "field.totalPayments.label",
+                    "labelKey": "generateShiftCloseReport.summary.totalPayments",
                     "order": 70,
                     "required": false,
-                    "inputType": "money",
-                    "format": "number",
-                    "source": "DailyShift.totalPayments",
-                    "stateKey": "ui.generateShiftCloseReport.input.generateShiftCloseReport.totalPayments"
+                    "stateKey": "ui.generateShiftCloseReport.data.generateShiftCloseReport"
                   },
                   {
-                    "id": "field-summary-closingNotes",
+                    "id": "fld-summary-closingNotes",
                     "field": "closingNotes",
-                    "labelKey": "field.closingNotes.label",
+                    "labelKey": "generateShiftCloseReport.summary.closingNotes",
                     "order": 80,
                     "required": false,
-                    "inputType": "text",
-                    "format": "string",
-                    "source": "DailyShift.closingNotes",
-                    "stateKey": "ui.generateShiftCloseReport.input.generateShiftCloseReport.closingNotes"
+                    "inputType": "textarea",
+                    "stateKey": "ui.generateShiftCloseReport.data.generateShiftCloseReport"
                   }
                 ],
                 "columns": [],

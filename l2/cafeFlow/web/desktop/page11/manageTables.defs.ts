@@ -20,7 +20,7 @@ export const definition = {
   "navigationRefs": [],
   "sections": [
     {
-      "id": "section.manageTables",
+      "id": "sec.manageTables",
       "type": "section",
       "sectionName": "Gerenciar mesas",
       "titleKey": "manageTables.section.title",
@@ -28,8 +28,8 @@ export const definition = {
       "order": 10,
       "organisms": [
         {
-          "id": "organism.manageTables",
-          "type": "organism",
+          "id": "org.manageTables",
+          "type": "formPanel",
           "organismName": "ManageTables",
           "titleKey": "manageTables.organism.title",
           "purpose": "Gerenciar mesas",
@@ -55,11 +55,16 @@ export const definition = {
           "order": 10,
           "intentionRefs": [
             {
-              "id": "intention.manageTables.form",
+              "id": "int.manageTables.form",
               "intent": "commandForm",
-              "action": "manageTables",
               "submitAction": "manageTables",
               "order": 10
+            },
+            {
+              "id": "int.manageTables.status",
+              "intent": "workflowStatus",
+              "stateKey": "ui.manageTables.action.manageTables.status",
+              "order": 20
             }
           ]
         }
@@ -67,11 +72,11 @@ export const definition = {
     }
   ],
   "layout": {
-    "id": "manageTables.layout",
+    "id": "manageTablesLayout",
     "type": "page",
     "sections": [
       {
-        "id": "section.manageTables",
+        "id": "sec.manageTables",
         "type": "section",
         "sectionName": "Gerenciar mesas",
         "titleKey": "manageTables.section.title",
@@ -79,8 +84,8 @@ export const definition = {
         "order": 10,
         "organisms": [
           {
-            "id": "organism.manageTables",
-            "type": "organism",
+            "id": "org.manageTables",
+            "type": "formPanel",
             "organismName": "ManageTables",
             "titleKey": "manageTables.organism.title",
             "purpose": "Gerenciar mesas",
@@ -106,15 +111,14 @@ export const definition = {
             "order": 10,
             "intentions": [
               {
-                "id": "intention.manageTables.form",
+                "id": "int.manageTables.form",
                 "intent": "commandForm",
                 "order": 10,
                 "titleKey": "manageTables.form.title",
-                "action": "manageTables",
                 "submitAction": "manageTables",
                 "fields": [
                   {
-                    "id": "field.tableId",
+                    "id": "fld.manageTables.tableId",
                     "field": "tableId",
                     "labelKey": "manageTables.field.tableId",
                     "order": 10,
@@ -123,7 +127,7 @@ export const definition = {
                     "stateKey": "ui.manageTables.input.manageTables.tableId"
                   },
                   {
-                    "id": "field.number",
+                    "id": "fld.manageTables.number",
                     "field": "number",
                     "labelKey": "manageTables.field.number",
                     "order": 20,
@@ -132,7 +136,7 @@ export const definition = {
                     "stateKey": "ui.manageTables.input.manageTables.number"
                   },
                   {
-                    "id": "field.status",
+                    "id": "fld.manageTables.status",
                     "field": "status",
                     "labelKey": "manageTables.field.status",
                     "order": 30,
@@ -147,7 +151,7 @@ export const definition = {
                 "rowActions": [],
                 "actions": [
                   {
-                    "id": "action.manageTables.submit",
+                    "id": "act.manageTables.submit",
                     "action": "manageTables",
                     "labelKey": "manageTables.action.submit",
                     "order": 10,
@@ -155,6 +159,19 @@ export const definition = {
                     "actionKey": "manageTables"
                   }
                 ]
+              },
+              {
+                "id": "int.manageTables.status",
+                "intent": "workflowStatus",
+                "order": 20,
+                "titleKey": "manageTables.status.title",
+                "stateKey": "ui.manageTables.action.manageTables.status",
+                "fields": [],
+                "columns": [],
+                "filters": [],
+                "toolbar": [],
+                "rowActions": [],
+                "actions": []
               }
             ]
           }

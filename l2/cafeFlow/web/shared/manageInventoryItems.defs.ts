@@ -173,15 +173,16 @@ export const definition = {
   "navigationRefs": [],
   "i18n": {
     "manageInventoryItems.section.main.title": "Gerenciar itens de estoque (ingredientes)",
-    "manageInventoryItems.organism.form.title": "Gerenciar itens de estoque (ingredientes)",
-    "manageInventoryItems.intention.commandForm.title": "Command Form",
-    "manageInventoryItems.field.name.label": "Name",
-    "manageInventoryItems.field.description.label": "Description",
-    "manageInventoryItems.field.unit.label": "Unit",
-    "manageInventoryItems.field.currentQuantity.label": "Current Quantity",
-    "manageInventoryItems.field.minimumLevel.label": "Minimum Level",
+    "manageInventoryItems.organism.form.title": "Gerenciar itens de estoque",
+    "manageInventoryItems.intention.status.title": "Status da operação",
+    "manageInventoryItems.intention.form.title": "Dados do item de estoque",
+    "manageInventoryItems.field.name.label": "Nome",
+    "manageInventoryItems.field.description.label": "Descrição",
+    "manageInventoryItems.field.unit.label": "Unidade",
+    "manageInventoryItems.field.currentQuantity.label": "Quantidade atual",
+    "manageInventoryItems.field.minimumLevel.label": "Nível mínimo",
     "manageInventoryItems.field.status.label": "Status",
-    "manageInventoryItems.action.submit.label": "Manage Inventory Items"
+    "manageInventoryItems.action.submit.label": "Salvar alterações"
   },
   "automation": {
     "statePrefix": "ui.manageInventoryItems",

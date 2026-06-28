@@ -134,15 +134,14 @@ export const definition = {
   "initialLoads": [],
   "navigationRefs": [],
   "i18n": {
-    "page.manageMenuCategories.title": "Gerenciar categorias do cardápio",
-    "section.manageMenuCategories.title": "Gerenciar categorias do cardápio",
-    "organism.manageMenuCategories.title": "Gerenciar categorias do cardápio",
-    "intention.manageMenuCategories.form.title": "Detalhes da categoria",
-    "field.menuCategoryId.label": "ID da categoria",
-    "field.name.label": "Nome",
-    "field.description.label": "Descrição",
-    "field.status.label": "Status",
-    "action.manageMenuCategories.label": "Salvar alterações"
+    "manageMenuCategories.section.title": "Gerenciar categorias do cardápio",
+    "manageMenuCategories.organism.title": "Gerenciar categorias do cardápio",
+    "manageMenuCategories.form.title": "Dados da categoria",
+    "manageMenuCategories.field.menuCategoryId": "ID da categoria",
+    "manageMenuCategories.field.name": "Nome",
+    "manageMenuCategories.field.description": "Descrição",
+    "manageMenuCategories.field.status": "Status",
+    "manageMenuCategories.action.submit": "Salvar alterações"
   },
   "automation": {
     "statePrefix": "ui.manageMenuCategories",

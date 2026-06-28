@@ -25,7 +25,7 @@ export const definition = {
   "navigationRefs": [],
   "sections": [
     {
-      "id": "section-kitchenProductionFlow-main",
+      "id": "sec.kitchenProductionFlow.main",
       "type": "section",
       "sectionName": "Fluxo de produção da cozinha",
       "titleKey": "kitchenProductionFlow.section.main.title",
@@ -33,7 +33,7 @@ export const definition = {
       "order": 10,
       "organisms": [
         {
-          "id": "organism-viewKitchenTickets",
+          "id": "org.viewKitchenTickets",
           "type": "organism",
           "organismName": "ViewKitchenTickets",
           "titleKey": "kitchenProductionFlow.organism.viewKitchenTickets.title",
@@ -50,7 +50,7 @@ export const definition = {
           "order": 10,
           "intentionRefs": [
             {
-              "id": "intention-viewKitchenTickets-list",
+              "id": "intent.viewKitchenTickets.queryList",
               "intent": "queryList",
               "stateKey": "ui.kitchenProductionFlow.data.viewKitchenTickets",
               "action": "viewKitchenTickets",
@@ -59,7 +59,7 @@ export const definition = {
           ]
         },
         {
-          "id": "organism-updateKitchenTicketStatus",
+          "id": "org.updateKitchenTicketStatus",
           "type": "organism",
           "organismName": "UpdateKitchenTicketStatus",
           "titleKey": "kitchenProductionFlow.organism.updateKitchenTicketStatus.title",
@@ -83,15 +83,16 @@ export const definition = {
           "order": 20,
           "intentionRefs": [
             {
-              "id": "intention-updateKitchenTicketStatus-form",
+              "id": "intent.updateKitchenTicketStatus.commandForm",
               "intent": "commandForm",
+              "action": "updateKitchenTicketStatus",
               "submitAction": "updateKitchenTicketStatus",
               "order": 10
             }
           ]
         },
         {
-          "id": "organism-updateOrderItemStatus",
+          "id": "org.updateOrderItemStatus",
           "type": "organism",
           "organismName": "UpdateOrderItemStatus",
           "titleKey": "kitchenProductionFlow.organism.updateOrderItemStatus.title",
@@ -116,8 +117,9 @@ export const definition = {
           "order": 30,
           "intentionRefs": [
             {
-              "id": "intention-updateOrderItemStatus-form",
+              "id": "intent.updateOrderItemStatus.commandForm",
               "intent": "commandForm",
+              "action": "updateOrderItemStatus",
               "submitAction": "updateOrderItemStatus",
               "order": 10
             }
@@ -131,7 +133,7 @@ export const definition = {
     "type": "page",
     "sections": [
       {
-        "id": "section-kitchenProductionFlow-main",
+        "id": "sec.kitchenProductionFlow.main",
         "type": "section",
         "sectionName": "Fluxo de produção da cozinha",
         "titleKey": "kitchenProductionFlow.section.main.title",
@@ -139,7 +141,7 @@ export const definition = {
         "order": 10,
         "organisms": [
           {
-            "id": "organism-viewKitchenTickets",
+            "id": "org.viewKitchenTickets",
             "type": "organism",
             "organismName": "ViewKitchenTickets",
             "titleKey": "kitchenProductionFlow.organism.viewKitchenTickets.title",
@@ -156,49 +158,49 @@ export const definition = {
             "order": 10,
             "intentions": [
               {
-                "id": "intention-viewKitchenTickets-list",
+                "id": "intent.viewKitchenTickets.queryList",
                 "intent": "queryList",
                 "order": 10,
-                "titleKey": "kitchenProductionFlow.intention.viewKitchenTickets.list.title",
+                "titleKey": "kitchenProductionFlow.intent.viewKitchenTickets.queryList.title",
                 "action": "viewKitchenTickets",
                 "fields": [],
                 "columns": [
                   {
-                    "id": "column-kitchenTicketId",
+                    "id": "col.viewKitchenTickets.kitchenTicketId",
                     "field": "kitchenTicketId",
-                    "labelKey": "kitchenProductionFlow.field.kitchenTicketId",
+                    "labelKey": "kitchenProductionFlow.field.kitchenTicketId.label",
                     "order": 10,
                     "required": false,
                     "stateKey": "ui.kitchenProductionFlow.data.viewKitchenTickets"
                   },
                   {
-                    "id": "column-orderId",
+                    "id": "col.viewKitchenTickets.orderId",
                     "field": "orderId",
-                    "labelKey": "kitchenProductionFlow.field.orderId",
+                    "labelKey": "kitchenProductionFlow.field.orderId.label",
                     "order": 20,
                     "required": false,
                     "stateKey": "ui.kitchenProductionFlow.data.viewKitchenTickets"
                   },
                   {
-                    "id": "column-status",
+                    "id": "col.viewKitchenTickets.status",
                     "field": "status",
-                    "labelKey": "kitchenProductionFlow.field.status",
+                    "labelKey": "kitchenProductionFlow.field.status.label",
                     "order": 30,
                     "required": false,
                     "stateKey": "ui.kitchenProductionFlow.data.viewKitchenTickets"
                   },
                   {
-                    "id": "column-createdAt",
+                    "id": "col.viewKitchenTickets.createdAt",
                     "field": "createdAt",
-                    "labelKey": "kitchenProductionFlow.field.createdAt",
+                    "labelKey": "kitchenProductionFlow.field.createdAt.label",
                     "order": 40,
                     "required": false,
                     "stateKey": "ui.kitchenProductionFlow.data.viewKitchenTickets"
                   },
                   {
-                    "id": "column-updatedAt",
+                    "id": "col.viewKitchenTickets.updatedAt",
                     "field": "updatedAt",
-                    "labelKey": "kitchenProductionFlow.field.updatedAt",
+                    "labelKey": "kitchenProductionFlow.field.updatedAt.label",
                     "order": 50,
                     "required": false,
                     "stateKey": "ui.kitchenProductionFlow.data.viewKitchenTickets"
@@ -206,45 +208,45 @@ export const definition = {
                 ],
                 "filters": [
                   {
-                    "id": "filter-kitchenTicketId",
+                    "id": "filter.viewKitchenTickets.kitchenTicketId",
                     "field": "kitchenTicketId",
-                    "labelKey": "kitchenProductionFlow.field.kitchenTicketId",
+                    "labelKey": "kitchenProductionFlow.filter.kitchenTicketId.label",
                     "order": 10,
                     "required": false,
                     "inputType": "text",
                     "stateKey": "ui.kitchenProductionFlow.input.viewKitchenTickets.kitchenTicketId"
                   },
                   {
-                    "id": "filter-orderId",
+                    "id": "filter.viewKitchenTickets.orderId",
                     "field": "orderId",
-                    "labelKey": "kitchenProductionFlow.field.orderId",
+                    "labelKey": "kitchenProductionFlow.filter.orderId.label",
                     "order": 20,
                     "required": false,
                     "inputType": "text",
                     "stateKey": "ui.kitchenProductionFlow.input.viewKitchenTickets.orderId"
                   },
                   {
-                    "id": "filter-status",
+                    "id": "filter.viewKitchenTickets.status",
                     "field": "status",
-                    "labelKey": "kitchenProductionFlow.field.status",
+                    "labelKey": "kitchenProductionFlow.filter.status.label",
                     "order": 30,
                     "required": false,
                     "inputType": "select",
                     "stateKey": "ui.kitchenProductionFlow.input.viewKitchenTickets.status"
                   },
                   {
-                    "id": "filter-createdAt",
+                    "id": "filter.viewKitchenTickets.createdAt",
                     "field": "createdAt",
-                    "labelKey": "kitchenProductionFlow.field.createdAt",
+                    "labelKey": "kitchenProductionFlow.filter.createdAt.label",
                     "order": 40,
                     "required": false,
                     "inputType": "date",
                     "stateKey": "ui.kitchenProductionFlow.input.viewKitchenTickets.createdAt"
                   },
                   {
-                    "id": "filter-updatedAt",
+                    "id": "filter.viewKitchenTickets.updatedAt",
                     "field": "updatedAt",
-                    "labelKey": "kitchenProductionFlow.field.updatedAt",
+                    "labelKey": "kitchenProductionFlow.filter.updatedAt.label",
                     "order": 50,
                     "required": false,
                     "inputType": "date",
@@ -253,9 +255,9 @@ export const definition = {
                 ],
                 "toolbar": [
                   {
-                    "id": "toolbar-viewKitchenTickets",
+                    "id": "tb.viewKitchenTickets.query",
                     "action": "viewKitchenTickets",
-                    "labelKey": "kitchenProductionFlow.action.viewKitchenTickets",
+                    "labelKey": "kitchenProductionFlow.action.viewKitchenTickets.label",
                     "order": 10,
                     "actionKey": "viewKitchenTickets"
                   }
@@ -267,7 +269,7 @@ export const definition = {
             ]
           },
           {
-            "id": "organism-updateKitchenTicketStatus",
+            "id": "org.updateKitchenTicketStatus",
             "type": "organism",
             "organismName": "UpdateKitchenTicketStatus",
             "titleKey": "kitchenProductionFlow.organism.updateKitchenTicketStatus.title",
@@ -291,16 +293,17 @@ export const definition = {
             "order": 20,
             "intentions": [
               {
-                "id": "intention-updateKitchenTicketStatus-form",
+                "id": "intent.updateKitchenTicketStatus.commandForm",
                 "intent": "commandForm",
                 "order": 10,
-                "titleKey": "kitchenProductionFlow.intention.updateKitchenTicketStatus.form.title",
+                "titleKey": "kitchenProductionFlow.intent.updateKitchenTicketStatus.commandForm.title",
+                "action": "updateKitchenTicketStatus",
                 "submitAction": "updateKitchenTicketStatus",
                 "fields": [
                   {
-                    "id": "field-kitchenTicketStatus",
+                    "id": "field.updateKitchenTicketStatus.status",
                     "field": "status",
-                    "labelKey": "kitchenProductionFlow.field.status",
+                    "labelKey": "kitchenProductionFlow.field.kitchenTicketStatus.label",
                     "order": 10,
                     "required": true,
                     "inputType": "select",
@@ -313,9 +316,9 @@ export const definition = {
                 "rowActions": [],
                 "actions": [
                   {
-                    "id": "action-updateKitchenTicketStatus",
+                    "id": "act.updateKitchenTicketStatus.submit",
                     "action": "updateKitchenTicketStatus",
-                    "labelKey": "kitchenProductionFlow.action.updateKitchenTicketStatus",
+                    "labelKey": "kitchenProductionFlow.action.updateKitchenTicketStatus.label",
                     "order": 10,
                     "actionKey": "updateKitchenTicketStatus"
                   }
@@ -324,7 +327,7 @@ export const definition = {
             ]
           },
           {
-            "id": "organism-updateOrderItemStatus",
+            "id": "org.updateOrderItemStatus",
             "type": "organism",
             "organismName": "UpdateOrderItemStatus",
             "titleKey": "kitchenProductionFlow.organism.updateOrderItemStatus.title",
@@ -349,16 +352,17 @@ export const definition = {
             "order": 30,
             "intentions": [
               {
-                "id": "intention-updateOrderItemStatus-form",
+                "id": "intent.updateOrderItemStatus.commandForm",
                 "intent": "commandForm",
                 "order": 10,
-                "titleKey": "kitchenProductionFlow.intention.updateOrderItemStatus.form.title",
+                "titleKey": "kitchenProductionFlow.intent.updateOrderItemStatus.commandForm.title",
+                "action": "updateOrderItemStatus",
                 "submitAction": "updateOrderItemStatus",
                 "fields": [
                   {
-                    "id": "field-orderItemStatus",
+                    "id": "field.updateOrderItemStatus.status",
                     "field": "status",
-                    "labelKey": "kitchenProductionFlow.field.orderItem.status",
+                    "labelKey": "kitchenProductionFlow.field.orderItemStatus.label",
                     "order": 10,
                     "required": true,
                     "inputType": "select",
@@ -371,9 +375,9 @@ export const definition = {
                 "rowActions": [],
                 "actions": [
                   {
-                    "id": "action-updateOrderItemStatus",
+                    "id": "act.updateOrderItemStatus.submit",
                     "action": "updateOrderItemStatus",
-                    "labelKey": "kitchenProductionFlow.action.updateOrderItemStatus",
+                    "labelKey": "kitchenProductionFlow.action.updateOrderItemStatus.label",
                     "order": 10,
                     "actionKey": "updateOrderItemStatus"
                   }

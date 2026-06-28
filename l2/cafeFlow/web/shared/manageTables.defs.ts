@@ -17,7 +17,7 @@ export const definition = {
   },
   "layoutRef": {
     "defPath": "_102050_/l2/cafeFlow/web/desktop/page11/manageTables.defs.ts",
-    "layoutId": "manageTables.layout"
+    "layoutId": "manageTablesLayout"
   },
   "states": [
     {
@@ -117,11 +117,12 @@ export const definition = {
   "i18n": {
     "manageTables.section.title": "Gerenciar mesas",
     "manageTables.organism.title": "Gerenciar mesas",
-    "manageTables.form.title": "Command Form",
-    "manageTables.field.tableId": "Table Id",
-    "manageTables.field.number": "Number",
-    "manageTables.field.status": "Status",
-    "manageTables.action.submit": "Manage Tables"
+    "manageTables.form.title": "Dados da mesa",
+    "manageTables.field.tableId": "Identificador da mesa",
+    "manageTables.field.number": "Número da mesa",
+    "manageTables.field.status": "Situação",
+    "manageTables.action.submit": "Salvar",
+    "manageTables.status.title": "Status da operação"
   },
   "automation": {
     "statePrefix": "ui.manageTables",

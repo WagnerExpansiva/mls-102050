@@ -20,7 +20,7 @@ export const definition = {
   "navigationRefs": [],
   "sections": [
     {
-      "id": "section-record-payment",
+      "id": "section.recordPayment",
       "type": "section",
       "sectionName": "Registrar pagamento/recebimento",
       "titleKey": "recordPayment.section.title",
@@ -28,8 +28,8 @@ export const definition = {
       "order": 10,
       "organisms": [
         {
-          "id": "org-record-payment",
-          "type": "composite",
+          "id": "organism.recordPayment",
+          "type": "organism",
           "organismName": "RecordPayment",
           "titleKey": "recordPayment.organism.title",
           "purpose": "Registrar pagamento/recebimento",
@@ -41,14 +41,7 @@ export const definition = {
             "Order",
             "DailyShift"
           ],
-          "readsFields": [
-            "Order.orderId",
-            "Order.orderType",
-            "Order.status",
-            "Order.totalAmount",
-            "Order.tableId",
-            "Order.customerName"
-          ],
+          "readsFields": [],
           "writesFields": [
             "Payment.method",
             "Payment.amount",
@@ -60,15 +53,10 @@ export const definition = {
           "order": 10,
           "intentionRefs": [
             {
-              "id": "intent-order-summary",
-              "intent": "summary",
-              "order": 10
-            },
-            {
-              "id": "intent-record-payment-form",
+              "id": "intention.recordPayment.form",
               "intent": "commandForm",
               "submitAction": "recordPayment",
-              "order": 20
+              "order": 10
             }
           ]
         }
@@ -76,11 +64,11 @@ export const definition = {
     }
   ],
   "layout": {
-    "id": "recordPaymentLayout",
+    "id": "recordPayment.default",
     "type": "page",
     "sections": [
       {
-        "id": "section-record-payment",
+        "id": "section.recordPayment",
         "type": "section",
         "sectionName": "Registrar pagamento/recebimento",
         "titleKey": "recordPayment.section.title",
@@ -88,8 +76,8 @@ export const definition = {
         "order": 10,
         "organisms": [
           {
-            "id": "org-record-payment",
-            "type": "composite",
+            "id": "organism.recordPayment",
+            "type": "organism",
             "organismName": "RecordPayment",
             "titleKey": "recordPayment.organism.title",
             "purpose": "Registrar pagamento/recebimento",
@@ -101,14 +89,7 @@ export const definition = {
               "Order",
               "DailyShift"
             ],
-            "readsFields": [
-              "Order.orderId",
-              "Order.orderType",
-              "Order.status",
-              "Order.totalAmount",
-              "Order.tableId",
-              "Order.customerName"
-            ],
+            "readsFields": [],
             "writesFields": [
               "Payment.method",
               "Payment.amount",
@@ -120,101 +101,38 @@ export const definition = {
             "order": 10,
             "intentions": [
               {
-                "id": "intent-order-summary",
-                "intent": "summary",
-                "order": 10,
-                "titleKey": "recordPayment.order.summary.title",
-                "fields": [
-                  {
-                    "id": "field-order-id",
-                    "field": "Order.orderId",
-                    "labelKey": "recordPayment.order.field.orderId",
-                    "order": 10,
-                    "required": false,
-                    "stateKey": "ui.recordPayment.input.recordPayment.Order.orderId"
-                  },
-                  {
-                    "id": "field-order-type",
-                    "field": "Order.orderType",
-                    "labelKey": "recordPayment.order.field.orderType",
-                    "order": 20,
-                    "required": false,
-                    "stateKey": "ui.recordPayment.input.recordPayment.Order.orderType"
-                  },
-                  {
-                    "id": "field-order-status",
-                    "field": "Order.status",
-                    "labelKey": "recordPayment.order.field.status",
-                    "order": 30,
-                    "required": false,
-                    "stateKey": "ui.recordPayment.input.recordPayment.Order.status"
-                  },
-                  {
-                    "id": "field-order-total",
-                    "field": "Order.totalAmount",
-                    "labelKey": "recordPayment.order.field.totalAmount",
-                    "order": 40,
-                    "required": false,
-                    "format": "money",
-                    "stateKey": "ui.recordPayment.input.recordPayment.Order.totalAmount"
-                  },
-                  {
-                    "id": "field-order-table",
-                    "field": "Order.tableId",
-                    "labelKey": "recordPayment.order.field.tableId",
-                    "order": 50,
-                    "required": false,
-                    "stateKey": "ui.recordPayment.input.recordPayment.Order.tableId"
-                  },
-                  {
-                    "id": "field-order-customer",
-                    "field": "Order.customerName",
-                    "labelKey": "recordPayment.order.field.customerName",
-                    "order": 60,
-                    "required": false,
-                    "stateKey": "ui.recordPayment.input.recordPayment.Order.customerName"
-                  }
-                ],
-                "columns": [],
-                "filters": [],
-                "toolbar": [],
-                "rowActions": [],
-                "actions": []
-              },
-              {
-                "id": "intent-record-payment-form",
+                "id": "intention.recordPayment.form",
                 "intent": "commandForm",
-                "order": 20,
-                "titleKey": "recordPayment.payment.form.title",
+                "order": 10,
+                "titleKey": "recordPayment.form.title",
                 "submitAction": "recordPayment",
                 "fields": [
                   {
-                    "id": "field-payment-method",
-                    "field": "Payment.method",
-                    "labelKey": "recordPayment.payment.field.method",
+                    "id": "field.payment.method",
+                    "field": "method",
+                    "labelKey": "recordPayment.field.method",
                     "order": 10,
                     "required": true,
                     "inputType": "text",
-                    "stateKey": "ui.recordPayment.input.recordPayment.Payment.method"
+                    "stateKey": "ui.recordPayment.input.recordPayment.method"
                   },
                   {
-                    "id": "field-payment-amount",
-                    "field": "Payment.amount",
-                    "labelKey": "recordPayment.payment.field.amount",
+                    "id": "field.payment.amount",
+                    "field": "amount",
+                    "labelKey": "recordPayment.field.amount",
                     "order": 20,
                     "required": true,
                     "inputType": "money",
-                    "format": "money",
-                    "stateKey": "ui.recordPayment.input.recordPayment.Payment.amount"
+                    "stateKey": "ui.recordPayment.input.recordPayment.amount"
                   },
                   {
-                    "id": "field-payment-status",
-                    "field": "Payment.status",
-                    "labelKey": "recordPayment.payment.field.status",
+                    "id": "field.payment.status",
+                    "field": "status",
+                    "labelKey": "recordPayment.field.status",
                     "order": 30,
                     "required": true,
                     "inputType": "select",
-                    "stateKey": "ui.recordPayment.input.recordPayment.Payment.status"
+                    "stateKey": "ui.recordPayment.input.recordPayment.status"
                   }
                 ],
                 "columns": [],
@@ -223,7 +141,7 @@ export const definition = {
                 "rowActions": [],
                 "actions": [
                   {
-                    "id": "action-record-payment",
+                    "id": "action.recordPayment.submit",
                     "action": "recordPayment",
                     "labelKey": "recordPayment.action.submit",
                     "order": 10,
