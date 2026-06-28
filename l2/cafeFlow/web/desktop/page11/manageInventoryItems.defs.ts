@@ -29,7 +29,7 @@ export const definition = {
       "organisms": [
         {
           "id": "organism.manageInventoryItems.form",
-          "type": "organism",
+          "type": "form",
           "organismName": "ManageInventoryItems",
           "titleKey": "manageInventoryItems.organism.form.title",
           "purpose": "Gerenciar itens de estoque (ingredientes)",
@@ -55,9 +55,16 @@ export const definition = {
           "order": 10,
           "intentionRefs": [
             {
-              "id": "intention.manageInventoryItems.commandForm",
-              "intent": "commandForm",
+              "id": "intention.manageInventoryItems.status",
+              "intent": "workflowStatus",
               "order": 10
+            },
+            {
+              "id": "intention.manageInventoryItems.form",
+              "intent": "commandForm",
+              "action": "manageInventoryItems",
+              "submitAction": "manageInventoryItems",
+              "order": 20
             }
           ]
         }
@@ -78,7 +85,7 @@ export const definition = {
         "organisms": [
           {
             "id": "organism.manageInventoryItems.form",
-            "type": "organism",
+            "type": "form",
             "organismName": "ManageInventoryItems",
             "titleKey": "manageInventoryItems.organism.form.title",
             "purpose": "Gerenciar itens de estoque (ingredientes)",
@@ -104,64 +111,78 @@ export const definition = {
             "order": 10,
             "intentions": [
               {
-                "id": "intention.manageInventoryItems.commandForm",
-                "intent": "commandForm",
+                "id": "intention.manageInventoryItems.status",
+                "intent": "workflowStatus",
                 "order": 10,
-                "titleKey": "manageInventoryItems.intention.commandForm.title",
+                "titleKey": "manageInventoryItems.intention.status.title",
+                "fields": [],
+                "columns": [],
+                "filters": [],
+                "toolbar": [],
+                "rowActions": [],
+                "actions": []
+              },
+              {
+                "id": "intention.manageInventoryItems.form",
+                "intent": "commandForm",
+                "order": 20,
+                "titleKey": "manageInventoryItems.intention.form.title",
+                "action": "manageInventoryItems",
+                "submitAction": "manageInventoryItems",
                 "fields": [
                   {
                     "id": "field.manageInventoryItems.name",
-                    "field": "InventoryItem.name",
+                    "field": "name",
                     "labelKey": "manageInventoryItems.field.name.label",
                     "order": 10,
                     "required": true,
                     "inputType": "text",
-                    "stateKey": "ui.manageInventoryItems.input.manageInventoryItems.InventoryItem.name"
+                    "stateKey": "ui.manageInventoryItems.input.manageInventoryItems.name"
                   },
                   {
                     "id": "field.manageInventoryItems.description",
-                    "field": "InventoryItem.description",
+                    "field": "description",
                     "labelKey": "manageInventoryItems.field.description.label",
                     "order": 20,
                     "required": false,
                     "inputType": "textarea",
-                    "stateKey": "ui.manageInventoryItems.input.manageInventoryItems.InventoryItem.description"
+                    "stateKey": "ui.manageInventoryItems.input.manageInventoryItems.description"
                   },
                   {
                     "id": "field.manageInventoryItems.unit",
-                    "field": "InventoryItem.unit",
+                    "field": "unit",
                     "labelKey": "manageInventoryItems.field.unit.label",
                     "order": 30,
                     "required": true,
                     "inputType": "text",
-                    "stateKey": "ui.manageInventoryItems.input.manageInventoryItems.InventoryItem.unit"
+                    "stateKey": "ui.manageInventoryItems.input.manageInventoryItems.unit"
                   },
                   {
                     "id": "field.manageInventoryItems.currentQuantity",
-                    "field": "InventoryItem.currentQuantity",
+                    "field": "currentQuantity",
                     "labelKey": "manageInventoryItems.field.currentQuantity.label",
                     "order": 40,
                     "required": true,
                     "inputType": "number",
-                    "stateKey": "ui.manageInventoryItems.input.manageInventoryItems.InventoryItem.currentQuantity"
+                    "stateKey": "ui.manageInventoryItems.input.manageInventoryItems.currentQuantity"
                   },
                   {
                     "id": "field.manageInventoryItems.minimumLevel",
-                    "field": "InventoryItem.minimumLevel",
+                    "field": "minimumLevel",
                     "labelKey": "manageInventoryItems.field.minimumLevel.label",
                     "order": 50,
                     "required": true,
                     "inputType": "number",
-                    "stateKey": "ui.manageInventoryItems.input.manageInventoryItems.InventoryItem.minimumLevel"
+                    "stateKey": "ui.manageInventoryItems.input.manageInventoryItems.minimumLevel"
                   },
                   {
                     "id": "field.manageInventoryItems.status",
-                    "field": "InventoryItem.status",
+                    "field": "status",
                     "labelKey": "manageInventoryItems.field.status.label",
                     "order": 60,
                     "required": true,
                     "inputType": "select",
-                    "stateKey": "ui.manageInventoryItems.input.manageInventoryItems.InventoryItem.status"
+                    "stateKey": "ui.manageInventoryItems.input.manageInventoryItems.status"
                   }
                 ],
                 "columns": [],

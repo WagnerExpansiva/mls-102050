@@ -20,18 +20,18 @@ export const definition = {
   "navigationRefs": [],
   "sections": [
     {
-      "id": "section-ai-sales-summary",
+      "id": "sec-aiSalesSummary-main",
       "type": "section",
       "sectionName": "Assistente IA: resumo de vendas do dia",
-      "titleKey": "aiSalesSummary.section.title",
+      "titleKey": "aiSalesSummary.section.main.title",
       "mode": "view",
       "order": 10,
       "organisms": [
         {
-          "id": "organism-ai-sales-summary",
-          "type": "panel",
+          "id": "org-aiSalesSummary",
+          "type": "organism",
           "organismName": "AiSalesSummary",
-          "titleKey": "aiSalesSummary.organism.title",
+          "titleKey": "aiSalesSummary.organism.main.title",
           "purpose": "Assistente IA: resumo de vendas do dia",
           "userActions": [
             "aiSalesSummary"
@@ -55,7 +55,7 @@ export const definition = {
           "order": 10,
           "intentionRefs": [
             {
-              "id": "intention-ai-sales-summary-form",
+              "id": "intent-aiSalesSummary-filters",
               "intent": "commandForm",
               "stateKey": "ui.aiSalesSummary.data.aiSalesSummary",
               "action": "aiSalesSummary",
@@ -63,7 +63,7 @@ export const definition = {
               "order": 10
             },
             {
-              "id": "intention-ai-sales-summary-results",
+              "id": "intent-aiSalesSummary-results",
               "intent": "queryList",
               "stateKey": "ui.aiSalesSummary.data.aiSalesSummary",
               "order": 20
@@ -74,22 +74,22 @@ export const definition = {
     }
   ],
   "layout": {
-    "id": "aiSalesSummaryLayout",
+    "id": "aiSalesSummary.layout",
     "type": "page",
     "sections": [
       {
-        "id": "section-ai-sales-summary",
+        "id": "sec-aiSalesSummary-main",
         "type": "section",
         "sectionName": "Assistente IA: resumo de vendas do dia",
-        "titleKey": "aiSalesSummary.section.title",
+        "titleKey": "aiSalesSummary.section.main.title",
         "mode": "view",
         "order": 10,
         "organisms": [
           {
-            "id": "organism-ai-sales-summary",
-            "type": "panel",
+            "id": "org-aiSalesSummary",
+            "type": "organism",
             "organismName": "AiSalesSummary",
-            "titleKey": "aiSalesSummary.organism.title",
+            "titleKey": "aiSalesSummary.organism.main.title",
             "purpose": "Assistente IA: resumo de vendas do dia",
             "userActions": [
               "aiSalesSummary"
@@ -113,35 +113,35 @@ export const definition = {
             "order": 10,
             "intentions": [
               {
-                "id": "intention-ai-sales-summary-form",
+                "id": "intent-aiSalesSummary-filters",
                 "intent": "commandForm",
                 "order": 10,
-                "titleKey": "aiSalesSummary.form.title",
+                "titleKey": "aiSalesSummary.intent.filters.title",
                 "action": "aiSalesSummary",
                 "submitAction": "aiSalesSummary",
                 "fields": [
                   {
-                    "id": "field-daily-shift-id",
+                    "id": "field-aiSalesSummary-dailyShiftId",
                     "field": "dailyShiftId",
-                    "labelKey": "aiSalesSummary.field.dailyShiftId",
+                    "labelKey": "aiSalesSummary.field.dailyShiftId.label",
                     "order": 10,
                     "required": false,
-                    "inputType": "select",
+                    "inputType": "text",
                     "stateKey": "ui.aiSalesSummary.input.aiSalesSummary.dailyShiftId"
                   },
                   {
-                    "id": "field-status",
+                    "id": "field-aiSalesSummary-status",
                     "field": "status",
-                    "labelKey": "aiSalesSummary.field.status",
+                    "labelKey": "aiSalesSummary.field.status.label",
                     "order": 20,
                     "required": false,
                     "inputType": "select",
                     "stateKey": "ui.aiSalesSummary.input.aiSalesSummary.status"
                   },
                   {
-                    "id": "field-closed-at",
+                    "id": "field-aiSalesSummary-closedAt",
                     "field": "closedAt",
-                    "labelKey": "aiSalesSummary.field.closedAt",
+                    "labelKey": "aiSalesSummary.field.closedAt.label",
                     "order": 30,
                     "required": false,
                     "inputType": "date",
@@ -154,9 +154,9 @@ export const definition = {
                 "rowActions": [],
                 "actions": [
                   {
-                    "id": "action-ai-sales-summary-submit",
+                    "id": "action-aiSalesSummary-run",
                     "action": "aiSalesSummary",
-                    "labelKey": "aiSalesSummary.action.run",
+                    "labelKey": "aiSalesSummary.action.run.label",
                     "order": 10,
                     "actionKey": "aiSalesSummary"
                   }
@@ -164,44 +164,42 @@ export const definition = {
                 "stateKey": "ui.aiSalesSummary.data.aiSalesSummary"
               },
               {
-                "id": "intention-ai-sales-summary-results",
+                "id": "intent-aiSalesSummary-results",
                 "intent": "queryList",
                 "order": 20,
-                "titleKey": "aiSalesSummary.results.title",
+                "titleKey": "aiSalesSummary.intent.results.title",
                 "fields": [],
                 "columns": [
                   {
-                    "id": "col-daily-shift-id",
+                    "id": "col-aiSalesSummary-dailyShiftId",
                     "field": "dailyShiftId",
-                    "labelKey": "aiSalesSummary.col.dailyShiftId",
+                    "labelKey": "aiSalesSummary.col.dailyShiftId.label",
                     "order": 10,
                     "required": false,
                     "stateKey": "ui.aiSalesSummary.data.aiSalesSummary"
                   },
                   {
-                    "id": "col-status",
+                    "id": "col-aiSalesSummary-status",
                     "field": "status",
-                    "labelKey": "aiSalesSummary.col.status",
+                    "labelKey": "aiSalesSummary.col.status.label",
                     "order": 20,
                     "required": false,
                     "stateKey": "ui.aiSalesSummary.data.aiSalesSummary"
                   },
                   {
-                    "id": "col-total-amount",
+                    "id": "col-aiSalesSummary-totalAmount",
                     "field": "totalAmount",
-                    "labelKey": "aiSalesSummary.col.totalAmount",
+                    "labelKey": "aiSalesSummary.col.totalAmount.label",
                     "order": 30,
                     "required": false,
-                    "format": "money",
                     "stateKey": "ui.aiSalesSummary.data.aiSalesSummary"
                   },
                   {
-                    "id": "col-closed-at",
+                    "id": "col-aiSalesSummary-closedAt",
                     "field": "closedAt",
-                    "labelKey": "aiSalesSummary.col.closedAt",
+                    "labelKey": "aiSalesSummary.col.closedAt.label",
                     "order": 40,
                     "required": false,
-                    "format": "datetime",
                     "stateKey": "ui.aiSalesSummary.data.aiSalesSummary"
                   }
                 ],

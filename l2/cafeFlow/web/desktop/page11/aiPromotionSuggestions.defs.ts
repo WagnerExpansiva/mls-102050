@@ -20,18 +20,18 @@ export const definition = {
   "navigationRefs": [],
   "sections": [
     {
-      "id": "sec-ai-promo",
+      "id": "sec-aiPromotionSuggestions-main",
       "type": "section",
       "sectionName": "Assistente IA: sugestões de itens para promover (últimos 7 dias)",
-      "titleKey": "aiPromotionSuggestions.section.title",
+      "titleKey": "aiPromotionSuggestions.section.main.title",
       "mode": "view",
       "order": 10,
       "organisms": [
         {
-          "id": "org-ai-promo",
-          "type": "organism",
+          "id": "org-aiPromotionSuggestions",
+          "type": "data",
           "organismName": "AiPromotionSuggestions",
-          "titleKey": "aiPromotionSuggestions.organism.title",
+          "titleKey": "aiPromotionSuggestions.organism.main.title",
           "purpose": "Assistente IA: sugestões de itens para promover (últimos 7 dias)",
           "userActions": [
             "aiPromotionSuggestions"
@@ -46,8 +46,6 @@ export const definition = {
             "orderId",
             "menuItemId",
             "kitchenTicketId",
-            "status",
-            "createdAt",
             "quantity",
             "unitPrice",
             "totalPrice",
@@ -58,7 +56,7 @@ export const definition = {
           "order": 10,
           "intentionRefs": [
             {
-              "id": "intent-ai-promo-query",
+              "id": "int-aiPromotionSuggestions-query",
               "intent": "queryList",
               "stateKey": "ui.aiPromotionSuggestions.data.aiPromotionSuggestions",
               "action": "aiPromotionSuggestions",
@@ -75,18 +73,18 @@ export const definition = {
     "type": "page",
     "sections": [
       {
-        "id": "sec-ai-promo",
+        "id": "sec-aiPromotionSuggestions-main",
         "type": "section",
         "sectionName": "Assistente IA: sugestões de itens para promover (últimos 7 dias)",
-        "titleKey": "aiPromotionSuggestions.section.title",
+        "titleKey": "aiPromotionSuggestions.section.main.title",
         "mode": "view",
         "order": 10,
         "organisms": [
           {
-            "id": "org-ai-promo",
-            "type": "organism",
+            "id": "org-aiPromotionSuggestions",
+            "type": "data",
             "organismName": "AiPromotionSuggestions",
-            "titleKey": "aiPromotionSuggestions.organism.title",
+            "titleKey": "aiPromotionSuggestions.organism.main.title",
             "purpose": "Assistente IA: sugestões de itens para promover (últimos 7 dias)",
             "userActions": [
               "aiPromotionSuggestions"
@@ -101,8 +99,6 @@ export const definition = {
               "orderId",
               "menuItemId",
               "kitchenTicketId",
-              "status",
-              "createdAt",
               "quantity",
               "unitPrice",
               "totalPrice",
@@ -113,7 +109,7 @@ export const definition = {
             "order": 10,
             "intentions": [
               {
-                "id": "intent-ai-promo-query",
+                "id": "int-aiPromotionSuggestions-query",
                 "intent": "queryList",
                 "order": 10,
                 "titleKey": "aiPromotionSuggestions.intent.query.title",
@@ -122,65 +118,65 @@ export const definition = {
                 "fields": [],
                 "columns": [
                   {
-                    "id": "col-id",
+                    "id": "col-orderItem-id",
                     "field": "id",
-                    "labelKey": "aiPromotionSuggestions.field.id",
+                    "labelKey": "aiPromotionSuggestions.field.id.label",
                     "order": 10,
                     "required": false,
                     "stateKey": "ui.aiPromotionSuggestions.data.aiPromotionSuggestions"
                   },
                   {
-                    "id": "col-orderId",
+                    "id": "col-orderItem-orderId",
                     "field": "orderId",
-                    "labelKey": "aiPromotionSuggestions.field.orderId",
+                    "labelKey": "aiPromotionSuggestions.field.orderId.label",
                     "order": 20,
                     "required": false,
                     "stateKey": "ui.aiPromotionSuggestions.data.aiPromotionSuggestions"
                   },
                   {
-                    "id": "col-menuItemId",
+                    "id": "col-orderItem-menuItemId",
                     "field": "menuItemId",
-                    "labelKey": "aiPromotionSuggestions.field.menuItemId",
+                    "labelKey": "aiPromotionSuggestions.field.menuItemId.label",
                     "order": 30,
                     "required": false,
                     "stateKey": "ui.aiPromotionSuggestions.data.aiPromotionSuggestions"
                   },
                   {
-                    "id": "col-kitchenTicketId",
+                    "id": "col-orderItem-kitchenTicketId",
                     "field": "kitchenTicketId",
-                    "labelKey": "aiPromotionSuggestions.field.kitchenTicketId",
+                    "labelKey": "aiPromotionSuggestions.field.kitchenTicketId.label",
                     "order": 40,
                     "required": false,
                     "stateKey": "ui.aiPromotionSuggestions.data.aiPromotionSuggestions"
                   },
                   {
-                    "id": "col-quantity",
+                    "id": "col-orderItem-quantity",
                     "field": "quantity",
-                    "labelKey": "aiPromotionSuggestions.field.quantity",
+                    "labelKey": "aiPromotionSuggestions.field.quantity.label",
                     "order": 50,
                     "required": false,
                     "stateKey": "ui.aiPromotionSuggestions.data.aiPromotionSuggestions"
                   },
                   {
-                    "id": "col-unitPrice",
+                    "id": "col-orderItem-unitPrice",
                     "field": "unitPrice",
-                    "labelKey": "aiPromotionSuggestions.field.unitPrice",
+                    "labelKey": "aiPromotionSuggestions.field.unitPrice.label",
                     "order": 60,
                     "required": false,
                     "stateKey": "ui.aiPromotionSuggestions.data.aiPromotionSuggestions"
                   },
                   {
-                    "id": "col-totalPrice",
+                    "id": "col-orderItem-totalPrice",
                     "field": "totalPrice",
-                    "labelKey": "aiPromotionSuggestions.field.totalPrice",
+                    "labelKey": "aiPromotionSuggestions.field.totalPrice.label",
                     "order": 70,
                     "required": false,
                     "stateKey": "ui.aiPromotionSuggestions.data.aiPromotionSuggestions"
                   },
                   {
-                    "id": "col-observations",
+                    "id": "col-orderItem-observations",
                     "field": "observations",
-                    "labelKey": "aiPromotionSuggestions.field.observations",
+                    "labelKey": "aiPromotionSuggestions.field.observations.label",
                     "order": 80,
                     "required": false,
                     "stateKey": "ui.aiPromotionSuggestions.data.aiPromotionSuggestions"
@@ -188,54 +184,54 @@ export const definition = {
                 ],
                 "filters": [
                   {
-                    "id": "filter-id",
+                    "id": "flt-orderItem-id",
                     "field": "id",
-                    "labelKey": "aiPromotionSuggestions.filter.id",
+                    "labelKey": "aiPromotionSuggestions.filter.id.label",
                     "order": 10,
                     "required": false,
                     "inputType": "text",
                     "stateKey": "ui.aiPromotionSuggestions.input.aiPromotionSuggestions.id"
                   },
                   {
-                    "id": "filter-orderId",
+                    "id": "flt-orderItem-orderId",
                     "field": "orderId",
-                    "labelKey": "aiPromotionSuggestions.filter.orderId",
+                    "labelKey": "aiPromotionSuggestions.filter.orderId.label",
                     "order": 20,
                     "required": false,
                     "inputType": "text",
                     "stateKey": "ui.aiPromotionSuggestions.input.aiPromotionSuggestions.orderId"
                   },
                   {
-                    "id": "filter-menuItemId",
+                    "id": "flt-orderItem-menuItemId",
                     "field": "menuItemId",
-                    "labelKey": "aiPromotionSuggestions.filter.menuItemId",
+                    "labelKey": "aiPromotionSuggestions.filter.menuItemId.label",
                     "order": 30,
                     "required": false,
                     "inputType": "text",
                     "stateKey": "ui.aiPromotionSuggestions.input.aiPromotionSuggestions.menuItemId"
                   },
                   {
-                    "id": "filter-kitchenTicketId",
+                    "id": "flt-orderItem-kitchenTicketId",
                     "field": "kitchenTicketId",
-                    "labelKey": "aiPromotionSuggestions.filter.kitchenTicketId",
+                    "labelKey": "aiPromotionSuggestions.filter.kitchenTicketId.label",
                     "order": 40,
                     "required": false,
                     "inputType": "text",
                     "stateKey": "ui.aiPromotionSuggestions.input.aiPromotionSuggestions.kitchenTicketId"
                   },
                   {
-                    "id": "filter-status",
+                    "id": "flt-orderItem-status",
                     "field": "status",
-                    "labelKey": "aiPromotionSuggestions.filter.status",
+                    "labelKey": "aiPromotionSuggestions.filter.status.label",
                     "order": 50,
                     "required": false,
                     "inputType": "select",
                     "stateKey": "ui.aiPromotionSuggestions.input.aiPromotionSuggestions.status"
                   },
                   {
-                    "id": "filter-createdAt",
+                    "id": "flt-orderItem-createdAt",
                     "field": "createdAt",
-                    "labelKey": "aiPromotionSuggestions.filter.createdAt",
+                    "labelKey": "aiPromotionSuggestions.filter.createdAt.label",
                     "order": 60,
                     "required": false,
                     "inputType": "date",
@@ -244,25 +240,15 @@ export const definition = {
                 ],
                 "toolbar": [
                   {
-                    "id": "tb-run",
+                    "id": "tb-aiPromotionSuggestions-run",
                     "action": "aiPromotionSuggestions",
-                    "labelKey": "aiPromotionSuggestions.action.run",
+                    "labelKey": "aiPromotionSuggestions.action.run.label",
                     "order": 10,
-                    "displayHint": "primary",
                     "actionKey": "aiPromotionSuggestions"
                   }
                 ],
                 "rowActions": [],
-                "actions": [
-                  {
-                    "id": "act-run",
-                    "action": "aiPromotionSuggestions",
-                    "labelKey": "aiPromotionSuggestions.action.run",
-                    "order": 10,
-                    "displayHint": "primary",
-                    "actionKey": "aiPromotionSuggestions"
-                  }
-                ],
+                "actions": [],
                 "stateKey": "ui.aiPromotionSuggestions.data.aiPromotionSuggestions"
               }
             ]

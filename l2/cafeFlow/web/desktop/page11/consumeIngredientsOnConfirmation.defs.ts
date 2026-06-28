@@ -24,7 +24,7 @@ export const definition = {
   "navigationRefs": [],
   "sections": [
     {
-      "id": "section.consumeIngredientsOnConfirmation.main",
+      "id": "sec-consume-ingredients",
       "type": "section",
       "sectionName": "Baixar estoque por consumo de ingredientes",
       "titleKey": "consumeIngredientsOnConfirmation.section.main.title",
@@ -32,8 +32,8 @@ export const definition = {
       "order": 10,
       "organisms": [
         {
-          "id": "organism.createStockConsumption",
-          "type": "form",
+          "id": "org-create-stock-consumption",
+          "type": "organism",
           "organismName": "CreateStockConsumption",
           "titleKey": "consumeIngredientsOnConfirmation.organism.createStockConsumption.title",
           "purpose": "Registrar consumo de estoque",
@@ -56,7 +56,7 @@ export const definition = {
           "order": 10,
           "intentionRefs": [
             {
-              "id": "intention.createStockConsumption.commandForm",
+              "id": "intent-create-stock-consumption-form",
               "intent": "commandForm",
               "action": "createStockConsumption",
               "submitAction": "createStockConsumption",
@@ -72,7 +72,7 @@ export const definition = {
     "type": "page",
     "sections": [
       {
-        "id": "section.consumeIngredientsOnConfirmation.main",
+        "id": "sec-consume-ingredients",
         "type": "section",
         "sectionName": "Baixar estoque por consumo de ingredientes",
         "titleKey": "consumeIngredientsOnConfirmation.section.main.title",
@@ -80,8 +80,8 @@ export const definition = {
         "order": 10,
         "organisms": [
           {
-            "id": "organism.createStockConsumption",
-            "type": "form",
+            "id": "org-create-stock-consumption",
+            "type": "organism",
             "organismName": "CreateStockConsumption",
             "titleKey": "consumeIngredientsOnConfirmation.organism.createStockConsumption.title",
             "purpose": "Registrar consumo de estoque",
@@ -104,15 +104,15 @@ export const definition = {
             "order": 10,
             "intentions": [
               {
-                "id": "intention.createStockConsumption.commandForm",
+                "id": "intent-create-stock-consumption-form",
                 "intent": "commandForm",
                 "order": 10,
-                "titleKey": "consumeIngredientsOnConfirmation.intention.createStockConsumption.title",
+                "titleKey": "consumeIngredientsOnConfirmation.intent.createStockConsumption.form.title",
                 "action": "createStockConsumption",
                 "submitAction": "createStockConsumption",
                 "fields": [
                   {
-                    "id": "field.quantity",
+                    "id": "fld-quantity",
                     "field": "quantity",
                     "labelKey": "consumeIngredientsOnConfirmation.field.quantity.label",
                     "order": 10,
@@ -121,7 +121,7 @@ export const definition = {
                     "stateKey": "ui.consumeIngredientsOnConfirmation.input.createStockConsumption.quantity"
                   },
                   {
-                    "id": "field.status",
+                    "id": "fld-status",
                     "field": "status",
                     "labelKey": "consumeIngredientsOnConfirmation.field.status.label",
                     "order": 20,
@@ -130,7 +130,7 @@ export const definition = {
                     "stateKey": "ui.consumeIngredientsOnConfirmation.input.createStockConsumption.status"
                   },
                   {
-                    "id": "field.consumedAt",
+                    "id": "fld-consumedAt",
                     "field": "consumedAt",
                     "labelKey": "consumeIngredientsOnConfirmation.field.consumedAt.label",
                     "order": 30,
@@ -145,11 +145,10 @@ export const definition = {
                 "rowActions": [],
                 "actions": [
                   {
-                    "id": "action.createStockConsumption.submit",
+                    "id": "act-submit-create-stock-consumption",
                     "action": "createStockConsumption",
                     "labelKey": "consumeIngredientsOnConfirmation.action.createStockConsumption.label",
                     "order": 10,
-                    "displayHint": "primary",
                     "actionKey": "createStockConsumption"
                   }
                 ]

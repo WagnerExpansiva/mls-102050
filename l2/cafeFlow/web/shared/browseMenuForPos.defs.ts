@@ -17,7 +17,7 @@ export const definition = {
   },
   "layoutRef": {
     "defPath": "_102050_/l2/cafeFlow/web/desktop/page11/browseMenuForPos.defs.ts",
-    "layoutId": "browseMenuForPosLayout"
+    "layoutId": "browseMenuForPos.layout"
   },
   "states": [
     {
@@ -190,25 +190,25 @@ export const definition = {
   ],
   "navigationRefs": [],
   "i18n": {
-    "page.title": "Consultar cardápio no POS",
-    "section.menu.title": "Consultar cardápio no POS",
-    "organism.menu.title": "Cardápio no POS",
-    "intent.menu.query.title": "Buscar itens do cardápio",
-    "filter.menuItemId.label": "Item",
-    "filter.menuCategoryId.label": "Categoria",
-    "filter.name.label": "Nome",
-    "filter.status.label": "Status",
-    "filter.createdAt.label": "Criado em",
-    "filter.updatedAt.label": "Atualizado em",
-    "column.menuItemId.label": "Item",
-    "column.menuCategoryId.label": "Categoria",
-    "column.name.label": "Nome",
-    "column.description.label": "Descrição",
-    "column.price.label": "Preço",
-    "column.status.label": "Status",
-    "column.createdAt.label": "Criado em",
-    "column.updatedAt.label": "Atualizado em",
-    "action.browseMenuForPos.label": "Consultar"
+    "browseMenuForPos.page.title": "Consultar cardápio no POS",
+    "browseMenuForPos.section.menu.title": "Consultar cardápio no POS",
+    "browseMenuForPos.organism.menu.title": "Cardápio no POS",
+    "browseMenuForPos.intent.list.title": "Itens do cardápio",
+    "browseMenuForPos.filter.menuItemId.label": "ID do item",
+    "browseMenuForPos.filter.menuCategoryId.label": "ID da categoria",
+    "browseMenuForPos.filter.name.label": "Nome do item",
+    "browseMenuForPos.filter.status.label": "Status",
+    "browseMenuForPos.filter.createdAt.label": "Criado em",
+    "browseMenuForPos.filter.updatedAt.label": "Atualizado em",
+    "browseMenuForPos.column.menuItemId.label": "ID do item",
+    "browseMenuForPos.column.menuCategoryId.label": "ID da categoria",
+    "browseMenuForPos.column.name.label": "Nome",
+    "browseMenuForPos.column.description.label": "Descrição",
+    "browseMenuForPos.column.price.label": "Preço",
+    "browseMenuForPos.column.status.label": "Status",
+    "browseMenuForPos.column.createdAt.label": "Criado em",
+    "browseMenuForPos.column.updatedAt.label": "Atualizado em",
+    "browseMenuForPos.toolbar.search.label": "Buscar"
   },
   "automation": {
     "statePrefix": "ui.browseMenuForPos",

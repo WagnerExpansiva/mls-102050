@@ -20,18 +20,18 @@ export const definition = {
   "navigationRefs": [],
   "sections": [
     {
-      "id": "sectionMenu",
+      "id": "section.menu",
       "type": "section",
       "sectionName": "Consultar cardápio no POS",
-      "titleKey": "section.menu.title",
+      "titleKey": "browseMenuForPos.section.menu.title",
       "mode": "view",
       "order": 10,
       "organisms": [
         {
-          "id": "organismBrowseMenu",
-          "type": "data",
+          "id": "organism.menu.browse",
+          "type": "organism",
           "organismName": "BrowseMenuForPos",
-          "titleKey": "organism.menu.title",
+          "titleKey": "browseMenuForPos.organism.menu.title",
           "purpose": "Consultar cardápio no POS",
           "userActions": [
             "browseMenuForPos"
@@ -57,7 +57,7 @@ export const definition = {
           "order": 10,
           "intentionRefs": [
             {
-              "id": "intentMenuQuery",
+              "id": "intention.menu.list",
               "intent": "queryList",
               "stateKey": "ui.browseMenuForPos.data.browseMenuForPos",
               "action": "browseMenuForPos",
@@ -70,22 +70,22 @@ export const definition = {
     }
   ],
   "layout": {
-    "id": "browseMenuForPosLayout",
+    "id": "browseMenuForPos.layout",
     "type": "page",
     "sections": [
       {
-        "id": "sectionMenu",
+        "id": "section.menu",
         "type": "section",
         "sectionName": "Consultar cardápio no POS",
-        "titleKey": "section.menu.title",
+        "titleKey": "browseMenuForPos.section.menu.title",
         "mode": "view",
         "order": 10,
         "organisms": [
           {
-            "id": "organismBrowseMenu",
-            "type": "data",
+            "id": "organism.menu.browse",
+            "type": "organism",
             "organismName": "BrowseMenuForPos",
-            "titleKey": "organism.menu.title",
+            "titleKey": "browseMenuForPos.organism.menu.title",
             "purpose": "Consultar cardápio no POS",
             "userActions": [
               "browseMenuForPos"
@@ -111,138 +111,140 @@ export const definition = {
             "order": 10,
             "intentions": [
               {
-                "id": "intentMenuQuery",
+                "id": "intention.menu.list",
                 "intent": "queryList",
                 "order": 10,
-                "titleKey": "intent.menu.query.title",
+                "titleKey": "browseMenuForPos.intent.list.title",
                 "action": "browseMenuForPos",
                 "submitAction": "browseMenuForPos",
                 "fields": [],
                 "columns": [
                   {
-                    "id": "colMenuItemId",
+                    "id": "col.menu.menuItemId",
                     "field": "menuItemId",
-                    "labelKey": "column.menuItemId.label",
+                    "labelKey": "browseMenuForPos.column.menuItemId.label",
                     "order": 10,
                     "required": false,
                     "stateKey": "ui.browseMenuForPos.data.browseMenuForPos"
                   },
                   {
-                    "id": "colMenuCategoryId",
+                    "id": "col.menu.menuCategoryId",
                     "field": "menuCategoryId",
-                    "labelKey": "column.menuCategoryId.label",
+                    "labelKey": "browseMenuForPos.column.menuCategoryId.label",
                     "order": 20,
                     "required": false,
                     "stateKey": "ui.browseMenuForPos.data.browseMenuForPos"
                   },
                   {
-                    "id": "colName",
+                    "id": "col.menu.name",
                     "field": "name",
-                    "labelKey": "column.name.label",
+                    "labelKey": "browseMenuForPos.column.name.label",
                     "order": 30,
                     "required": false,
                     "stateKey": "ui.browseMenuForPos.data.browseMenuForPos"
                   },
                   {
-                    "id": "colDescription",
+                    "id": "col.menu.description",
                     "field": "description",
-                    "labelKey": "column.description.label",
+                    "labelKey": "browseMenuForPos.column.description.label",
                     "order": 40,
                     "required": false,
                     "stateKey": "ui.browseMenuForPos.data.browseMenuForPos"
                   },
                   {
-                    "id": "colPrice",
+                    "id": "col.menu.price",
                     "field": "price",
-                    "labelKey": "column.price.label",
+                    "labelKey": "browseMenuForPos.column.price.label",
                     "order": 50,
                     "required": false,
                     "stateKey": "ui.browseMenuForPos.data.browseMenuForPos"
                   },
                   {
-                    "id": "colStatus",
+                    "id": "col.menu.status",
                     "field": "status",
-                    "labelKey": "column.status.label",
+                    "labelKey": "browseMenuForPos.column.status.label",
                     "order": 60,
                     "required": false,
                     "stateKey": "ui.browseMenuForPos.data.browseMenuForPos"
                   },
                   {
-                    "id": "colCreatedAt",
+                    "id": "col.menu.createdAt",
                     "field": "createdAt",
-                    "labelKey": "column.createdAt.label",
+                    "labelKey": "browseMenuForPos.column.createdAt.label",
                     "order": 70,
                     "required": false,
-                    "format": "date",
                     "stateKey": "ui.browseMenuForPos.data.browseMenuForPos"
                   },
                   {
-                    "id": "colUpdatedAt",
+                    "id": "col.menu.updatedAt",
                     "field": "updatedAt",
-                    "labelKey": "column.updatedAt.label",
+                    "labelKey": "browseMenuForPos.column.updatedAt.label",
                     "order": 80,
                     "required": false,
-                    "format": "date",
                     "stateKey": "ui.browseMenuForPos.data.browseMenuForPos"
                   }
                 ],
                 "filters": [
                   {
-                    "id": "filterMenuItemId",
+                    "id": "filter.menu.menuItemId",
                     "field": "menuItemId",
-                    "labelKey": "filter.menuItemId.label",
+                    "labelKey": "browseMenuForPos.filter.menuItemId.label",
                     "order": 10,
                     "required": false,
+                    "inputType": "text",
                     "stateKey": "ui.browseMenuForPos.input.browseMenuForPos.menuItemId"
                   },
                   {
-                    "id": "filterMenuCategoryId",
+                    "id": "filter.menu.menuCategoryId",
                     "field": "menuCategoryId",
-                    "labelKey": "filter.menuCategoryId.label",
+                    "labelKey": "browseMenuForPos.filter.menuCategoryId.label",
                     "order": 20,
                     "required": false,
+                    "inputType": "text",
                     "stateKey": "ui.browseMenuForPos.input.browseMenuForPos.menuCategoryId"
                   },
                   {
-                    "id": "filterName",
+                    "id": "filter.menu.name",
                     "field": "name",
-                    "labelKey": "filter.name.label",
+                    "labelKey": "browseMenuForPos.filter.name.label",
                     "order": 30,
                     "required": false,
+                    "inputType": "text",
                     "stateKey": "ui.browseMenuForPos.input.browseMenuForPos.name"
                   },
                   {
-                    "id": "filterStatus",
+                    "id": "filter.menu.status",
                     "field": "status",
-                    "labelKey": "filter.status.label",
+                    "labelKey": "browseMenuForPos.filter.status.label",
                     "order": 40,
                     "required": false,
+                    "inputType": "select",
                     "stateKey": "ui.browseMenuForPos.input.browseMenuForPos.status"
                   },
                   {
-                    "id": "filterCreatedAt",
+                    "id": "filter.menu.createdAt",
                     "field": "createdAt",
-                    "labelKey": "filter.createdAt.label",
+                    "labelKey": "browseMenuForPos.filter.createdAt.label",
                     "order": 50,
                     "required": false,
-                    "format": "date",
+                    "inputType": "date",
                     "stateKey": "ui.browseMenuForPos.input.browseMenuForPos.createdAt"
                   },
                   {
-                    "id": "filterUpdatedAt",
+                    "id": "filter.menu.updatedAt",
                     "field": "updatedAt",
-                    "labelKey": "filter.updatedAt.label",
+                    "labelKey": "browseMenuForPos.filter.updatedAt.label",
                     "order": 60,
                     "required": false,
-                    "format": "date",
+                    "inputType": "date",
                     "stateKey": "ui.browseMenuForPos.input.browseMenuForPos.updatedAt"
                   }
                 ],
                 "toolbar": [
                   {
-                    "id": "tbBrowse",
+                    "id": "toolbar.menu.search",
                     "action": "browseMenuForPos",
-                    "labelKey": "action.browseMenuForPos.label",
+                    "labelKey": "browseMenuForPos.toolbar.search.label",
                     "order": 10,
                     "actionKey": "browseMenuForPos"
                   }
@@ -250,9 +252,9 @@ export const definition = {
                 "rowActions": [],
                 "actions": [
                   {
-                    "id": "actBrowse",
+                    "id": "action.menu.search",
                     "action": "browseMenuForPos",
-                    "labelKey": "action.browseMenuForPos.label",
+                    "labelKey": "browseMenuForPos.toolbar.search.label",
                     "order": 10,
                     "actionKey": "browseMenuForPos"
                   }

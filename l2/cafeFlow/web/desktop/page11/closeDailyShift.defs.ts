@@ -24,7 +24,7 @@ export const definition = {
   "navigationRefs": [],
   "sections": [
     {
-      "id": "section-close-daily-shift",
+      "id": "sec-close-daily-shift",
       "type": "section",
       "sectionName": "Fechar turno diário (fechamento de caixa)",
       "titleKey": "closeDailyShift.section.main.title",
@@ -32,7 +32,7 @@ export const definition = {
       "order": 10,
       "organisms": [
         {
-          "id": "organism-update-daily-shift-status",
+          "id": "org-update-daily-shift-status",
           "type": "form",
           "organismName": "UpdateDailyShiftStatus",
           "titleKey": "closeDailyShift.organism.updateDailyShiftStatus.title",
@@ -49,7 +49,7 @@ export const definition = {
           "order": 10,
           "intentionRefs": [
             {
-              "id": "intention-update-daily-shift-status-form",
+              "id": "intent-update-daily-shift-status-form",
               "intent": "commandForm",
               "action": "updateDailyShiftStatus",
               "submitAction": "updateDailyShiftStatus",
@@ -58,7 +58,7 @@ export const definition = {
           ]
         },
         {
-          "id": "organism-record-closing-cash-movement",
+          "id": "org-record-closing-cash-movement",
           "type": "form",
           "organismName": "RecordClosingCashMovement",
           "titleKey": "closeDailyShift.organism.recordClosingCashMovement.title",
@@ -75,7 +75,7 @@ export const definition = {
           "order": 20,
           "intentionRefs": [
             {
-              "id": "intention-record-closing-cash-movement-form",
+              "id": "intent-record-closing-cash-movement-form",
               "intent": "commandForm",
               "action": "recordClosingCashMovement",
               "submitAction": "recordClosingCashMovement",
@@ -87,11 +87,11 @@ export const definition = {
     }
   ],
   "layout": {
-    "id": "closeDailyShiftLayout",
+    "id": "closeDailyShift.layout",
     "type": "page",
     "sections": [
       {
-        "id": "section-close-daily-shift",
+        "id": "sec-close-daily-shift",
         "type": "section",
         "sectionName": "Fechar turno diário (fechamento de caixa)",
         "titleKey": "closeDailyShift.section.main.title",
@@ -99,7 +99,7 @@ export const definition = {
         "order": 10,
         "organisms": [
           {
-            "id": "organism-update-daily-shift-status",
+            "id": "org-update-daily-shift-status",
             "type": "form",
             "organismName": "UpdateDailyShiftStatus",
             "titleKey": "closeDailyShift.organism.updateDailyShiftStatus.title",
@@ -116,7 +116,7 @@ export const definition = {
             "order": 10,
             "intentions": [
               {
-                "id": "intention-update-daily-shift-status-form",
+                "id": "intent-update-daily-shift-status-form",
                 "intent": "commandForm",
                 "order": 10,
                 "titleKey": "closeDailyShift.intent.updateDailyShiftStatus.title",
@@ -126,7 +126,7 @@ export const definition = {
                   {
                     "id": "field-update-daily-shift-id",
                     "field": "dailyShiftId",
-                    "labelKey": "closeDailyShift.field.dailyShiftId",
+                    "labelKey": "closeDailyShift.field.dailyShiftId.label",
                     "order": 10,
                     "required": false,
                     "inputType": "text",
@@ -135,7 +135,7 @@ export const definition = {
                   {
                     "id": "field-update-shift-date",
                     "field": "shiftDate",
-                    "labelKey": "closeDailyShift.field.shiftDate",
+                    "labelKey": "closeDailyShift.field.shiftDate.label",
                     "order": 20,
                     "required": true,
                     "inputType": "date",
@@ -144,7 +144,7 @@ export const definition = {
                   {
                     "id": "field-update-status",
                     "field": "status",
-                    "labelKey": "closeDailyShift.field.status",
+                    "labelKey": "closeDailyShift.field.status.label",
                     "order": 30,
                     "required": true,
                     "inputType": "select",
@@ -153,7 +153,7 @@ export const definition = {
                   {
                     "id": "field-update-opened-at",
                     "field": "openedAt",
-                    "labelKey": "closeDailyShift.field.openedAt",
+                    "labelKey": "closeDailyShift.field.openedAt.label",
                     "order": 40,
                     "required": true,
                     "inputType": "datetime",
@@ -162,7 +162,7 @@ export const definition = {
                   {
                     "id": "field-update-closed-at",
                     "field": "closedAt",
-                    "labelKey": "closeDailyShift.field.closedAt",
+                    "labelKey": "closeDailyShift.field.closedAt.label",
                     "order": 50,
                     "required": false,
                     "inputType": "datetime",
@@ -171,7 +171,7 @@ export const definition = {
                   {
                     "id": "field-update-opening-cash-balance",
                     "field": "openingCashBalance",
-                    "labelKey": "closeDailyShift.field.openingCashBalance",
+                    "labelKey": "closeDailyShift.field.openingCashBalance.label",
                     "order": 60,
                     "required": false,
                     "inputType": "money",
@@ -180,7 +180,7 @@ export const definition = {
                   {
                     "id": "field-update-closing-cash-balance",
                     "field": "closingCashBalance",
-                    "labelKey": "closeDailyShift.field.closingCashBalance",
+                    "labelKey": "closeDailyShift.field.closingCashBalance.label",
                     "order": 70,
                     "required": false,
                     "inputType": "money",
@@ -189,7 +189,7 @@ export const definition = {
                   {
                     "id": "field-update-total-sales",
                     "field": "totalSales",
-                    "labelKey": "closeDailyShift.field.totalSales",
+                    "labelKey": "closeDailyShift.field.totalSales.label",
                     "order": 80,
                     "required": false,
                     "inputType": "money",
@@ -198,7 +198,7 @@ export const definition = {
                   {
                     "id": "field-update-total-payments",
                     "field": "totalPayments",
-                    "labelKey": "closeDailyShift.field.totalPayments",
+                    "labelKey": "closeDailyShift.field.totalPayments.label",
                     "order": 90,
                     "required": false,
                     "inputType": "money",
@@ -207,7 +207,7 @@ export const definition = {
                   {
                     "id": "field-update-closing-notes",
                     "field": "closingNotes",
-                    "labelKey": "closeDailyShift.field.closingNotes",
+                    "labelKey": "closeDailyShift.field.closingNotes.label",
                     "order": 100,
                     "required": false,
                     "inputType": "textarea",
@@ -220,11 +220,10 @@ export const definition = {
                 "rowActions": [],
                 "actions": [
                   {
-                    "id": "action-submit-update-daily-shift-status",
+                    "id": "action-update-daily-shift-status",
                     "action": "updateDailyShiftStatus",
-                    "labelKey": "closeDailyShift.action.updateDailyShiftStatus",
+                    "labelKey": "closeDailyShift.action.updateDailyShiftStatus.label",
                     "order": 10,
-                    "displayHint": "primary",
                     "actionKey": "updateDailyShiftStatus"
                   }
                 ]
@@ -232,7 +231,7 @@ export const definition = {
             ]
           },
           {
-            "id": "organism-record-closing-cash-movement",
+            "id": "org-record-closing-cash-movement",
             "type": "form",
             "organismName": "RecordClosingCashMovement",
             "titleKey": "closeDailyShift.organism.recordClosingCashMovement.title",
@@ -249,7 +248,7 @@ export const definition = {
             "order": 20,
             "intentions": [
               {
-                "id": "intention-record-closing-cash-movement-form",
+                "id": "intent-record-closing-cash-movement-form",
                 "intent": "commandForm",
                 "order": 10,
                 "titleKey": "closeDailyShift.intent.recordClosingCashMovement.title",
@@ -259,7 +258,7 @@ export const definition = {
                   {
                     "id": "field-record-shift-date",
                     "field": "shiftDate",
-                    "labelKey": "closeDailyShift.field.shiftDate",
+                    "labelKey": "closeDailyShift.field.shiftDate.label",
                     "order": 10,
                     "required": true,
                     "inputType": "date",
@@ -268,7 +267,7 @@ export const definition = {
                   {
                     "id": "field-record-status",
                     "field": "status",
-                    "labelKey": "closeDailyShift.field.status",
+                    "labelKey": "closeDailyShift.field.status.label",
                     "order": 20,
                     "required": true,
                     "inputType": "select",
@@ -277,7 +276,7 @@ export const definition = {
                   {
                     "id": "field-record-opened-at",
                     "field": "openedAt",
-                    "labelKey": "closeDailyShift.field.openedAt",
+                    "labelKey": "closeDailyShift.field.openedAt.label",
                     "order": 30,
                     "required": true,
                     "inputType": "datetime",
@@ -286,7 +285,7 @@ export const definition = {
                   {
                     "id": "field-record-closed-at",
                     "field": "closedAt",
-                    "labelKey": "closeDailyShift.field.closedAt",
+                    "labelKey": "closeDailyShift.field.closedAt.label",
                     "order": 40,
                     "required": false,
                     "inputType": "datetime",
@@ -295,7 +294,7 @@ export const definition = {
                   {
                     "id": "field-record-opening-cash-balance",
                     "field": "openingCashBalance",
-                    "labelKey": "closeDailyShift.field.openingCashBalance",
+                    "labelKey": "closeDailyShift.field.openingCashBalance.label",
                     "order": 50,
                     "required": false,
                     "inputType": "money",
@@ -304,7 +303,7 @@ export const definition = {
                   {
                     "id": "field-record-closing-cash-balance",
                     "field": "closingCashBalance",
-                    "labelKey": "closeDailyShift.field.closingCashBalance",
+                    "labelKey": "closeDailyShift.field.closingCashBalance.label",
                     "order": 60,
                     "required": false,
                     "inputType": "money",
@@ -313,7 +312,7 @@ export const definition = {
                   {
                     "id": "field-record-total-sales",
                     "field": "totalSales",
-                    "labelKey": "closeDailyShift.field.totalSales",
+                    "labelKey": "closeDailyShift.field.totalSales.label",
                     "order": 70,
                     "required": false,
                     "inputType": "money",
@@ -322,7 +321,7 @@ export const definition = {
                   {
                     "id": "field-record-total-payments",
                     "field": "totalPayments",
-                    "labelKey": "closeDailyShift.field.totalPayments",
+                    "labelKey": "closeDailyShift.field.totalPayments.label",
                     "order": 80,
                     "required": false,
                     "inputType": "money",
@@ -331,7 +330,7 @@ export const definition = {
                   {
                     "id": "field-record-closing-notes",
                     "field": "closingNotes",
-                    "labelKey": "closeDailyShift.field.closingNotes",
+                    "labelKey": "closeDailyShift.field.closingNotes.label",
                     "order": 90,
                     "required": false,
                     "inputType": "textarea",
@@ -344,11 +343,10 @@ export const definition = {
                 "rowActions": [],
                 "actions": [
                   {
-                    "id": "action-submit-record-closing-cash-movement",
+                    "id": "action-record-closing-cash-movement",
                     "action": "recordClosingCashMovement",
-                    "labelKey": "closeDailyShift.action.recordClosingCashMovement",
+                    "labelKey": "closeDailyShift.action.recordClosingCashMovement.label",
                     "order": 10,
-                    "displayHint": "primary",
                     "actionKey": "recordClosingCashMovement"
                   }
                 ]

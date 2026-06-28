@@ -17,7 +17,7 @@ export const definition = {
   },
   "layoutRef": {
     "defPath": "_102050_/l2/cafeFlow/web/desktop/page11/manageMenuItems.defs.ts",
-    "layoutId": "manageMenuItems.default"
+    "layoutId": "manageMenuItems.layout"
   },
   "states": [
     {
@@ -174,18 +174,15 @@ export const definition = {
   "i18n": {
     "manageMenuItems.section.title": "Gerenciar itens do cardápio",
     "manageMenuItems.organism.title": "Gerenciar itens do cardápio",
-    "manageMenuItems.list.title": "Query List",
-    "manageMenuItems.field.menuItemId": "Menu Item Id",
-    "manageMenuItems.field.name": "Name",
-    "manageMenuItems.field.menuCategoryId": "Menu Category Id",
-    "manageMenuItems.field.price": "Price",
+    "manageMenuItems.form.title": "Detalhes do item do cardápio",
+    "manageMenuItems.actions.title": "Ações",
+    "manageMenuItems.field.menuItemId": "ID do item",
+    "manageMenuItems.field.menuCategoryId": "Categoria",
+    "manageMenuItems.field.name": "Nome",
+    "manageMenuItems.field.description": "Descrição",
+    "manageMenuItems.field.price": "Preço",
     "manageMenuItems.field.status": "Status",
-    "manageMenuItems.filter.name": "Name",
-    "manageMenuItems.filter.menuCategoryId": "Menu Category Id",
-    "manageMenuItems.filter.status": "Status",
-    "manageMenuItems.form.title": "Command Form",
-    "manageMenuItems.field.description": "Description",
-    "manageMenuItems.action.submit": "Manage Menu Items"
+    "manageMenuItems.action.submit": "Salvar alterações"
   },
   "automation": {
     "statePrefix": "ui.manageMenuItems",

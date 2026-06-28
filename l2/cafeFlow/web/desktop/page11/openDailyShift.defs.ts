@@ -24,16 +24,16 @@ export const definition = {
   "navigationRefs": [],
   "sections": [
     {
-      "id": "section-open-daily-shift",
+      "id": "openDailyShift.section.main",
       "type": "section",
       "sectionName": "Abrir turno diário",
-      "titleKey": "openDailyShift.section.openDailyShift.title",
+      "titleKey": "openDailyShift.section.main.title",
       "mode": "edit",
       "order": 10,
       "organisms": [
         {
-          "id": "organism-create-daily-shift",
-          "type": "form",
+          "id": "openDailyShift.organism.createDailyShift",
+          "type": "organism",
           "organismName": "CreateDailyShift",
           "titleKey": "openDailyShift.organism.createDailyShift.title",
           "purpose": "Criar turno diário",
@@ -60,7 +60,7 @@ export const definition = {
           "order": 10,
           "intentionRefs": [
             {
-              "id": "intention-create-daily-shift-form",
+              "id": "openDailyShift.intention.createDailyShift.form",
               "intent": "commandForm",
               "submitAction": "createDailyShift",
               "order": 10
@@ -68,8 +68,8 @@ export const definition = {
           ]
         },
         {
-          "id": "organism-record-opening-cash-movement",
-          "type": "form",
+          "id": "openDailyShift.organism.recordOpeningCashMovement",
+          "type": "organism",
           "organismName": "RecordOpeningCashMovement",
           "titleKey": "openDailyShift.organism.recordOpeningCashMovement.title",
           "purpose": "Registrar movimento de caixa de abertura",
@@ -93,7 +93,7 @@ export const definition = {
           "order": 20,
           "intentionRefs": [
             {
-              "id": "intention-record-opening-cash-movement-form",
+              "id": "openDailyShift.intention.recordOpeningCashMovement.form",
               "intent": "commandForm",
               "submitAction": "recordOpeningCashMovement",
               "order": 10
@@ -108,16 +108,16 @@ export const definition = {
     "type": "page",
     "sections": [
       {
-        "id": "section-open-daily-shift",
+        "id": "openDailyShift.section.main",
         "type": "section",
         "sectionName": "Abrir turno diário",
-        "titleKey": "openDailyShift.section.openDailyShift.title",
+        "titleKey": "openDailyShift.section.main.title",
         "mode": "edit",
         "order": 10,
         "organisms": [
           {
-            "id": "organism-create-daily-shift",
-            "type": "form",
+            "id": "openDailyShift.organism.createDailyShift",
+            "type": "organism",
             "organismName": "CreateDailyShift",
             "titleKey": "openDailyShift.organism.createDailyShift.title",
             "purpose": "Criar turno diário",
@@ -144,50 +144,47 @@ export const definition = {
             "order": 10,
             "intentions": [
               {
-                "id": "intention-create-daily-shift-form",
+                "id": "openDailyShift.intention.createDailyShift.form",
                 "intent": "commandForm",
                 "order": 10,
-                "titleKey": "openDailyShift.intention.createDailyShiftForm.title",
+                "titleKey": "openDailyShift.intention.createDailyShift.form.title",
                 "submitAction": "createDailyShift",
                 "fields": [
                   {
-                    "id": "field-dailyShift-shiftDate",
-                    "field": "DailyShift.shiftDate",
-                    "labelKey": "openDailyShift.field.shiftDate.label",
+                    "id": "openDailyShift.field.createDailyShift.shiftDate",
+                    "field": "shiftDate",
+                    "labelKey": "openDailyShift.field.createDailyShift.shiftDate.label",
                     "order": 10,
                     "required": true,
                     "inputType": "date",
-                    "format": "date",
-                    "stateKey": "ui.openDailyShift.input.createDailyShift.DailyShift.shiftDate"
+                    "stateKey": "ui.openDailyShift.input.createDailyShift.shiftDate"
                   },
                   {
-                    "id": "field-dailyShift-status",
-                    "field": "DailyShift.status",
-                    "labelKey": "openDailyShift.field.status.label",
+                    "id": "openDailyShift.field.createDailyShift.status",
+                    "field": "status",
+                    "labelKey": "openDailyShift.field.createDailyShift.status.label",
                     "order": 20,
                     "required": true,
                     "inputType": "select",
-                    "stateKey": "ui.openDailyShift.input.createDailyShift.DailyShift.status"
+                    "stateKey": "ui.openDailyShift.input.createDailyShift.status"
                   },
                   {
-                    "id": "field-dailyShift-openedAt",
-                    "field": "DailyShift.openedAt",
-                    "labelKey": "openDailyShift.field.openedAt.label",
+                    "id": "openDailyShift.field.createDailyShift.openedAt",
+                    "field": "openedAt",
+                    "labelKey": "openDailyShift.field.createDailyShift.openedAt.label",
                     "order": 30,
                     "required": true,
                     "inputType": "datetime",
-                    "format": "datetime",
-                    "stateKey": "ui.openDailyShift.input.createDailyShift.DailyShift.openedAt"
+                    "stateKey": "ui.openDailyShift.input.createDailyShift.openedAt"
                   },
                   {
-                    "id": "field-dailyShift-openingCashBalance",
-                    "field": "DailyShift.openingCashBalance",
-                    "labelKey": "openDailyShift.field.openingCashBalance.label",
+                    "id": "openDailyShift.field.createDailyShift.openingCashBalance",
+                    "field": "openingCashBalance",
+                    "labelKey": "openDailyShift.field.createDailyShift.openingCashBalance.label",
                     "order": 40,
                     "required": false,
-                    "inputType": "number",
-                    "format": "money",
-                    "stateKey": "ui.openDailyShift.input.createDailyShift.DailyShift.openingCashBalance"
+                    "inputType": "money",
+                    "stateKey": "ui.openDailyShift.input.createDailyShift.openingCashBalance"
                   }
                 ],
                 "columns": [],
@@ -196,9 +193,9 @@ export const definition = {
                 "rowActions": [],
                 "actions": [
                   {
-                    "id": "action-create-daily-shift",
+                    "id": "openDailyShift.action.createDailyShift.submit",
                     "action": "createDailyShift",
-                    "labelKey": "openDailyShift.action.createDailyShift.label",
+                    "labelKey": "openDailyShift.action.createDailyShift.submit.label",
                     "order": 10,
                     "displayHint": "primary",
                     "actionKey": "createDailyShift"
@@ -208,8 +205,8 @@ export const definition = {
             ]
           },
           {
-            "id": "organism-record-opening-cash-movement",
-            "type": "form",
+            "id": "openDailyShift.organism.recordOpeningCashMovement",
+            "type": "organism",
             "organismName": "RecordOpeningCashMovement",
             "titleKey": "openDailyShift.organism.recordOpeningCashMovement.title",
             "purpose": "Registrar movimento de caixa de abertura",
@@ -233,39 +230,38 @@ export const definition = {
             "order": 20,
             "intentions": [
               {
-                "id": "intention-record-opening-cash-movement-form",
+                "id": "openDailyShift.intention.recordOpeningCashMovement.form",
                 "intent": "commandForm",
                 "order": 10,
-                "titleKey": "openDailyShift.intention.recordOpeningCashMovementForm.title",
+                "titleKey": "openDailyShift.intention.recordOpeningCashMovement.form.title",
                 "submitAction": "recordOpeningCashMovement",
                 "fields": [
                   {
-                    "id": "field-cashMovement-movementType",
-                    "field": "CashMovement.movementType",
-                    "labelKey": "openDailyShift.field.movementType.label",
+                    "id": "openDailyShift.field.recordOpeningCashMovement.movementType",
+                    "field": "movementType",
+                    "labelKey": "openDailyShift.field.recordOpeningCashMovement.movementType.label",
                     "order": 10,
                     "required": true,
                     "inputType": "select",
-                    "stateKey": "ui.openDailyShift.input.recordOpeningCashMovement.CashMovement.movementType"
+                    "stateKey": "ui.openDailyShift.input.recordOpeningCashMovement.movementType"
                   },
                   {
-                    "id": "field-cashMovement-amount",
-                    "field": "CashMovement.amount",
-                    "labelKey": "openDailyShift.field.amount.label",
+                    "id": "openDailyShift.field.recordOpeningCashMovement.amount",
+                    "field": "amount",
+                    "labelKey": "openDailyShift.field.recordOpeningCashMovement.amount.label",
                     "order": 20,
                     "required": true,
-                    "inputType": "number",
-                    "format": "money",
-                    "stateKey": "ui.openDailyShift.input.recordOpeningCashMovement.CashMovement.amount"
+                    "inputType": "money",
+                    "stateKey": "ui.openDailyShift.input.recordOpeningCashMovement.amount"
                   },
                   {
-                    "id": "field-cashMovement-reason",
-                    "field": "CashMovement.reason",
-                    "labelKey": "openDailyShift.field.reason.label",
+                    "id": "openDailyShift.field.recordOpeningCashMovement.reason",
+                    "field": "reason",
+                    "labelKey": "openDailyShift.field.recordOpeningCashMovement.reason.label",
                     "order": 30,
                     "required": true,
                     "inputType": "text",
-                    "stateKey": "ui.openDailyShift.input.recordOpeningCashMovement.CashMovement.reason"
+                    "stateKey": "ui.openDailyShift.input.recordOpeningCashMovement.reason"
                   }
                 ],
                 "columns": [],
@@ -274,9 +270,9 @@ export const definition = {
                 "rowActions": [],
                 "actions": [
                   {
-                    "id": "action-record-opening-cash-movement",
+                    "id": "openDailyShift.action.recordOpeningCashMovement.submit",
                     "action": "recordOpeningCashMovement",
-                    "labelKey": "openDailyShift.action.recordOpeningCashMovement.label",
+                    "labelKey": "openDailyShift.action.recordOpeningCashMovement.submit.label",
                     "order": 10,
                     "displayHint": "primary",
                     "actionKey": "recordOpeningCashMovement"
