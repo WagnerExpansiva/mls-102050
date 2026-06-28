@@ -32,7 +32,7 @@ export const operationCreateKitchenTicket = {
     "actor": "attendant",
     "priority": "now"
   },
-  "statusFrontend": "toCreate",
+  "statusFrontend": "done",
   "statusBackend": "done"
 } as const;
 

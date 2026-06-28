@@ -32,7 +32,7 @@ export const operationRecordPayment = {
     "actor": "cashier",
     "priority": "now"
   },
-  "statusFrontend": "toCreate",
+  "statusFrontend": "done",
   "statusBackend": "done"
 } as const;
 
