@@ -18,24 +18,28 @@ export const dineInOrderLifecycleUsecase = {
     "outputTypeName": "DineInOrderLifecycleOutput",
     "ports": [
       "Order",
-      "DailyShift"
+      "MenuItem",
+      "Payment",
+      "InventoryItem"
     ],
     "rulesApplied": [
       "orderStatusTransitions",
       "paymentTimingByOrderType",
       "ingredientConsumptionTrigger",
+      "aiOutputLanguageSelection",
       "tableOccupancyConsistency"
     ],
     "transactional": true,
     "steps": [
-      "Step 1 - Create Order: validate open DailyShift, assign Table (tableOccupancyConsistency), set orderType=DINE_IN, status=OPEN",
-      "Step 2 - Add Items: add OrderItems with MenuItem references, recalculate totals",
-      "Step 3 - Confirm Order: transition status OPEN -> CONFIRMED (orderStatusTransitions), trigger ingredientConsumptionTrigger",
-      "Step 4 - Kitchen: create KitchenTicket, track preparation through statuses",
-      "Step 5 - Serve: update OrderItem statuses to SERVED as kitchen completes items",
-      "Step 6 - Payment: apply paymentTimingByOrderType (DINE_IN pays at end), record Payment(s)",
-      "Step 7 - Close: validate all items served and payments complete, transition to CLOSED, free Table (tableOccupancyConsistency)",
-      "Return final Order state with full lifecycle summary"
+      "Step 1 — Create Order: invoke createOrder with orderType=DINE_IN, assign Table (apply tableOccupancyConsistency)",
+      "Step 2 — Add Items: invoke addOrderItem for each requested MenuItem (apply orderStatusTransitions)",
+      "Step 3 — Send to Kitchen: invoke createKitchenTicket for the order",
+      "Step 4 — Kitchen Production: invoke updateKitchenTicketStatus and updateOrderItemStatus as items are prepared",
+      "Step 5 — Consume Ingredients: invoke consumeIngredientsOnConfirmation when items are confirmed (apply ingredientConsumptionTrigger via InventoryItem port)",
+      "Step 6 — Record Payment: invoke recordPayment (apply paymentTimingByOrderType — dine-in pays after consumption)",
+      "Step 7 — Close Order: invoke updateOrderStatus to CLOSED, release Table (apply tableOccupancyConsistency)",
+      "Apply aiOutputLanguageSelection rule throughout for localized communication",
+      "Return full lifecycle result with order, ticket, payment, and consumption references"
     ]
   }
 } as const;
@@ -50,9 +54,13 @@ export const pipeline = [
     "defPath": "_102050_/l1/cafeFlow/layer_2_application/usecases/dineInOrderLifecycle.defs.ts",
     "dependsFiles": [
       "_102050_/l1/cafeFlow/layer_2_application/ports/orderRepository.d.ts",
-      "_102050_/l1/cafeFlow/layer_2_application/ports/dailyShiftRepository.d.ts",
+      "_102050_/l1/cafeFlow/layer_2_application/ports/menuItemRepository.d.ts",
+      "_102050_/l1/cafeFlow/layer_2_application/ports/paymentRepository.d.ts",
+      "_102050_/l1/cafeFlow/layer_2_application/ports/inventoryItemRepository.d.ts",
       "_102050_/l1/cafeFlow/layer_3_domain/entities/order.d.ts",
-      "_102050_/l1/cafeFlow/layer_3_domain/entities/dailyShift.d.ts"
+      "_102050_/l1/cafeFlow/layer_3_domain/entities/menuItem.d.ts",
+      "_102050_/l1/cafeFlow/layer_3_domain/entities/payment.d.ts",
+      "_102050_/l1/cafeFlow/layer_3_domain/entities/inventoryItem.d.ts"
     ],
     "dependsOn": [],
     "skills": [
@@ -64,6 +72,7 @@ export const pipeline = [
       "orderStatusTransitions",
       "paymentTimingByOrderType",
       "ingredientConsumptionTrigger",
+      "aiOutputLanguageSelection",
       "tableOccupancyConsistency"
     ],
     "agent": "agentMaterializeGen"

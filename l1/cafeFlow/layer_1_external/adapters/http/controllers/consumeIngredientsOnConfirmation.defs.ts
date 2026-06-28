@@ -14,8 +14,22 @@ export const consumeIngredientsOnConfirmationController = {
   "data": {
     "pageId": "consumeIngredientsOnConfirmation",
     "controllerName": "ConsumeIngredientsOnConfirmationController",
-    "handlers": [],
-    "routes": []
+    "ownerKind": "workflow",
+    "outputSource": "usecase",
+    "handlers": [
+      {
+        "handlerName": "cafeFlowConsumeIngredientsOnConfirmationHandler",
+        "command": "consumeIngredientsOnConfirmation",
+        "usecaseRef": "consumeIngredientsOnConfirmation",
+        "kind": "command"
+      }
+    ],
+    "routes": [
+      {
+        "key": "cafeFlow.consumeIngredientsOnConfirmation.consumeIngredientsOnConfirmation",
+        "handlerName": "cafeFlowConsumeIngredientsOnConfirmationHandler"
+      }
+    ]
   }
 } as const;
 
@@ -28,7 +42,7 @@ export const pipeline = [
     "outputPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/consumeIngredientsOnConfirmation.ts",
     "defPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/consumeIngredientsOnConfirmation.defs.ts",
     "dependsFiles": [
-      "_102050_/l2/cafeFlow/web/contracts/consumeIngredientsOnConfirmation.ts"
+      "_102050_/l1/cafeFlow/layer_2_application/usecases/consumeIngredientsOnConfirmation.d.ts"
     ],
     "dependsOn": [],
     "skills": [

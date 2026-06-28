@@ -26,13 +26,14 @@ export const addOrderItemUsecase = {
     ],
     "transactional": true,
     "steps": [
-      "Validate order exists and is in a status that allows adding items (OPEN or similar) via Order port",
-      "Validate referenced MenuItem exists and is available via MenuItem port",
-      "Create OrderItem entity with quantity, notes, and unit price from MenuItem",
-      "Add OrderItem to Order aggregate and recalculate Order.totalAmount",
-      "Persist Order (with new OrderItem) via Order port within transaction",
-      "If ingredientConsumptionTrigger applies, enqueue or create StockConsumption for the new item",
-      "Return created OrderItem with id and computed totals"
+      "Validate order exists and is in a status that allows item additions (OPEN or similar)",
+      "Validate referenced MenuItem exists and is available",
+      "Apply orderStatusTransitions rule to ensure order can accept items",
+      "Create OrderItem entity linked to Order and MenuItem",
+      "Persist OrderItem via Order port (aggregate root manages items)",
+      "Recalculate Order.totalAmount",
+      "Persist updated Order",
+      "If ingredientConsumptionTrigger applies, enqueue stock consumption for later confirmation"
     ]
   }
 } as const;

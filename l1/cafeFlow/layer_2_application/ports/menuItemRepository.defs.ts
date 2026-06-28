@@ -17,36 +17,49 @@ export const menuItemRepositoryPort = {
     "methods": [
       {
         "name": "getById",
-        "returns": "MenuItem | null",
+        "returns": "MenuItem",
         "params": [
-          "menuItemId: MenuItemId"
-        ]
+          "menuItemId: string"
+        ],
+        "description": "Retrieve a single MenuItem aggregate by its identity"
       },
       {
         "name": "list",
         "returns": "MenuItem[]",
         "params": [
           "filter: MenuItemFilter"
-        ]
+        ],
+        "description": "List MenuItem aggregates matching the domain filter"
       },
       {
         "name": "save",
         "returns": "void",
         "params": [
           "menuItem: MenuItem"
-        ]
+        ],
+        "description": "Persist a MenuItem aggregate and its embedded RecipeComponents"
       },
       {
         "name": "findByCategory",
         "returns": "MenuItem[]",
         "params": [
-          "categoryId: CategoryId"
-        ]
+          "category: MenuCategory"
+        ],
+        "description": "Domain finder: items belonging to a menu category"
       },
       {
         "name": "findAvailable",
         "returns": "MenuItem[]",
-        "params": []
+        "params": [],
+        "description": "Domain finder: items currently available for sale"
+      },
+      {
+        "name": "findByName",
+        "returns": "MenuItem[]",
+        "params": [
+          "name: string"
+        ],
+        "description": "Domain finder: items matching a name search"
       }
     ]
   }

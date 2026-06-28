@@ -29,15 +29,15 @@ export const createOrderUsecase = {
     ],
     "transactional": true,
     "steps": [
-      "Validate an open DailyShift exists via DailyShift port",
-      "Apply orderStatusTransitions rule to set initial Order status (OPEN)",
-      "Apply paymentTimingByOrderType rule based on orderType (DINE_IN, TAKEOUT, DELIVERY)",
-      "If DINE_IN, validate Table availability and apply tableOccupancyConsistency rule",
-      "Apply aiOutputLanguageSelection rule for order language",
-      "Create Order entity with orderType, tableId (if dine-in), dailyShiftId, totalAmount=0",
-      "If ingredientConsumptionTrigger applies at creation, prepare StockConsumption entries",
-      "Persist Order (and update Table status if dine-in) within transaction",
-      "Return created Order with generated orderId"
+      "Validate DailyShift is OPEN via DailyShift port",
+      "If orderType is DINE_IN, validate Table availability and apply tableOccupancyConsistency rule",
+      "Apply paymentTimingByOrderType rule to determine payment expectations",
+      "Create Order entity with status=OPEN, link to DailyShift and optional Table",
+      "Apply orderStatusTransitions rule for initial state",
+      "Apply aiOutputLanguageSelection rule for localized order metadata",
+      "Persist Order via Order port",
+      "If Table assigned, update Table status to OCCUPIED",
+      "Return created order with generated orderId"
     ]
   }
 } as const;

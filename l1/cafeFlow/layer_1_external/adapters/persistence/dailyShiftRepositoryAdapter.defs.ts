@@ -12,14 +12,13 @@ export const dailyShiftRepositoryAdapter = {
     "planId": ""
   },
   "data": {
-    "className": "DailyShiftRepository",
     "entityId": "DailyShift",
+    "className": "DailyShiftRepository",
     "portRef": "IDailyShiftRepository",
     "tableRef": "daily_shifts",
     "notes": [
-      "Real columns: daily_shift_id, status, created_at",
-      "Details JSONB: shift_date, opened_at, closed_at, opening_cash_balance, closing_cash_balance, total_sales, total_payments, closing_notes, updated_at, cash_movements (embedded CashMovement[])",
-      "ctx.data used for row<->domain mapping"
+      "columns: daily_shift_id, status, created_at",
+      "details JSONB: shiftDate, openedAt, closedAt, openingCashBalance, closingCashBalance, totalSales, totalPayments, closingNotes, updatedAt, CashMovement[]"
     ]
   }
 } as const;

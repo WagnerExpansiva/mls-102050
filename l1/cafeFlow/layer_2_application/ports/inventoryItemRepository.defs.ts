@@ -17,36 +17,49 @@ export const inventoryItemRepositoryPort = {
     "methods": [
       {
         "name": "getById",
-        "returns": "InventoryItem | null",
+        "returns": "InventoryItem",
         "params": [
-          "inventoryItemId: InventoryItemId"
-        ]
+          "inventoryItemId: string"
+        ],
+        "description": "Retrieve a single InventoryItem aggregate by its identity"
       },
       {
         "name": "list",
         "returns": "InventoryItem[]",
         "params": [
           "filter: InventoryItemFilter"
-        ]
+        ],
+        "description": "List InventoryItem aggregates matching the domain filter"
       },
       {
         "name": "save",
         "returns": "void",
         "params": [
           "inventoryItem: InventoryItem"
-        ]
+        ],
+        "description": "Persist an InventoryItem aggregate"
       },
       {
         "name": "findBySku",
-        "returns": "InventoryItem | null",
+        "returns": "InventoryItem",
         "params": [
           "sku: Sku"
-        ]
+        ],
+        "description": "Domain finder: item by stock-keeping unit"
       },
       {
-        "name": "findBelowReorderLevel",
+        "name": "findLowStock",
         "returns": "InventoryItem[]",
-        "params": []
+        "params": [],
+        "description": "Domain finder: items below their reorder threshold"
+      },
+      {
+        "name": "findBySupplier",
+        "returns": "InventoryItem[]",
+        "params": [
+          "supplierId: string"
+        ],
+        "description": "Domain finder: items provided by a given supplier"
       }
     ]
   }

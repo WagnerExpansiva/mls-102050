@@ -12,14 +12,13 @@ export const paymentRepositoryAdapter = {
     "planId": ""
   },
   "data": {
-    "className": "PaymentRepository",
     "entityId": "Payment",
+    "className": "PaymentRepository",
     "portRef": "IPaymentRepository",
     "tableRef": "payments",
     "notes": [
-      "Real columns: payment_id, order_id, daily_shift_id, status, created_at",
-      "Details JSONB: method, amount, updated_at",
-      "ctx.data used for row<->domain mapping"
+      "columns: payment_id, order_id, daily_shift_id, status, created_at",
+      "details JSONB: method, amount, updatedAt"
     ]
   }
 } as const;

@@ -17,45 +17,49 @@ export const orderRepositoryPort = {
     "methods": [
       {
         "name": "getById",
-        "returns": "Order | null",
+        "returns": "Order",
         "params": [
-          "orderId: OrderId"
-        ]
+          "orderId: string"
+        ],
+        "description": "Retrieve a single Order aggregate by its identity"
       },
       {
         "name": "list",
         "returns": "Order[]",
         "params": [
           "filter: OrderFilter"
-        ]
+        ],
+        "description": "List Order aggregates matching the domain filter"
       },
       {
         "name": "save",
         "returns": "void",
         "params": [
           "order: Order"
-        ]
+        ],
+        "description": "Persist an Order aggregate and its embedded OrderItems and KitchenTickets"
       },
       {
-        "name": "findByTable",
+        "name": "findByTableNumber",
         "returns": "Order[]",
         "params": [
-          "tableId: TableId"
-        ]
+          "tableNumber: TableNumber"
+        ],
+        "description": "Domain finder: orders for a specific table"
       },
       {
         "name": "findByStatus",
         "returns": "Order[]",
         "params": [
           "status: OrderStatus"
-        ]
+        ],
+        "description": "Domain finder: orders in a given lifecycle status"
       },
       {
-        "name": "findOpenByTable",
-        "returns": "Order | null",
-        "params": [
-          "tableId: TableId"
-        ]
+        "name": "findActiveOrders",
+        "returns": "Order[]",
+        "params": [],
+        "description": "Domain finder: orders that are not yet closed or cancelled"
       }
     ]
   }

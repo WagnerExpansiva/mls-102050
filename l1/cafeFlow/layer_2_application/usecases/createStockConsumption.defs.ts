@@ -26,14 +26,15 @@ export const createStockConsumptionUsecase = {
     ],
     "transactional": true,
     "steps": [
-      "Read Order and its OrderItems via Order port",
-      "Read MenuItem recipes (RecipeComponent) via MenuItem port for each OrderItem",
-      "Apply ingredientConsumptionTrigger rule to compute required quantities per InventoryItem",
-      "Read current InventoryItem quantities via InventoryItem port",
-      "Create StockConsumption entries for each consumed ingredient",
-      "Decrement InventoryItem.currentQuantity and update status if below minimumLevel",
-      "Persist StockConsumption and updated InventoryItem within transaction",
-      "Return list of created StockConsumption entries with updated inventory levels"
+      "Read Order and OrderItems via Order port",
+      "Read MenuItem recipes via MenuItem port",
+      "Read InventoryItem current quantities via InventoryItem port",
+      "Apply ingredientConsumptionTrigger rule to compute required quantities from RecipeComponent",
+      "Validate sufficient stock for each InventoryItem",
+      "Create StockConsumption records per InventoryItem",
+      "Decrement InventoryItem.currentQuantity",
+      "Persist updated InventoryItem via InventoryItem port",
+      "Return consumption summary"
     ]
   }
 } as const;

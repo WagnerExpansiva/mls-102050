@@ -25,11 +25,10 @@ export const createKitchenTicketUsecase = {
     "transactional": true,
     "steps": [
       "Read Order and its OrderItems via Order port",
-      "Validate Order status allows kitchen ticket creation per orderStatusTransitions rule",
-      "Filter OrderItems that require kitchen preparation",
-      "Create KitchenTicket entity with items, order reference, and initial status=PENDING",
-      "Persist KitchenTicket within transaction",
-      "Return created KitchenTicket with id and item list"
+      "Apply orderStatusTransitions rule to verify order is in a kitchen-ready status",
+      "Build KitchenTicket from OrderItems that require preparation",
+      "Persist KitchenTicket",
+      "Return created ticket reference"
     ]
   }
 } as const;

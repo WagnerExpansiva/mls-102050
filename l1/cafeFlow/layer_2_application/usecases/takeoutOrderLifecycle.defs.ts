@@ -18,23 +18,27 @@ export const takeoutOrderLifecycleUsecase = {
     "outputTypeName": "TakeoutOrderLifecycleOutput",
     "ports": [
       "Order",
-      "DailyShift"
+      "MenuItem",
+      "Payment",
+      "InventoryItem"
     ],
     "rulesApplied": [
       "orderStatusTransitions",
       "paymentTimingByOrderType",
-      "ingredientConsumptionTrigger"
+      "ingredientConsumptionTrigger",
+      "aiOutputLanguageSelection"
     ],
     "transactional": true,
     "steps": [
-      "Step 1 - Create Order: validate open DailyShift, set orderType=TAKEOUT, status=OPEN (no Table assignment needed)",
-      "Step 2 - Add Items: add OrderItems with MenuItem references, recalculate totals",
-      "Step 3 - Payment: apply paymentTimingByOrderType (TAKEOUT may require payment upfront), record Payment(s)",
-      "Step 4 - Confirm Order: transition status OPEN -> CONFIRMED (orderStatusTransitions), trigger ingredientConsumptionTrigger",
-      "Step 5 - Kitchen: create KitchenTicket, track preparation through statuses",
-      "Step 6 - Ready: transition all OrderItems to READY, notify customer for pickup",
-      "Step 7 - Close: transition Order to CLOSED after pickup confirmation",
-      "Return final Order state with full lifecycle summary"
+      "Step 1 — Create Order: invoke createOrder with orderType=TAKEOUT (no Table assignment, no tableOccupancyConsistency)",
+      "Step 2 — Add Items: invoke addOrderItem for each requested MenuItem (apply orderStatusTransitions)",
+      "Step 3 — Record Payment: invoke recordPayment (apply paymentTimingByOrderType — takeout pays upfront before preparation)",
+      "Step 4 — Send to Kitchen: invoke createKitchenTicket for the order",
+      "Step 5 — Kitchen Production: invoke updateKitchenTicketStatus and updateOrderItemStatus as items are prepared",
+      "Step 6 — Consume Ingredients: invoke consumeIngredientsOnConfirmation when items are confirmed (apply ingredientConsumptionTrigger via InventoryItem port)",
+      "Step 7 — Close Order: invoke updateOrderStatus to CLOSED (no Table release needed)",
+      "Apply aiOutputLanguageSelection rule throughout for localized communication",
+      "Return full lifecycle result with order, ticket, payment, and consumption references"
     ]
   }
 } as const;
@@ -49,9 +53,13 @@ export const pipeline = [
     "defPath": "_102050_/l1/cafeFlow/layer_2_application/usecases/takeoutOrderLifecycle.defs.ts",
     "dependsFiles": [
       "_102050_/l1/cafeFlow/layer_2_application/ports/orderRepository.d.ts",
-      "_102050_/l1/cafeFlow/layer_2_application/ports/dailyShiftRepository.d.ts",
+      "_102050_/l1/cafeFlow/layer_2_application/ports/menuItemRepository.d.ts",
+      "_102050_/l1/cafeFlow/layer_2_application/ports/paymentRepository.d.ts",
+      "_102050_/l1/cafeFlow/layer_2_application/ports/inventoryItemRepository.d.ts",
       "_102050_/l1/cafeFlow/layer_3_domain/entities/order.d.ts",
-      "_102050_/l1/cafeFlow/layer_3_domain/entities/dailyShift.d.ts"
+      "_102050_/l1/cafeFlow/layer_3_domain/entities/menuItem.d.ts",
+      "_102050_/l1/cafeFlow/layer_3_domain/entities/payment.d.ts",
+      "_102050_/l1/cafeFlow/layer_3_domain/entities/inventoryItem.d.ts"
     ],
     "dependsOn": [],
     "skills": [
@@ -62,7 +70,8 @@ export const pipeline = [
     "rulesApplied": [
       "orderStatusTransitions",
       "paymentTimingByOrderType",
-      "ingredientConsumptionTrigger"
+      "ingredientConsumptionTrigger",
+      "aiOutputLanguageSelection"
     ],
     "agent": "agentMaterializeGen"
   }

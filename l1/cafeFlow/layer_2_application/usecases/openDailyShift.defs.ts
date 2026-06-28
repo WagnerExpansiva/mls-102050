@@ -25,13 +25,10 @@ export const openDailyShiftUsecase = {
     ],
     "transactional": true,
     "steps": [
-      "Step 1 - Validate: check no other DailyShift is OPEN for the same or overlapping date via DailyShift port",
-      "Step 2 - Create Shift: create DailyShift with shiftDate, status=OPEN, openedAt=now, openingCashBalance",
-      "Step 3 - Configure: apply paymentTimingByOrderType rule to set payment flow defaults for the shift",
-      "Step 4 - Language: apply aiOutputLanguageSelection rule for shift default language",
-      "Step 5 - Record Cash: record opening CashMovement (movementType=OPENING) linked to the shift",
-      "Step 6 - Persist: save DailyShift and CashMovement within transaction",
-      "Return opened DailyShift with dailyShiftId and initial cash balance"
+      "Step 1 — Create Shift: invoke createDailyShift with shiftDate, openingCashBalance (apply paymentTimingByOrderType, aiOutputLanguageSelection)",
+      "Step 2 — Record Opening Cash: invoke recordOpeningCashMovement with opening cash amount and reason",
+      "Step 3 — Verify: read DailyShift to confirm status=OPEN and cash movement recorded",
+      "Return shift opening confirmation with dailyShiftId and opening balance"
     ]
   }
 } as const;

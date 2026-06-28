@@ -17,13 +17,16 @@ export const updateKitchenTicketStatusUsecase = {
     "inputTypeName": "UpdateKitchenTicketStatusInput",
     "outputTypeName": "UpdateKitchenTicketStatusOutput",
     "ports": [],
+    "rulesApplied": [
+      "orderStatusTransitions"
+    ],
     "transactional": true,
     "steps": [
       "Read KitchenTicket by id",
-      "Apply orderStatusTransitions rule to validate the status transition (PENDING -> IN_PROGRESS -> READY -> COMPLETED)",
+      "Apply orderStatusTransitions rule to validate target status is reachable from current",
       "Update KitchenTicket.status and updatedAt",
-      "Persist within transaction",
-      "Return updated KitchenTicket with new status"
+      "Persist via repository",
+      "Return updated ticket"
     ]
   }
 } as const;
@@ -42,6 +45,9 @@ export const pipeline = [
       "_102021_/l2/agentChangeBackend/skills/architecture.md",
       "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
+    ],
+    "rulesApplied": [
+      "orderStatusTransitions"
     ],
     "agent": "agentMaterializeGen"
   }

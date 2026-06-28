@@ -17,13 +17,16 @@ export const updateTableStatusUsecase = {
     "inputTypeName": "UpdateTableStatusInput",
     "outputTypeName": "UpdateTableStatusOutput",
     "ports": [],
+    "rulesApplied": [
+      "tableOccupancyConsistency"
+    ],
     "transactional": true,
     "steps": [
       "Read Table by id",
-      "Apply tableOccupancyConsistency rule: validate no conflicting active Orders if setting to AVAILABLE",
-      "Update Table.status (AVAILABLE, OCCUPIED, RESERVED, CLEANING) and updatedAt",
-      "Persist within transaction",
-      "Return updated Table with new status"
+      "Apply tableOccupancyConsistency rule to validate status change does not conflict with active orders",
+      "Update Table.status and updatedAt",
+      "Persist via repository",
+      "Return updated table"
     ]
   }
 } as const;
@@ -42,6 +45,9 @@ export const pipeline = [
       "_102021_/l2/agentChangeBackend/skills/architecture.md",
       "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
+    ],
+    "rulesApplied": [
+      "tableOccupancyConsistency"
     ],
     "agent": "agentMaterializeGen"
   }

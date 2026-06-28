@@ -27,12 +27,12 @@ export const aiSalesSummaryUsecase = {
     "transactional": false,
     "steps": [
       "Read DailyShift for the requested period via DailyShift port",
-      "Read closed Orders within the shift date range via Order port",
-      "Read OrderItem details and MenuItem info for breakdown via MenuItem port",
-      "Apply aiOutputLanguageSelection rule to determine output language",
-      "Compute total sales, order count, average ticket, top items, sales by category",
-      "Generate natural-language summary in selected language",
-      "Return structured summary with metrics and narrative text"
+      "Read Orders within the shift via Order port",
+      "Read MenuItem details via MenuItem port",
+      "Aggregate totalAmount, status counts, closedAt timestamps",
+      "Apply aiOutputLanguageSelection rule to format output language",
+      "Generate natural-language sales summary",
+      "Return summary with key metrics"
     ]
   }
 } as const;

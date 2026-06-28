@@ -17,13 +17,13 @@ export const manageMenuCategoriesUsecase = {
     "inputTypeName": "ManageMenuCategoriesInput",
     "outputTypeName": "ManageMenuCategoriesOutput",
     "ports": [],
+    "rulesApplied": [],
     "transactional": true,
     "steps": [
-      "Validate MenuCategory name is non-empty and unique",
-      "For update: verify category exists and no orphan MenuItem references remain if deleting",
-      "Create/Update/Delete MenuCategory entity",
-      "Persist within transaction",
-      "Return created/updated/deleted MenuCategory confirmation"
+      "Validate category name uniqueness",
+      "Create or update MenuCategory entity",
+      "Persist via repository",
+      "Return category"
     ]
   }
 } as const;

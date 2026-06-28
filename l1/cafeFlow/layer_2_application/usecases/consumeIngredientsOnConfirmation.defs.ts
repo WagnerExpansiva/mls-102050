@@ -26,15 +26,15 @@ export const consumeIngredientsOnConfirmationUsecase = {
     ],
     "transactional": true,
     "steps": [
-      "Read Order and all OrderItems via Order port after status changed to CONFIRMED",
-      "For each OrderItem, read MenuItem recipe components via MenuItem port",
-      "Apply ingredientConsumptionTrigger rule to compute total ingredient quantities needed",
-      "Read current InventoryItem stock levels via InventoryItem port",
-      "Validate sufficient stock exists for all ingredients",
-      "Create StockConsumption entries for each ingredient deduction",
-      "Decrement InventoryItem.currentQuantity and update status per inventoryLowStockThreshold",
-      "Persist all StockConsumption and InventoryItem updates within transaction",
-      "Return consumption summary with per-ingredient deductions and updated stock levels"
+      "Read Order and confirmed OrderItems via Order port",
+      "Read MenuItem recipes via MenuItem port",
+      "Read InventoryItem stock levels via InventoryItem port",
+      "Apply ingredientConsumptionTrigger rule to compute consumption quantities from RecipeComponent",
+      "Validate sufficient stock for each InventoryItem",
+      "Create StockConsumption records",
+      "Decrement InventoryItem.currentQuantity and update status if below threshold",
+      "Persist all changes via InventoryItem port",
+      "Return consumption summary with any low-stock alerts"
     ]
   }
 } as const;

@@ -30,17 +30,17 @@ export const updateOrderStatusUsecase = {
     ],
     "transactional": true,
     "steps": [
-      "Read Order with OrderItems via Order port",
-      "Apply orderStatusTransitions rule to validate the requested status transition",
-      "If transitioning to CLOSED: validate all OrderItems are SERVED/COMPLETED via Order port",
-      "If transitioning to CLOSED: validate payments cover totalAmount via Payment port",
-      "Apply paymentTimingByOrderType rule to ensure payment timing constraints are met",
-      "If ingredientConsumptionTrigger applies (e.g., on CONFIRMED): create StockConsumption and update InventoryItem via InventoryItem port",
-      "If DINE_IN and closing/cancelling: apply tableOccupancyConsistency rule to free the Table",
-      "Apply aiOutputLanguageSelection rule for any notification messages",
-      "Update Order.status, updatedAt, closedAt or cancelledAt + cancellationReason",
-      "Persist Order (and Table, StockConsumption) within transaction",
-      "Return updated Order with new status and side-effect summary"
+      "Read Order with OrderItems, KitchenTickets, Payments via Order port",
+      "Apply orderStatusTransitions rule to validate target status is reachable from current",
+      "If transitioning to CLOSED: apply paymentTimingByOrderType rule to verify all payments settled",
+      "If transitioning to CLOSED: apply ingredientConsumptionTrigger rule to ensure stock consumed via InventoryItem port",
+      "If transitioning to CLOSED: set closedAt, release Table (apply tableOccupancyConsistency rule)",
+      "If transitioning to CANCELLED: set cancelledAt and cancellationReason, release Table",
+      "Apply aiOutputLanguageSelection rule for localized status metadata",
+      "Update Order.status and updatedAt",
+      "If Table released, update Table status to AVAILABLE",
+      "Persist Order via Order port",
+      "Return updated order"
     ]
   }
 } as const;

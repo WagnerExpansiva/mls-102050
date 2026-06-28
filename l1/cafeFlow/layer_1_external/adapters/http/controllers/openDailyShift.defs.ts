@@ -14,8 +14,22 @@ export const openDailyShiftController = {
   "data": {
     "pageId": "openDailyShift",
     "controllerName": "OpenDailyShiftController",
-    "handlers": [],
-    "routes": []
+    "ownerKind": "workflow",
+    "outputSource": "usecase",
+    "handlers": [
+      {
+        "handlerName": "cafeFlowOpenDailyShiftHandler",
+        "command": "openDailyShift",
+        "usecaseRef": "openDailyShift",
+        "kind": "command"
+      }
+    ],
+    "routes": [
+      {
+        "key": "cafeFlow.openDailyShift.openDailyShift",
+        "handlerName": "cafeFlowOpenDailyShiftHandler"
+      }
+    ]
   }
 } as const;
 
@@ -28,7 +42,7 @@ export const pipeline = [
     "outputPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/openDailyShift.ts",
     "defPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/openDailyShift.defs.ts",
     "dependsFiles": [
-      "_102050_/l2/cafeFlow/web/contracts/openDailyShift.ts"
+      "_102050_/l1/cafeFlow/layer_2_application/usecases/openDailyShift.d.ts"
     ],
     "dependsOn": [],
     "skills": [

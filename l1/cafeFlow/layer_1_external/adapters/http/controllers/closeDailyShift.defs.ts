@@ -14,8 +14,22 @@ export const closeDailyShiftController = {
   "data": {
     "pageId": "closeDailyShift",
     "controllerName": "CloseDailyShiftController",
-    "handlers": [],
-    "routes": []
+    "ownerKind": "workflow",
+    "outputSource": "usecase",
+    "handlers": [
+      {
+        "handlerName": "cafeFlowCloseDailyShiftHandler",
+        "command": "closeDailyShift",
+        "usecaseRef": "closeDailyShift",
+        "kind": "command"
+      }
+    ],
+    "routes": [
+      {
+        "key": "cafeFlow.closeDailyShift.closeDailyShift",
+        "handlerName": "cafeFlowCloseDailyShiftHandler"
+      }
+    ]
   }
 } as const;
 
@@ -28,7 +42,7 @@ export const pipeline = [
     "outputPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/closeDailyShift.ts",
     "defPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/closeDailyShift.defs.ts",
     "dependsFiles": [
-      "_102050_/l2/cafeFlow/web/contracts/closeDailyShift.ts"
+      "_102050_/l1/cafeFlow/layer_2_application/usecases/closeDailyShift.d.ts"
     ],
     "dependsOn": [],
     "skills": [

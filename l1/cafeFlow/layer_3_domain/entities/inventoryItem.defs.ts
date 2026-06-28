@@ -82,7 +82,8 @@ export const inventoryItemDomainEntity = {
       "minimumLevel must be greater than or equal to zero",
       "name must not be empty",
       "unit must not be empty",
-      "status can only transition between active and inactive"
+      "status can only transition between active and inactive",
+      "an inactive InventoryItem cannot be used in new RecipeComponents"
     ],
     "valueObjects": []
   }

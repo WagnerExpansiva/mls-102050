@@ -22,20 +22,22 @@ export const closeDailyShiftUsecase = {
       "Payment"
     ],
     "rulesApplied": [
+      "orderStatusTransitions",
       "paymentTimingByOrderType",
       "aiOutputLanguageSelection"
     ],
     "transactional": true,
     "steps": [
-      "Read DailyShift by id via DailyShift port and validate it is OPEN",
-      "Read all Orders for the shift via Order port and validate all are CLOSED or CANCELLED",
-      "Read all Payments and CashMovements for the shift via Payment port",
-      "Apply paymentTimingByOrderType rule to reconcile payments by order type",
-      "Compute closingCashBalance, totalSales, totalPayments, and variance",
-      "Apply aiOutputLanguageSelection rule for closing notes language",
-      "Update DailyShift: status=CLOSED, closedAt, closingCashBalance, closingNotes, totals",
-      "Persist DailyShift within transaction",
-      "Return closed DailyShift with reconciliation summary"
+      "Read current DailyShift via DailyShift port and verify status=OPEN",
+      "Read all Orders for the shift via Order port",
+      "Apply orderStatusTransitions rule: verify no Orders remain in OPEN or IN_PROGRESS status (close or block)",
+      "Read all Payments via Payment port and reconcile totals",
+      "Apply paymentTimingByOrderType rule to verify all expected payments are recorded",
+      "Set DailyShift.status=CLOSED, closedAt, closingCashBalance, closingNotes",
+      "Apply aiOutputLanguageSelection rule for localized close metadata",
+      "Persist DailyShift via DailyShift port",
+      "Invoke generateShiftCloseReport as final step",
+      "Return close confirmation with report summary"
     ]
   }
 } as const;
@@ -63,6 +65,7 @@ export const pipeline = [
       "_102034_.d.ts"
     ],
     "rulesApplied": [
+      "orderStatusTransitions",
       "paymentTimingByOrderType",
       "aiOutputLanguageSelection"
     ],

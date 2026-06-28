@@ -12,17 +12,17 @@ export const menuItemRepositoryAdapter = {
     "planId": ""
   },
   "data": {
-    "className": "MenuItemRepository",
     "entityId": "MenuItem",
+    "className": "MenuItemRepository",
     "portRef": "IMenuItemRepository",
     "tableRef": "menu_items",
     "mdmReads": [
       "MenuCategory"
     ],
     "notes": [
-      "Real columns: menu_item_id, menu_category_id, status, created_at",
-      "Details JSONB: name, description, price, updated_at, recipe_components (embedded RecipeComponent[])",
-      "Resolves MenuCategory via MDM 102034 using menu_category_id; ctx.data used for MDM fetch and domain mapping"
+      "columns: menu_item_id, menu_category_id, status, created_at",
+      "details JSONB: name, description, price, updatedAt, RecipeComponent[]",
+      "mdmRefs resolved via 102034: MenuCategory"
     ]
   }
 } as const;
