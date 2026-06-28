@@ -15,7 +15,7 @@ export const consumeIngredientsOnConfirmationController = {
     "pageId": "consumeIngredientsOnConfirmation",
     "controllerName": "ConsumeIngredientsOnConfirmationController",
     "ownerKind": "workflow",
-    "outputSource": "usecase",
+    "outputSource": "contract",
     "handlers": [
       {
         "handlerName": "cafeFlowConsumeIngredientsOnConfirmationHandler",
@@ -42,7 +42,8 @@ export const pipeline = [
     "outputPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/consumeIngredientsOnConfirmation.ts",
     "defPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/consumeIngredientsOnConfirmation.defs.ts",
     "dependsFiles": [
-      "_102050_/l1/cafeFlow/layer_2_application/usecases/consumeIngredientsOnConfirmation.d.ts"
+      "_102050_/l1/cafeFlow/layer_2_application/usecases/consumeIngredientsOnConfirmation.d.ts",
+      "_102050_/l2/cafeFlow/web/contracts/consumeIngredientsOnConfirmation.ts"
     ],
     "dependsOn": [],
     "skills": [

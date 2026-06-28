@@ -15,7 +15,7 @@ export const recordPaymentController = {
     "pageId": "recordPayment",
     "controllerName": "RecordPaymentController",
     "ownerKind": "operation",
-    "outputSource": "usecase",
+    "outputSource": "contract",
     "handlers": [
       {
         "handlerName": "cafeFlowRecordPaymentHandler",
@@ -42,7 +42,8 @@ export const pipeline = [
     "outputPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/recordPayment.ts",
     "defPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/recordPayment.defs.ts",
     "dependsFiles": [
-      "_102050_/l1/cafeFlow/layer_2_application/usecases/recordPayment.d.ts"
+      "_102050_/l1/cafeFlow/layer_2_application/usecases/recordPayment.d.ts",
+      "_102050_/l2/cafeFlow/web/contracts/recordPayment.ts"
     ],
     "dependsOn": [],
     "skills": [

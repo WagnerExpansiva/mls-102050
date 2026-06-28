@@ -15,7 +15,7 @@ export const aiSalesSummaryController = {
     "pageId": "aiSalesSummary",
     "controllerName": "AiSalesSummaryController",
     "ownerKind": "operation",
-    "outputSource": "usecase",
+    "outputSource": "contract",
     "handlers": [
       {
         "handlerName": "cafeFlowAiSalesSummaryHandler",
@@ -42,7 +42,8 @@ export const pipeline = [
     "outputPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/aiSalesSummary.ts",
     "defPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/aiSalesSummary.defs.ts",
     "dependsFiles": [
-      "_102050_/l1/cafeFlow/layer_2_application/usecases/aiSalesSummary.d.ts"
+      "_102050_/l1/cafeFlow/layer_2_application/usecases/aiSalesSummary.d.ts",
+      "_102050_/l2/cafeFlow/web/contracts/aiSalesSummary.ts"
     ],
     "dependsOn": [],
     "skills": [

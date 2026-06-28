@@ -15,7 +15,7 @@ export const aiPromotionSuggestionsController = {
     "pageId": "aiPromotionSuggestions",
     "controllerName": "AiPromotionSuggestionsController",
     "ownerKind": "operation",
-    "outputSource": "usecase",
+    "outputSource": "contract",
     "handlers": [
       {
         "handlerName": "cafeFlowAiPromotionSuggestionsHandler",
@@ -42,7 +42,8 @@ export const pipeline = [
     "outputPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/aiPromotionSuggestions.ts",
     "defPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/aiPromotionSuggestions.defs.ts",
     "dependsFiles": [
-      "_102050_/l1/cafeFlow/layer_2_application/usecases/aiPromotionSuggestions.d.ts"
+      "_102050_/l1/cafeFlow/layer_2_application/usecases/aiPromotionSuggestions.d.ts",
+      "_102050_/l2/cafeFlow/web/contracts/aiPromotionSuggestions.ts"
     ],
     "dependsOn": [],
     "skills": [

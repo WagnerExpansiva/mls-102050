@@ -74,10 +74,12 @@ export const menuItemDomainEntity = {
       "inactive"
     ],
     "invariants": [
-      "price must be greater than zero",
-      "name must not be empty",
-      "status can only transition from draft to active, active to inactive, and inactive to active",
-      "cannot delete a MenuItem that is referenced by active Orders"
+      "price must be >= 0",
+      "name must not be empty or whitespace",
+      "status transitions: draft -> active -> inactive; inactive -> active allowed",
+      "cannot delete a MenuItem that is referenced by active Orders",
+      "each RecipeComponent.inventoryItemId must be unique within the MenuItem",
+      "RecipeComponent.quantity must be > 0"
     ],
     "valueObjects": [
       {

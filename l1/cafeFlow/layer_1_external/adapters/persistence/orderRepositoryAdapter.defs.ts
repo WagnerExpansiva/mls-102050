@@ -12,17 +12,15 @@ export const orderRepositoryAdapter = {
     "planId": ""
   },
   "data": {
-    "entityId": "Order",
     "className": "OrderRepository",
+    "entityId": "Order",
     "portRef": "IOrderRepository",
     "tableRef": "orders",
     "mdmReads": [
       "Table"
     ],
     "notes": [
-      "columns: order_id, daily_shift_id, table_id, kitchen_ticket_id, order_type, status, created_at",
-      "details JSONB: totalAmount, notes, customerName, customerPhone, numberOfGuests, closedAt, cancelledAt, cancellationReason, updatedAt, OrderItem[], KitchenTicket[]",
-      "mdmRefs resolved via 102034: Table"
+      "Columns: order_id, daily_shift_id, table_id, kitchen_ticket_id, order_type, status, created_at. Details JSONB: totalAmount, notes, customerName, customerPhone, numberOfGuests, closedAt, cancelledAt, cancellationReason, updatedAt, orderItems, kitchenTicket. MDM ref Table resolved through 102034."
     ]
   }
 } as const;

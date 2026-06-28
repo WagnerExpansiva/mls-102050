@@ -12,13 +12,13 @@ export const paymentRepositoryAdapter = {
     "planId": ""
   },
   "data": {
-    "entityId": "Payment",
     "className": "PaymentRepository",
+    "entityId": "Payment",
     "portRef": "IPaymentRepository",
     "tableRef": "payments",
+    "mdmReads": [],
     "notes": [
-      "columns: payment_id, order_id, daily_shift_id, status, created_at",
-      "details JSONB: method, amount, updatedAt"
+      "Columns: payment_id, order_id, daily_shift_id, status, created_at. Details JSONB: method, amount, updatedAt. No MDM refs."
     ]
   }
 } as const;

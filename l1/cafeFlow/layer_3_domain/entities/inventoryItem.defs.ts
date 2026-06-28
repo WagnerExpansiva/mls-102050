@@ -78,12 +78,12 @@ export const inventoryItemDomainEntity = {
       "inactive"
     ],
     "invariants": [
-      "currentQuantity must not be negative",
-      "minimumLevel must be greater than or equal to zero",
-      "name must not be empty",
-      "unit must not be empty",
-      "status can only transition between active and inactive",
-      "an inactive InventoryItem cannot be used in new RecipeComponents"
+      "currentQuantity must be >= 0",
+      "minimumLevel must be >= 0",
+      "name must not be empty or whitespace",
+      "unit must not be empty or whitespace",
+      "status transitions: active -> inactive; inactive -> active allowed",
+      "low-stock alert is raised when currentQuantity <= minimumLevel"
     ],
     "valueObjects": []
   }

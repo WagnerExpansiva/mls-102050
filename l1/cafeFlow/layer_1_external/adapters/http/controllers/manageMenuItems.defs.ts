@@ -15,7 +15,7 @@ export const manageMenuItemsController = {
     "pageId": "manageMenuItems",
     "controllerName": "ManageMenuItemsController",
     "ownerKind": "operation",
-    "outputSource": "usecase",
+    "outputSource": "contract",
     "handlers": [
       {
         "handlerName": "cafeFlowManageMenuItemsHandler",
@@ -42,7 +42,8 @@ export const pipeline = [
     "outputPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/manageMenuItems.ts",
     "defPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/manageMenuItems.defs.ts",
     "dependsFiles": [
-      "_102050_/l1/cafeFlow/layer_2_application/usecases/manageMenuItems.d.ts"
+      "_102050_/l1/cafeFlow/layer_2_application/usecases/manageMenuItems.d.ts",
+      "_102050_/l2/cafeFlow/web/contracts/manageMenuItems.ts"
     ],
     "dependsOn": [],
     "skills": [

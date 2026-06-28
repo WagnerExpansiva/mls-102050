@@ -135,14 +135,17 @@ export const orderDomainEntity = {
     ],
     "invariants": [
       "totalAmount must equal the sum of all OrderItem.totalPrice",
-      "when orderType is mesa, tableId is required",
-      "when orderType is takeout, tableId must be null",
-      "status transitions must follow: draft -> sentToKitchen -> inPreparation -> ready -> served -> closed; any state can go to cancelled",
-      "closedAt must be set when status is closed",
-      "cancelledAt and cancellationReason must be set when status is cancelled",
-      "cannot modify OrderItems after status is sentToKitchen",
-      "dailyShift must be open when Order is created",
-      "numberOfGuests must be greater than zero when provided"
+      "when orderType is 'mesa', tableId is required",
+      "when orderType is 'takeout', tableId must be null",
+      "status transitions: draft -> sentToKitchen -> inPreparation -> ready -> served -> closed; draft or any pre-closed state -> cancelled allowed",
+      "when status is 'closed', closedAt must be set",
+      "when status is 'cancelled', cancelledAt and cancellationReason must be set",
+      "cannot add or modify OrderItems after status is sentToKitchen",
+      "OrderItem.quantity must be > 0",
+      "OrderItem.totalPrice must equal OrderItem.quantity * OrderItem.unitPrice",
+      "OrderItem.status transitions: new -> sentToKitchen -> inPreparation -> ready -> served; any pre-served -> cancelled",
+      "KitchenTicket.status transitions: open -> inProgress -> done; open or inProgress -> void",
+      "at least one OrderItem is required before sending to kitchen"
     ],
     "valueObjects": [
       {

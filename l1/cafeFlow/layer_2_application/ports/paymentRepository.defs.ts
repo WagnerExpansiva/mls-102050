@@ -17,52 +17,46 @@ export const paymentRepositoryPort = {
     "methods": [
       {
         "name": "getById",
-        "returns": "Payment",
+        "returns": "Payment | null",
         "params": [
-          "paymentId: string"
-        ],
-        "description": "Retrieve a single Payment aggregate by its identity"
+          "paymentId: PaymentId"
+        ]
       },
       {
         "name": "list",
         "returns": "Payment[]",
         "params": [
           "filter: PaymentFilter"
-        ],
-        "description": "List Payment aggregates matching the domain filter"
+        ]
       },
       {
         "name": "save",
         "returns": "void",
         "params": [
           "payment: Payment"
-        ],
-        "description": "Persist a Payment aggregate"
+        ]
       },
       {
         "name": "findByOrderId",
         "returns": "Payment[]",
         "params": [
-          "orderId: string"
-        ],
-        "description": "Domain finder: payments associated with an order"
+          "orderId: OrderId"
+        ]
       },
       {
         "name": "findByMethod",
         "returns": "Payment[]",
         "params": [
           "method: PaymentMethod"
-        ],
-        "description": "Domain finder: payments made with a specific method"
+        ]
       },
       {
         "name": "findByDateRange",
         "returns": "Payment[]",
         "params": [
-          "from: CalendarDate",
-          "to: CalendarDate"
-        ],
-        "description": "Domain finder: payments within a date range"
+          "start: Date",
+          "end: Date"
+        ]
       }
     ]
   }

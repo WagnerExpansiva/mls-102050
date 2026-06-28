@@ -19,7 +19,7 @@ export const orderTableDefinition = {
         "name": "order_id",
         "type": "uuid",
         "nullable": false,
-        "description": "PK/FK identifier"
+        "description": "PK/FK identifier for order"
       },
       {
         "name": "daily_shift_id",
@@ -30,8 +30,8 @@ export const orderTableDefinition = {
       {
         "name": "table_id",
         "type": "uuid",
-        "nullable": false,
-        "description": "FK to table"
+        "nullable": true,
+        "description": "FK to table (nullable for non-dine-in orders)"
       },
       {
         "name": "kitchen_ticket_id",
@@ -43,25 +43,25 @@ export const orderTableDefinition = {
         "name": "order_type",
         "type": "varchar",
         "nullable": false,
-        "description": "Order type status field"
+        "description": "Order type (dine-in, takeaway, delivery, etc.)"
       },
       {
         "name": "status",
         "type": "varchar",
         "nullable": false,
-        "description": "Status field"
+        "description": "Status of the order"
       },
       {
         "name": "created_at",
         "type": "timestamp",
         "nullable": false,
-        "description": "Ordering timestamp"
+        "description": "Creation timestamp for ordering"
       },
       {
         "name": "details",
         "type": "jsonb",
         "nullable": true,
-        "description": "Contains: totalAmount, notes, customerName, customerPhone, numberOfGuests, closedAt, cancelledAt, cancellationReason, updatedAt"
+        "description": "Contains totalAmount, notes, customerName, customerPhone, numberOfGuests, closedAt, cancelledAt, cancellationReason, updatedAt and child collections OrderItem, KitchenTicket"
       }
     ],
     "primaryKey": [

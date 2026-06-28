@@ -15,7 +15,7 @@ export const kitchenProductionFlowController = {
     "pageId": "kitchenProductionFlow",
     "controllerName": "KitchenProductionFlowController",
     "ownerKind": "workflow",
-    "outputSource": "usecase",
+    "outputSource": "contract",
     "handlers": [
       {
         "handlerName": "cafeFlowKitchenProductionFlowHandler",
@@ -42,7 +42,8 @@ export const pipeline = [
     "outputPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/kitchenProductionFlow.ts",
     "defPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/kitchenProductionFlow.defs.ts",
     "dependsFiles": [
-      "_102050_/l1/cafeFlow/layer_2_application/usecases/kitchenProductionFlow.d.ts"
+      "_102050_/l1/cafeFlow/layer_2_application/usecases/kitchenProductionFlow.d.ts",
+      "_102050_/l2/cafeFlow/web/contracts/kitchenProductionFlow.ts"
     ],
     "dependsOn": [],
     "skills": [

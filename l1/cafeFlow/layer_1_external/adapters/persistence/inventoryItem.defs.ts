@@ -19,25 +19,25 @@ export const inventoryItemTableDefinition = {
         "name": "inventory_item_id",
         "type": "uuid",
         "nullable": false,
-        "description": "PK/FK identifier"
+        "description": "PK/FK identifier for inventory item"
       },
       {
         "name": "status",
         "type": "varchar",
         "nullable": false,
-        "description": "Status field"
+        "description": "Status of the inventory item"
       },
       {
         "name": "created_at",
         "type": "timestamp",
         "nullable": false,
-        "description": "Ordering timestamp"
+        "description": "Creation timestamp for ordering"
       },
       {
         "name": "details",
         "type": "jsonb",
         "nullable": true,
-        "description": "Contains: name, description, unit, currentQuantity, minimumLevel, updatedAt"
+        "description": "Contains name, description, unit, currentQuantity, minimumLevel, updatedAt"
       }
     ],
     "primaryKey": [

@@ -15,7 +15,7 @@ export const openDailyShiftController = {
     "pageId": "openDailyShift",
     "controllerName": "OpenDailyShiftController",
     "ownerKind": "workflow",
-    "outputSource": "usecase",
+    "outputSource": "contract",
     "handlers": [
       {
         "handlerName": "cafeFlowOpenDailyShiftHandler",
@@ -42,7 +42,8 @@ export const pipeline = [
     "outputPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/openDailyShift.ts",
     "defPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/openDailyShift.defs.ts",
     "dependsFiles": [
-      "_102050_/l1/cafeFlow/layer_2_application/usecases/openDailyShift.d.ts"
+      "_102050_/l1/cafeFlow/layer_2_application/usecases/openDailyShift.d.ts",
+      "_102050_/l2/cafeFlow/web/contracts/openDailyShift.ts"
     ],
     "dependsOn": [],
     "skills": [

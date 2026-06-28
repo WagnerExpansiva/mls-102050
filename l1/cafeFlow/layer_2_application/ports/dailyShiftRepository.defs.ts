@@ -17,49 +17,43 @@ export const dailyShiftRepositoryPort = {
     "methods": [
       {
         "name": "getById",
-        "returns": "DailyShift",
+        "returns": "DailyShift | null",
         "params": [
-          "dailyShiftId: string"
-        ],
-        "description": "Retrieve a single DailyShift aggregate by its identity"
+          "dailyShiftId: DailyShiftId"
+        ]
       },
       {
         "name": "list",
         "returns": "DailyShift[]",
         "params": [
           "filter: DailyShiftFilter"
-        ],
-        "description": "List DailyShift aggregates matching the domain filter"
+        ]
       },
       {
         "name": "save",
         "returns": "void",
         "params": [
           "dailyShift: DailyShift"
-        ],
-        "description": "Persist a DailyShift aggregate and its embedded CashMovements"
+        ]
       },
       {
         "name": "findByDate",
-        "returns": "DailyShift[]",
+        "returns": "DailyShift | null",
         "params": [
-          "date: CalendarDate"
-        ],
-        "description": "Domain finder: shifts on a specific calendar date"
+          "businessDate: BusinessDate"
+        ]
       },
       {
         "name": "findOpenShift",
-        "returns": "DailyShift",
-        "params": [],
-        "description": "Domain finder: the currently open shift, if any"
+        "returns": "DailyShift | null",
+        "params": []
       },
       {
         "name": "findByCashier",
         "returns": "DailyShift[]",
         "params": [
-          "cashierId: string"
-        ],
-        "description": "Domain finder: shifts worked by a specific cashier"
+          "cashierId: EmployeeId"
+        ]
       }
     ]
   }

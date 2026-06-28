@@ -15,7 +15,7 @@ export const browseMenuForPosController = {
     "pageId": "browseMenuForPos",
     "controllerName": "BrowseMenuForPosController",
     "ownerKind": "operation",
-    "outputSource": "usecase",
+    "outputSource": "contract",
     "handlers": [
       {
         "handlerName": "cafeFlowBrowseMenuForPosHandler",
@@ -42,7 +42,8 @@ export const pipeline = [
     "outputPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/browseMenuForPos.ts",
     "defPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/browseMenuForPos.defs.ts",
     "dependsFiles": [
-      "_102050_/l1/cafeFlow/layer_2_application/usecases/browseMenuForPos.d.ts"
+      "_102050_/l1/cafeFlow/layer_2_application/usecases/browseMenuForPos.d.ts",
+      "_102050_/l2/cafeFlow/web/contracts/browseMenuForPos.ts"
     ],
     "dependsOn": [],
     "skills": [

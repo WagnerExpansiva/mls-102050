@@ -15,7 +15,7 @@ export const dineInOrderLifecycleController = {
     "pageId": "dineInOrderLifecycle",
     "controllerName": "DineInOrderLifecycleController",
     "ownerKind": "workflow",
-    "outputSource": "usecase",
+    "outputSource": "contract",
     "handlers": [
       {
         "handlerName": "cafeFlowDineInOrderLifecycleHandler",
@@ -42,7 +42,8 @@ export const pipeline = [
     "outputPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/dineInOrderLifecycle.ts",
     "defPath": "_102050_/l1/cafeFlow/layer_1_external/adapters/http/controllers/dineInOrderLifecycle.defs.ts",
     "dependsFiles": [
-      "_102050_/l1/cafeFlow/layer_2_application/usecases/dineInOrderLifecycle.d.ts"
+      "_102050_/l1/cafeFlow/layer_2_application/usecases/dineInOrderLifecycle.d.ts",
+      "_102050_/l2/cafeFlow/web/contracts/dineInOrderLifecycle.ts"
     ],
     "dependsOn": [],
     "skills": [

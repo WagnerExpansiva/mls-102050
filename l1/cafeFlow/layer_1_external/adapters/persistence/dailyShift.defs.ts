@@ -19,25 +19,25 @@ export const dailyShiftTableDefinition = {
         "name": "daily_shift_id",
         "type": "uuid",
         "nullable": false,
-        "description": "PK/FK identifier"
+        "description": "PK/FK identifier for daily shift"
       },
       {
         "name": "status",
         "type": "varchar",
         "nullable": false,
-        "description": "Status field"
+        "description": "Status of the daily shift"
       },
       {
         "name": "created_at",
         "type": "timestamp",
         "nullable": false,
-        "description": "Ordering timestamp"
+        "description": "Creation timestamp for ordering"
       },
       {
         "name": "details",
         "type": "jsonb",
         "nullable": true,
-        "description": "Contains: shiftDate, openedAt, closedAt, openingCashBalance, closingCashBalance, totalSales, totalPayments, closingNotes, updatedAt"
+        "description": "Contains shiftDate, openedAt, closedAt, openingCashBalance, closingCashBalance, totalSales, totalPayments, closingNotes, updatedAt and child collection CashMovement"
       }
     ],
     "primaryKey": [
