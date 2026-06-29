@@ -8,11 +8,12 @@ export const operationCreateOrder = {
   "kind": "create",
   "reads": [
     "DailyShift",
-    "Table"
+    "Table",
+    "TableOccupancy"
   ],
   "writes": [
     "Order",
-    "Table"
+    "TableOccupancy"
   ],
   "rulesApplied": [
     "orderStatusTransitions",

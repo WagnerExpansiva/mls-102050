@@ -3,9 +3,10 @@
 export const cafeFlowEntityTable = {
   "entityId": "Table",
   "title": "Mesa",
-  "description": "Identificador de mesa para atendimento no salão; suporte a abertura e fechamento consolidado de consumo.",
+  "description": "Cadastro da mesa do salão (dado mestre/MDM): identificador físico. A ocupação operacional (livre/ocupada/gastos) vive em TableOccupancy.",
   "ownership": "moduleOwned",
   "kind": "mdm",
+  "mdmSubtype": "AssetGeneric",
   "fields": [
     {
       "fieldId": "tableId",
@@ -23,11 +24,10 @@ export const cafeFlowEntityTable = {
       "fieldId": "status",
       "type": "string",
       "required": true,
-      "description": "Situação atual da mesa no ciclo de atendimento.",
+      "description": "Situação cadastral da mesa (não confundir com ocupação operacional, que vive em TableOccupancy).",
       "enum": [
-        "available",
-        "occupied",
-        "disabled"
+        "active",
+        "inactive"
       ]
     },
     {
@@ -44,18 +44,14 @@ export const cafeFlowEntityTable = {
     }
   ],
   "statusEnum": [
-    "available",
-    "occupied",
-    "disabled"
+    "active",
+    "inactive"
   ],
   "lifecycleStates": [
-    "available",
-    "occupied",
-    "disabled"
+    "active",
+    "inactive"
   ],
-  "rulesApplied": [
-    "tableOccupancyConsistency"
-  ]
+  "rulesApplied": []
 } as const;
 
 export default cafeFlowEntityTable;

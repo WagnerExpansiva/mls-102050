@@ -14,6 +14,7 @@ export const operationUpdateOrderStatus = {
     "OrderItem",
     "KitchenTicket",
     "Table",
+    "TableOccupancy",
     "Payment",
     "InventoryItem",
     "RecipeComponent"
@@ -25,7 +26,7 @@ export const operationUpdateOrderStatus = {
     "Order.closedAt",
     "Order.cancelledAt",
     "Order.cancellationReason",
-    "Table",
+    "TableOccupancy",
     "StockConsumption"
   ],
   "rulesApplied": [

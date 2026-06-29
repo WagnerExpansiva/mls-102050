@@ -60,9 +60,9 @@ export const cafeFlowRules = {
     {
       "ruleId": "tableOccupancyConsistency",
       "title": "Consistência de ocupação de mesa",
-      "description": "Uma Table só pode estar 'occupied' quando existir ao menos um Order aberto associado; ao fechar/cancelar o último Order aberto da mesa, a Table deve voltar para 'available' (salvo 'disabled').",
+      "description": "Uma TableOccupancy só pode estar 'occupied' quando existir ao menos um Order aberto associado; ao fechar/cancelar o último Order aberto da mesa, a TableOccupancy deve voltar para 'available' (salvo 'disabled').",
       "appliesTo": [
-        "Table",
+        "TableOccupancy",
         "Order"
       ],
       "layer": "domain"

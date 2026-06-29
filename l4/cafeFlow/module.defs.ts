@@ -230,8 +230,18 @@ export const cafeFlowModule = {
       },
       "Table": {
         "title": "Mesa",
-        "description": "Identificador de mesa para atendimento no salão; suporte a abertura e fechamento consolidado de consumo.",
+        "description": "Cadastro da mesa do salão (dado mestre/MDM): identificador físico. A ocupação operacional vive em TableOccupancy.",
         "kind": "mdm",
+        "ownership": "moduleOwned",
+        "statusEnum": [
+          "active",
+          "inactive"
+        ]
+      },
+      "TableOccupancy": {
+        "title": "Ocupação de Mesa",
+        "description": "Estado operacional da mesa (livre/ocupada/desabilitada) e consumo acumulado. Dado transacional com tabela própria; referencia Table (cadastro) por id.",
+        "kind": "core",
         "ownership": "moduleOwned",
         "statusEnum": [
           "available",
@@ -371,7 +381,14 @@ export const cafeFlowModule = {
       "fromEntity": "Order",
       "toEntity": "Table",
       "type": "manyToOne",
-      "description": "Orders do tipo mesa referenciam uma Table; takeout não exige mesa."
+      "description": "Orders do tipo mesa referenciam uma Table (cadastro MDM) por id; takeout não exige mesa."
+    },
+    {
+      "relationshipId": "tableOccupancyReferencesTable",
+      "fromEntity": "TableOccupancy",
+      "toEntity": "Table",
+      "type": "manyToOne",
+      "description": "Cada TableOccupancy (estado operacional) referencia o cadastro da mesa (Table, MDM) por id."
     },
     {
       "relationshipId": "orderGeneratesKitchenTicket",

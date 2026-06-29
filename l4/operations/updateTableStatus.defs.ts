@@ -4,14 +4,18 @@ export const operationUpdateTableStatus = {
   "operationId": "updateTableStatus",
   "title": "Atualizar ocupação da mesa",
   "actor": "attendant",
-  "entity": "Table",
+  "entity": "TableOccupancy",
   "kind": "update",
   "reads": [
+    "TableOccupancy",
     "Table"
   ],
   "writes": [
-    "Table.status",
-    "Table.updatedAt"
+    "TableOccupancy.status",
+    "TableOccupancy.currentChargesTotal",
+    "TableOccupancy.openedAt",
+    "TableOccupancy.closedAt",
+    "TableOccupancy.updatedAt"
   ],
   "rulesApplied": [
     "tableOccupancyConsistency"

@@ -85,7 +85,8 @@ export const workflowDineInOrderLifecycle = {
     "Order",
     "OrderItem",
     "KitchenTicket",
-    "Table"
+    "Table",
+    "TableOccupancy"
   ],
   "rulesApplied": [],
   "story": {

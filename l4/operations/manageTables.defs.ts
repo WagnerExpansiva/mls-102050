@@ -12,9 +12,7 @@ export const operationManageTables = {
   "writes": [
     "Table"
   ],
-  "rulesApplied": [
-    "tableOccupancyConsistency"
-  ],
+  "rulesApplied": [],
   "story": {
     "actor": "manager",
     "goal": "manter cadastro de mesas",
