@@ -13,23 +13,101 @@ export const manageMenuItemsUsecase = {
   },
   "data": {
     "usecaseId": "manageMenuItems",
-    "functionName": "manageMenuItems",
-    "inputTypeName": "ManageMenuItemsInput",
-    "outputTypeName": "ManageMenuItemsOutput",
     "ports": [
       "MenuItem"
     ],
-    "rulesApplied": [
-      "aiOutputLanguageSelection"
+    "functions": [
+      {
+        "functionName": "updateMenuItem",
+        "inputTypeName": "UpdateMenuItemInput",
+        "outputTypeName": "UpdateMenuItemOutput",
+        "input": [
+          {
+            "name": "menuItemId",
+            "type": "string",
+            "required": true,
+            "ofEntity": "MenuItem",
+            "description": "Identifier of the menu item to update"
+          },
+          {
+            "name": "menuCategoryId",
+            "type": "string",
+            "required": false,
+            "ofEntity": "MenuCategory",
+            "description": "New category reference (mdmRef) for the menu item"
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "required": false,
+            "ofEntity": "MenuItem",
+            "description": "Updated display name of the menu item"
+          },
+          {
+            "name": "description",
+            "type": "string",
+            "required": false,
+            "ofEntity": "MenuItem",
+            "description": "Updated description of the menu item"
+          },
+          {
+            "name": "price",
+            "type": "number",
+            "required": false,
+            "ofEntity": "MenuItem",
+            "description": "Updated price of the menu item"
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "required": false,
+            "ofEntity": "MenuItem",
+            "description": "Updated status: draft, active, or inactive"
+          }
+        ],
+        "output": [
+          {
+            "name": "menuItemId",
+            "type": "string",
+            "required": true,
+            "ofEntity": "MenuItem",
+            "description": "Identifier of the updated menu item"
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "required": true,
+            "ofEntity": "MenuItem",
+            "description": "Current status of the menu item after update"
+          },
+          {
+            "name": "updatedAt",
+            "type": "string",
+            "required": true,
+            "ofEntity": "MenuItem",
+            "description": "Timestamp of the last update"
+          }
+        ],
+        "ports": [
+          "MenuItem"
+        ],
+        "rulesApplied": [
+          "aiOutputLanguageSelection"
+        ],
+        "transactional": true,
+        "steps": [
+          "1. Load the MenuItem aggregate by menuItemId via MenuItemPort.findById",
+          "2. Validate that the MenuItem exists; throw NotFound if missing",
+          "3. If menuCategoryId is provided, verify the MenuCategory exists via ctx.data.mdmDocument.get({ mdmId: menuCategoryId }) and that its status is active",
+          "4. Apply field changes (name, description, price, status, menuCategoryId) to the loaded MenuItem aggregate using its domain mutation methods",
+          "5. Validate status transition rules (draft->active, active->inactive, etc.) within the MenuItem entity",
+          "6. Save the updated MenuItem aggregate via MenuItemPort.save",
+          "7. Return menuItemId, current status, and updatedAt timestamp"
+        ]
+      }
     ],
-    "transactional": true,
-    "steps": [
-      "Read existing MenuItem via MenuItem port (for updates)",
-      "Validate referenced MenuCategory exists",
-      "Apply aiOutputLanguageSelection rule for localized name/description fields",
-      "Create or update MenuItem entity",
-      "Persist MenuItem via MenuItem port",
-      "Return updated item"
+    "mdmRefs": [
+      "MenuCategory"
     ]
   }
 } as const;
@@ -51,9 +129,6 @@ export const pipeline = [
       "_102021_/l2/agentChangeBackend/skills/architecture.md",
       "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
-    ],
-    "rulesApplied": [
-      "aiOutputLanguageSelection"
     ],
     "agent": "agentMaterializeGen"
   }

@@ -17,14 +17,14 @@ export const paymentRepositoryPort = {
     "methods": [
       {
         "name": "getById",
-        "returns": "Payment | null",
+        "returns": "Payment",
         "params": [
           "paymentId: PaymentId"
         ]
       },
       {
         "name": "list",
-        "returns": "Payment[]",
+        "returns": "PaymentCollection",
         "params": [
           "filter: PaymentFilter"
         ]
@@ -33,30 +33,27 @@ export const paymentRepositoryPort = {
         "name": "save",
         "returns": "void",
         "params": [
-          "payment: Payment"
+          "aggregate: Payment"
         ]
       },
       {
-        "name": "findByOrderId",
-        "returns": "Payment[]",
+        "name": "findByOrder",
+        "returns": "PaymentCollection",
         "params": [
           "orderId: OrderId"
         ]
       },
       {
-        "name": "findByMethod",
-        "returns": "Payment[]",
+        "name": "findByStatus",
+        "returns": "PaymentCollection",
         "params": [
-          "method: PaymentMethod"
+          "status: PaymentStatus"
         ]
       },
       {
-        "name": "findByDateRange",
-        "returns": "Payment[]",
-        "params": [
-          "start: Date",
-          "end: Date"
-        ]
+        "name": "findPending",
+        "returns": "PaymentCollection",
+        "params": []
       }
     ]
   }

@@ -13,25 +13,116 @@ export const createDailyShiftUsecase = {
   },
   "data": {
     "usecaseId": "createDailyShift",
-    "functionName": "createDailyShift",
-    "inputTypeName": "CreateDailyShiftInput",
-    "outputTypeName": "CreateDailyShiftOutput",
     "ports": [
       "DailyShift"
     ],
-    "rulesApplied": [
-      "paymentTimingByOrderType",
-      "aiOutputLanguageSelection"
+    "functions": [
+      {
+        "functionName": "createDailyShift",
+        "inputTypeName": "CreateDailyShiftInput",
+        "outputTypeName": "CreateDailyShiftOutput",
+        "input": [
+          {
+            "name": "shiftDate",
+            "type": "string",
+            "required": true,
+            "ofEntity": "DailyShift",
+            "description": "Date the shift belongs to (YYYY-MM-DD)"
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "required": true,
+            "ofEntity": "DailyShift",
+            "description": "Shift status: open or closed"
+          },
+          {
+            "name": "openedAt",
+            "type": "string",
+            "required": true,
+            "ofEntity": "DailyShift",
+            "description": "Timestamp when the shift was opened"
+          },
+          {
+            "name": "closedAt",
+            "type": "string",
+            "required": false,
+            "ofEntity": "DailyShift",
+            "description": "Timestamp when the shift was closed"
+          },
+          {
+            "name": "openingCashBalance",
+            "type": "number",
+            "required": false,
+            "ofEntity": "DailyShift",
+            "description": "Cash balance at shift opening"
+          },
+          {
+            "name": "closingCashBalance",
+            "type": "number",
+            "required": false,
+            "ofEntity": "DailyShift",
+            "description": "Cash balance at shift closing"
+          },
+          {
+            "name": "totalSales",
+            "type": "number",
+            "required": false,
+            "ofEntity": "DailyShift",
+            "description": "Total sales accumulated during the shift"
+          },
+          {
+            "name": "totalPayments",
+            "type": "number",
+            "required": false,
+            "ofEntity": "DailyShift",
+            "description": "Total payments processed during the shift"
+          },
+          {
+            "name": "closingNotes",
+            "type": "string",
+            "required": false,
+            "ofEntity": "DailyShift",
+            "description": "Free-text notes recorded at closing"
+          }
+        ],
+        "output": [
+          {
+            "name": "dailyShiftId",
+            "type": "string",
+            "required": true,
+            "ofEntity": "DailyShift",
+            "description": "Id of the created daily shift"
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "required": true,
+            "ofEntity": "DailyShift",
+            "description": "Status of the created shift (open or closed)"
+          }
+        ],
+        "ports": [
+          "DailyShift"
+        ],
+        "rulesApplied": [
+          "paymentTimingByOrderType",
+          "aiOutputLanguageSelection"
+        ],
+        "transactional": true,
+        "steps": [
+          "Validate that no DailyShift already exists for the given shiftDate via DailyShift port query",
+          "Validate that status is either 'open' or 'closed'",
+          "If status is 'closed', require closedAt and closingCashBalance to be provided",
+          "Apply paymentTimingByOrderType rule to determine expected payment timing for the shift",
+          "Apply aiOutputLanguageSelection rule to set the output language for any AI-generated closing notes",
+          "Create a new DailyShift aggregate with server-generated dailyShiftId, createdAt, updatedAt",
+          "Persist the DailyShift via the DailyShift port save operation",
+          "Return dailyShiftId and status of the created shift"
+        ]
+      }
     ],
-    "transactional": true,
-    "steps": [
-      "Validate no open DailyShift exists for the same shiftDate via DailyShift port",
-      "Create DailyShift entity with shiftDate, openingCashBalance, openedAt, status=OPEN",
-      "Apply paymentTimingByOrderType rule to set expected payment flows",
-      "Apply aiOutputLanguageSelection rule for localized shift metadata",
-      "Persist DailyShift via DailyShift port",
-      "Return created shift with generated dailyShiftId"
-    ]
+    "mdmRefs": []
   }
 } as const;
 
@@ -52,10 +143,6 @@ export const pipeline = [
       "_102021_/l2/agentChangeBackend/skills/architecture.md",
       "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
-    ],
-    "rulesApplied": [
-      "paymentTimingByOrderType",
-      "aiOutputLanguageSelection"
     ],
     "agent": "agentMaterializeGen"
   }

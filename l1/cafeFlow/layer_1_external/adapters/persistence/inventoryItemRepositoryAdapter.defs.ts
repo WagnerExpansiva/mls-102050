@@ -12,13 +12,14 @@ export const inventoryItemRepositoryAdapter = {
     "planId": ""
   },
   "data": {
-    "className": "InventoryItemRepository",
+    "className": "InventoryItemRepositoryAdapter",
     "entityId": "InventoryItem",
     "portRef": "IInventoryItemRepository",
     "tableRef": "inventory_items",
     "mdmReads": [],
     "notes": [
-      "Columns: inventory_item_id, status, created_at. Details JSONB: name, description, unit, currentQuantity, minimumLevel, updatedAt. No MDM refs."
+      "Real columns: inventory_item_id, status, created_at",
+      "Details JSONB holds name, description, unit, current_quantity, minimum_level, updated_at"
     ]
   }
 } as const;

@@ -13,31 +13,124 @@ export const createOrderUsecase = {
   },
   "data": {
     "usecaseId": "createOrder",
-    "functionName": "createOrder",
-    "inputTypeName": "CreateOrderInput",
-    "outputTypeName": "CreateOrderOutput",
     "ports": [
       "Order",
       "DailyShift"
     ],
-    "rulesApplied": [
-      "orderStatusTransitions",
-      "paymentTimingByOrderType",
-      "ingredientConsumptionTrigger",
-      "aiOutputLanguageSelection",
-      "tableOccupancyConsistency"
+    "functions": [
+      {
+        "functionName": "createOrder",
+        "inputTypeName": "CreateOrderInput",
+        "outputTypeName": "CreateOrderOutput",
+        "input": [
+          {
+            "name": "dailyShiftId",
+            "type": "string",
+            "required": true,
+            "ofEntity": "DailyShift",
+            "description": "The open daily shift under which the order is created"
+          },
+          {
+            "name": "tableId",
+            "type": "string",
+            "required": false,
+            "ofEntity": "Table",
+            "description": "Required when orderType is 'mesa'; references the Table master-data document"
+          },
+          {
+            "name": "orderType",
+            "type": "string",
+            "required": true,
+            "ofEntity": "Order",
+            "description": "Order type: 'mesa' (dine-in) or 'takeout'"
+          },
+          {
+            "name": "notes",
+            "type": "string",
+            "required": false,
+            "ofEntity": "Order",
+            "description": "Free-text notes for the order"
+          },
+          {
+            "name": "customerName",
+            "type": "string",
+            "required": false,
+            "ofEntity": "Order",
+            "description": "Customer name (optional, used mainly for takeout)"
+          },
+          {
+            "name": "customerPhone",
+            "type": "string",
+            "required": false,
+            "ofEntity": "Order",
+            "description": "Customer phone (optional, used mainly for takeout)"
+          },
+          {
+            "name": "numberOfGuests",
+            "type": "number",
+            "required": false,
+            "ofEntity": "Order",
+            "description": "Number of guests at the table (optional, used mainly for mesa)"
+          }
+        ],
+        "output": [
+          {
+            "name": "orderId",
+            "type": "string",
+            "required": true,
+            "ofEntity": "Order",
+            "description": "The newly created order identifier"
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "required": true,
+            "ofEntity": "Order",
+            "description": "Initial status of the order, always 'draft' on creation"
+          },
+          {
+            "name": "totalAmount",
+            "type": "number",
+            "required": true,
+            "ofEntity": "Order",
+            "description": "Initial total amount, always 0 on creation"
+          },
+          {
+            "name": "tableStatus",
+            "type": "string",
+            "required": false,
+            "ofEntity": "Table",
+            "description": "Updated table status ('occupied') when orderType is 'mesa'"
+          }
+        ],
+        "ports": [
+          "Order",
+          "DailyShift"
+        ],
+        "rulesApplied": [
+          "orderStatusTransitions",
+          "paymentTimingByOrderType",
+          "ingredientConsumptionTrigger",
+          "aiOutputLanguageSelection",
+          "tableOccupancyConsistency"
+        ],
+        "transactional": true,
+        "steps": [
+          "1. Load DailyShift via DailyShift port by dailyShiftId; validate that shift status is 'open' — reject if closed or not found.",
+          "2. If orderType is 'mesa': require tableId (reject if missing); read Table master-data document via ctx.data.mdmDocument.get({ mdmId: tableId }); validate table status is 'available' (tableOccupancyConsistency) — reject if 'occupied' or 'disabled'.",
+          "3. If orderType is 'takeout': tableId must be null; skip table validation.",
+          "4. Create new Order aggregate with status='draft' (orderStatusTransitions initial state), totalAmount=0, kitchenTicketId=null, closedAt=null, cancelledAt=null; set createdAt/updatedAt to server timestamp.",
+          "5. Apply paymentTimingByOrderType: for 'takeout' payment is expected immediately; for 'mesa' payment is deferred until close — store this expectation as order metadata.",
+          "6. Apply aiOutputLanguageSelection: determine the language for AI-generated kitchen ticket output based on shift or tenant configuration.",
+          "7. ingredientConsumptionTrigger is registered but not fired on create — it fires when status transitions to 'sentToKitchen'.",
+          "8. Save Order via Order port.",
+          "9. If orderType is 'mesa': update Table master-data document status to 'occupied' (tableOccupancyConsistency) and persist via ctx.data.mdmDocument update.",
+          "10. Return orderId, status, totalAmount, and tableStatus (if applicable)."
+        ]
+      }
     ],
-    "transactional": true,
-    "steps": [
-      "Validate DailyShift is OPEN via DailyShift port",
-      "If orderType is DINE_IN, validate Table availability and apply tableOccupancyConsistency rule",
-      "Apply paymentTimingByOrderType rule to determine payment expectations",
-      "Create Order entity with status=OPEN, link to DailyShift and optional Table",
-      "Apply orderStatusTransitions rule for initial state",
-      "Apply aiOutputLanguageSelection rule for localized order metadata",
-      "Persist Order via Order port",
-      "If Table assigned, update Table status to OCCUPIED",
-      "Return created order with generated orderId"
+    "mdmRefs": [
+      "Table"
     ]
   }
 } as const;
@@ -61,13 +154,6 @@ export const pipeline = [
       "_102021_/l2/agentChangeBackend/skills/architecture.md",
       "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
-    ],
-    "rulesApplied": [
-      "orderStatusTransitions",
-      "paymentTimingByOrderType",
-      "ingredientConsumptionTrigger",
-      "aiOutputLanguageSelection",
-      "tableOccupancyConsistency"
     ],
     "agent": "agentMaterializeGen"
   }

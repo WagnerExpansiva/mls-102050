@@ -13,17 +13,81 @@ export const manageMenuCategoriesUsecase = {
   },
   "data": {
     "usecaseId": "manageMenuCategories",
-    "functionName": "manageMenuCategories",
-    "inputTypeName": "ManageMenuCategoriesInput",
-    "outputTypeName": "ManageMenuCategoriesOutput",
     "ports": [],
-    "rulesApplied": [],
-    "transactional": true,
-    "steps": [
-      "Validate category name uniqueness",
-      "Create or update MenuCategory entity",
-      "Persist via repository",
-      "Return category"
+    "functions": [
+      {
+        "functionName": "updateMenuCategory",
+        "inputTypeName": "UpdateMenuCategoryInput",
+        "outputTypeName": "UpdateMenuCategoryOutput",
+        "input": [
+          {
+            "name": "menuCategoryId",
+            "type": "string",
+            "required": true,
+            "ofEntity": "MenuCategory",
+            "description": "Identifier of the MenuCategory to update"
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "required": true,
+            "ofEntity": "MenuCategory",
+            "description": "Updated category name"
+          },
+          {
+            "name": "description",
+            "type": "string",
+            "required": false,
+            "ofEntity": "MenuCategory",
+            "description": "Updated category description"
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "required": true,
+            "ofEntity": "MenuCategory",
+            "description": "Updated status (active or inactive)"
+          }
+        ],
+        "output": [
+          {
+            "name": "menuCategoryId",
+            "type": "string",
+            "required": true,
+            "ofEntity": "MenuCategory",
+            "description": "Identifier of the updated MenuCategory"
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "required": true,
+            "ofEntity": "MenuCategory",
+            "description": "Confirmed status after update"
+          },
+          {
+            "name": "updatedAt",
+            "type": "string",
+            "required": true,
+            "ofEntity": "MenuCategory",
+            "description": "Timestamp of the update"
+          }
+        ],
+        "ports": [],
+        "rulesApplied": [],
+        "transactional": true,
+        "steps": [
+          "Load MenuCategory by menuCategoryId via MenuCategory port",
+          "Validate that the MenuCategory exists; throw not-found if absent",
+          "Validate status is one of 'active' or 'inactive'",
+          "Apply updated fields (name, description, status) to the MenuCategory aggregate",
+          "Set updatedAt to the current server timestamp",
+          "Save the MenuCategory aggregate via MenuCategory port",
+          "Return menuCategoryId, status, and updatedAt"
+        ]
+      }
+    ],
+    "mdmRefs": [
+      "MenuCategory"
     ]
   }
 } as const;

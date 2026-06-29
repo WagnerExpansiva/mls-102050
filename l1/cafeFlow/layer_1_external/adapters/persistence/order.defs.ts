@@ -31,7 +31,7 @@ export const orderTableDefinition = {
         "name": "table_id",
         "type": "uuid",
         "nullable": true,
-        "description": "FK to table (nullable for non-dine-in orders)"
+        "description": "FK to table"
       },
       {
         "name": "kitchen_ticket_id",
