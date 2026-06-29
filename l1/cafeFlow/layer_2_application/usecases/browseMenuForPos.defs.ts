@@ -13,21 +13,91 @@ export const browseMenuForPosUsecase = {
   },
   "data": {
     "usecaseId": "browseMenuForPos",
-    "functionName": "browseMenuForPos",
-    "inputTypeName": "BrowseMenuForPosInput",
-    "outputTypeName": "BrowseMenuForPosOutput",
     "ports": [
       "MenuItem"
     ],
-    "rulesApplied": [
-      "aiOutputLanguageSelection"
+    "functions": [
+      {
+        "functionName": "browseMenuForPos",
+        "inputTypeName": "BrowseMenuForPosInput",
+        "outputTypeName": "BrowseMenuForPosOutput",
+        "input": [
+          {
+            "name": "menuCategoryId",
+            "type": "string",
+            "required": false,
+            "description": "Filter menu items by category id (optional)"
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "required": false,
+            "description": "Filter by menu item status (e.g. 'active' for POS display)"
+          }
+        ],
+        "output": [
+          {
+            "name": "menuItemId",
+            "type": "string",
+            "required": true,
+            "ofEntity": "MenuItem"
+          },
+          {
+            "name": "menuCategoryId",
+            "type": "string",
+            "required": true,
+            "ofEntity": "MenuItem"
+          },
+          {
+            "name": "categoryName",
+            "type": "string",
+            "required": true,
+            "ofEntity": "MenuCategory",
+            "description": "Category name resolved from MDM MenuCategory"
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "required": true,
+            "ofEntity": "MenuItem"
+          },
+          {
+            "name": "description",
+            "type": "string",
+            "required": false,
+            "ofEntity": "MenuItem"
+          },
+          {
+            "name": "price",
+            "type": "number",
+            "required": true,
+            "ofEntity": "MenuItem"
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "required": true,
+            "ofEntity": "MenuItem"
+          }
+        ],
+        "ports": [
+          "MenuItem"
+        ],
+        "rulesApplied": [
+          "aiOutputLanguageSelection"
+        ],
+        "transactional": false,
+        "steps": [
+          "1. Query MenuItem entities via MenuItem port, optionally filtered by menuCategoryId and status",
+          "2. Collect distinct menuCategoryIds from the returned items",
+          "3. For each distinct menuCategoryId, resolve MenuCategory from MDM via ctx.data.mdmDocument.get({ mdmId: menuCategoryId }) to obtain the category name",
+          "4. Apply aiOutputLanguageSelection rule to select the appropriate language for display fields (name, description, categoryName)",
+          "5. Return the enriched list of menu items with categoryName included"
+        ]
+      }
     ],
-    "transactional": false,
-    "steps": [
-      "Read all MenuItem entries grouped by MenuCategory via MenuItem port",
-      "Apply aiOutputLanguageSelection rule to localize item names/descriptions",
-      "Filter out unavailable items",
-      "Return structured menu tree for POS display"
+    "mdmRefs": [
+      "MenuCategory"
     ]
   }
 } as const;
@@ -49,9 +119,6 @@ export const pipeline = [
       "_102021_/l2/agentChangeBackend/skills/architecture.md",
       "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
-    ],
-    "rulesApplied": [
-      "aiOutputLanguageSelection"
     ],
     "agent": "agentMaterializeGen"
   }

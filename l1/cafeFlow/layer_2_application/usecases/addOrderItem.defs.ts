@@ -27,64 +27,52 @@ export const addOrderItemUsecase = {
             "name": "orderId",
             "type": "string",
             "required": true,
-            "description": "ID of the parent Order to which the item is added"
+            "ofEntity": "Order",
+            "description": "ID of the parent Order to which the item will be added"
           },
           {
             "name": "menuItemId",
             "type": "string",
             "required": true,
             "ofEntity": "MenuItem",
-            "description": "ID of the MenuItem being ordered"
+            "description": "ID of the MenuItem to add to the order"
           },
           {
             "name": "quantity",
             "type": "number",
             "required": true,
-            "description": "Quantity ordered"
+            "ofEntity": "OrderItem",
+            "description": "Quantity of the menu item ordered"
           },
           {
             "name": "observations",
             "type": "string",
             "required": false,
-            "description": "Free-text observations for the kitchen"
+            "ofEntity": "OrderItem",
+            "description": "Optional preparation notes or customer requests"
           }
         ],
         "output": [
           {
-            "name": "orderItemId",
-            "type": "string",
-            "required": true,
-            "description": "Generated ID of the new OrderItem"
-          },
-          {
             "name": "orderId",
             "type": "string",
             "required": true,
-            "description": "Parent Order ID"
+            "ofEntity": "Order",
+            "description": "ID of the parent Order"
+          },
+          {
+            "name": "orderItemId",
+            "type": "string",
+            "required": true,
+            "ofEntity": "OrderItem",
+            "description": "ID of the newly created OrderItem"
           },
           {
             "name": "status",
             "type": "string",
             "required": true,
-            "description": "Initial status of the OrderItem (new)"
-          },
-          {
-            "name": "unitPrice",
-            "type": "number",
-            "required": true,
-            "description": "Unit price copied from MenuItem"
-          },
-          {
-            "name": "totalPrice",
-            "type": "number",
-            "required": true,
-            "description": "unitPrice * quantity"
-          },
-          {
-            "name": "orderTotalAmount",
-            "type": "number",
-            "required": true,
-            "description": "Recalculated Order total after adding item"
+            "ofEntity": "OrderItem",
+            "description": "Initial status of the order item (new)"
           }
         ],
         "ports": [
@@ -98,14 +86,16 @@ export const addOrderItemUsecase = {
         "transactional": true,
         "steps": [
           "Load Order by orderId via Order port",
-          "Load MenuItem by menuItemId via MenuItem port to get current price and status",
-          "Validate MenuItem status is 'active'",
-          "Validate Order status allows adding items (draft or sentToKitchen) per orderStatusTransitions rule",
-          "Create OrderItem with unitPrice from MenuItem.price, totalPrice = unitPrice * quantity, status = 'new'",
+          "Validate Order status is not closed or cancelled (orderStatusTransitions rule)",
+          "Load MenuItem by menuItemId via MenuItem port",
+          "Validate MenuItem status is active",
+          "Compute unitPrice from MenuItem.price and totalPrice = unitPrice * quantity",
+          "Create new OrderItem with status 'new', computed prices, and provided observations",
           "Add OrderItem to Order's items collection",
-          "Recalculate Order.totalAmount as sum of all non-cancelled item totalPrice",
-          "Save Order via Order port",
-          "If Order status transitions to sentToKitchen, trigger ingredientConsumptionTrigger for stock consumption"
+          "Recalculate Order.totalAmount from all order items",
+          "Apply ingredientConsumptionTrigger: generate StockConsumption entries for the menu item's ingredients",
+          "Save Order (with embedded OrderItem and StockConsumption) via Order port",
+          "Return orderId, orderItemId, and status"
         ]
       }
     ],

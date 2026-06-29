@@ -13,22 +13,58 @@ export const aiPromotionSuggestionsUsecase = {
   },
   "data": {
     "usecaseId": "aiPromotionSuggestions",
-    "functionName": "aiPromotionSuggestions",
-    "inputTypeName": "AiPromotionSuggestionsInput",
-    "outputTypeName": "AiPromotionSuggestionsOutput",
     "ports": [
       "Order",
       "MenuItem"
     ],
-    "rulesApplied": [],
-    "transactional": false,
-    "steps": [
-      "Read recent OrderItem history via Order port",
-      "Read MenuItem catalog via MenuItem port",
-      "Aggregate sales frequency and revenue per MenuItem",
-      "Generate promotion suggestions based on sales patterns",
-      "Return structured suggestion list"
-    ]
+    "functions": [
+      {
+        "functionName": "aiPromotionSuggestions",
+        "inputTypeName": "AiPromotionSuggestionsInput",
+        "outputTypeName": "AiPromotionSuggestionsOutput",
+        "input": [
+          {
+            "name": "orderId",
+            "type": "string",
+            "required": true,
+            "ofEntity": "Order",
+            "description": "The order to analyze for promotion suggestions"
+          }
+        ],
+        "output": [
+          {
+            "name": "orderId",
+            "type": "string",
+            "required": true,
+            "ofEntity": "Order",
+            "description": "The analyzed order id"
+          },
+          {
+            "name": "suggestions",
+            "type": "array",
+            "required": true,
+            "description": "List of AI-generated promotion suggestions based on the order items and available menu items",
+            "ofEntity": "OrderItem"
+          }
+        ],
+        "ports": [
+          "Order",
+          "MenuItem"
+        ],
+        "rulesApplied": [],
+        "transactional": false,
+        "steps": [
+          "Load the Order aggregate by orderId via OrderPort (includes embedded OrderItems)",
+          "Collect all menuItemIds from the order items",
+          "Load referenced MenuItems via MenuItemPort to obtain names, prices, categories and status",
+          "Filter MenuItems to only active ones for suggestion candidates",
+          "Analyze current order items: quantities, categories, total amount, and item combinations",
+          "Generate promotion suggestions (upsell, cross-sell, bundle, discount) based on order composition and available active menu items",
+          "Return the orderId and the list of suggestions with suggested menu item, suggestion type, description, suggested price and discount percentage"
+        ]
+      }
+    ],
+    "mdmRefs": []
   }
 } as const;
 

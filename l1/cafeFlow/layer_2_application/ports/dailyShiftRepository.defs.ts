@@ -17,14 +17,14 @@ export const dailyShiftRepositoryPort = {
     "methods": [
       {
         "name": "getById",
-        "returns": "DailyShift | null",
+        "returns": "DailyShift",
         "params": [
           "dailyShiftId: DailyShiftId"
         ]
       },
       {
         "name": "list",
-        "returns": "DailyShift[]",
+        "returns": "DailyShiftCollection",
         "params": [
           "filter: DailyShiftFilter"
         ]
@@ -33,26 +33,26 @@ export const dailyShiftRepositoryPort = {
         "name": "save",
         "returns": "void",
         "params": [
-          "dailyShift: DailyShift"
+          "aggregate: DailyShift"
         ]
       },
       {
         "name": "findByDate",
-        "returns": "DailyShift | null",
+        "returns": "DailyShift",
         "params": [
-          "businessDate: BusinessDate"
+          "date: BusinessDate"
         ]
       },
       {
         "name": "findOpenShift",
-        "returns": "DailyShift | null",
+        "returns": "DailyShift",
         "params": []
       },
       {
         "name": "findByCashier",
-        "returns": "DailyShift[]",
+        "returns": "DailyShiftCollection",
         "params": [
-          "cashierId: EmployeeId"
+          "cashierId: CashierId"
         ]
       }
     ]

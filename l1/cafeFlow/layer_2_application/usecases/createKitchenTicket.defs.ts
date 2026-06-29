@@ -13,23 +13,74 @@ export const createKitchenTicketUsecase = {
   },
   "data": {
     "usecaseId": "createKitchenTicket",
-    "functionName": "createKitchenTicket",
-    "inputTypeName": "CreateKitchenTicketInput",
-    "outputTypeName": "CreateKitchenTicketOutput",
     "ports": [
       "Order"
     ],
-    "rulesApplied": [
-      "orderStatusTransitions"
+    "functions": [
+      {
+        "functionName": "createKitchenTicket",
+        "inputTypeName": "CreateKitchenTicketInput",
+        "outputTypeName": "CreateKitchenTicketOutput",
+        "input": [
+          {
+            "name": "orderId",
+            "type": "string",
+            "required": true,
+            "ofEntity": "Order",
+            "description": "The order for which a kitchen ticket is created"
+          }
+        ],
+        "output": [
+          {
+            "name": "kitchenTicketId",
+            "type": "string",
+            "required": true,
+            "ofEntity": "KitchenTicket",
+            "description": "The generated kitchen ticket id"
+          },
+          {
+            "name": "orderId",
+            "type": "string",
+            "required": true,
+            "ofEntity": "Order",
+            "description": "The parent order id"
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "required": true,
+            "ofEntity": "KitchenTicket",
+            "description": "Initial kitchen ticket status (open)"
+          },
+          {
+            "name": "orderStatus",
+            "type": "string",
+            "required": true,
+            "ofEntity": "Order",
+            "description": "Updated order status after transition"
+          }
+        ],
+        "ports": [
+          "Order"
+        ],
+        "rulesApplied": [
+          "orderStatusTransitions"
+        ],
+        "transactional": true,
+        "steps": [
+          "Load Order by orderId via Order port",
+          "Validate Order status is 'draft' and can transition to 'sentToKitchen' per orderStatusTransitions rule",
+          "Generate kitchenTicketId (uuid) and create KitchenTicket with status 'open', orderId, createdAt and updatedAt set to now",
+          "Assign kitchenTicketId to Order.kitchenTicketId",
+          "Assign kitchenTicketId to every OrderItem in the order and set each OrderItem.status to 'sentToKitchen'",
+          "Transition Order.status from 'draft' to 'sentToKitchen' (orderStatusTransitions rule)",
+          "Update Order.updatedAt to now",
+          "Save Order (with embedded KitchenTicket and updated OrderItems) via Order port",
+          "Return kitchenTicketId, orderId, kitchen ticket status, and updated order status"
+        ]
+      }
     ],
-    "transactional": true,
-    "steps": [
-      "Read Order and its OrderItems via Order port",
-      "Apply orderStatusTransitions rule to verify order is in a kitchen-ready status",
-      "Build KitchenTicket from OrderItems that require preparation",
-      "Persist KitchenTicket",
-      "Return created ticket reference"
-    ]
+    "mdmRefs": []
   }
 } as const;
 
@@ -50,9 +101,6 @@ export const pipeline = [
       "_102021_/l2/agentChangeBackend/skills/architecture.md",
       "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
-    ],
-    "rulesApplied": [
-      "orderStatusTransitions"
     ],
     "agent": "agentMaterializeGen"
   }

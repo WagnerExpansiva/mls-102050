@@ -17,14 +17,14 @@ export const menuItemRepositoryPort = {
     "methods": [
       {
         "name": "getById",
-        "returns": "MenuItem | null",
+        "returns": "MenuItem",
         "params": [
           "menuItemId: MenuItemId"
         ]
       },
       {
         "name": "list",
-        "returns": "MenuItem[]",
+        "returns": "MenuItemCollection",
         "params": [
           "filter: MenuItemFilter"
         ]
@@ -33,26 +33,26 @@ export const menuItemRepositoryPort = {
         "name": "save",
         "returns": "void",
         "params": [
-          "menuItem: MenuItem"
+          "aggregate: MenuItem"
         ]
       },
       {
         "name": "findByCategory",
-        "returns": "MenuItem[]",
+        "returns": "MenuItemCollection",
         "params": [
           "category: Category"
         ]
       },
       {
         "name": "findAvailable",
-        "returns": "MenuItem[]",
+        "returns": "MenuItemCollection",
         "params": []
       },
       {
-        "name": "findByNamePattern",
-        "returns": "MenuItem[]",
+        "name": "existsByName",
+        "returns": "boolean",
         "params": [
-          "pattern: string"
+          "name: string"
         ]
       }
     ]

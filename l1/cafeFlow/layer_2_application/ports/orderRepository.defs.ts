@@ -17,14 +17,14 @@ export const orderRepositoryPort = {
     "methods": [
       {
         "name": "getById",
-        "returns": "Order | null",
+        "returns": "Order",
         "params": [
           "orderId: OrderId"
         ]
       },
       {
         "name": "list",
-        "returns": "Order[]",
+        "returns": "OrderCollection",
         "params": [
           "filter: OrderFilter"
         ]
@@ -33,27 +33,29 @@ export const orderRepositoryPort = {
         "name": "save",
         "returns": "void",
         "params": [
-          "order: Order"
+          "aggregate: Order"
         ]
       },
       {
-        "name": "findByTableNumber",
-        "returns": "Order[]",
+        "name": "findByTable",
+        "returns": "OrderCollection",
         "params": [
-          "tableNumber: TableNumber"
+          "tableId: TableId"
         ]
       },
       {
         "name": "findByStatus",
-        "returns": "Order[]",
+        "returns": "OrderCollection",
         "params": [
           "status: OrderStatus"
         ]
       },
       {
-        "name": "findActiveOrders",
-        "returns": "Order[]",
-        "params": []
+        "name": "findOpenByTable",
+        "returns": "Order",
+        "params": [
+          "tableId: TableId"
+        ]
       }
     ]
   }

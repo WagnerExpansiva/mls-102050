@@ -13,27 +13,85 @@ export const recordPaymentUsecase = {
   },
   "data": {
     "usecaseId": "recordPayment",
-    "functionName": "recordPayment",
-    "inputTypeName": "RecordPaymentInput",
-    "outputTypeName": "RecordPaymentOutput",
     "ports": [
       "Payment",
       "Order",
       "DailyShift"
     ],
-    "rulesApplied": [
-      "paymentTimingByOrderType"
+    "functions": [
+      {
+        "functionName": "recordPayment",
+        "inputTypeName": "RecordPaymentInput",
+        "outputTypeName": "RecordPaymentOutput",
+        "input": [
+          {
+            "name": "orderId",
+            "type": "string",
+            "required": true,
+            "ofEntity": "Order",
+            "description": "Reference to the Order this payment belongs to"
+          },
+          {
+            "name": "dailyShiftId",
+            "type": "string",
+            "required": true,
+            "ofEntity": "DailyShift",
+            "description": "Reference to the DailyShift during which the payment is recorded"
+          },
+          {
+            "name": "method",
+            "type": "string",
+            "required": true,
+            "description": "Payment method (e.g. cash, card, pix)"
+          },
+          {
+            "name": "amount",
+            "type": "number",
+            "required": true,
+            "description": "Payment amount in currency units"
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "required": true,
+            "description": "Initial payment status: authorized | captured | voided | refunded"
+          }
+        ],
+        "output": [
+          {
+            "name": "paymentId",
+            "type": "string",
+            "required": true,
+            "ofEntity": "Payment",
+            "description": "ID of the newly created Payment"
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "required": true,
+            "description": "Confirmed status of the created Payment"
+          }
+        ],
+        "ports": [
+          "Payment",
+          "Order",
+          "DailyShift"
+        ],
+        "rulesApplied": [
+          "paymentTimingByOrderType"
+        ],
+        "transactional": true,
+        "steps": [
+          "Load Order by orderId via OrderPort to retrieve orderType and current status",
+          "Load DailyShift by dailyShiftId via DailyShiftPort to verify shift status is 'open'",
+          "Apply paymentTimingByOrderType rule: validate that the payment is allowed at this stage based on orderType (mesa vs takeout) and order status",
+          "Validate amount is positive and does not exceed Order.totalAmount",
+          "Create Payment aggregate via PaymentPort with provided method, amount, status, orderId, dailyShiftId and server-generated paymentId, createdAt, updatedAt",
+          "Return paymentId and confirmed status"
+        ]
+      }
     ],
-    "transactional": true,
-    "steps": [
-      "Read Order via Order port to verify it exists and accepts payments",
-      "Read DailyShift via DailyShift port to verify shift is OPEN",
-      "Apply paymentTimingByOrderType rule to validate payment timing is allowed for orderType",
-      "Create Payment entity linked to Order and DailyShift",
-      "Persist Payment via Payment port",
-      "Update Order payment status if fully paid",
-      "Return recorded payment"
-    ]
+    "mdmRefs": []
   }
 } as const;
 
@@ -58,9 +116,6 @@ export const pipeline = [
       "_102021_/l2/agentChangeBackend/skills/architecture.md",
       "_102021_/l2/agentChangeBackend/skills/applicationUsecase.md",
       "_102034_.d.ts"
-    ],
-    "rulesApplied": [
-      "paymentTimingByOrderType"
     ],
     "agent": "agentMaterializeGen"
   }

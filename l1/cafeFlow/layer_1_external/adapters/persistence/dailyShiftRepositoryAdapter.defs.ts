@@ -12,13 +12,14 @@ export const dailyShiftRepositoryAdapter = {
     "planId": ""
   },
   "data": {
-    "className": "DailyShiftRepository",
+    "className": "DailyShiftRepositoryAdapter",
     "entityId": "DailyShift",
     "portRef": "IDailyShiftRepository",
     "tableRef": "daily_shifts",
     "mdmReads": [],
     "notes": [
-      "Columns: daily_shift_id, status, created_at. Details JSONB: shiftDate, openedAt, closedAt, openingCashBalance, closingCashBalance, totalSales, totalPayments, closingNotes, updatedAt, cashMovements. No MDM refs."
+      "Real columns: daily_shift_id, status, created_at",
+      "Details JSONB holds shiftDate, openedAt, closedAt, openingCashBalance, closingCashBalance, totalSales, totalPayments, closingNotes, updatedAt, cashMovements (embedded)"
     ]
   }
 } as const;

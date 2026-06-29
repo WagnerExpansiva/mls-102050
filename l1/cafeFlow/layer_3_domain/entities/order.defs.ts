@@ -135,17 +135,14 @@ export const orderDomainEntity = {
     ],
     "invariants": [
       "totalAmount must equal the sum of all OrderItem.totalPrice",
-      "when orderType is 'mesa', tableId is required",
-      "when orderType is 'takeout', tableId must be null",
-      "status transitions: draft -> sentToKitchen -> inPreparation -> ready -> served -> closed; draft or any pre-closed state -> cancelled allowed",
-      "when status is 'closed', closedAt must be set",
-      "when status is 'cancelled', cancelledAt and cancellationReason must be set",
-      "cannot add or modify OrderItems after status is sentToKitchen",
-      "OrderItem.quantity must be > 0",
-      "OrderItem.totalPrice must equal OrderItem.quantity * OrderItem.unitPrice",
-      "OrderItem.status transitions: new -> sentToKitchen -> inPreparation -> ready -> served; any pre-served -> cancelled",
-      "KitchenTicket.status transitions: open -> inProgress -> done; open or inProgress -> void",
-      "at least one OrderItem is required before sending to kitchen"
+      "tableId is required when orderType is 'mesa'",
+      "tableId must be null when orderType is 'takeout'",
+      "numberOfGuests must be greater than zero when provided",
+      "cannot add or modify OrderItems after status is 'closed' or 'cancelled'",
+      "closedAt must be set when status transitions to 'closed'",
+      "cancelledAt and cancellationReason must be set when status transitions to 'cancelled'",
+      "status transitions: draft→sentToKitchen, sentToKitchen→inPreparation, inPreparation→ready, ready→served, served→closed; draft→cancelled, sentToKitchen→cancelled, inPreparation→cancelled, ready→cancelled, served→cancelled",
+      "dailyShift must be in 'open' status when creating an order"
     ],
     "valueObjects": [
       {
@@ -268,7 +265,7 @@ export const orderDomainEntity = {
             "description": "Data e hora da última atualização do ticket"
           }
         ],
-        "collection": true
+        "collection": false
       }
     ]
   }

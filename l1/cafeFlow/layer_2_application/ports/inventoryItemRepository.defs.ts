@@ -17,14 +17,14 @@ export const inventoryItemRepositoryPort = {
     "methods": [
       {
         "name": "getById",
-        "returns": "InventoryItem | null",
+        "returns": "InventoryItem",
         "params": [
           "inventoryItemId: InventoryItemId"
         ]
       },
       {
         "name": "list",
-        "returns": "InventoryItem[]",
+        "returns": "InventoryItemCollection",
         "params": [
           "filter: InventoryItemFilter"
         ]
@@ -33,24 +33,24 @@ export const inventoryItemRepositoryPort = {
         "name": "save",
         "returns": "void",
         "params": [
-          "inventoryItem: InventoryItem"
+          "aggregate: InventoryItem"
         ]
       },
       {
         "name": "findBySku",
-        "returns": "InventoryItem | null",
+        "returns": "InventoryItem",
         "params": [
           "sku: Sku"
         ]
       },
       {
         "name": "findLowStock",
-        "returns": "InventoryItem[]",
+        "returns": "InventoryItemCollection",
         "params": []
       },
       {
         "name": "findBySupplier",
-        "returns": "InventoryItem[]",
+        "returns": "InventoryItemCollection",
         "params": [
           "supplierId: SupplierId"
         ]

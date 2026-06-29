@@ -76,13 +76,12 @@ export const paymentDomainEntity = {
       "refunded"
     ],
     "invariants": [
-      "amount must be > 0",
-      "method must not be empty or whitespace",
-      "status transitions: authorized -> captured; authorized -> voided; captured -> refunded",
-      "cannot void a payment that is already captured (must refund instead)",
-      "cannot refund a payment that is not captured",
-      "dailyShiftId must reference an open DailyShift when payment is captured",
-      "sum of all Payment.amount for an Order must not exceed Order.totalAmount"
+      "amount must be greater than zero",
+      "method must not be empty",
+      "at least one of orderId or dailyShiftId must be set",
+      "status transitions: authorized→captured, authorized→voided, captured→refunded",
+      "cannot modify amount or method after status is 'captured'",
+      "dailyShiftId must reference an open DailyShift at time of capture"
     ],
     "valueObjects": []
   }

@@ -13,20 +13,71 @@ export const updateTableStatusUsecase = {
   },
   "data": {
     "usecaseId": "updateTableStatus",
-    "functionName": "updateTableStatus",
-    "inputTypeName": "UpdateTableStatusInput",
-    "outputTypeName": "UpdateTableStatusOutput",
     "ports": [],
+    "functions": [
+      {
+        "functionName": "updateTableStatus",
+        "inputTypeName": "UpdateTableStatusInput",
+        "outputTypeName": "UpdateTableStatusOutput",
+        "input": [
+          {
+            "name": "tableId",
+            "type": "string",
+            "required": true,
+            "ofEntity": "Table",
+            "description": "Unique identifier of the table whose status is being updated"
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "required": true,
+            "ofEntity": "Table",
+            "description": "New status for the table: available, occupied, or disabled"
+          }
+        ],
+        "output": [
+          {
+            "name": "tableId",
+            "type": "string",
+            "required": true,
+            "ofEntity": "Table",
+            "description": "Identifier of the updated table"
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "required": true,
+            "ofEntity": "Table",
+            "description": "Confirmed status after update"
+          },
+          {
+            "name": "updatedAt",
+            "type": "string",
+            "required": true,
+            "ofEntity": "Table",
+            "description": "Timestamp of the status update"
+          }
+        ],
+        "ports": [],
+        "rulesApplied": [
+          "tableOccupancyConsistency"
+        ],
+        "transactional": true,
+        "steps": [
+          "Load Table master-data document by id via ctx.data.mdmDocument.get({ mdmId: tableId })",
+          "Validate that the requested status is one of available, occupied, disabled",
+          "Apply tableOccupancyConsistency rule: if transitioning to 'occupied' ensure no conflicting active occupancy; if transitioning to 'available' ensure no active orders/reservations tied to the table",
+          "Update the Table document status field and set updatedAt to current timestamp",
+          "Persist the updated Table master-data document via ctx.data.mdmDocument update within a single transaction",
+          "Return tableId, confirmed status, and updatedAt"
+        ]
+      }
+    ],
     "rulesApplied": [
       "tableOccupancyConsistency"
     ],
-    "transactional": true,
-    "steps": [
-      "Read Table by id",
-      "Apply tableOccupancyConsistency rule to validate status change does not conflict with active orders",
-      "Update Table.status and updatedAt",
-      "Persist via repository",
-      "Return updated table"
+    "mdmRefs": [
+      "Table"
     ]
   }
 } as const;
